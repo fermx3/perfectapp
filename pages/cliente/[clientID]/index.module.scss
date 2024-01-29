@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+
+  .section {
+    border: solid;
+    border-radius: 0.3rem;
+    margin: 0.5rem;
+    padding: 0.3rem;
+    width: 80%;
+  }
+}
