@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 import classes from './button.module.scss';
 
-export default function Button({ href, onClick, children }) {
+export default function Button({ href, children, ...props }) {
   if (!href) {
     return (
-      <button className={classes.button} onClick={onClick}>
+      <button className={classes.button} {...props}>
         {children}
       </button>
     );
