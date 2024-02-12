@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import Button from '../button';
 
-async function createCliente(userId, password, tipoDeCliente) {
+async function createCliente(userId, password, nivelDeCliente, role) {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
-    body: JSON.stringify({ userId, password, tipoDeCliente }),
+    body: JSON.stringify({ userId, password, nivelDeCliente, role }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -24,7 +24,7 @@ export default function CrearClienteForm() {
   const [formInput, setFormInput] = useState({
     userId: '',
     password: '',
-    tipoDeCliente: 'Básico',
+    nivelDeCliente: 'Básico',
   });
 
   async function submitHandler(event) {
@@ -32,7 +32,7 @@ export default function CrearClienteForm() {
 
     const enteredUserId = formInput.userId;
     const enteredPassword = formInput.password;
-    const enteredTipoDeCliente = formInput.tipoDeCliente;
+    const enterednivelDeCliente = formInput.nivelDeCliente;
 
     // Add validation
 
@@ -40,7 +40,8 @@ export default function CrearClienteForm() {
       const result = await createCliente(
         enteredUserId,
         enteredPassword,
-        enteredTipoDeCliente
+        enterednivelDeCliente,
+        'cliente'
       );
       console.log(result); //Successfuly create user
     } catch (error) {
@@ -78,14 +79,18 @@ export default function CrearClienteForm() {
           />
         </div>
         <div>
-          <label htmlFor='tipoDeCliente'>Tipo de cliente:</label>
+          <label htmlFor='nivelDeCliente'>Tipo de cliente:</label>
           <select
             onChange={(event) =>
-              setFormInput({ ...formInput, tipoDeCliente: event.target.value })
+              setFormInput({ ...formInput, nivelDeCliente: event.target.value })
             }
           >
             {tiposDeClientes.map((object) => {
-              return <option value={object}>{object}</option>;
+              return (
+                <option value={object} key={object}>
+                  {object}
+                </option>
+              );
             })}
           </select>
         </div>

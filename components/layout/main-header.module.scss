@@ -1,0 +1,23 @@
+.header {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vh 2vh;
+  min-height: 3rem;
+  max-height: 5rem;
+  background-color: #202020;
+
+  .logo {
+    filter: invert(100);
+  }
+
+  .nav {
+    li,
+    a {
+      text-decoration: none;
+      list-style: none;
+      color: white;
+    }
+  }
+}

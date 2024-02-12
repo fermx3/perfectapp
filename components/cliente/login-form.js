@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+import { signIn } from 'next-auth/react';
+
 import Button from '../button';
 
 async function createCliente(userId, password) {
@@ -36,10 +38,14 @@ export default function LoginForm() {
     // Add validation
 
     try {
-      const result = await createCliente(enteredUserId, enteredPassword);
-      console.log(result); //Successfuly create user
+      const result = await signIn('credentials', {
+        redirect: false,
+        userId: enteredUserId,
+        password: enteredPassword,
+      });
+      console.log(result); //Successfuly logged in user
     } catch (error) {
-      console.log(error); //Fail on create user
+      console.log(error); //Fail on loggin user
     }
   }
 
