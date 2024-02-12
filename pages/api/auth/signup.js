@@ -1,10 +1,12 @@
 import { hashPassword } from '@/lib/auth';
-import { connectToDatabase } from '@/lib/db';
+import { PrismaClient } from '@prisma/client';
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
     return;
   }
+
+  const prisma = new PrismaClient();
 
   const data = req.body;
 
@@ -25,29 +27,38 @@ async function handler(req, res) {
     return;
   }
 
-  const client = await connectToDatabase();
+  async function main() {
+    //Check if the userId already exists
+    const existingUser = await prisma.users.findUnique({
+      where: { userId: userId },
+    });
 
-  const db = client.db();
-  //Check if the userId already exists
-  const existingUser = await db.collection('users').findOne({ userId: userId });
+    if (existingUser) {
+      res.status(422).json({ message: 'El numero de usuario ya existe.' });
+      return;
+    }
+    //
+    const hashedPassword = await hashPassword(password);
+    const result = await prisma.users.create({
+      data: {
+        userId: userId,
+        password: hashedPassword,
+        nivelDeCliente: nivelDeCliente,
+        role: role,
+      },
+    });
 
-  if (existingUser) {
-    res.status(422).json({ message: 'El numero de usuario ya existe.' });
-    client.close();
-    return;
+    res.status(201).json({ message: 'Usuario creado!' });
   }
-  //
-  const hashedPassword = await hashPassword(password);
 
-  const result = await db.collection('users').insertOne({
-    userId: userId,
-    password: hashedPassword,
-    nivelDeCliente: nivelDeCliente,
-    role: role,
-  });
-
-  res.status(201).json({ message: 'Usuario creado!' });
-  client.close();
+  main()
+    .then(async () => {
+      await prisma.$disconnect();
+    })
+    .catch(async (e) => {
+      console.error(e);
+      await prisma.$disconnect();
+    });
 }
 
 export default handler;

@@ -41,7 +41,7 @@ export default function CrearClienteForm() {
         enteredUserId,
         enteredPassword,
         enterednivelDeCliente,
-        'cliente'
+        'CLIENTE'
       );
       console.log(result); //Successfuly create user
     } catch (error) {

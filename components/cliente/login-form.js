@@ -5,24 +5,6 @@ import { signIn } from 'next-auth/react';
 
 import Button from '../button';
 
-async function createCliente(userId, password) {
-  const response = await fetch('/api/auth/signup', {
-    method: 'POST',
-    body: JSON.stringify({ userId, password }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || 'Something went wrong!');
-  }
-
-  return data;
-}
-
 export default function LoginForm() {
   const [formInput, setFormInput] = useState({
     userId: '',
