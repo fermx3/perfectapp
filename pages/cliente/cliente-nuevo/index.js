@@ -1,5 +1,7 @@
-import Button from '@/components/button';
 import { useState } from 'react';
+import { getSession } from 'next-auth/react';
+
+import Button from '@/components/button';
 
 export default function ClienteNuevoPage() {
   const [username, setUsername] = useState('');
@@ -39,3 +41,25 @@ export default function ClienteNuevoPage() {
     </>
   );
 }
+
+// export async function getServerSideProps(context) {
+//   const session = await getSession({ req: context.req });
+//   const { clientID } = context.query;
+
+//   if (
+//     !session ||
+//     session.user.role !== 'CLIENTE' ||
+//     clientID !== session.user.userId
+//   ) {
+//     return {
+//       redirect: {
+//         destination: '/cliente/login',
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: { session },
+//   };
+// }

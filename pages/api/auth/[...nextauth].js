@@ -9,6 +9,9 @@ export default NextAuth({
   },
   providers: [
     CredentialsProvider({
+      profile(profile) {
+        return { role: profile.role ?? 'user' };
+      },
       async authorize(credentials) {
         const client = await connectToDatabase();
 
@@ -33,8 +36,24 @@ export default NextAuth({
         }
 
         client.close();
-        return { userId: user.userId };
+        return { userId: user.userId, role: user.role };
       },
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+        token.userId = user.userId;
+        token.nombreDelNegocio = user.nombreDelNegocio;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.role = token.role;
+      session.user.userId = token.userId;
+      session.user.nombreDelNegocio = token.nombreDelNegocio;
+      return session;
+    },
+  },
 });

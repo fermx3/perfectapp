@@ -13,6 +13,7 @@ model users {
   password       String
   role           Role
   userId         String @unique
+  nombreDelNegocio String
 }
 
 enum Role {

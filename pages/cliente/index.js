@@ -1,13 +1,14 @@
-import LoginForm from '@/components/cliente/login-form';
+import Button from '@/components/button';
 
 export default function ClientePage() {
   return (
     <>
       <header>
-        <h1>Cliente</h1>
+        <h1>Página para clientes</h1>
       </header>
       <main>
-        <LoginForm />
+        <h2>Bienvenido a la seccion de clientes.</h2>
+        <Button href='/cliente/login'>Ingresa a tu cuenta</Button>
       </main>
     </>
   );

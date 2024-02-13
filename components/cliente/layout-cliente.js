@@ -6,27 +6,25 @@ import classes from './layout-cliente.module.scss';
 export default function LayoutCliente({ children }) {
   const router = useRouter();
 
+  const { clientID } = router.query;
+
   return (
     <>
       <header>
-        <p>Numero de cliente: {router.query.clientID}</p>
+        <p>Numero de cliente: {clientID}</p>
         <div>
           <h1>Hola NOMBRE DEL NEGOCIO</h1>
         </div>
         <nav className={classes.nav}>
           <ul>
             <li>
-              <Link href={`/cliente/${router.query.clientID}`}>Home</Link>
+              <Link href={`/cliente/${clientID}`}>Home</Link>
             </li>
             <li>
-              <Link href={`/cliente/${router.query.clientID}/promociones`}>
-                Promociones
-              </Link>
+              <Link href={`/cliente/${clientID}/promociones`}>Promociones</Link>
             </li>
             <li>
-              <Link href={`/cliente/${router.query.clientID}/perfil`}>
-                Perfil
-              </Link>
+              <Link href={`/cliente/${clientID}/perfil`}>Perfil</Link>
             </li>
           </ul>
         </nav>
