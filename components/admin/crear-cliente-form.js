@@ -1,11 +1,24 @@
 import { useState } from 'react';
 
 import Button from '../button';
+import FormControl from '../forms/form-control';
 
-async function createCliente(userId, password, nivelDeCliente, role) {
+async function createCliente(
+  userId,
+  password,
+  nivelDeCliente,
+  nombreDelUser,
+  role
+) {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
-    body: JSON.stringify({ userId, password, nivelDeCliente, role }),
+    body: JSON.stringify({
+      userId,
+      password,
+      nivelDeCliente,
+      nombreDelUser,
+      role,
+    }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -25,6 +38,7 @@ export default function CrearClienteForm() {
     userId: '',
     password: '',
     nivelDeCliente: 'Básico',
+    nombreDelUser: '',
   });
 
   async function submitHandler(event) {
@@ -33,6 +47,7 @@ export default function CrearClienteForm() {
     const enteredUserId = formInput.userId;
     const enteredPassword = formInput.password;
     const enterednivelDeCliente = formInput.nivelDeCliente;
+    const enterednombreDelUser = formInput.nombreDelUser;
 
     // Add validation
 
@@ -41,12 +56,21 @@ export default function CrearClienteForm() {
         enteredUserId,
         enteredPassword,
         enterednivelDeCliente,
+        enterednombreDelUser,
         'CLIENTE'
       );
       console.log(result); //Successfuly create user
     } catch (error) {
       console.log(error); //Fail on create user
     }
+
+    //reset form
+    setFormInput({
+      userId: '',
+      password: '',
+      nivelDeCliente: 'Básico',
+      nombreDelUser: '',
+    });
   }
 
   const tiposDeClientes = ['Básico', 'Oro', 'Platino'];
@@ -54,30 +78,34 @@ export default function CrearClienteForm() {
   return (
     <>
       <form onSubmit={submitHandler}>
-        <div>
-          <label htmlFor='userId'>Numero de cliente:</label>
-          <input
-            type='text'
-            id='userId'
-            value={formInput.userId}
-            onChange={(event) =>
-              setFormInput({ ...formInput, userId: event.target.value })
-            }
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='password'>Contraseña:</label>
-          <input
-            type='password'
-            id='password'
-            value={formInput.password}
-            onChange={(event) =>
-              setFormInput({ ...formInput, password: event.target.value })
-            }
-            required
-          />
-        </div>
+        <FormControl
+          id='userId'
+          label='Numero de cliente:'
+          type='number'
+          value={formInput.userId}
+          onChange={(event) =>
+            setFormInput({ ...formInput, userId: event.target.value })
+          }
+        />
+        <FormControl
+          id='password'
+          label='Contraseña:'
+          type='password'
+          value={formInput.password}
+          onChange={(event) =>
+            setFormInput({ ...formInput, password: event.target.value })
+          }
+        />
+        <FormControl
+          id='nombreDelUser'
+          label='Nombre del cliente:'
+          type='text'
+          value={formInput.nombreDelUser}
+          onChange={(event) =>
+            setFormInput({ ...formInput, nombreDelUser: event.target.value })
+          }
+        />
+
         <div>
           <label htmlFor='nivelDeCliente'>Tipo de cliente:</label>
           <select
@@ -94,9 +122,7 @@ export default function CrearClienteForm() {
             })}
           </select>
         </div>
-        <div>
-          <Button>Crear Cliente</Button>
-        </div>
+        <FormControl type='button' label='Crear Cliente' />
       </form>
     </>
   );

@@ -19,6 +19,6 @@
     "sass": "^1.70.0"
   },
   "devDependencies": {
-    "prisma": "^5.9.1"
+    "prisma": "^5.10.2"
   }
 }

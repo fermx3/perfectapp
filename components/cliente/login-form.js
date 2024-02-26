@@ -8,6 +8,7 @@ import { signIn } from 'next-auth/react';
 import Button from '../button';
 
 import classes from './login-form.module.scss';
+import FormControl from '../forms/form-control';
 
 export default function LoginForm() {
   const [formInput, setFormInput] = useState({
@@ -46,33 +47,23 @@ export default function LoginForm() {
     <div className={classes.formContainer}>
       <h2>Inicia Sesión</h2>
       <form onSubmit={submitHandler} className={classes.form}>
-        <div className={classes.formControl}>
-          <label htmlFor='userId'>Numero de cliente:</label>
-          <input
-            type='text'
-            id='userId'
-            value={formInput.userId}
-            onChange={(event) =>
-              setFormInput({ ...formInput, userId: event.target.value })
-            }
-            required
-          />
-        </div>
-        <div className={classes.formControl}>
-          <label htmlFor='password'>Contraseña:</label>
-          <input
-            type='password'
-            id='password'
-            value={formInput.password}
-            onChange={(event) =>
-              setFormInput({ ...formInput, password: event.target.value })
-            }
-            required
-          />
-        </div>
-        <div className={classes.formControl}>
-          <Button>Ingresar</Button>
-        </div>
+        <FormControl
+          id='userId'
+          label='Numero de cliente:'
+          type='text'
+          onChange={(event) =>
+            setFormInput({ ...formInput, userId: event.target.value })
+          }
+        />
+        <FormControl
+          id='password'
+          label='Contraseña:'
+          type='password'
+          onChange={(event) =>
+            setFormInput({ ...formInput, password: event.target.value })
+          }
+        />
+        <FormControl type='button' label='Ingresar' />
       </form>
       <div className={classes.formFooter}>
         <p>¿No tienes cuenta?</p>

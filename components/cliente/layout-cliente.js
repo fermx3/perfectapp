@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import classes from './layout-cliente.module.scss';
 
-export default function LayoutCliente({ children }) {
+export default function LayoutCliente({ children, nombreDelCliente }) {
   const router = useRouter();
 
   const { clientID } = router.query;
@@ -13,7 +13,7 @@ export default function LayoutCliente({ children }) {
       <header>
         <p>Numero de cliente: {clientID}</p>
         <div>
-          <h1>Hola NOMBRE DEL NEGOCIO</h1>
+          <h1>Hola {nombreDelCliente}</h1>
         </div>
         <nav className={classes.nav}>
           <ul>

@@ -1,16 +1,36 @@
 import { getSession } from 'next-auth/react';
+import { getUserInfo } from '@/lib/prismaDB';
 
 import LayoutCliente from '@/components/cliente/layout-cliente';
 
 import classes from './index.module.scss';
 
-export default function PanelDeCliente() {
+export default function PanelDeCliente({ userInfo }) {
+  const isOnPreview = true;
+
+  if (isOnPreview) {
+    return (
+      <div className={classes.preview}>
+        <header>
+          <h2>Hola {userInfo.nombreDelUser}</h2>
+          <p>Nivel {userInfo.nivelDeCliente}</p>
+        </header>
+        <main>
+          <h1>¡Bienvenido a la experiencia LEAL!</h1>
+          <p>Pronto descubriras como tu lealtad te hará ganar.</p>
+          <p>Pregunta a tu asesor.</p>
+        </main>
+        ;
+      </div>
+    );
+  }
+
   return (
-    <LayoutCliente>
+    <LayoutCliente nombreDelCliente={userInfo.nombreDelUser}>
       <main className={classes.main}>
         <div>
           <section className={classes.section}>
-            <h2>Cliente Platino</h2>
+            <h2>Cliente {userInfo.nivelDeCliente}</h2>
           </section>
           <section className={classes.section}>
             <h2>Cuotas del mes</h2>
@@ -30,6 +50,7 @@ export default function PanelDeCliente() {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   const { clientID } = context.query;
+  const userInfo = await getUserInfo(clientID);
 
   if (
     !session ||
@@ -45,6 +66,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session },
+    props: { session, userInfo },
   };
 }

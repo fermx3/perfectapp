@@ -7,13 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type UserInfo {
+  nivelDeCliente   String
+  nombreDelUser    String
+}
+
 model users {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
-  nivelDeCliente String
-  password       String
-  role           Role
-  userId         String @unique
-  nombreDelNegocio String
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  password String
+  role     Role
+  userId   String @unique
+  userInfo UserInfo
 }
 
 enum Role {

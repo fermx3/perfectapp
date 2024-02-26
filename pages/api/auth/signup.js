@@ -10,7 +10,7 @@ async function handler(req, res) {
 
   const data = req.body;
 
-  const { userId, password, nivelDeCliente, role } = data;
+  const { userId, password, nivelDeCliente, nombreDelUser, role } = data;
 
   if (
     !userId ||
@@ -18,6 +18,7 @@ async function handler(req, res) {
     !password ||
     password.trim().length < 8 ||
     !nivelDeCliente ||
+    !nombreDelUser ||
     !role
   ) {
     res.status(422).json({
@@ -43,8 +44,11 @@ async function handler(req, res) {
       data: {
         userId: userId,
         password: hashedPassword,
-        nivelDeCliente: nivelDeCliente,
         role: role,
+        userInfo: {
+          nombreDelUser: nombreDelUser,
+          nivelDeCliente: nivelDeCliente,
+        },
       },
     });
 
