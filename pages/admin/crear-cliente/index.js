@@ -1,10 +1,11 @@
 import CrearClienteForm from '@/components/admin/crear-cliente-form';
+import Container from '@/components/layout/container';
 
 import { getSession } from 'next-auth/react';
 
 export default function CrearClientePage() {
   return (
-    <>
+    <Container md>
       <header>
         <h1>Crear cliente</h1>
         <p>
@@ -14,7 +15,7 @@ export default function CrearClientePage() {
       <main>
         <CrearClienteForm />
       </main>
-    </>
+    </Container>
   );
 }
 

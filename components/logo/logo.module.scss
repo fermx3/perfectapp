@@ -1,0 +1,12 @@
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.horizontalLogo {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-top: 1rem;
+}

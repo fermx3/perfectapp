@@ -1,3 +1,3 @@
 export default function OperadorPage() {
-  return <h1>Pagina de operador</h1>;
+  return <h1>Pagina de asesor</h1>;
 }

@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import FormControl from '../forms/form-control';
 
 import { signIn } from 'next-auth/react';
 
-import Button from '../button';
-
 import classes from './login-form.module.scss';
-import FormControl from '../forms/form-control';
 
 export default function LoginForm() {
   const [formInput, setFormInput] = useState({
@@ -20,7 +18,16 @@ export default function LoginForm() {
   const session = useSession();
 
   if (session.status === 'authenticated') {
-    router.replace(`/cliente/${session.data.user.userId}`);
+    switch (session.data.user.role) {
+      case 'CLIENTE':
+        router.replace(`/cliente/${session.data.user.userId}`);
+        break;
+      case 'ADMIN':
+        router.replace(`/admin`);
+        break;
+      default:
+        router.replace('/login-error');
+    }
   }
 
   async function submitHandler(event) {
@@ -49,8 +56,8 @@ export default function LoginForm() {
       <form onSubmit={submitHandler} className={classes.form}>
         <FormControl
           id='userId'
-          label='Numero de cliente:'
-          type='text'
+          label='Numero de usuario:'
+          type='number'
           onChange={(event) =>
             setFormInput({ ...formInput, userId: event.target.value })
           }

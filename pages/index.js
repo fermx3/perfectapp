@@ -5,6 +5,7 @@ import Question from '@/components/question';
 import { Inter } from 'next/font/google';
 
 import classes from './index.module.scss';
+import Logo from '@/components/logo/logo';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,22 +19,14 @@ export default function Home() {
         <link rel='icon' href='/favicon.png' />
       </Head>
       <main className={classes.main}>
-        <div className={classes.logo}>
-          <Image
-            src={'/images/perfect-logo.png'}
-            width={100}
-            height={100}
-            alt='perfect logo'
-          />
-          <h1>perfect app</h1>
-        </div>
+        <Logo />
         <div className={classes.header}>
           <Question
             question='Bienvenido/a! Primero selecciona tu rol:'
             options={[
-              { name: 'Cliente', link: '/cliente/login' },
-              { name: 'Operador', link: '/operador' },
-              { name: 'Usuario', link: '/usuario' },
+              { name: 'Leal', link: '/cliente/login' },
+              { name: 'Asesor', link: '/operador' },
+              { name: 'Cliente', link: '/usuario' },
             ]}
           />
         </div>

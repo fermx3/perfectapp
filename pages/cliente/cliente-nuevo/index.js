@@ -1,32 +1,29 @@
 import { useState } from 'react';
-import { getSession } from 'next-auth/react';
 
 import Button from '@/components/button';
+import Container from '@/components/layout/container';
+import FormControl from '@/components/forms/form-control';
 
 export default function ClienteNuevoPage() {
   const [username, setUsername] = useState('');
 
   return (
-    <>
+    <Container>
       <header>
-        <h1>cliente nuevo</h1>
+        <h1>Cliente nuevo</h1>
       </header>
       <main>
         <h2>¿Cuentas con numero de Cliente Upfield?</h2>
         <form>
-          <div>
-            <label htmlFor='username'>Número de Cliente Upfield:</label>
-            <input
-              type='number'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <Button href={`/cliente/${username}/registro`}>Registrar</Button>
-          </div>
+          <FormControl
+            id='username'
+            label=''
+            type='number'
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <FormControl type='button' label='Registrar' />
         </form>
-        <div>
+        <div style={{ display: 'flex' }}>
           <Button
             onClick={() =>
               alert(
@@ -38,7 +35,7 @@ export default function ClienteNuevoPage() {
           </Button>
         </div>
       </main>
-    </>
+    </Container>
   );
 }
 

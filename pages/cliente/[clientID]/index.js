@@ -6,7 +6,7 @@ import LayoutCliente from '@/components/cliente/layout-cliente';
 import classes from './index.module.scss';
 
 export default function PanelDeCliente({ userInfo }) {
-  const isOnPreview = true;
+  const isOnPreview = false;
 
   if (isOnPreview) {
     return (
@@ -20,13 +20,15 @@ export default function PanelDeCliente({ userInfo }) {
           <p>Pronto descubriras como tu lealtad te hará ganar.</p>
           <p>Pregunta a tu asesor.</p>
         </main>
-        ;
       </div>
     );
   }
 
   return (
-    <LayoutCliente nombreDelCliente={userInfo.nombreDelUser}>
+    <LayoutCliente
+      nombreDelCliente={userInfo.nombreDelUser}
+      nivelDeCliente={userInfo.nivelDeCliente}
+    >
       <main className={classes.main}>
         <div>
           <section className={classes.section}>

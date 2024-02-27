@@ -1,8 +1,9 @@
 import Button from '@/components/button';
+import Container from '@/components/layout/container';
 
 export default function RegistroClientePage() {
   return (
-    <>
+    <Container>
       <header>
         <h1>Registrar con numero de cliente</h1>
       </header>
@@ -30,6 +31,6 @@ export default function RegistroClientePage() {
           </div>
         </form>
       </main>
-    </>
+    </Container>
   );
 }

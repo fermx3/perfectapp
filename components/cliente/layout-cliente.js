@@ -2,18 +2,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import classes from './layout-cliente.module.scss';
+import Container from '../layout/container';
 
-export default function LayoutCliente({ children, nombreDelCliente }) {
+export default function LayoutCliente({
+  children,
+  nombreDelCliente,
+  nivelDeCliente,
+}) {
   const router = useRouter();
 
   const { clientID } = router.query;
 
   return (
-    <>
+    <Container>
       <header>
-        <p>Numero de cliente: {clientID}</p>
         <div>
-          <h1>Hola {nombreDelCliente}</h1>
+          <h1>{nombreDelCliente}</h1>
+          <p>Numero de cliente: {clientID}</p>
+          <p>Cliente {nivelDeCliente}</p>
         </div>
         <nav className={classes.nav}>
           <ul>
@@ -30,6 +36,6 @@ export default function LayoutCliente({ children, nombreDelCliente }) {
         </nav>
       </header>
       {children}
-    </>
+    </Container>
   );
 }

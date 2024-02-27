@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import Button from '../button';
 import FormControl from '../forms/form-control';
 
 async function createCliente(
@@ -105,23 +104,15 @@ export default function CrearClienteForm() {
             setFormInput({ ...formInput, nombreDelUser: event.target.value })
           }
         />
-
-        <div>
-          <label htmlFor='nivelDeCliente'>Tipo de cliente:</label>
-          <select
-            onChange={(event) =>
-              setFormInput({ ...formInput, nivelDeCliente: event.target.value })
-            }
-          >
-            {tiposDeClientes.map((object) => {
-              return (
-                <option value={object} key={object}>
-                  {object}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+        <FormControl
+          id='nivelDeCliente'
+          label='Tipo de cliente:'
+          type='select'
+          options={tiposDeClientes}
+          onChange={(event) =>
+            setFormInput({ ...formInput, nivelDeCliente: event.target.value })
+          }
+        />
         <FormControl type='button' label='Crear Cliente' />
       </form>
     </>
