@@ -25,7 +25,7 @@ export default function Home() {
             question='Bienvenido/a! Primero selecciona tu rol:'
             options={[
               { name: 'Leal', link: '/cliente/login' },
-              { name: 'Asesor', link: '/operador' },
+              { name: 'Asesor', link: '/asesor' },
               { name: 'Cliente', link: '/usuario' },
             ]}
           />

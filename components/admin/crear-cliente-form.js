@@ -56,7 +56,7 @@ export default function CrearClienteForm() {
         enteredPassword,
         enterednivelDeCliente,
         enterednombreDelUser,
-        'CLIENTE'
+        'LEAL'
       );
       console.log(result); //Successfuly create user
     } catch (error) {

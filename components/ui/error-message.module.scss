@@ -1,0 +1,21 @@
+.error {
+  padding: 0.2rem 0.8rem;
+  margin-top: -0.5rem;
+  font-size: 0.8rem;
+  background-color: red;
+  color: white;
+  border-radius: 0 0 5px 5px;
+  animation: slideIn 1s ease 0s 1 normal forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
 
   if (
     !session ||
-    session.user.role !== 'CLIENTE' ||
+    session.user.role !== 'LEAL' ||
     clientID !== session.user.userId
   ) {
     return {

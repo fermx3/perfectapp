@@ -7,7 +7,7 @@ export default function ClientePage() {
   return (
     <>
       <header className={classes.header}>
-        <Logo horizontal />
+        <Logo horizontal priority />
       </header>
       <main className={classes.main}>
         <LoginForm />

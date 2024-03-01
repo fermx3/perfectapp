@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import classes from './logo.module.scss';
 
-export default function Logo({ horizontal }) {
+export default function Logo({ horizontal, priority }) {
   return (
     <div className={horizontal ? classes.horizontalLogo : classes.logo}>
       <Image
@@ -10,6 +10,7 @@ export default function Logo({ horizontal }) {
         width={80}
         height={80}
         alt='perfect logo'
+        priority={priority}
       />
       <h1>perfect app</h1>
     </div>

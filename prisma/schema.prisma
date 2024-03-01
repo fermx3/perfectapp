@@ -22,7 +22,7 @@ model users {
 
 enum Role {
   ADMIN
+  LEAL
+  ASESOR
   CLIENTE
-  OPERADOR
-  USUARIO
 }

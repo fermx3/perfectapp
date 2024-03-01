@@ -7,6 +7,7 @@ import FormControl from '../forms/form-control';
 import { signIn } from 'next-auth/react';
 
 import classes from './login-form.module.scss';
+import ErrorMessage from '../ui/error-message';
 
 export default function LoginForm() {
   const [formInput, setFormInput] = useState({
@@ -14,13 +15,18 @@ export default function LoginForm() {
     password: '',
   });
 
+  const [isError, setIsError] = useState();
+
   const router = useRouter();
   const session = useSession();
 
   if (session.status === 'authenticated') {
     switch (session.data.user.role) {
-      case 'CLIENTE':
+      case 'LEAL':
         router.replace(`/cliente/${session.data.user.userId}`);
+        break;
+      case 'ASESOR':
+        router.replace(`/asesor`);
         break;
       case 'ADMIN':
         router.replace(`/admin`);
@@ -32,6 +38,7 @@ export default function LoginForm() {
 
   async function submitHandler(event) {
     event.preventDefault();
+    setIsError(undefined);
 
     const enteredUserId = formInput.userId;
     const enteredPassword = formInput.password;
@@ -44,6 +51,11 @@ export default function LoginForm() {
         userId: enteredUserId,
         password: enteredPassword,
       });
+
+      if (result.error) {
+        setIsError(result.error);
+      }
+
       console.log(result); //Successfuly logged in user
     } catch (error) {
       console.log(error); //Fail on loggin user
@@ -70,6 +82,7 @@ export default function LoginForm() {
             setFormInput({ ...formInput, password: event.target.value })
           }
         />
+        {isError && <ErrorMessage error={isError} />}
         <FormControl type='button' label='Ingresar' />
       </form>
       <div className={classes.formFooter}>
