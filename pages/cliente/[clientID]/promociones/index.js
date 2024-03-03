@@ -1,18 +1,18 @@
 import { getSession } from 'next-auth/react';
 
-import LayoutCliente from '@/components/cliente/layout-cliente';
+import LayoutDashboard from '@/components/cliente/layout-dashboard';
 
 import classes from './index.module.scss';
 
 export default function PromocionesClientePage() {
   return (
-    <LayoutCliente>
+    <LayoutDashboard>
       <main className={classes.main}>
         <div className={classes.section}>
           <h2>Promociones del mes</h2>
         </div>
       </main>
-    </LayoutCliente>
+    </LayoutDashboard>
   );
 }
 

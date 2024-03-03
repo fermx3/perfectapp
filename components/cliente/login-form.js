@@ -26,7 +26,7 @@ export default function LoginForm() {
         router.replace(`/cliente/${session.data.user.userId}`);
         break;
       case 'ASESOR':
-        router.replace(`/asesor`);
+        router.replace(`/asesor/${session.data.user.userId}`);
         break;
       case 'ADMIN':
         router.replace(`/admin`);

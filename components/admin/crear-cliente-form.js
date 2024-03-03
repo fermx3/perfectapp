@@ -2,20 +2,14 @@ import { useState } from 'react';
 
 import FormControl from '../forms/form-control';
 
-async function createCliente(
-  userId,
-  password,
-  nivelDeCliente,
-  nombreDelUser,
-  role
-) {
+async function createCliente(userId, password, nivelDeCliente, nombre, role) {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     body: JSON.stringify({
       userId,
       password,
       nivelDeCliente,
-      nombreDelUser,
+      nombre,
       role,
     }),
     headers: {
@@ -37,7 +31,7 @@ export default function CrearClienteForm() {
     userId: '',
     password: '',
     nivelDeCliente: 'Básico',
-    nombreDelUser: '',
+    nombre: '',
   });
 
   async function submitHandler(event) {
@@ -46,7 +40,7 @@ export default function CrearClienteForm() {
     const enteredUserId = formInput.userId;
     const enteredPassword = formInput.password;
     const enterednivelDeCliente = formInput.nivelDeCliente;
-    const enterednombreDelUser = formInput.nombreDelUser;
+    const enterednombre = formInput.nombre;
 
     // Add validation
 
@@ -55,7 +49,7 @@ export default function CrearClienteForm() {
         enteredUserId,
         enteredPassword,
         enterednivelDeCliente,
-        enterednombreDelUser,
+        enterednombre,
         'LEAL'
       );
       console.log(result); //Successfuly create user
@@ -68,7 +62,7 @@ export default function CrearClienteForm() {
       userId: '',
       password: '',
       nivelDeCliente: 'Básico',
-      nombreDelUser: '',
+      nombre: '',
     });
   }
 
@@ -96,12 +90,12 @@ export default function CrearClienteForm() {
           }
         />
         <FormControl
-          id='nombreDelUser'
+          id='nombre'
           label='Nombre del cliente:'
           type='text'
-          value={formInput.nombreDelUser}
+          value={formInput.nombre}
           onChange={(event) =>
-            setFormInput({ ...formInput, nombreDelUser: event.target.value })
+            setFormInput({ ...formInput, nombre: event.target.value })
           }
         />
         <FormControl

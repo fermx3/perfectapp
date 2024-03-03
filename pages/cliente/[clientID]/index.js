@@ -1,7 +1,7 @@
 import { getSession } from 'next-auth/react';
 import { getUserInfo } from '@/lib/prismaDB';
 
-import LayoutCliente from '@/components/cliente/layout-cliente';
+import LayoutDashboard from '@/components/cliente/layout-dashboard';
 
 import classes from './index.module.scss';
 
@@ -12,7 +12,7 @@ export default function PanelDeCliente({ userInfo }) {
     return (
       <div className={classes.preview}>
         <header>
-          <h2>Hola {userInfo.nombreDelUser}</h2>
+          <h2>Hola {userInfo.nombre}</h2>
           <p>Nivel {userInfo.nivelDeCliente}</p>
         </header>
         <main>
@@ -25,8 +25,9 @@ export default function PanelDeCliente({ userInfo }) {
   }
 
   return (
-    <LayoutCliente
-      nombreDelCliente={userInfo.nombreDelUser}
+    <LayoutDashboard
+      nombre={userInfo.nombre}
+      role='cliente'
       nivelDeCliente={userInfo.nivelDeCliente}
     >
       <main className={classes.main}>
@@ -45,14 +46,13 @@ export default function PanelDeCliente({ userInfo }) {
           <h2>Dashboard</h2>
         </section>
       </main>
-    </LayoutCliente>
+    </LayoutDashboard>
   );
 }
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   const { clientID } = context.query;
-  const userInfo = await getUserInfo(clientID);
 
   if (
     !session ||
@@ -66,6 +66,8 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const userInfo = await getUserInfo(clientID);
 
   return {
     props: { session, userInfo },

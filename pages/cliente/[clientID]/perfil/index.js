@@ -1,12 +1,12 @@
 import { getSession } from 'next-auth/react';
 
-import LayoutCliente from '@/components/cliente/layout-cliente';
+import LayoutDashboard from '@/components/cliente/layout-dashboard';
 
 import classes from './index.module.scss';
 
 export default function PromocionesClientePage() {
   return (
-    <LayoutCliente>
+    <LayoutDashboard>
       <main className={classes.main}>
         <div className={classes.section}>
           <h2>Datos del cliente</h2>
@@ -15,7 +15,7 @@ export default function PromocionesClientePage() {
           <h2>Datos del negocio</h2>
         </div>
       </main>
-    </LayoutCliente>
+    </LayoutDashboard>
   );
 }
 
