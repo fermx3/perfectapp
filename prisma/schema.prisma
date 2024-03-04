@@ -26,3 +26,12 @@ enum Role {
   ASESOR
   CLIENTE
 }
+
+model clientes {
+    id              String        @id @default(auto()) @map("_id") @db.ObjectId
+    nombre          String
+    cadena          Boolean
+    leales          String
+    nivelDeCliente  String
+    userId          String @unique
+}

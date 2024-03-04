@@ -1,8 +1,11 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import moment from 'moment';
+import 'moment/locale/es-mx';
+
+import Container from '../layout/container';
+import Link from 'next/link';
 
 import classes from './layout-dashboard.module.scss';
-import Container from '../layout/container';
 
 export default function LayoutDashboard({
   children,
@@ -11,8 +14,7 @@ export default function LayoutDashboard({
   nivelDeCliente,
 }) {
   const router = useRouter();
-
-  const { userId } = router.query;
+  const userId = router.query.slug;
 
   return (
     <Container>
@@ -21,10 +23,11 @@ export default function LayoutDashboard({
           {role === 'asesor' && <h4>Asesor</h4>}
           <h1>{nombre}</h1>
           <p>
-            {role === 'cliente'
+            {role === 'leal'
               ? `Numero de cliente: ${userId}`
               : `Usuario: ${userId}`}
           </p>
+          {role === 'asesor' && <p>{moment().format('LL')}</p>}
           {nivelDeCliente && <p>Cliente {nivelDeCliente}</p>}
         </div>
         {/* <nav className={classes.nav}>

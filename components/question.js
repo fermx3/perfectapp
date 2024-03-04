@@ -1,10 +1,11 @@
 import Button from './button';
+import Container from './layout/container';
 
 import classes from './question.module.scss';
 
 export default function Question({ question, options }) {
   return (
-    <>
+    <Container>
       <div className={classes.header}>
         <h2>{question}</h2>
       </div>
@@ -15,6 +16,6 @@ export default function Question({ question, options }) {
           </Button>
         ))}
       </div>
-    </>
+    </Container>
   );
 }

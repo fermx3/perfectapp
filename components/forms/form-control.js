@@ -9,6 +9,7 @@ export default function FormControl({
   onChange,
   value,
   options,
+  defaultOption,
 }) {
   if (type === 'button') {
     return (
@@ -23,6 +24,11 @@ export default function FormControl({
       <div className={classes.formControl}>
         <label htmlFor={id}>{label}</label>
         <select onChange={onChange}>
+          {defaultOption && (
+            <option value='' selected disabled hidden>
+              {defaultOption}
+            </option>
+          )}
           {options.map((object) => {
             return (
               <option value={object} key={object}>

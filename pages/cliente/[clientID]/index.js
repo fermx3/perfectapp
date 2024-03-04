@@ -27,7 +27,7 @@ export default function PanelDeCliente({ userInfo }) {
   return (
     <LayoutDashboard
       nombre={userInfo.nombre}
-      role='cliente'
+      role='leal'
       nivelDeCliente={userInfo.nivelDeCliente}
     >
       <main className={classes.main}>
