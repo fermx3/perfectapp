@@ -11,6 +11,7 @@ import classes from './index.module.scss';
 
 export default function ClienteEnBasePage({ userId, clientes }) {
   const [value, setValue] = useState('');
+  const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState(false);
 
   return (
     <Container md>
@@ -56,7 +57,19 @@ export default function ClienteEnBasePage({ userId, clientes }) {
             'Sábado',
             'Domingo',
           ]}
+          onChange={() => setFrecuenciaIsSelected(true)}
         />
+        {frecuenciaIsSelected && (
+          <ul className={classes.clientes}>
+            {clientes.map((cliente) => (
+              <li key={cliente.userId}>
+                <Link href={`/asesor/cliente-en-base/${cliente.userId}`}>
+                  {cliente.nombre}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </main>
     </Container>
   );

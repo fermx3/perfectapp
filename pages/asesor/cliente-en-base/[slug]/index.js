@@ -10,7 +10,6 @@ export default function VisitaPage({ cliente }) {
     <>
       <LayoutDashboard
         role='leal'
-        clientId='111'
         nombre={cliente.nombre}
         nivelDeCliente={cliente.nivelDeCliente}
       >

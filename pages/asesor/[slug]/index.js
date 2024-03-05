@@ -21,12 +21,12 @@ export default function AsesorPage({ userInfo }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  const { userId } = context.query;
+  const { slug } = context.query;
 
   if (
     !session ||
     session.user.role !== 'ASESOR' ||
-    userId !== session.user.userId
+    slug !== session.user.userId
   ) {
     return {
       redirect: {
@@ -36,7 +36,7 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const userInfo = await getUserInfo(userId);
+  const userInfo = await getUserInfo(slug);
 
   return {
     props: { session, userInfo },
