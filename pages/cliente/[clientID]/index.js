@@ -6,7 +6,7 @@ import LayoutDashboard from '@/components/cliente/layout-dashboard';
 import classes from './index.module.scss';
 
 export default function PanelDeCliente({ userInfo }) {
-  const isOnPreview = false;
+  const isOnPreview = true;
 
   if (isOnPreview) {
     return (

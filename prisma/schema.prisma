@@ -30,8 +30,9 @@ enum Role {
 model clientes {
     id              String        @id @default(auto()) @map("_id") @db.ObjectId
     nombre          String
-    cadena          Boolean
+    cadena          String
     leales          String
     nivelDeCliente  String
     userId          String @unique
+    frecuencia      String
 }

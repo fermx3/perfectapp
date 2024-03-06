@@ -3,20 +3,26 @@ import { useState } from 'react';
 
 import Container from '@/components/layout/container';
 import FormControl from '@/components/forms/form-control';
+import LayoutDashboard from '@/components/cliente/layout-dashboard';
 
-import { getClientes } from '@/lib/prismaDB';
+import { getClientes, getUserInfo } from '@/lib/prismaDB';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
 
-export default function ClienteEnBasePage({ userId, clientes }) {
+export default function ClienteEnBasePage({ clientes, userInfo, userId }) {
   const [value, setValue] = useState('');
-  const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState(false);
+  const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
+
+  const filteredClientes = clientes.filter((cliente) => {
+    return cliente.frecuencia === frecuenciaIsSelected;
+  });
 
   return (
     <Container md>
       <header>
         <h1>Busqueda de cliente</h1>
+        <h5>Asesor: {userInfo.nombre}</h5>
       </header>
       <main className={classes.main}>
         <FormControl
@@ -57,17 +63,21 @@ export default function ClienteEnBasePage({ userId, clientes }) {
             'Sábado',
             'Domingo',
           ]}
-          onChange={() => setFrecuenciaIsSelected(true)}
+          onChange={(e) => setFrecuenciaIsSelected(e.target.value)}
         />
         {frecuenciaIsSelected && (
           <ul className={classes.clientes}>
-            {clientes.map((cliente) => (
-              <li key={cliente.userId}>
-                <Link href={`/asesor/cliente-en-base/${cliente.userId}`}>
-                  {cliente.nombre}
-                </Link>
-              </li>
-            ))}
+            {filteredClientes.length !== 0 ? (
+              filteredClientes.map((cliente) => (
+                <li key={cliente.userId}>
+                  <Link href={`/asesor/cliente-en-base/${cliente.userId}`}>
+                    {cliente.nombre}
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li>No hay clientes para este día</li>
+            )}
           </ul>
         )}
       </main>
@@ -88,10 +98,11 @@ export async function getServerSideProps(context) {
   }
 
   const clientes = await getClientes();
-
   const userId = session.user.userId;
 
+  const userInfo = await getUserInfo(userId);
+
   return {
-    props: { session, userId, clientes },
+    props: { session, clientes, userInfo },
   };
 }

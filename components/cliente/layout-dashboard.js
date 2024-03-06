@@ -12,6 +12,8 @@ export default function LayoutDashboard({
   nombre,
   role,
   nivelDeCliente,
+  leales,
+  cadena,
 }) {
   const router = useRouter();
   const userId = router.query.slug;
@@ -22,13 +24,17 @@ export default function LayoutDashboard({
         <div>
           {role === 'asesor' && <h4>Asesor</h4>}
           <h1>{nombre}</h1>
-          <p>
-            {role === 'leal'
-              ? `Numero de cliente: ${userId}`
-              : `Usuario: ${userId}`}
-          </p>
+          {userId && (
+            <p>
+              {role === 'leal'
+                ? `Numero de cliente: ${userId}`
+                : `Usuario: ${userId}`}
+            </p>
+          )}
           {role === 'asesor' && <p>{moment().format('LL')}</p>}
           {nivelDeCliente && <p>Cliente {nivelDeCliente}</p>}
+          {cadena && <p>{`Cadena: ${cadena}`}</p>}
+          {leales && <p>{`Leales: ${leales}`}</p>}
         </div>
         {/* <nav className={classes.nav}>
           <ul>
