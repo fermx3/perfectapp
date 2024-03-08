@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import { UserContext } from '@/store/user-context';
 import Link from 'next/link';
 import FormControl from '../forms/form-control';
+import ErrorMessage from '../ui/error-message';
 
 import { signIn } from 'next-auth/react';
 
 import classes from './login-form.module.scss';
-import ErrorMessage from '../ui/error-message';
 
 export default function LoginForm() {
   const [formInput, setFormInput] = useState({
@@ -16,6 +17,8 @@ export default function LoginForm() {
   });
 
   const [isError, setIsError] = useState();
+
+  const { setCurrentUser } = useContext(UserContext);
 
   const router = useRouter();
   const session = useSession();
@@ -60,6 +63,10 @@ export default function LoginForm() {
     } catch (error) {
       console.log(error); //Fail on loggin user
     }
+  }
+
+  if (session.data) {
+    setCurrentUser(session.data.user);
   }
 
   return (

@@ -4,7 +4,13 @@ import { getUserInfo } from '@/lib/prismaDB';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
 import Question from '@/components/question';
 
+import { UserContext } from '@/store/user-context';
+import { useContext } from 'react';
+
 export default function AsesorPage({ userInfo }) {
+  const { currentUser } = useContext(UserContext);
+  console.log(currentUser);
+
   return (
     <>
       <LayoutDashboard nombre={userInfo.nombre} role='asesor' />
