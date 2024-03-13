@@ -41,6 +41,15 @@ export default function FormControl({
     );
   }
 
+  if (type === 'textarea') {
+    return (
+      <div className={classes.formControl}>
+        <label htmlFor={id}>{label}</label>
+        <textarea id={id} value={value} onChange={onChange} rows='4' required />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.formControl}>
       <label htmlFor={id}>{label}</label>

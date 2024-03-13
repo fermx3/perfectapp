@@ -37,6 +37,7 @@ export default function LoginForm() {
       default:
         router.replace('/login-error');
     }
+    return <h1>Loading...</h1>;
   }
 
   async function submitHandler(event) {

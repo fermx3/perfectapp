@@ -2,17 +2,32 @@ import Link from 'next/link';
 
 import classes from './button.module.scss';
 
-export default function Button({ href, children, ...props }) {
+export const BUTTON_TYPE_CLASSES = {
+  base: 'base',
+  secondary: 'secondary',
+  disabled: 'disabled',
+};
+
+const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) =>
+  ({
+    [BUTTON_TYPE_CLASSES.base]: classes.button,
+    [BUTTON_TYPE_CLASSES.secondary]: classes.secondaryButton,
+    [BUTTON_TYPE_CLASSES.disabled]: classes.disabledButton,
+  }[buttonType]);
+
+export default function Button({ href, children, buttonType, ...props }) {
+  const customButton = getButton(buttonType);
+
   if (!href) {
     return (
-      <button className={classes.button} {...props}>
+      <button className={customButton} {...props}>
         {children}
       </button>
     );
   }
 
   return (
-    <Link href={href} className={classes.button}>
+    <Link href={href} className={classes.button} {...props}>
       {children}
     </Link>
   );

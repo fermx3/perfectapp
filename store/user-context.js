@@ -1,4 +1,3 @@
-import { getUserInfo } from '@/lib/prismaDB';
 import { createContext, useState } from 'react';
 
 export const UserContext = createContext({

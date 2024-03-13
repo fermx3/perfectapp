@@ -1,10 +1,34 @@
 import { getSession } from 'next-auth/react';
 import { getCliente } from '@/lib/prismaDB';
 
-import Button from '@/components/button';
+import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
 
+import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
+import { UserContext } from '@/store/user-context';
+import moment from 'moment';
+import { useContext } from 'react';
+import ClienteEnBase1 from '@/components/cliente-en-base/cliente-en-base';
+
 export default function VisitaPage({ cliente }) {
+  const { setVisitaActual, visitaActual } = useContext(ClienteEnBaseContext);
+  const { currentUser } = useContext(UserContext);
+  console.log(visitaActual);
+  console.log(currentUser);
+
+  const onClickHandler = function () {
+    if (visitaActual.inicioVisita) {
+      return;
+    }
+    const inicioVisita = moment().format();
+    setVisitaActual({
+      ...visitaActual,
+      asesor: 'dummyNumber',
+      numeroDeCliente: cliente.userId,
+      inicioVisita: inicioVisita,
+    });
+  };
+
   return (
     <>
       <LayoutDashboard
@@ -14,7 +38,14 @@ export default function VisitaPage({ cliente }) {
         cadena={cliente.cadena}
         leales={cliente.leales}
       >
-        <Button>Comenzar visita</Button>
+        <Button
+          onClick={onClickHandler}
+          buttonType={visitaActual.inicioVisita && BUTTON_TYPE_CLASSES.disabled}
+          disabled={visitaActual.inicioVisita}
+        >
+          Comenzar visita
+        </Button>
+        {visitaActual.inicioVisita && <ClienteEnBase1 />}
       </LayoutDashboard>
     </>
   );
