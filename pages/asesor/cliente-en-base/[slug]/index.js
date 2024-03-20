@@ -1,22 +1,50 @@
+import { useContext, useState } from 'react';
 import { getSession } from 'next-auth/react';
 import { getCliente } from '@/lib/prismaDB';
 
+import { UserContext } from '@/store/user-context';
+import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
+
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
-
-import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
-import { UserContext } from '@/store/user-context';
-import moment from 'moment';
-import { useContext } from 'react';
 import ClienteEnBase1 from '@/components/cliente-en-base/cliente-en-base';
+import ClienteEnBase2 from '@/components/cliente-en-base/cliente-en-base-2';
+import ClienteEnBase3 from '@/components/cliente-en-base/cliente-en-base-3';
+
+import moment from 'moment';
+import { useRouter } from 'next/router';
 
 export default function VisitaPage({ cliente }) {
   const { setVisitaActual, visitaActual } = useContext(ClienteEnBaseContext);
   const { currentUser } = useContext(UserContext);
-  console.log(visitaActual);
+  const [stage, setStage] = useState(0);
   console.log(currentUser);
+  console.log(visitaActual);
+  console.log(stage);
 
-  const onClickHandler = function () {
+  const router = useRouter();
+
+  function submitHandler(event, newData) {
+    event.preventDefault();
+    setVisitaActual({ ...visitaActual, ...newData });
+
+    if (stage >= 2) {
+      alert('Order Sent!');
+      const finVisita = moment().format();
+      //Upload to DB with finVisita
+      setStage(0);
+      setVisitaActual({});
+      router.replace('/');
+    } else {
+      setStage(stage + 1);
+    }
+  }
+
+  function prevHandler() {
+    setStage(stage - 1);
+  }
+
+  function onClickHandler() {
     if (visitaActual.inicioVisita) {
       return;
     }
@@ -27,7 +55,7 @@ export default function VisitaPage({ cliente }) {
       numeroDeCliente: cliente.userId,
       inicioVisita: inicioVisita,
     });
-  };
+  }
 
   return (
     <>
@@ -45,7 +73,21 @@ export default function VisitaPage({ cliente }) {
         >
           Comenzar visita
         </Button>
-        {visitaActual.inicioVisita && <ClienteEnBase1 />}
+        {visitaActual.inicioVisita && stage === 0 && (
+          <ClienteEnBase1 submitHandler={submitHandler} />
+        )}
+        {visitaActual.inicioVisita && stage === 1 && (
+          <ClienteEnBase2
+            submitHandler={submitHandler}
+            prevHandler={prevHandler}
+          />
+        )}
+        {visitaActual.inicioVisita && stage === 2 && (
+          <ClienteEnBase3
+            submitHandler={submitHandler}
+            prevHandler={prevHandler}
+          />
+        )}
       </LayoutDashboard>
     </>
   );

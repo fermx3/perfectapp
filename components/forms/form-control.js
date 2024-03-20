@@ -1,3 +1,4 @@
+import ReactSwitch from 'react-switch';
 import Button from '../button';
 
 import classes from './form-control.module.scss';
@@ -46,6 +47,15 @@ export default function FormControl({
       <div className={classes.formControl}>
         <label htmlFor={id}>{label}</label>
         <textarea id={id} value={value} onChange={onChange} rows='4' required />
+      </div>
+    );
+  }
+
+  if (type === 'switch') {
+    return (
+      <div className={classes.formControl}>
+        <label htmlFor={id}>{label}</label>
+        <ReactSwitch id={id} checked={value} onChange={onChange} />
       </div>
     );
   }

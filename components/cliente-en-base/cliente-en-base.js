@@ -3,6 +3,9 @@ import FormControl from '../forms/form-control';
 
 import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
 import Button from '../button';
+import InfoMessage from '../ui/info-message';
+import FormSection from '../forms/form-section';
+import FormGroup from '../forms/form-group';
 
 const getNoDeCompetidoresNumber = function (endNumber) {
   const competidoresNumber = [];
@@ -12,81 +15,142 @@ const getNoDeCompetidoresNumber = function (endNumber) {
   return competidoresNumber;
 };
 
-export default function ClienteEnBase1() {
-  const { setVisitaActual, visitaActual } = useContext(ClienteEnBaseContext);
+export default function ClienteEnBase1({ submitHandler }) {
+  const { visitaActual } = useContext(ClienteEnBaseContext);
 
-  const [clienteEnBase1, setClienteEnBase1] = useState({
-    noDeCompetidores: null,
-    competidores: [],
-    comentarios1: '',
+  const [clienteEnBase, setClienteEnBase] = useState({
+    noDeCompetidores: visitaActual.noDeCompetidores,
+    competidores: visitaActual.competidores ? visitaActual.competidores : [],
+    comentarios1: visitaActual.comentarios1,
   });
-  const [competidores, setCompetidores] = useState([]);
+  const [competidores, setCompetidores] = useState(
+    visitaActual.competidores ? visitaActual.competidores : []
+  );
 
-  console.log(clienteEnBase1);
-  console.log(visitaActual);
-
-  function submitHandler(event) {
-    event.preventDefault();
-    setVisitaActual({ ...visitaActual, ...clienteEnBase1 });
-    console.log(clienteEnBase1);
-  }
+  console.log('clienteEnBase: ', clienteEnBase);
+  console.log('visitaActual: ', visitaActual);
 
   return (
-    <form onSubmit={submitHandler}>
-      <div>
-        <h4>Assessment Producto - Empaque - Precio</h4>
+    <form onSubmit={(event) => submitHandler(event, clienteEnBase)}>
+      <FormSection titulo='Assessment Producto - Empaque - Precio'>
         <FormControl
           type='select'
           label='Numero de competidores'
           options={getNoDeCompetidoresNumber(10)}
-          defaultOption='Selecciona un número'
-          value={clienteEnBase1.noDeCompetidores}
+          defaultOption={
+            visitaActual.noDeCompetidores
+              ? visitaActual.noDeCompetidores
+              : 'Selecciona un número'
+          }
+          value={clienteEnBase.noDeCompetidores}
           onChange={(e) =>
-            setClienteEnBase1({
-              ...clienteEnBase1,
+            setClienteEnBase({
+              ...clienteEnBase,
               noDeCompetidores: Number(e.target.value),
             })
           }
         />
-        {clienteEnBase1.noDeCompetidores &&
-          [...Array(Number(clienteEnBase1.noDeCompetidores))].map(
+        {clienteEnBase.noDeCompetidores &&
+          [...Array(Number(clienteEnBase.noDeCompetidores))].map(
             (value, index) => (
-              <FormControl
-                type='select'
-                label={`Competidor ${index + 1}`}
-                defaultOption='Nombre del competidor'
-                options={['Chipilo', 'Chilchota', 'Lala', 'Otra']}
-                key={index}
-                value={clienteEnBase1.competidores[index]}
-                onChange={(e) => {
-                  const newArr = [...competidores];
-                  newArr[index] = { competidor: e.target.value };
-                  setCompetidores(newArr);
-                  setClienteEnBase1({
-                    ...clienteEnBase1,
-                    competidores: newArr,
-                  });
-                }}
-              />
+              <FormGroup titulo={`Competidor ${index + 1}`}>
+                <FormControl
+                  type='select'
+                  id={`competidor${index + 1}`}
+                  defaultOption={
+                    visitaActual.competidores
+                      ? visitaActual.competidores[index]
+                        ? visitaActual.competidores[index].competidor
+                        : 'Nombre del competidor'
+                      : 'Nombre del competidor'
+                  }
+                  options={['Chipilo', 'Chilchota', 'Lala', 'Otra']}
+                  key={index}
+                  value={clienteEnBase.competidores[index]}
+                  onChange={(e) => {
+                    const newArr = [...competidores];
+                    newArr[index] = { competidor: e.target.value };
+                    setCompetidores(newArr);
+                    setClienteEnBase({
+                      ...clienteEnBase,
+                      competidores: newArr,
+                    });
+                  }}
+                />
+                <FormControl
+                  type='number'
+                  id='competidorGramos'
+                  label='Gramos'
+                  value={clienteEnBase.competidores[index].gramos}
+                  onChange={(e) => {
+                    const newArr = [...competidores];
+                    newArr[index] = {
+                      ...newArr[index],
+                      gramos: e.target.value,
+                    };
+                    setCompetidores(newArr);
+                    setClienteEnBase({
+                      ...clienteEnBase,
+                      competidores: newArr,
+                    });
+                  }}
+                />
+                <FormControl
+                  type='number'
+                  id='precioConPromo'
+                  label='Precio con Promo'
+                  value={clienteEnBase.competidores[index].precioConPromo}
+                  onChange={(e) => {
+                    const newArr = [...competidores];
+                    newArr[index] = {
+                      ...newArr[index],
+                      precioConPromo: e.target.value,
+                    };
+                    setCompetidores(newArr);
+                    setClienteEnBase({
+                      ...clienteEnBase,
+                      competidores: newArr,
+                    });
+                  }}
+                />
+                <FormControl
+                  type='number'
+                  id='precioRegular'
+                  label='Precio Regular'
+                  value={clienteEnBase.competidores[index].precio}
+                  onChange={(e) => {
+                    const newArr = [...competidores];
+                    newArr[index] = {
+                      ...newArr[index],
+                      precio: e.target.value,
+                    };
+                    setCompetidores(newArr);
+                    setClienteEnBase({
+                      ...clienteEnBase,
+                      competidores: newArr,
+                    });
+                  }}
+                />
+              </FormGroup>
             )
           )}
-      </div>
-      <div>
-        <h4>Assessment Promoción - Propuesta</h4>
-        {clienteEnBase1.noDeCompetidores &&
-          clienteEnBase1.competidores.map((competidor) => {
-            return <p>{competidor.competidor}</p>;
+      </FormSection>
+      <FormSection titulo='Assessment Promoción - Propuesta'>
+        {clienteEnBase.noDeCompetidores &&
+          clienteEnBase.competidores.map((competidor) => {
+            return <FormGroup titulo={competidor.competidor}></FormGroup>;
           })}
-      </div>
-      <div>
-        <h4>ℹ️ Informacion de Categoria</h4>
-      </div>
+      </FormSection>
+      <InfoMessage
+        titulo='Informacion de Categoria'
+        contenido='Aquí va el contenido de la noticia importante.'
+      />
       <FormControl
         type='textarea'
         label='Comentarios'
-        value={clienteEnBase1.comentarios1}
+        value={clienteEnBase.comentarios1}
         onChange={(e) =>
-          setClienteEnBase1({ ...clienteEnBase1, comentarios1: e.target.value })
+          setClienteEnBase({ ...clienteEnBase, comentarios1: e.target.value })
         }
       />
       <Button>Siguiente</Button>
