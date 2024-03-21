@@ -44,7 +44,7 @@ export default function FormControl({
 
   if (type === 'textarea') {
     return (
-      <div className={classes.formControl}>
+      <div className={classes.textArea}>
         <label htmlFor={id}>{label}</label>
         <textarea id={id} value={value} onChange={onChange} rows='4' required />
       </div>

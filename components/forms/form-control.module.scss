@@ -62,3 +62,8 @@
     text-shadow: 0 0 0 #000;
   }
 }
+
+.textArea {
+  @extend .formControl;
+  margin: 1rem 0;
+}
