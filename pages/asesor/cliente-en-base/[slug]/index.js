@@ -13,35 +13,36 @@ import ClienteEnBase3 from '@/components/cliente-en-base/cliente-en-base-3';
 
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { StageContext } from '@/store/stage.context';
 
 export default function VisitaPage({ cliente }) {
   const { setVisitaActual, visitaActual } = useContext(ClienteEnBaseContext);
   const { currentUser } = useContext(UserContext);
-  const [stage, setStage] = useState(0);
+  const { currentStage, setCurrentStage } = useContext(StageContext);
+
   console.log(currentUser);
   console.log(visitaActual);
-  console.log(stage);
+  console.log(currentStage);
 
   const router = useRouter();
 
   function submitHandler(event, newData) {
-    event.preventDefault();
-    setVisitaActual({ ...visitaActual, ...newData });
-
-    if (stage >= 2) {
-      alert('Order Sent!');
-      const finVisita = moment().format();
-      //Upload to DB with finVisita
-      setStage(0);
-      setVisitaActual({});
-      router.replace('/');
-    } else {
-      setStage(stage + 1);
-    }
+    // event.preventDefault();
+    // setVisitaActual({ ...visitaActual, ...newData });
+    // if (currentStage >= 2) {
+    //   alert('Order Sent!');
+    //   const finVisita = moment().format();
+    //   //Upload to DB with finVisita
+    //   setStage(0);
+    //   setVisitaActual({});
+    //   router.replace('/');
+    // } else {
+    //   setStage(currentStage + 1);
+    // }
   }
 
   function prevHandler() {
-    setStage(stage - 1);
+    setCurrentStage(currentStage - 1);
   }
 
   function onClickHandler() {
@@ -73,16 +74,16 @@ export default function VisitaPage({ cliente }) {
         >
           Comenzar visita
         </Button>
-        {visitaActual.inicioVisita && stage === 0 && (
+        {visitaActual.inicioVisita && currentStage === 0 && (
           <ClienteEnBase1 submitHandler={submitHandler} />
         )}
-        {visitaActual.inicioVisita && stage === 1 && (
+        {visitaActual.inicioVisita && currentStage === 1 && (
           <ClienteEnBase2
             submitHandler={submitHandler}
             prevHandler={prevHandler}
           />
         )}
-        {visitaActual.inicioVisita && stage === 2 && (
+        {visitaActual.inicioVisita && currentStage === 2 && (
           <ClienteEnBase3
             submitHandler={submitHandler}
             prevHandler={prevHandler}

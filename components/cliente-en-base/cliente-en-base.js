@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
 import FormControl from '../forms/form-control';
 
 import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
@@ -6,225 +7,93 @@ import Button from '../button';
 import InfoMessage from '../ui/info-message';
 import FormSection from '../forms/form-section';
 import FormGroup from '../forms/form-group';
+import CompetidoresField from './competidores-field';
+import { StageContext } from '@/store/stage.context';
 
-const getNoDeCompetidoresNumber = function (endNumber) {
-  const competidoresNumber = [];
-  for (let i = 1; i <= endNumber; i++) {
-    competidoresNumber.push(i);
-  }
-  return competidoresNumber;
-};
-
-export default function ClienteEnBase1({ submitHandler }) {
+export default function ClienteEnBase1() {
   const { visitaActual, setVisitaActual } = useContext(ClienteEnBaseContext);
+  const { currentStage, setCurrentStage } = useContext(StageContext);
 
-  const [competidores, setCompetidores] = useState(
-    visitaActual.competidores ? visitaActual.competidores : []
-  );
+  const defaultValues = {
+    competidores: [
+      {
+        nombre: '',
+        productos: [{ gramos: 0, precio: 0, precioConPromo: 0 }],
+      },
+    ],
+    comentarios1: '',
+  };
 
-  const [clienteEnBase, setClienteEnBase] = useState({
-    noDeCompetidores: visitaActual.noDeCompetidores,
-    competidores: competidores,
-    comentarios1: visitaActual.comentarios1,
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    getValues,
+    setValue,
+    errors,
+  } = useForm({
+    defaultValues,
   });
 
-  const [noDeProductos, setNoDeProductos] = useState(1);
+  // function submitHandler(event, newData) {
+  //   event.preventDefault();
+  //   setVisitaActual({ ...visitaActual, ...newData });
 
-  console.log('clienteEnBase: ', clienteEnBase);
+  //   if (stage >= 2) {
+  //     alert('Order Sent!');
+  //     const finVisita = moment().format();
+  //     //Upload to DB with finVisita
+  //     setStage(0);
+  //     setVisitaActual({});
+  //     router.replace('/');
+  //   } else {
+  //     setStage(stage + 1);
+  //   }
+  // }
+
+  const onSubmit = (data) => {
+    setVisitaActual({ ...visitaActual, ...data });
+    setCurrentStage(currentStage + 1);
+  };
+  const competidores = watch('competidores');
+
   console.log('visitaActual: ', visitaActual);
-
   return (
-    <form onSubmit={(event) => submitHandler(event, clienteEnBase)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormSection titulo='Assessment Producto - Empaque - Precio'>
-        <FormControl
-          type='select'
-          label='Numero de competidores'
-          options={getNoDeCompetidoresNumber(10)}
-          defaultOption={
-            visitaActual.noDeCompetidores
-              ? visitaActual.noDeCompetidores
-              : 'Selecciona un número'
-          }
-          value={clienteEnBase.noDeCompetidores}
-          onChange={(e) => {
-            setClienteEnBase({
-              ...clienteEnBase,
-              noDeCompetidores: Number(e.target.value),
-              competidores: [],
-            });
-            setCompetidores([]);
-            setVisitaActual({ ...visitaActual, competidores: [] });
+        <CompetidoresField
+          {...{
+            control,
+            register,
+            defaultValues,
+            getValues,
+            setValue,
+            errors,
           }}
         />
-        {clienteEnBase.noDeCompetidores &&
-          [...Array(Number(clienteEnBase.noDeCompetidores))].map(
-            (value, index) => (
-              <FormGroup titulo={`Competidor ${index + 1}`}>
-                <FormControl
-                  type='select'
-                  id={`competidor${index + 1}`}
-                  defaultOption={
-                    visitaActual.competidores
-                      ? visitaActual.competidores[index]
-                        ? visitaActual.competidores[index].competidor
-                        : 'Nombre del competidor'
-                      : 'Nombre del competidor'
-                  }
-                  options={['Chipilo', 'Chilchota', 'Lala', 'Otra']}
-                  key={index}
-                  value={clienteEnBase.competidores[index]}
-                  onChange={(e) => {
-                    const newArr = [...competidores];
-                    newArr[index] = { competidor: e.target.value };
-                    setCompetidores(newArr);
-                    setClienteEnBase({
-                      ...clienteEnBase,
-                      competidores: newArr,
-                    });
-                  }}
-                />
-                {clienteEnBase.competidores[index] &&
-                  [...Array(Number(noDeProductos))].map((value, producto) => {
-                    return (
-                      <div>
-                        <h4>Producto {producto + 1}</h4>
-                        <FormControl
-                          type='number'
-                          id='competidorGramos'
-                          label='Gramos'
-                          value={
-                            clienteEnBase.competidores[index].productos
-                              ? clienteEnBase.competidores[index].productos[
-                                  producto
-                                ].gramos
-                              : null
-                          }
-                          onChange={(e) => {
-                            const newArr = [...competidores];
-                            // newArr[index].productos[producto].gramos =
-                            //   e.target.value;
-                            newArr[index] = {
-                              ...newArr[index],
-                              productos: [
-                                {
-                                  ...newArr[index].productos[producto],
-                                  gramos: e.target.value,
-                                },
-                              ],
-                            };
-                            console.log({
-                              ...newArr[index].productos[producto],
-                            });
-                            setCompetidores(newArr);
-                            setClienteEnBase({
-                              ...clienteEnBase,
-                              competidores: newArr,
-                            });
-                          }}
-                        />
-                        <FormControl
-                          type='number'
-                          id='precioConPromo'
-                          label='Precio con Promo'
-                          value={
-                            clienteEnBase.competidores[index].productos
-                              ? clienteEnBase.competidores[index].productos[
-                                  producto
-                                ].precioConPromo
-                              : null
-                          }
-                          onChange={(e) => {
-                            const newArr = [...competidores];
-                            // newArr[index].productos[producto].precioConPromo =
-                            //   e.target.value;
-                            newArr[index] = {
-                              ...newArr[index],
-                              productos: [
-                                {
-                                  ...newArr[index].productos[producto],
-                                  precioConPromo: e.target.value,
-                                },
-                              ],
-                            };
-                            setCompetidores(newArr);
-                            setClienteEnBase({
-                              ...clienteEnBase,
-                              competidores: newArr,
-                            });
-                          }}
-                        />
-                        <FormControl
-                          type='number'
-                          id='precioRegular'
-                          label='Precio Regular'
-                          value={
-                            clienteEnBase.competidores[index].productos
-                              ? clienteEnBase.competidores[index].productos[
-                                  producto
-                                ].precio
-                              : null
-                          }
-                          onChange={(e) => {
-                            const newArr = [...competidores];
-                            // newArr[index].productos[producto].gramos =
-                            //   e.target.value;
-                            newArr[index] = {
-                              ...newArr[index],
-                              productos: [
-                                {
-                                  ...newArr[index].productos[producto],
-                                  precio: e.target.value,
-                                },
-                              ],
-                            };
-                            setCompetidores(newArr);
-                            setClienteEnBase({
-                              ...clienteEnBase,
-                              competidores: newArr,
-                            });
-                          }}
-                        />
-                        <Button
-                          type='button'
-                          onClick={() => {
-                            setNoDeProductos(noDeProductos + 1);
-                          }}
-                        >
-                          +
-                        </Button>
-                        {producto >= 1 && (
-                          <Button
-                            type='button'
-                            onClick={() => setNoDeProductos(noDeProductos - 1)}
-                          >
-                            -
-                          </Button>
-                        )}
-                      </div>
-                    );
-                  })}
-              </FormGroup>
-            )
-          )}
       </FormSection>
       <FormSection titulo='Assessment Promoción - Propuesta'>
-        {clienteEnBase.noDeCompetidores &&
-          clienteEnBase.competidores.map((competidor) => {
-            return <FormGroup titulo={competidor.competidor}></FormGroup>;
+        {competidores &&
+          competidores.map((competidor) => {
+            return <FormGroup titulo={competidor.nombre}></FormGroup>;
           })}
       </FormSection>
       <InfoMessage
         titulo='Informacion de Categoria'
         contenido='Aquí va el contenido de la noticia importante.'
       />
-      <FormControl
-        type='textarea'
-        label='Comentarios'
-        value={clienteEnBase.comentarios1}
-        onChange={(e) =>
-          setClienteEnBase({ ...clienteEnBase, comentarios1: e.target.value })
-        }
-      />
+      <FormControl>
+        <label>Comentarios:</label>
+        <textarea
+          {...register('comentarios1', {
+            required: 'Por favor ingresa un comentario.',
+          })}
+          rows={4}
+          required
+        />
+      </FormControl>
+
       <Button>Siguiente</Button>
     </form>
   );

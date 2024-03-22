@@ -25,13 +25,15 @@ export default function ClienteEnBasePage({ clientes, userInfo, userId }) {
         <h5>Asesor: {userInfo.nombre}</h5>
       </header>
       <main className={classes.main}>
-        <FormControl
-          type='search'
-          id='searchBar'
-          label='Nombre de Cliente'
-          onChange={(event) => setValue(event.target.value)}
-          value={value}
-        />
+        <FormControl>
+          <label>Nombre del cliente</label>
+          <input
+            type='search'
+            placeholder='Busqueda por nombre'
+            onChange={(event) => setValue(event.target.value)}
+            value={value}
+          />
+        </FormControl>
         {value !== '' && (
           <ul className={classes.clientes}>
             {clientes
@@ -50,6 +52,24 @@ export default function ClienteEnBasePage({ clientes, userInfo, userId }) {
           </ul>
         )}
         <h4>o</h4>
+        <FormControl>
+          <label>Día de visita</label>
+          <select onChange={(e) => setFrecuenciaIsSelected(e.target.value)}>
+            <option value={0} selected disabled hidden>
+              Elije una opción
+            </option>
+            {[
+              'Lunes',
+              'Martes',
+              'Miércoles',
+              'Jueves',
+              'Sábado',
+              'Domingo',
+            ].map((dia) => (
+              <option>{dia}</option>
+            ))}
+          </select>
+        </FormControl>
         <FormControl
           type='select'
           id='frecuencia'
