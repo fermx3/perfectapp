@@ -18,7 +18,7 @@ export default function ClienteEnBase1() {
     competidores: [
       {
         nombre: '',
-        productos: [{ gramos: 0, precio: 0, precioConPromo: 0 }],
+        productos: [{ gramos: 100, precio: 0, hasPromo: false, pop: false }],
       },
     ],
     comentarios1: '',
@@ -34,6 +34,7 @@ export default function ClienteEnBase1() {
     errors,
   } = useForm({
     defaultValues,
+    shouldUnregister: true,
   });
 
   // function submitHandler(event, newData) {
@@ -59,6 +60,7 @@ export default function ClienteEnBase1() {
   const competidores = watch('competidores');
 
   console.log('visitaActual: ', visitaActual);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormSection titulo='Assessment Producto - Empaque - Precio'>
@@ -73,12 +75,12 @@ export default function ClienteEnBase1() {
           }}
         />
       </FormSection>
-      <FormSection titulo='Assessment Promoción - Propuesta'>
+      {/* <FormSection titulo='Assessment Promoción - Propuesta'>
         {competidores &&
           competidores.map((competidor) => {
             return <FormGroup titulo={competidor.nombre}></FormGroup>;
           })}
-      </FormSection>
+      </FormSection> */}
       <InfoMessage
         titulo='Informacion de Categoria'
         contenido='Aquí va el contenido de la noticia importante.'

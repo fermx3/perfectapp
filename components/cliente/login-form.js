@@ -13,6 +13,7 @@ import { signIn } from 'next-auth/react';
 
 import classes from './login-form.module.scss';
 import Button from '../button';
+import Container from '../layout/container';
 
 export default function LoginForm() {
   const [isError, setIsError] = useState();
@@ -61,7 +62,11 @@ export default function LoginForm() {
       default:
         router.replace('/login-error');
     }
-    return <h1>Loading...</h1>;
+    return (
+      <Container md>
+        <h1>Loading...</h1>
+      </Container>
+    );
   }
 
   if (session.data) {

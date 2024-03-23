@@ -17,7 +17,6 @@ export default function CompetidoresField({
     name: 'competidores',
   });
 
-  console.log(errors);
   return (
     <>
       {fields.map((competidor, index) => (
@@ -39,7 +38,10 @@ export default function CompetidoresField({
               ))}
             </select>
           </FormControl>
-          <ProductosField nestIndex={index} {...{ control, register }} />
+          <ProductosField
+            nestIndex={index}
+            {...{ control, register, getValues }}
+          />
           {index > 0 && (
             <Button
               type='button'

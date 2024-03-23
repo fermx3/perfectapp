@@ -1,11 +1,11 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import Question from '@/components/question';
+import Button from '@/components/button';
 
 import { Inter } from 'next/font/google';
 
 import classes from './index.module.scss';
 import Logo from '@/components/logo/logo';
+import Container from '@/components/layout/container';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,14 +21,10 @@ export default function Home() {
       <main className={classes.main}>
         <Logo />
         <div className={classes.header}>
-          <Question
-            question='Bienvenido/a! Primero selecciona tu rol:'
-            options={[
-              { name: 'Leal', link: '/cliente/login' },
-              { name: 'Asesor', link: '/asesor' },
-              { name: 'Cliente', link: '/usuario' },
-            ]}
-          />
+          <Container md>
+            <h1>Bienvenido/a a perfect app!</h1>
+            <Button href='/cliente/login'>Acceder</Button>
+          </Container>
         </div>
       </main>
     </>
