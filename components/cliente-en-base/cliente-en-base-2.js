@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 
 import ReactSwitch from 'react-switch';
@@ -6,37 +6,15 @@ import InfoMessage from '../ui/info-message';
 import Button from '../button';
 import FormSection from '../forms/form-section';
 import FormControl from '../forms/form-control';
-
-import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
 import FormGroup from '../forms/form-group';
 import OrdenDeCompraField from './orden-de-compra-field';
 
+import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
+import { StageContext } from '@/store/stage.context';
+
 export default function ClienteEnBase2({ prevHandler }) {
   const { visitaActual, setVisitaActual } = useContext(ClienteEnBaseContext);
-
-  const [clienteEnBase, setClienteEnBase] = useState({
-    cuentaConInventario: visitaActual.cuentaConInventario
-      ? visitaActual.cuentaConInventario
-      : false,
-    ordenDeCompra: visitaActual.ordenDeCompra
-      ? visitaActual.ordenDeCompra
-      : false,
-    comentarios2: visitaActual.comentarios2,
-  });
-
-  function handleInventario(inventarioChecked) {
-    setClienteEnBase({
-      ...clienteEnBase,
-      cuentaConInventario: !inventarioChecked,
-    });
-  }
-
-  function handleOrden(ordenChecked) {
-    setClienteEnBase({
-      ...clienteEnBase,
-      ordenDeCompra: !ordenChecked,
-    });
-  }
+  const { currentStage, setCurrentStage } = useContext(StageContext);
 
   const promociones = [
     {
@@ -68,8 +46,9 @@ export default function ClienteEnBase2({ prevHandler }) {
   const defaultValues = {
     promociones: promociones,
     cuentaConInventario: false,
-    ordenDeCompra: false,
+    hayOrdenDeCompra: false,
     comentarios2: '',
+    ordenDeCompra: [],
   };
 
   const {
@@ -95,6 +74,8 @@ export default function ClienteEnBase2({ prevHandler }) {
     setCurrentStage(currentStage + 1);
   };
 
+  const hayOrden = watch('hayOrdenDeCompra');
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <InfoMessage
@@ -103,8 +84,10 @@ export default function ClienteEnBase2({ prevHandler }) {
       />
       <FormSection titulo='Promoción del mes'>
         {fields.map((promocion, index) => (
-          <FormGroup key={index}>
-            <h4>{promocion.promo}</h4>
+          <FormGroup key={promocion.id}>
+            <h4 {...register(`promociones.${index}.promo`)}>
+              {promocion.promo}
+            </h4>
             <p>
               <span>{promocion.sku}</span>
             </p>
@@ -136,14 +119,25 @@ export default function ClienteEnBase2({ prevHandler }) {
         <FormControl>
           <label>¿Orden de compra?</label>
           <Controller
-            name={`ordenDeCompra`}
+            name={`hayOrdenDeCompra`}
             control={control}
             render={({ field: { onChange, value } }) => (
               <ReactSwitch checked={value} onChange={onChange} />
             )}
           />
         </FormControl>
-        <OrdenDeCompraField {...{ control, register, defaultValues, errors }} />
+        {hayOrden && (
+          <OrdenDeCompraField
+            {...{
+              control,
+              register,
+              defaultValues,
+              errors,
+              getValues,
+              setValue,
+            }}
+          />
+        )}
       </FormSection>
       <FormControl>
         <label>Comentarios:</label>

@@ -14,6 +14,7 @@ import ClienteEnBase3 from '@/components/cliente-en-base/cliente-en-base-3';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { StageContext } from '@/store/stage.context';
+import ClienteEnBaseResumen from '@/components/cliente-en-base/cliente-en-base-resumen';
 
 export default function VisitaPage({ cliente }) {
   const { setVisitaActual, visitaActual } = useContext(ClienteEnBaseContext);
@@ -78,16 +79,13 @@ export default function VisitaPage({ cliente }) {
           <ClienteEnBase1 submitHandler={submitHandler} />
         )}
         {visitaActual.inicioVisita && currentStage === 1 && (
-          <ClienteEnBase2
-            submitHandler={submitHandler}
-            prevHandler={prevHandler}
-          />
+          <ClienteEnBase2 prevHandler={prevHandler} />
         )}
         {visitaActual.inicioVisita && currentStage === 2 && (
-          <ClienteEnBase3
-            submitHandler={submitHandler}
-            prevHandler={prevHandler}
-          />
+          <ClienteEnBase3 prevHandler={prevHandler} />
+        )}
+        {visitaActual.inicioVisita && currentStage === 3 && (
+          <ClienteEnBaseResumen prevHandler={prevHandler} />
         )}
       </LayoutDashboard>
     </>
