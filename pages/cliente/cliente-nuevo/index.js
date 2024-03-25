@@ -50,7 +50,7 @@ export default function ClienteNuevoPage() {
 //   ) {
 //     return {
 //       redirect: {
-//         destination: '/cliente/login',
+//         destination: '/login',
 //         permanent: false,
 //       },
 //     };

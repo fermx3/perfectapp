@@ -99,7 +99,7 @@ export async function getServerSideProps(context) {
   if (!session || session.user.role !== 'ASESOR') {
     return {
       redirect: {
-        destination: '/cliente/login',
+        destination: '/login',
         permanent: false,
       },
     };

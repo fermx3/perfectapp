@@ -23,7 +23,7 @@ export default function Home() {
         <div className={classes.header}>
           <Container md>
             <h1>Bienvenido/a a perfect app!</h1>
-            <Button href='/cliente/login'>Acceder</Button>
+            <Button href='/login'>Acceder</Button>
           </Container>
         </div>
       </main>

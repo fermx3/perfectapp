@@ -8,7 +8,7 @@ export default function ClientePage() {
       </header>
       <main>
         <h2>Bienvenido a la seccion de clientes.</h2>
-        <Button href='/cliente/login'>Ingresa a tu cuenta</Button>
+        <Button href='/login'>Ingresa a tu cuenta</Button>
       </main>
     </>
   );
