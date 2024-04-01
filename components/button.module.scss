@@ -1,5 +1,6 @@
+@import '@/styles/variables';
 .button {
-  background-color: red;
+  background-color: $primary-color;
   display: inline-block;
   padding: 0.3em 1.2em;
   margin: 0.1em auto;

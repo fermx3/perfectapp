@@ -2,7 +2,7 @@ import MainLayout from '@/components/layout/main-layout';
 import { ClienteEnBaseProvider } from '@/store/clienteEnBase.context';
 import { StageProvider } from '@/store/stage.context';
 import { UserProvider } from '@/store/user-context';
-import '@/styles/globals.css';
+import '@/styles/globals.scss';
 
 import { SessionProvider } from 'next-auth/react';
 
