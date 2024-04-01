@@ -5,19 +5,20 @@
   padding: 0.3em 1.2em;
   margin: 0.1em auto;
   border: 0.16em solid rgba(255, 255, 255, 0);
-  border-radius: 0.4rem;
+  border-radius: $border-radius-1;
   box-sizing: border-box;
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  color: #ffffff;
+  font-weight: bold;
+  color: $white-color;
   text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
   text-align: center;
+  line-height: 1.5em;
   transition: all 0.2s;
   cursor: pointer;
 }
 .button:hover {
-  border-color: rgba(255, 255, 255, 1);
+  border-color: $white-color;
 }
 @media all and (max-width: 575px) {
   .button {
@@ -29,7 +30,7 @@
 
 .disabledButton {
   @extend .button;
-  background-color: lightgrey;
+  background-color: $disabled-color;
   cursor: not-allowed;
 
   &:hover {

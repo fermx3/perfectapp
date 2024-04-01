@@ -1,9 +1,11 @@
+@import '@/styles/variables';
+
 .main {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  height: 90vh;
+  height: 80vh;
 
   .logo {
     display: flex;
@@ -26,7 +28,7 @@
     padding-top: 3rem;
 
     a {
-      background-color: red;
+      background-color: $primary-color;
       display: inline-block;
       padding: 0.3em 1.2em;
       margin: 0 0.1em 0.1em 0;
@@ -36,13 +38,13 @@
       text-decoration: none;
       font-family: 'Roboto', sans-serif;
       font-weight: 300;
-      color: #ffffff;
+      color: $white-color;
       text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
       text-align: center;
       transition: all 0.2s;
     }
     a:hover {
-      border-color: rgba(255, 255, 255, 1);
+      border-color: $white-color;
     }
     @media all and (max-width: 30em) {
       a {

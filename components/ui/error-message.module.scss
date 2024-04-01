@@ -1,9 +1,11 @@
+@import '@/styles/variables';
+
 .error {
   padding: 0.2rem 0.8rem;
   margin-top: -0.5rem;
   font-size: 0.8rem;
-  background-color: red;
-  color: white;
+  background-color: $primary-color;
+  color: $white-color;
   border-radius: 0 0 5px 5px;
   animation: slideIn 1s ease 0s 1 normal forwards;
 }

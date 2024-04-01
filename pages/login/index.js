@@ -6,9 +6,9 @@ import classes from './index.module.scss';
 export default function ClientePage() {
   return (
     <>
-      <header className={classes.header}>
+      {/* <header className={classes.header}>
         <Logo horizontal priority />
-      </header>
+      </header> */}
       <main className={classes.main}>
         <LoginForm />
       </main>

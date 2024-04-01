@@ -1,3 +1,5 @@
+@import '@/styles/variables';
+
 .formControl {
   display: flex;
   flex-direction: column;
@@ -8,7 +10,7 @@
   margin: 0 1px;
 
   &:focus {
-    border-color: #ced4da;
+    border-color: $white-color;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
   }
 
@@ -26,7 +28,7 @@
   }
 
   select {
-    background-color: white;
+    background-color: $white-color;
     border-radius: 4px;
     display: inline-block;
     font: inherit;
@@ -53,7 +55,7 @@
   }
 
   select:focus {
-    border-color: green;
+    border-color: $primary-color;
     outline: 0;
   }
 

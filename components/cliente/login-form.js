@@ -14,6 +14,7 @@ import { signIn } from 'next-auth/react';
 import classes from './login-form.module.scss';
 import Button from '../button';
 import Container from '../layout/container';
+import Loader from '../ui/loader';
 
 export default function LoginForm() {
   const [isError, setIsError] = useState();
@@ -64,7 +65,8 @@ export default function LoginForm() {
     }
     return (
       <Container md>
-        <h1>Loading...</h1>
+        <Loader />
+        <h1>Cargando...</h1>
       </Container>
     );
   }
@@ -92,8 +94,9 @@ export default function LoginForm() {
         <FormControl type='button' label='Ingresar' />
       </form>
       <div className={classes.formFooter}>
-        <p>¿No tienes cuenta?</p>
-        <Link href='/cliente/cliente-nuevo'>Registrate aquí</Link>
+        <Link href='/cliente/cliente-nuevo'>
+          ¿No tienes cuenta? Registrate aquí
+        </Link>
       </div>
     </div>
   );

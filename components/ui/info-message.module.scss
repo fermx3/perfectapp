@@ -1,7 +1,9 @@
+@import '@/styles/variables';
+
 .info {
   margin: 1rem 0;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background-color: black;
-  color: white;
+  background-color: $black-color;
+  color: $white-color;
 }
