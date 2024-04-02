@@ -14,13 +14,13 @@ export default function AdminPage() {
         <nav>
           <ul>
             <li>
-              <Link href={'/admin/crear-cliente'}>Crear Cliente</Link>
+              <Link href={'/admin/crear-cliente'}>Crear Leal</Link>
             </li>
             <li>
-              <Link href={'/admin'}>Crear Operador</Link>
+              <Link href={'/admin'}>Crear Asesor</Link>
             </li>
             <li>
-              <Link href={'/admin'}>Crear Usuario</Link>
+              <Link href={'/admin'}>Crear Cliente</Link>
             </li>
           </ul>
         </nav>
