@@ -7,10 +7,8 @@ export default function CrearClientePage() {
   return (
     <Container md>
       <header>
-        <h1>Crear cliente</h1>
-        <p>
-          Escribe los datos para crear un cliente nuevo en la base de datos.
-        </p>
+        <h1>Crear Leal</h1>
+        <p>Escribe los datos para crear un nuevo Leal en la base de datos.</p>
       </header>
       <main>
         <CrearClienteForm />

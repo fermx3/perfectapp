@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 
 import classes from './login-form.module.scss';
-import Button from '../button';
+import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import Container from '../layout/container';
 import Loader from '../ui/loader';
 
@@ -21,7 +21,12 @@ export default function LoginForm() {
 
   const { setCurrentUser } = useContext(UserContext);
 
-  const { register, handleSubmit, watch } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
     defaultValues: {
       userId: '',
       password: '',
@@ -80,18 +85,40 @@ export default function LoginForm() {
       <h2>Inicia Sesión</h2>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <FormControl>
-          <label>Numero de usuario:</label>
-          <input type='text' {...register('userId')} required />
+          <input
+            type='number'
+            placeholder='Numero de usuario'
+            {...register('userId', {
+              required: 'Por favor introduce tu número de usuario.',
+            })}
+          />
+          {errors.userId && <p>{errors.userId.message}</p>}
         </FormControl>
         <FormControl>
-          <label>Contraseña:</label>
-          <input type='password' {...register('password')} required />
+          <input
+            type='password'
+            placeholder='Contraseña'
+            minLength={8}
+            {...register('password', {
+              required: 'Por favor introduce tu contraseña.',
+            })}
+          />
+          {errors.password && <p>{errors.password.message}</p>}
         </FormControl>
         <FormControl>
-          <Button>Iniciar Sesión</Button>
+          <Button
+            disabled={isSubmitting}
+            buttonType={
+              isSubmitting
+                ? BUTTON_TYPE_CLASSES.disabled
+                : BUTTON_TYPE_CLASSES.base
+            }
+          >
+            Iniciar Sesión
+          </Button>
         </FormControl>
+        {isSubmitting && <Loader />}
         {isError && <ErrorMessage error={isError} />}
-        <FormControl type='button' label='Ingresar' />
       </form>
       <div className={classes.formFooter}>
         <Link href='/cliente/cliente-nuevo'>
