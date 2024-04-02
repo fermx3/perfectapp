@@ -1,5 +1,3 @@
-import Container from '../layout/container';
-
 import classes from './loader.module.scss';
 
 export default function Loader() {

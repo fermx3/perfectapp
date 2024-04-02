@@ -1,31 +1,12 @@
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { crearLealSchema } from '@/lib/schemas/schemas';
 
 import FormControl from '../forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
-
-async function createCliente(userId, password, nivelDeCliente, nombre, role) {
-  const response = await fetch('/api/auth/signup', {
-    method: 'POST',
-    body: JSON.stringify({
-      userId,
-      password,
-      nivelDeCliente,
-      nombre,
-      role,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || 'Something went wrong!');
-  }
-
-  return data;
-}
+import { useState } from 'react';
+import Loader from '../ui/loader';
 
 export default function CrearClienteForm() {
   const {
@@ -33,7 +14,7 @@ export default function CrearClienteForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
+    setError,
   } = useForm({
     defaultValues: {
       userId: '',
@@ -41,27 +22,75 @@ export default function CrearClienteForm() {
       confirmPassword: '',
       nivelDeCliente: '',
       nombre: '',
+      role: 'LEAL',
     },
+    resolver: zodResolver(crearLealSchema),
   });
+
+  const [successMessage, setSuccessMessage] = useState('');
+
+  async function createCliente(data) {
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message || 'Something went wrong!');
+    }
+
+    if (responseData.errors) {
+      const errors = responseData.errors;
+
+      if (errors.userId) {
+        setError('userId', {
+          type: 'server',
+          message: errors.userId,
+        });
+      } else if (errors.password) {
+        setError('password', {
+          type: 'server',
+          message: errors.password,
+        });
+      } else if (errors.confirmPassword) {
+        setError('confirmPassword', {
+          type: 'server',
+          message: errors.confirmPassword,
+        });
+      } else if (errors.nombre) {
+        setError('nombre', {
+          type: 'server',
+          message: errors.nombre,
+        });
+      } else if (errors.nivelDeCliente) {
+        setError('nivelDeCliente', {
+          type: 'server',
+          message: errors.nivelDeCliente,
+        });
+      }
+    }
+
+    return responseData;
+  }
 
   const tiposDeClientes = ['Básico', 'Oro', 'Platino'];
 
   const onSubmit = async (data) => {
     // submit to server
     try {
-      const result = await createCliente(
-        data.userId,
-        data.password,
-        data.nivelDeCliente,
-        data.nombre,
-        'LEAL'
-      );
-      console.log(result); //Successfuly create user
+      const result = await createCliente(data);
+      //Successfuly create user
+      setSuccessMessage(result.message);
     } catch (error) {
-      console.log(error); //Fail on create user
+      console.log(error);
+      //Fail on create user
     }
-
-    reset();
+    // reset();
   };
 
   return (
@@ -70,14 +99,8 @@ export default function CrearClienteForm() {
         <FormControl>
           <input
             type='number'
-            {...register('userId', {
-              required: 'Por favor introduce un numero de cliente.',
-              minLength: {
-                value: 5,
-                message:
-                  'El numero de usuario debe ser de al menos 5 caracteres.',
-              },
-            })}
+            min={0}
+            {...register('userId')}
             placeholder='Numero de cliente'
           />
           {errors.userId && <p>{errors.userId.message}</p>}
@@ -85,13 +108,7 @@ export default function CrearClienteForm() {
         <FormControl>
           <input
             type='text'
-            {...register('password', {
-              required: 'Por favor introduce una contraseña.',
-              minLength: {
-                value: 8,
-                message: 'La contraseña debe ser de al menos 8 caracteres.',
-              },
-            })}
+            {...register('password')}
             placeholder='Contraseña'
           />
           {errors.password && <p>{errors.password.message}</p>}
@@ -99,32 +116,19 @@ export default function CrearClienteForm() {
         <FormControl>
           <input
             type='password'
-            {...register('confirmPassword', {
-              required: 'Por favor confirma la contraseña.',
-              validate: (value) =>
-                value === getValues('password') ||
-                'Las contraseñas deben coincidir.',
-            })}
+            {...register('confirmPassword')}
             placeholder='Confirmar Contraseña'
           />
           {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         </FormControl>
         <FormControl>
-          <input
-            type='text'
-            {...register('nombre', {
-              required: 'Por favor introduce un nombre para el Leal.',
-            })}
-            placeholder='Nombre'
-          />
+          <input type='text' {...register('nombre')} placeholder='Nombre' />
           {errors.nombre && <p>{errors.nombre.message}</p>}
         </FormControl>
         <FormControl>
           <label>Nivel de cliente:</label>
           <select
-            {...register('nivelDeCliente', {
-              required: 'Por favor, selecciona un nivel de cliente.',
-            })}
+            {...register('nivelDeCliente')}
             placeholder='Nivel de cliente'
           >
             {tiposDeClientes.map((option) => (
@@ -135,7 +139,9 @@ export default function CrearClienteForm() {
           </select>
           {errors.nivelDeCliente && <p>{errors.nivelDeCliente.message}</p>}
         </FormControl>
+        <input type='hidden' value='LEAL' {...register('role')} />
         <FormControl>
+          {isSubmitting && <Loader />}
           <Button
             disable={isSubmitting}
             buttonType={
@@ -146,6 +152,7 @@ export default function CrearClienteForm() {
           >
             Crear Leal
           </Button>
+          {successMessage && <p>{successMessage}</p>}
         </FormControl>
       </form>
     </>

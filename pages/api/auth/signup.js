@@ -1,5 +1,6 @@
 import { hashPassword } from '@/lib/auth';
 import { PrismaClient } from '@prisma/client';
+import { crearLealSchema } from '@/lib/schemas/schemas';
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -8,9 +9,24 @@ async function handler(req, res) {
 
   const prisma = new PrismaClient();
 
-  const data = req.body;
+  const data = await req.body;
 
   const { userId, password, nivelDeCliente, nombre, role } = data;
+
+  //zod
+  // const result = crearLealSchema.safeParse(data);
+  // let zodErrors = {};
+  // if (!result.success) {
+  //   result.error.issues.forEach((issue) => {
+  //     zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
+  //   });
+  // }
+
+  // res.json(
+  //   Object.keys(zodErrors).length > 0
+  //     ? { errors: zodErrors }
+  //     : { success: true }
+  // );
 
   if (
     !userId ||
@@ -22,8 +38,7 @@ async function handler(req, res) {
     !role
   ) {
     res.status(422).json({
-      message:
-        'Entrada invalida - la contraseña debe ser mayor a 8 caracteres.',
+      message: 'Entrada invalida',
     });
     return;
   }
@@ -35,7 +50,13 @@ async function handler(req, res) {
     });
 
     if (existingUser) {
-      res.status(422).json({ message: 'El numero de usuario ya existe.' });
+      res
+        // .status(422)
+        .json({
+          errors: {
+            userId: 'El numero de usuario ya existe. Intenta otra vez.',
+          },
+        });
       return;
     }
     //
