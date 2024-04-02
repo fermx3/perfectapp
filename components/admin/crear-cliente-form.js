@@ -1,18 +1,18 @@
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { crearLealSchema } from '@/lib/schemas/schemas';
 
 import FormControl from '../forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
-import { useState } from 'react';
 import Loader from '../ui/loader';
 
 export default function CrearClienteForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitted },
     reset,
     setError,
   } = useForm({
@@ -81,16 +81,19 @@ export default function CrearClienteForm() {
   const tiposDeClientes = ['Básico', 'Oro', 'Platino'];
 
   const onSubmit = async (data) => {
+    setSuccessMessage('');
     // submit to server
     try {
       const result = await createCliente(data);
       //Successfuly create user
       setSuccessMessage(result.message);
+      if (result.message) {
+        reset();
+      }
     } catch (error) {
       console.log(error);
       //Fail on create user
     }
-    // reset();
   };
 
   return (
