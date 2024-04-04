@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { UserContext } from '@/store/user-context';
 
 import Link from 'next/link';
 import FormControl from '../forms/form-control';
@@ -18,8 +17,6 @@ import Loader from '../ui/loader';
 
 export default function LoginForm() {
   const [isError, setIsError] = useState();
-
-  const { setCurrentUser } = useContext(UserContext);
 
   const {
     register,
@@ -74,10 +71,6 @@ export default function LoginForm() {
         <h1>Cargando...</h1>
       </Container>
     );
-  }
-
-  if (session.data) {
-    setCurrentUser(session.data.user);
   }
 
   return (

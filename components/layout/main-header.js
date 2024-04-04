@@ -5,16 +5,12 @@ import { useSession, signOut } from 'next-auth/react';
 
 import classes from './main-header.module.scss';
 import Button from '../button';
-import { useContext } from 'react';
-import { UserContext } from '@/store/user-context';
 
 export default function MainHeader({ children }) {
   const session = useSession();
-  const { setCurrentUser } = useContext(UserContext);
 
   function logoutHandler() {
     signOut();
-    setCurrentUser(null);
   }
 
   return (

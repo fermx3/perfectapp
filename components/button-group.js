@@ -1,9 +1,9 @@
 import Button from './button';
 import Container from './layout/container';
 
-import classes from './question.module.scss';
+import classes from './button-group.module.scss';
 
-export default function Question({ question, options }) {
+export default function ButtonGroup({ question, options }) {
   return (
     <Container>
       <div className={classes.header}>

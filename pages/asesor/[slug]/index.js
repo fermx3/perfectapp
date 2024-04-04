@@ -2,19 +2,20 @@ import { getSession } from 'next-auth/react';
 import { getUserInfo } from '@/lib/prismaDB';
 
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
-import Question from '@/components/question';
+import ButtonGroup from '@/components/button-group';
 
-import { UserContext } from '@/store/user-context';
-import { useContext } from 'react';
-
-export default function AsesorPage({ userInfo }) {
-  const { currentUser } = useContext(UserContext);
-  console.log(currentUser);
+export default function AsesorPage({ userInfo, session }) {
+  console.log(userInfo);
+  console.log(session);
 
   return (
     <>
-      <LayoutDashboard nombre={userInfo.nombre} role='asesor' />
-      <Question
+      <LayoutDashboard
+        nombre={userInfo.nombre}
+        userId={session.user.userId}
+        role={session.user.role}
+      />
+      <ButtonGroup
         options={[
           { name: 'Cliente en Base', link: '/asesor/cliente-en-base' },
           { name: 'Cliente Nuevo', link: '#' },

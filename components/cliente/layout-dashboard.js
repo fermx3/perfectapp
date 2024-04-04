@@ -10,28 +10,26 @@ import classes from './layout-dashboard.module.scss';
 export default function LayoutDashboard({
   children,
   nombre,
-  role,
   nivelDeCliente,
   leales,
   cadena,
+  role,
+  userId,
 }) {
-  const router = useRouter();
-  const userId = router.query.slug;
-
   return (
     <Container>
       <header>
         <div>
-          {role === 'asesor' && <h4>Asesor</h4>}
+          {role === 'ASESOR' && <h4>Asesor</h4>}
           <h1>{nombre}</h1>
           {userId && (
             <p>
-              {role === 'leal'
+              {role === 'LEAL'
                 ? `Numero de cliente: ${userId}`
                 : `Usuario: ${userId}`}
             </p>
           )}
-          {role === 'asesor' && <p>{moment().format('LL')}</p>}
+          {role === 'ASESOR' && <p>{moment().format('LL')}</p>}
           {nivelDeCliente && <p>Cliente {nivelDeCliente}</p>}
           {cadena && <p>{`Cadena: ${cadena}`}</p>}
           {leales && <p>{`Leales: ${leales}`}</p>}

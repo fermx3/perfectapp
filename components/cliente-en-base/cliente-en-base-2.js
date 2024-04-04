@@ -9,12 +9,11 @@ import FormControl from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import OrdenDeCompraField from './orden-de-compra-field';
 
-import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
-import { StageContext } from '@/store/stage.context';
+import { VisitaActualContext } from '@/store/visitaActual.context';
 
 export default function ClienteEnBase2({ prevHandler }) {
-  const { visitaActual, setVisitaActual } = useContext(ClienteEnBaseContext);
-  const { currentStage, setCurrentStage } = useContext(StageContext);
+  const { visitaActual, setVisitaActual, currentStage, nextStage } =
+    useContext(VisitaActualContext);
 
   const promociones = [
     {
@@ -71,7 +70,7 @@ export default function ClienteEnBase2({ prevHandler }) {
 
   const onSubmit = (data) => {
     setVisitaActual({ ...visitaActual, ...data });
-    setCurrentStage(currentStage + 1);
+    nextStage();
   };
 
   const hayOrden = watch('hayOrdenDeCompra');

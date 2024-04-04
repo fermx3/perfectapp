@@ -8,14 +8,13 @@ import FormSection from '../forms/form-section';
 import FormGroup from '../forms/form-group';
 import ReactSwitch from 'react-switch';
 
-import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
-import { StageContext } from '@/store/stage.context';
+import { VisitaActualContext } from '@/store/visitaActual.context';
 import ImplementacionMaterialesField from './implementacion-materiales-field';
 import ImplementacionExhibicionField from './implementacion-exhibicion-field';
 
 export default function ClienteEnBase3({ submitHandler, prevHandler }) {
-  const { visitaActual, setVisitaActual } = useContext(ClienteEnBaseContext);
-  const { currentStage, setCurrentStage } = useContext(StageContext);
+  const { visitaActual, setVisitaActual, nextStage } =
+    useContext(VisitaActualContext);
 
   const planDeComunicacion = [
     {
@@ -72,7 +71,7 @@ export default function ClienteEnBase3({ submitHandler, prevHandler }) {
 
   const onSubmit = (data) => {
     setVisitaActual({ ...visitaActual, ...data });
-    setCurrentStage(currentStage + 1);
+    nextStage();
   };
 
   return (

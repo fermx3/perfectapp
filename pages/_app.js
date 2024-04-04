@@ -1,7 +1,5 @@
 import MainLayout from '@/components/layout/main-layout';
-import { ClienteEnBaseProvider } from '@/store/clienteEnBase.context';
-import { StageProvider } from '@/store/stage.context';
-import { UserProvider } from '@/store/user-context';
+import { VisitaActualProvider } from '@/store/visitaActual.context';
 import '@/styles/globals.scss';
 
 import { SessionProvider } from 'next-auth/react';
@@ -9,15 +7,11 @@ import { SessionProvider } from 'next-auth/react';
 export default function App({ Component, pageProps, session }) {
   return (
     <SessionProvider session={session}>
-      <UserProvider>
-        <ClienteEnBaseProvider>
-          <StageProvider>
-            <MainLayout>
-              <Component {...pageProps} />
-            </MainLayout>
-          </StageProvider>
-        </ClienteEnBaseProvider>
-      </UserProvider>
+      <VisitaActualProvider>
+        <MainLayout>
+          <Component {...pageProps} />
+        </MainLayout>
+      </VisitaActualProvider>
     </SessionProvider>
   );
 }

@@ -3,14 +3,13 @@ import { useState } from 'react';
 
 import Container from '@/components/layout/container';
 import FormControl from '@/components/forms/form-control';
-import LayoutDashboard from '@/components/cliente/layout-dashboard';
 
 import { getClientes, getUserInfo } from '@/lib/prismaDB';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
 
-export default function ClienteEnBasePage({ clientes, userInfo, userId }) {
+export default function ClienteEnBasePage({ clientes, userInfo }) {
   const [value, setValue] = useState('');
   const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
 

@@ -2,17 +2,16 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import FormControl from '../forms/form-control';
 
-import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
+import { VisitaActualContext } from '@/store/visitaActual.context';
 import Button from '../button';
 import InfoMessage from '../ui/info-message';
 import FormSection from '../forms/form-section';
 import FormGroup from '../forms/form-group';
 import CompetidoresField from './competidores-field';
-import { StageContext } from '@/store/stage.context';
 
 export default function ClienteEnBase1() {
-  const { visitaActual, setVisitaActual } = useContext(ClienteEnBaseContext);
-  const { currentStage, setCurrentStage } = useContext(StageContext);
+  const { visitaActual, setVisitaActual, currentStage, nextStage } =
+    useContext(VisitaActualContext);
 
   const defaultValues = {
     competidores: [
@@ -55,9 +54,8 @@ export default function ClienteEnBase1() {
 
   const onSubmit = (data) => {
     setVisitaActual({ ...visitaActual, ...data });
-    setCurrentStage(currentStage + 1);
+    nextStage();
   };
-  const competidores = watch('competidores');
 
   console.log('visitaActual: ', visitaActual);
 

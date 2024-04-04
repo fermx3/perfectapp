@@ -5,12 +5,11 @@ import moment from 'moment';
 import Container from '../layout/container';
 import Button from '../button';
 
-import { ClienteEnBaseContext } from '@/store/clienteEnBase.context';
-import { StageContext } from '@/store/stage.context';
+import { VisitaActualContext } from '@/store/visitaActual.context';
 
 export default function ClienteEnBaseResumen({ prevHandler }) {
-  const { visitaActual, setVisitaActual } = useContext(ClienteEnBaseContext);
-  const { currentStage, setCurrentStage } = useContext(StageContext);
+  const { visitaActual, setVisitaActual, resetStage } =
+    useContext(VisitaActualContext);
 
   const router = useRouter();
 
@@ -19,7 +18,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
     const finVisita = moment().format();
     //Upload to DB with finVisita
     //Send to mail
-    setCurrentStage(0);
+    resetStage();
     setVisitaActual({});
     router.replace('/');
   };
@@ -60,7 +59,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
         <div>
           <h4>Promociones del mes</h4>
           {visitaActual.promociones.map((promocion) => (
-            <div>
+            <div key={promocion.promo}>
               <h5>{promocion.promo}</h5>
               <p>
                 {promocion.implementada ? 'Implementada' : 'NO implementada'}
@@ -95,7 +94,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
         <div>
           <h4>Plan de comunicación del mes</h4>
           {visitaActual.planDeComunicacion.map((material) => (
-            <div>
+            <div key={material.materiales}>
               <h5>{material.materiales}</h5>
               <p>Alcance: {material.alcance ? 'Si' : 'No'}</p>
             </div>
@@ -104,7 +103,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
         <div>
           <h4>Implementación Materiales</h4>
           {visitaActual.materiales.map((material) => (
-            <div>
+            <div key={material.material}>
               <h5>{material.material}</h5>
               <p>PoP: {material.pop ? 'Si' : 'No'}</p>
             </div>
@@ -113,7 +112,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
         <div>
           <h4>Implementación de Exhibición</h4>
           {visitaActual.exhibiciones.map((exhibicion) => (
-            <div>
+            <div key={exhibicion.producto}>
               <h5>{exhibicion.producto}</h5>
               <p>Periodo negociado: {exhibicion.periodoNegociado}</p>
               <p>PoP: {exhibicion.pop ? 'Si' : 'No'}</p>
