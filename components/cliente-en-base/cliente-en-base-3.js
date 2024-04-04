@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 
 import Button from '../button';
@@ -8,13 +8,18 @@ import FormSection from '../forms/form-section';
 import FormGroup from '../forms/form-group';
 import ReactSwitch from 'react-switch';
 
-import { VisitaActualContext } from '@/store/visitaActual.context';
+import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
+import {
+  setVisitaActual,
+  nextStage,
+} from '@/store/visitaActual/visitaActual.reducer';
+
 import ImplementacionMaterialesField from './implementacion-materiales-field';
 import ImplementacionExhibicionField from './implementacion-exhibicion-field';
 
-export default function ClienteEnBase3({ submitHandler, prevHandler }) {
-  const { visitaActual, setVisitaActual, nextStage } =
-    useContext(VisitaActualContext);
+export default function ClienteEnBase3({ prevHandler }) {
+  const dispatch = useDispatch();
+  const visitaActual = useSelector(selectVisitaActual);
 
   const planDeComunicacion = [
     {
@@ -70,8 +75,8 @@ export default function ClienteEnBase3({ submitHandler, prevHandler }) {
   });
 
   const onSubmit = (data) => {
-    setVisitaActual({ ...visitaActual, ...data });
-    nextStage();
+    dispatch(setVisitaActual({ ...visitaActual, ...data }));
+    dispatch(nextStage());
   };
 
   return (

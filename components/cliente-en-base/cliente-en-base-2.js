@@ -1,5 +1,5 @@
-import { useContext } from 'react';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ReactSwitch from 'react-switch';
 import InfoMessage from '../ui/info-message';
@@ -9,11 +9,15 @@ import FormControl from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import OrdenDeCompraField from './orden-de-compra-field';
 
-import { VisitaActualContext } from '@/store/visitaActual.context';
+import {
+  setVisitaActual,
+  nextStage,
+} from '@/store/visitaActual/visitaActual.reducer';
+import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 
 export default function ClienteEnBase2({ prevHandler }) {
-  const { visitaActual, setVisitaActual, currentStage, nextStage } =
-    useContext(VisitaActualContext);
+  const dispatch = useDispatch();
+  const visitaActual = useSelector(selectVisitaActual);
 
   const promociones = [
     {
@@ -69,8 +73,8 @@ export default function ClienteEnBase2({ prevHandler }) {
   });
 
   const onSubmit = (data) => {
-    setVisitaActual({ ...visitaActual, ...data });
-    nextStage();
+    dispatch(setVisitaActual({ ...visitaActual, ...data }));
+    dispatch(nextStage());
   };
 
   const hayOrden = watch('hayOrdenDeCompra');

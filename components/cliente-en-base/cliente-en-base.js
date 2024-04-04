@@ -1,17 +1,21 @@
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import FormControl from '../forms/form-control';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { VisitaActualContext } from '@/store/visitaActual.context';
 import Button from '../button';
 import InfoMessage from '../ui/info-message';
 import FormSection from '../forms/form-section';
-import FormGroup from '../forms/form-group';
 import CompetidoresField from './competidores-field';
 
+import {
+  setVisitaActual,
+  nextStage,
+} from '@/store/visitaActual/visitaActual.reducer';
+import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
+
 export default function ClienteEnBase1() {
-  const { visitaActual, setVisitaActual, currentStage, nextStage } =
-    useContext(VisitaActualContext);
+  const dispatch = useDispatch();
+  const visitaActual = useSelector(selectVisitaActual);
 
   const defaultValues = {
     competidores: [
@@ -53,11 +57,9 @@ export default function ClienteEnBase1() {
   // }
 
   const onSubmit = (data) => {
-    setVisitaActual({ ...visitaActual, ...data });
-    nextStage();
+    dispatch(setVisitaActual({ ...visitaActual, ...data }));
+    dispatch(nextStage());
   };
-
-  console.log('visitaActual: ', visitaActual);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

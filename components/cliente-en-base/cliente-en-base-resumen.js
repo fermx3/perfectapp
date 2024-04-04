@@ -1,15 +1,19 @@
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import moment from 'moment';
 
 import Container from '../layout/container';
 import Button from '../button';
 
-import { VisitaActualContext } from '@/store/visitaActual.context';
+import {
+  setVisitaActual,
+  resetStage,
+} from '@/store/visitaActual/visitaActual.reducer';
+import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 
 export default function ClienteEnBaseResumen({ prevHandler }) {
-  const { visitaActual, setVisitaActual, resetStage } =
-    useContext(VisitaActualContext);
+  const dispatch = useDispatch();
+  const visitaActual = useSelector(selectVisitaActual);
 
   const router = useRouter();
 
@@ -18,8 +22,8 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
     const finVisita = moment().format();
     //Upload to DB with finVisita
     //Send to mail
-    resetStage();
-    setVisitaActual({});
+    dispatch(resetStage());
+    dispatch(setVisitaActual({}));
     router.replace('/');
   };
 

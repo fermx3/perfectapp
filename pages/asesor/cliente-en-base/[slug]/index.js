@@ -1,43 +1,53 @@
-import { useContext } from 'react';
 import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { getCliente } from '@/lib/prismaDB';
-import { VisitaActualContext } from '@/store/visitaActual.context';
 
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
 import ClienteEnBase1 from '@/components/cliente-en-base/cliente-en-base';
 import ClienteEnBase2 from '@/components/cliente-en-base/cliente-en-base-2';
 import ClienteEnBase3 from '@/components/cliente-en-base/cliente-en-base-3';
-
-import moment from 'moment';
-import { useRouter } from 'next/router';
 import ClienteEnBaseResumen from '@/components/cliente-en-base/cliente-en-base-resumen';
 
-export default function VisitaPage({ cliente, session }) {
-  const { setVisitaActual, visitaActual, currentStage, prevStage } =
-    useContext(VisitaActualContext);
-  // const { currentStage, setCurrentStage } = useContext(StageContext);
+import moment from 'moment';
 
-  console.log(visitaActual);
-  console.log(currentStage);
+import {
+  setVisitaActual,
+  prevStage,
+} from '@/store/visitaActual/visitaActual.reducer';
+import {
+  selectCurrentStage,
+  selectVisitaActual,
+} from '@/store/visitaActual/visitaActual.selector';
+
+export default function VisitaPage({ cliente, session }) {
+  const dispatch = useDispatch();
+  const visitaActual = useSelector(selectVisitaActual);
+  const currentStage = useSelector(selectCurrentStage);
 
   const router = useRouter();
 
   function prevHandler() {
-    prevStage();
+    dispatch(prevStage());
   }
 
   function onClickHandler() {
-    if (visitaActual.inicioVisita) {
+    if (
+      visitaActual.inicioVisita &&
+      visitaActual.numeroDeCliente === router.query.slug
+    ) {
       return;
     }
     const inicioVisita = moment().format();
-    setVisitaActual({
-      ...visitaActual,
-      asesor: session.user.userId,
-      numeroDeCliente: cliente.userId,
-      inicioVisita: inicioVisita,
-    });
+    dispatch(
+      setVisitaActual({
+        asesor: session.user.userId,
+        numeroDeCliente: cliente.userId,
+        inicioVisita: inicioVisita,
+      })
+    );
   }
 
   return (
@@ -53,21 +63,33 @@ export default function VisitaPage({ cliente, session }) {
       >
         <Button
           onClick={onClickHandler}
-          buttonType={visitaActual.inicioVisita && BUTTON_TYPE_CLASSES.disabled}
-          disabled={visitaActual.inicioVisita}
+          buttonType={
+            visitaActual.inicioVisita &&
+            visitaActual.numeroDeCliente === router.query.slug
+              ? BUTTON_TYPE_CLASSES.disabled
+              : BUTTON_TYPE_CLASSES.base
+          }
+          disabled={
+            visitaActual.inicioVisita &&
+            visitaActual.numeroDeCliente === router.query.slug
+          }
         >
           Comenzar visita
         </Button>
-        {visitaActual.inicioVisita && currentStage === 0 && <ClienteEnBase1 />}
-        {visitaActual.inicioVisita && currentStage === 1 && (
-          <ClienteEnBase2 prevHandler={prevHandler} />
-        )}
-        {visitaActual.inicioVisita && currentStage === 2 && (
-          <ClienteEnBase3 prevHandler={prevHandler} />
-        )}
-        {visitaActual.inicioVisita && currentStage === 3 && (
-          <ClienteEnBaseResumen prevHandler={prevHandler} />
-        )}
+        {visitaActual.inicioVisita &&
+          visitaActual.numeroDeCliente === router.query.slug &&
+          currentStage === 0 && <ClienteEnBase1 />}
+        {visitaActual.inicioVisita &&
+          visitaActual.numeroDeCliente === router.query.slug &&
+          currentStage === 1 && <ClienteEnBase2 prevHandler={prevHandler} />}
+        {visitaActual.inicioVisita &&
+          visitaActual.numeroDeCliente === router.query.slug &&
+          currentStage === 2 && <ClienteEnBase3 prevHandler={prevHandler} />}
+        {visitaActual.inicioVisita &&
+          visitaActual.numeroDeCliente === router.query.slug &&
+          currentStage === 3 && (
+            <ClienteEnBaseResumen prevHandler={prevHandler} />
+          )}
       </LayoutDashboard>
     </>
   );
