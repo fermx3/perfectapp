@@ -1,5 +1,7 @@
 import { createContext, useReducer } from 'react';
 
+import { createAction } from '@/utils/reducer/reducer.utils';
+
 export const VisitaActualContext = createContext({
   visitaActual: {},
   currentStage: 0,
@@ -61,25 +63,21 @@ export function VisitaActualProvider({ children }) {
   console.log(currentStage);
 
   const setVisitaActual = (visitaActual) => {
-    dispatch({
-      type: VISITA_ACTUAL_ACTION_TYPES.SET_VISITA_ACTUAL,
-      payload: visitaActual,
-    });
+    dispatch(
+      createAction(VISITA_ACTUAL_ACTION_TYPES.SET_VISITA_ACTUAL, visitaActual)
+    );
   };
 
   const nextStage = (stage) => {
-    dispatch({ type: VISITA_ACTUAL_ACTION_TYPES.NEXT_STAGE, payload: stage });
+    dispatch(createAction(VISITA_ACTUAL_ACTION_TYPES.NEXT_STAGE, stage));
   };
 
   const prevStage = (stage) => {
-    dispatch({
-      type: VISITA_ACTUAL_ACTION_TYPES.PREV_STAGE,
-      payload: stage,
-    });
+    dispatch(createAction(VISITA_ACTUAL_ACTION_TYPES.PREV_STAGE, stage));
   };
 
   const resetStage = (stage) => {
-    dispatch({ type: VISITA_ACTUAL_ACTION_TYPES.RESET_STAGE, payload: stage });
+    dispatch(createAction(VISITA_ACTUAL_ACTION_TYPES.RESET_STAGE, stage));
   };
 
   const value = {
