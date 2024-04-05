@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import FormControl from '../forms/form-control';
 import ErrorMessage from '../ui/error-message';
@@ -75,9 +76,18 @@ export default function LoginForm() {
 
   return (
     <div className={classes.formContainer}>
-      <h2>Inicia Sesión</h2>
+      <div className={classes.formHeader}>
+        <h2>Inicia Sesión</h2>
+        <p>Lorem ipsum sit amet, consectetuer adiposcing elit, sed.</p>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-        <FormControl>
+        <div className={classes.imgBreaker}>
+          <div className={classes.horizontalLine}></div>
+          <Image src={'/images/icons/login.png'} width={50} height={50} />
+          <div className={classes.horizontalLine}></div>
+        </div>
+        <FormControl login>
+          <Image src={'/images/icons/user.png'} width={13} height={13} />
           <input
             type='number'
             placeholder='Numero de usuario'
@@ -87,7 +97,8 @@ export default function LoginForm() {
           />
           {errors.userId && <p>{errors.userId.message}</p>}
         </FormControl>
-        <FormControl>
+        <FormControl login>
+          <Image src={'/images/icons/password.png'} width={13} height={13} />
           <input
             type='password'
             placeholder='Contraseña'

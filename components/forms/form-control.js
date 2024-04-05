@@ -3,7 +3,7 @@ import Button from '../button';
 
 import classes from './form-control.module.scss';
 
-export default function FormControl({ children }) {
+export default function FormControl({ children, login }) {
   // if (type === 'button') {
   //   return (
   //     <div className={classes.formControl}>
@@ -52,5 +52,9 @@ export default function FormControl({ children }) {
   //   );
   // }
 
-  return <div className={classes.formControl}>{children}</div>;
+  return (
+    <div className={login ? classes.loginInput : classes.formControl}>
+      {children}
+    </div>
+  );
 }
