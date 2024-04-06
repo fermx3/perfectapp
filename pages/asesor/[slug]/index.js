@@ -3,11 +3,9 @@ import { getUserInfo } from '@/lib/prismaDB';
 
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
 import ButtonGroup from '@/components/button-group';
+import LinksGroup from '@/components/ui/links-group';
 
 export default function AsesorPage({ userInfo, session }) {
-  console.log(userInfo);
-  console.log(session);
-
   return (
     <>
       <LayoutDashboard
@@ -15,11 +13,23 @@ export default function AsesorPage({ userInfo, session }) {
         userId={session.user.userId}
         role={session.user.role}
       />
-      <ButtonGroup
-        options={[
-          { name: 'Cliente en Base', link: '/asesor/cliente-en-base' },
-          { name: 'Cliente Nuevo', link: '#' },
-          { name: 'Actividades y Promociones', link: '#' },
+      <LinksGroup
+        links={[
+          {
+            titulo: 'Cliente en Base',
+            link: '/asesor/cliente-en-base',
+            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+          },
+          {
+            titulo: 'Cliente Nuevo',
+            link: '#',
+            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+          },
+          {
+            titulo: 'Actividades y Promociones',
+            link: '#',
+            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+          },
         ]}
       />
     </>

@@ -83,7 +83,12 @@ export default function LoginForm() {
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <div className={classes.imgBreaker}>
           <div className={classes.horizontalLine}></div>
-          <Image src={'/images/icons/login.png'} width={50} height={50} />
+          <Image
+            src={'/images/icons/login.png'}
+            width={50}
+            height={50}
+            alt='login'
+          />
           <div className={classes.horizontalLine}></div>
         </div>
         <FormControl login>

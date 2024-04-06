@@ -1,0 +1,40 @@
+@import '@/styles/variables';
+.linksGroup {
+  margin-top: -32px;
+
+  .link {
+    border-radius: $border-radius-2;
+    color: $white-color;
+    margin: 0 10px;
+    padding: 1.2rem;
+    min-height: 120px;
+    position: relative;
+
+    &:nth-child(3n + 1) {
+      background-color: $primary-color;
+    }
+    &:nth-child(3n + 2) {
+      background-color: $secondary-color;
+    }
+    &:nth-child(3n + 3) {
+      background-color: $tertiary-color;
+    }
+
+    img {
+      position: absolute;
+      filter: invert(100%);
+      right: 1.2rem;
+    }
+
+    h3 {
+      font-size: 2.5rem;
+      font-weight: 100;
+      filter: opacity(50%);
+    }
+
+    p {
+      font-size: 0.8rem;
+      max-width: 200px;
+    }
+  }
+}
