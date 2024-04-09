@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form';
-import FormControl from '../forms/form-control';
+import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import { useDispatch, useSelector } from 'react-redux';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { clienteEnBaseSchema } from '@/lib/schemas/schemas';
 
 import Button from '../button';
 import InfoMessage from '../ui/info-message';
@@ -12,19 +15,20 @@ import {
   nextStage,
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
+import FormError from '../ui/form-error';
 
 export default function ClienteEnBase1() {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
   const defaultValues = {
-    competidores: [
+    competidores: visitaActual.competidores || [
       {
         nombre: '',
         productos: [{ gramos: 100, precio: 0, hasPromo: false, pop: false }],
       },
     ],
-    comentarios1: '',
+    comentarios1: visitaActual.comentarios1 || '',
   };
 
   const {
@@ -34,7 +38,8 @@ export default function ClienteEnBase1() {
     control,
     getValues,
     setValue,
-    errors,
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues,
     shouldUnregister: true,
@@ -72,30 +77,27 @@ export default function ClienteEnBase1() {
             getValues,
             setValue,
             errors,
+            watch,
+            setError,
           }}
         />
       </FormSection>
-      {/* <FormSection titulo='Assessment Promoción - Propuesta'>
-        {competidores &&
-          competidores.map((competidor) => {
-            return <FormGroup titulo={competidor.nombre}></FormGroup>;
-          })}
-      </FormSection> */}
       <InfoMessage
         titulo='Informacion de Categoria'
         contenido='Aquí va el contenido de la noticia importante.'
       />
-      <FormControl>
+      <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
         <label>Comentarios:</label>
         <textarea
           {...register('comentarios1', {
             required: 'Por favor ingresa un comentario.',
           })}
           rows={4}
-          required
         />
       </FormControl>
-
+      {errors.comentarios1 && (
+        <FormError>{errors.comentarios1.message}</FormError>
+      )}
       <Button>Siguiente</Button>
     </form>
   );

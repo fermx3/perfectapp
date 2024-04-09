@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
-import FormControl from '../forms/form-control';
+import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import FormGroup from '../forms/form-group';
+import InputGroup from '../forms/input-group';
 
 export default function OrdenDeCompraField({
   control,
@@ -71,12 +72,9 @@ export default function OrdenDeCompraField({
   ];
 
   const ordenDeCompra = getValues('ordenDeCompra');
-  console.log('ordenField', ordenDeCompra);
-
   return (
     <>
-      <FormControl>
-        <label>Producto</label>
+      <FormControl label='Producto' inputType={INPUT_TYPE_CLASSES.fullWidth}>
         <input
           type='search'
           placeholder='Busqueda por nombre de producto'
@@ -115,60 +113,63 @@ export default function OrdenDeCompraField({
             ))}
         </ul>
       )}
-      {fields.map((orden, index) => (
-        <FormGroup key={orden.id}>
-          <h4 {...register(`ordenDeCompra.${index}.producto`)}>
-            {orden.producto}
-          </h4>
-          <div>
-            <p>Puntos:</p>
-            <p>{orden.puntos}</p>
-          </div>
-          <div>
-            <p>Objetivo:</p>
-            <p>{orden.objetivo}</p>
-          </div>
-          <div>
-            <p>Promocion???:</p>
-            <p>{orden.promocion ? 'si' : 'no'}</p>
-          </div>
-          <FormControl>
-            <label>Cajas:</label>
-            <input
-              type='number'
-              {...register(`ordenDeCompra.${index}.cajas`, {
-                valueAsNumber: true,
-              })}
-            />
-          </FormControl>
-          <Button
-            type='button'
-            onClick={() => {
-              setValue(
-                `ordenDeCompra.${index}.cajas`,
-                ordenDeCompra[index].cajas + 1
-              );
-            }}
-          >
-            +
-          </Button>
-          <Button
-            type='button'
-            onClick={() => {
-              if (ordenDeCompra[index].cajas === 1) {
-                remove(index);
-              } else {
+      <InputGroup>
+        {fields.map((orden, index) => (
+          <FormGroup key={orden.id}>
+            <h4 {...register(`ordenDeCompra.${index}.producto`)}>
+              {orden.producto}
+            </h4>
+            <div>
+              <p>Puntos:</p>
+              <p>{orden.puntos}</p>
+            </div>
+            <div>
+              <p>Objetivo:</p>
+              <p>{orden.objetivo}</p>
+            </div>
+            <div>
+              <p>Promocion???:</p>
+              <p>{orden.promocion ? 'si' : 'no'}</p>
+            </div>
+            <FormControl label='Cajas:'>
+              <input
+                type='number'
+                min={1}
+                {...register(`ordenDeCompra.${index}.cajas`, {
+                  valueAsNumber: true,
+                })}
+                required
+              />
+            </FormControl>
+            <Button
+              type='button'
+              onClick={() => {
                 setValue(
                   `ordenDeCompra.${index}.cajas`,
-                  ordenDeCompra[index].cajas - 1
+                  ordenDeCompra[index].cajas + 1
                 );
-              }
-            }}
-          >
-            -
-          </Button>
-        </FormGroup>
-      ))}
+              }}
+            >
+              +
+            </Button>
+            <Button
+              type='button'
+              onClick={() => {
+                if (ordenDeCompra[index].cajas === 1) {
+                  remove(index);
+                } else {
+                  setValue(
+                    `ordenDeCompra.${index}.cajas`,
+                    ordenDeCompra[index].cajas - 1
+                  );
+                }
+              }}
+            >
+              -
+            </Button>
+          </FormGroup>
+        ))}
+      </InputGroup>
     </>
   );
 }

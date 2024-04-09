@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import FormControl from '../forms/form-control';
+import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import ErrorMessage from '../ui/error-message';
 
 import { useForm } from 'react-hook-form';
@@ -91,7 +91,7 @@ export default function LoginForm() {
           />
           <div className={classes.horizontalLine}></div>
         </div>
-        <FormControl login>
+        <FormControl inputType={INPUT_TYPE_CLASSES.login}>
           <Image src={'/images/icons/user.png'} width={13} height={13} />
           <input
             type='number'
@@ -102,7 +102,7 @@ export default function LoginForm() {
           />
           {errors.userId && <p>{errors.userId.message}</p>}
         </FormControl>
-        <FormControl login>
+        <FormControl inputType={INPUT_TYPE_CLASSES.login}>
           <Image src={'/images/icons/password.png'} width={13} height={13} />
           <input
             type='password'

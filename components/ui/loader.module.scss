@@ -7,22 +7,25 @@
 }
 
 .loader {
-  width: 40px;
-  aspect-ratio: 1;
-  background: radial-gradient(farthest-side, #000 90%, #0000) 50%/8px 8px
-      no-repeat,
-    conic-gradient(from -90deg at 15px 15px, #0000 90deg, $primary-color 0) 0 0/25px
-      25px;
-  animation: l7 1s infinite;
+  display: inline-grid;
+  font-size: 50px;
 }
-@keyframes l7 {
-  0% {
-    background-position: 50%, 0 0;
-  }
-  50% {
-    background-position: 50%, 25px 0;
-  }
-  100% {
-    background-position: 50%, 25px 25px;
+.loader:before,
+.loader:after {
+  background-image: url('/images/perfect-logo.png');
+  background-size: 50px;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  content: '';
+  grid-area: 1/1;
+}
+.loader:after {
+  animation: l10 1s infinite;
+}
+@keyframes l10 {
+  to {
+    transform: scale(1.8);
+    opacity: 0;
   }
 }

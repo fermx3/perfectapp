@@ -1,19 +1,24 @@
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { clienteEnBaseSchema2 } from '@/lib/schemas/schemas';
+
 import ReactSwitch from 'react-switch';
 import InfoMessage from '../ui/info-message';
 import Button from '../button';
 import FormSection from '../forms/form-section';
-import FormControl from '../forms/form-control';
+import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import OrdenDeCompraField from './orden-de-compra-field';
+import FormError from '../ui/form-error';
 
 import {
   setVisitaActual,
   nextStage,
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
+import InputGroup from '../forms/input-group';
 
 export default function ClienteEnBase2({ prevHandler }) {
   const dispatch = useDispatch();
@@ -47,11 +52,11 @@ export default function ClienteEnBase2({ prevHandler }) {
   ];
 
   const defaultValues = {
-    promociones: promociones,
-    cuentaConInventario: false,
-    hayOrdenDeCompra: false,
-    comentarios2: '',
-    ordenDeCompra: [],
+    promociones: visitaActual.promociones || promociones,
+    cuentaConInventario: visitaActual.cuentaConInventario || false,
+    hayOrdenDeCompra: visitaActual.hayOrdenDeCompra || false,
+    comentarios2: visitaActual.comentarios2 || '',
+    ordenDeCompra: visitaActual.ordenDeCompra || [],
   };
 
   const {
@@ -61,7 +66,7 @@ export default function ClienteEnBase2({ prevHandler }) {
     control,
     getValues,
     setValue,
-    errors,
+    formState: { errors },
   } = useForm({
     defaultValues,
     shouldUnregister: true,
@@ -86,31 +91,31 @@ export default function ClienteEnBase2({ prevHandler }) {
         contenido='Aquí va el contenido de la noticia importante.'
       />
       <FormSection titulo='Promoción del mes'>
-        {fields.map((promocion, index) => (
-          <FormGroup key={promocion.id}>
-            <h4 {...register(`promociones.${index}.promo`)}>
-              {promocion.promo}
-            </h4>
-            <p>
-              <span>{promocion.sku}</span>
-            </p>
-            <p>{promocion.desc}</p>
-            <FormControl>
-              <label>¿Implementada?</label>
-              <Controller
-                name={`promociones.${index}.implementada`}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <ReactSwitch checked={value} onChange={onChange} />
-                )}
-              />
-            </FormControl>
-          </FormGroup>
-        ))}
+        <InputGroup>
+          {fields.map((promocion, index) => (
+            <FormGroup key={promocion.id}>
+              <h4 {...register(`promociones.${index}.promo`)}>
+                {promocion.promo}
+              </h4>
+              <p>
+                <span>{promocion.sku}</span>
+              </p>
+              <p>{promocion.desc}</p>
+              <FormControl label='¿Implementada?'>
+                <Controller
+                  name={`promociones.${index}.implementada`}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <ReactSwitch checked={value} onChange={onChange} />
+                  )}
+                />
+              </FormControl>
+            </FormGroup>
+          ))}
+        </InputGroup>
       </FormSection>
       <FormSection titulo='Cuneta'>
-        <FormControl>
-          <label>¿Cuenta con inventario?</label>
+        <FormControl label='¿Cuenta con inventario?'>
           <Controller
             name={`cuentaConInventario`}
             control={control}
@@ -119,8 +124,7 @@ export default function ClienteEnBase2({ prevHandler }) {
             )}
           />
         </FormControl>
-        <FormControl>
-          <label>¿Orden de compra?</label>
+        <FormControl label='¿Orden de compra?'>
           <Controller
             name={`hayOrdenDeCompra`}
             control={control}
@@ -142,15 +146,19 @@ export default function ClienteEnBase2({ prevHandler }) {
           />
         )}
       </FormSection>
-      <FormControl>
-        <label>Comentarios:</label>
+      <FormControl
+        label='Comentarios:'
+        inputType={INPUT_TYPE_CLASSES.fullWidth}
+      >
         <textarea
           {...register('comentarios2', {
             required: 'Por favor ingresa un comentario.',
           })}
           rows={4}
-          required
         />
+        {errors.comentarios2 && (
+          <FormError>{errors.comentarios2.message}</FormError>
+        )}
       </FormControl>
       <Button type='button' onClick={prevHandler}>
         Anterior

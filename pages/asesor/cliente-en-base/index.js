@@ -1,8 +1,11 @@
-import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
+import Link from 'next/link';
 import Container from '@/components/layout/container';
-import FormControl from '@/components/forms/form-control';
+import FormControl, {
+  INPUT_TYPE_CLASSES,
+} from '@/components/forms/form-control';
 
 import { getClientes, getUserInfo } from '@/lib/prismaDB';
 import { getSession } from 'next-auth/react';
@@ -17,6 +20,18 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
     return cliente.frecuencia === frecuenciaIsSelected;
   });
 
+  const router = useRouter();
+
+  const listaChangeHandler = function (e) {
+    const selectedUser = clientes.find(
+      (cliente) => cliente.nombre === e.target.value
+    );
+
+    if (!selectedUser) return;
+
+    router.replace(`/asesor/cliente-en-base/${selectedUser.userId}`);
+  };
+
   return (
     <Container md>
       <header>
@@ -24,8 +39,22 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
         <h5>Asesor: {userInfo.nombre}</h5>
       </header>
       <main className={classes.main}>
-        <FormControl>
-          <label>Nombre del cliente</label>
+        <FormControl
+          label='Nombre del cliente'
+          inputType={INPUT_TYPE_CLASSES.fullWidth}
+        >
+          <input
+            list='clientesLista'
+            placeholder='Busqueda por nombre'
+            onChange={listaChangeHandler}
+          />
+          <datalist id='clientesLista'>
+            {clientes.map((cliente) => (
+              <option key={cliente.id} value={cliente.nombre}>
+                {cliente.nombre}
+              </option>
+            ))}
+          </datalist>
           <input
             type='search'
             placeholder='Busqueda por nombre'
@@ -51,7 +80,7 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
           </ul>
         )}
         <h4>o</h4>
-        <FormControl>
+        <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
           <label>Día de visita</label>
           <select onChange={(e) => setFrecuenciaIsSelected(e.target.value)}>
             <option value={0} selected disabled hidden>
@@ -65,25 +94,11 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
               'Sábado',
               'Domingo',
             ].map((dia) => (
-              <option>{dia}</option>
+              <option key={dia}>{dia}</option>
             ))}
           </select>
         </FormControl>
-        <FormControl
-          type='select'
-          id='frecuencia'
-          label='Frecuencia'
-          defaultOption='Día de Visita'
-          options={[
-            'Lunes',
-            'Martes',
-            'Miércoles',
-            'Jueves',
-            'Sábado',
-            'Domingo',
-          ]}
-          onChange={(e) => setFrecuenciaIsSelected(e.target.value)}
-        />
+
         {frecuenciaIsSelected && (
           <ul className={classes.clientes}>
             {filteredClientes.length !== 0 ? (

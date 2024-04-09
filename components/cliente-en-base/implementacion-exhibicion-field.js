@@ -57,8 +57,7 @@ export default function ImplementacionExhibicionField({
               ))}
             </select>
           </FormControl>
-          <FormControl>
-            <label>PoP</label>
+          <FormControl label='PoP'>
             <Controller
               name={`exhibiciones.${index}.pop`}
               control={control}

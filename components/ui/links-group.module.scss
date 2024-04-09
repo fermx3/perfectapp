@@ -7,7 +7,7 @@
     color: $white-color;
     margin: 0 10px;
     padding: 1.2rem;
-    min-height: 120px;
+    min-height: 150px;
     position: relative;
 
     &:nth-child(3n + 1) {
@@ -36,5 +36,15 @@
       font-size: 0.8rem;
       max-width: 200px;
     }
+  }
+}
+
+@media screen and (min-width: $mobile-size) {
+  .linksGroup {
+    display: flex;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
   }
 }

@@ -3,10 +3,11 @@ import { useForm, Controller, useFieldArray } from 'react-hook-form';
 
 import Button from '../button';
 import InfoMessage from '../ui/info-message';
-import FormControl from '../forms/form-control';
+import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import FormSection from '../forms/form-section';
 import FormGroup from '../forms/form-group';
 import ReactSwitch from 'react-switch';
+import FormError from '../ui/form-error';
 
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 import {
@@ -16,6 +17,9 @@ import {
 
 import ImplementacionMaterialesField from './implementacion-materiales-field';
 import ImplementacionExhibicionField from './implementacion-exhibicion-field';
+import InputGroup from '../forms/input-group';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { clienteEnBaseSchema3 } from '@/lib/schemas/schemas';
 
 export default function ClienteEnBase3({ prevHandler }) {
   const dispatch = useDispatch();
@@ -54,9 +58,10 @@ export default function ClienteEnBase3({ prevHandler }) {
   const periodoNegociado = ['1 semana', '2 semanas', '3 semanas'];
 
   const defaultValues = {
-    planDeComunicacion: planDeComunicacion,
-    materiales: [{ material: '', pop: false }],
-    comentarios3: '',
+    planDeComunicacion: visitaActual.planDeComunicacion || planDeComunicacion,
+    materiales: visitaActual.materiales || [{ material: '', pop: false }],
+    excibiciones: visitaActual.excibiciones || [],
+    comentarios3: visitaActual.comentarios3 || '',
   };
 
   const {
@@ -66,8 +71,11 @@ export default function ClienteEnBase3({ prevHandler }) {
     control,
     getValues,
     setValue,
-    errors,
-  } = useForm({ defaultValues, shouldUnregister: true });
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+    shouldUnregister: true,
+  });
 
   const { fields } = useFieldArray({
     control,
@@ -86,27 +94,28 @@ export default function ClienteEnBase3({ prevHandler }) {
         contenido='Aquí va el contenido de la noticia importante.'
       />
       <FormSection titulo='Plan de comunicación del mes'>
-        {fields.map((item, index) => (
-          <FormGroup key={item.id}>
-            <h4 {...register(`planDeComunicacion.${index}.materiales`)}>
-              {item.materiales}
-            </h4>
-            <p>{item.actividades}</p>
-            <p>
-              <span>{item.periodo}</span>
-            </p>
-            <FormControl>
-              <label>Alcance</label>
-              <Controller
-                name={`planDeComunicacion.${index}.alcance`}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <ReactSwitch checked={value} onChange={onChange} />
-                )}
-              />
-            </FormControl>
-          </FormGroup>
-        ))}
+        <InputGroup>
+          {fields.map((item, index) => (
+            <FormGroup key={item.id}>
+              <h4 {...register(`planDeComunicacion.${index}.materiales`)}>
+                {item.materiales}
+              </h4>
+              <p>{item.actividades}</p>
+              <p>
+                <span>{item.periodo}</span>
+              </p>
+              <FormControl label='Alcance'>
+                <Controller
+                  name={`planDeComunicacion.${index}.alcance`}
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <ReactSwitch checked={value} onChange={onChange} />
+                  )}
+                />
+              </FormControl>
+            </FormGroup>
+          ))}
+        </InputGroup>
       </FormSection>
       <FormSection titulo='Implementación'>
         <ImplementacionMaterialesField
@@ -136,15 +145,19 @@ export default function ClienteEnBase3({ prevHandler }) {
         />
       </FormSection>
 
-      <FormControl>
-        <label>Comentarios:</label>
+      <FormControl
+        label='Comentarios:'
+        inputType={INPUT_TYPE_CLASSES.fullWidth}
+      >
         <textarea
           {...register('comentarios3', {
             required: 'Por favor ingresa un comentario.',
           })}
           rows={4}
-          required
         />
+        {errors.comentarios3 && (
+          <FormError>{errors.comentarios3.message}</FormError>
+        )}
       </FormControl>
       <Button type='button' onClick={prevHandler}>
         Anterior

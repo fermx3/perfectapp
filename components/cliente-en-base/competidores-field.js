@@ -4,6 +4,7 @@ import FormControl from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import Button from '../button';
 import ProductosField from './productos-field';
+import FormError from '../ui/form-error';
 
 export default function CompetidoresField({
   control,
@@ -11,6 +12,7 @@ export default function CompetidoresField({
   setValue,
   getValues,
   errors,
+  watch,
 }) {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -24,9 +26,8 @@ export default function CompetidoresField({
           <FormControl>
             <select
               {...register(`competidores.${index}.nombre`, {
-                required: 'Por favor, selecciona un competidor.',
+                required: 'Por favor completa este campo',
               })}
-              required
             >
               <option value={null} selected disabled hidden>
                 Nombre del competidor
@@ -37,10 +38,13 @@ export default function CompetidoresField({
                 </option>
               ))}
             </select>
+            {errors.competidores?.[index]?.nombre && (
+              <FormError>{errors.competidores[index].nombre.message}</FormError>
+            )}
           </FormControl>
           <ProductosField
             nestIndex={index}
-            {...{ control, register, getValues }}
+            {...{ control, register, getValues, watch, errors }}
           />
           {index > 0 && (
             <Button

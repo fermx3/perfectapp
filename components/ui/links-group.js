@@ -13,6 +13,7 @@ export default function LinksGroup({ links }) {
               src={'/images/icons/up-right-arrow.png'}
               width={40}
               height={40}
+              alt='arrow'
             />
             <h3>0{index + 1}</h3>
             <h2>{link.titulo}</h2>

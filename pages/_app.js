@@ -1,7 +1,9 @@
-import MainLayout from '@/components/layout/main-layout';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from '@/store/store';
+
+import MainLayout from '@/components/layout/main-layout';
+import Loader from '@/components/ui/loader';
 
 import '@/styles/globals.scss';
 
@@ -11,7 +13,7 @@ export default function App({ Component, pageProps, session }) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={<Loader />} persistor={persistor}>
           <MainLayout>
             <Component {...pageProps} />
           </MainLayout>

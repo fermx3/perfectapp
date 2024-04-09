@@ -39,8 +39,7 @@ export default function ImplementacionMaterialesField({
               ))}
             </select>
           </FormControl>
-          <FormControl>
-            <label>PoP</label>
+          <FormControl label='Pop'>
             <Controller
               name={`materiales.${index}.pop`}
               control={control}

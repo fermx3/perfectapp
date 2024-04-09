@@ -1,52 +1,78 @@
 import { useFieldArray, Controller } from 'react-hook-form';
+import Image from 'next/image';
 
-import FormControl from '../forms/form-control';
+import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import Button from '../button';
 import ReactSwitch from 'react-switch';
+import InputGroup from '../forms/input-group';
+import FormError from '../ui/form-error';
 
 export default function ProductosField({
   nestIndex,
   control,
   register,
   getValues,
+  watch,
+  errors,
 }) {
   const { fields, remove, append } = useFieldArray({
     control,
     name: `competidores.${nestIndex}.productos`,
   });
 
-  const competidor = getValues(`competidores.${nestIndex}`);
+  const competidor = watch(`competidores.${nestIndex}`);
+
+  console.log(errors);
 
   return (
     <>
       {fields.map((producto, k) => {
         return (
-          <div key={producto.id}>
+          <InputGroup key={producto.id}>
             <h5>Producto {k + 1}</h5>
-            <FormControl>
-              <label>Gramos</label>
+            <FormControl label='Gramos' unit='gr'>
               <input
                 type='number'
                 {...register(
                   `competidores.${nestIndex}.productos.${k}.gramos`,
-                  { required: 'Este campo es requerido', valueAsNumber: true }
+                  {
+                    required: 'Por favor completa este campo',
+                    valueAsNumber: true,
+                  }
                 )}
-                required
               />
+              {errors.competidores?.[nestIndex]?.productos?.[k]?.gramos && (
+                <FormError>
+                  {errors.competidores[nestIndex].productos[k].gramos.message}
+                </FormError>
+              )}
             </FormControl>
-            <FormControl>
-              <label>Precio</label>
+            <FormControl prefix='$' label='Precio'>
               <input
                 type='number'
+                min={0}
                 {...register(
                   `competidores.${nestIndex}.productos.${k}.precio`,
-                  { required: 'Este campo es requerido', valueAsNumber: true }
+                  {
+                    required: 'Por favor llena este campo',
+                    min: {
+                      value: 1,
+                      message: 'El valor debe ser igual o mayor a 1',
+                    },
+                    valueAsNumber: true,
+                  }
                 )}
-                required
               />
+              {errors.competidores?.[nestIndex]?.productos?.[k]?.precio && (
+                <FormError>
+                  {errors.competidores[nestIndex].productos[k].precio.message}
+                </FormError>
+              )}
             </FormControl>
-            <FormControl>
-              <label>¿Tiene descuento?</label>
+            <FormControl
+              inputType={INPUT_TYPE_CLASSES.fullWidth}
+              label='¿Tiene descuento?'
+            >
               <Controller
                 name={`competidores.${nestIndex}.productos.${k}.hasPromo`}
                 control={control}
@@ -57,17 +83,33 @@ export default function ProductosField({
             </FormControl>
             {competidor.productos[k].hasPromo && (
               <>
-                <FormControl>
-                  <label>Precio Con Promo</label>
+                <FormControl prefix='$' label='Precio Con Promo'>
                   <input
                     type='number'
+                    min={0}
                     {...register(
                       `competidores.${nestIndex}.productos.${k}.precioConPromo`,
-                      { valueAsNumber: true }
+                      {
+                        required: 'Por favor llena este campo',
+                        min: {
+                          value: 1,
+                          message: 'El valor debe ser igual o mayor a 1',
+                        },
+                        valueAsNumber: true,
+                      }
                     )}
                   />
+                  {errors.competidores?.[nestIndex]?.productos?.[k]
+                    ?.precioConPromo && (
+                    <FormError>
+                      {
+                        errors.competidores[nestIndex].productos[k]
+                          .precioConPromo.message
+                      }
+                    </FormError>
+                  )}
                 </FormControl>
-                <FormControl>
+                <FormControl label='Razón de promo'>
                   <select
                     {...register(
                       `competidores.${nestIndex}.productos.${k}.precioConPromoReason`
@@ -100,10 +142,10 @@ export default function ProductosField({
             )}
             {k > 0 && (
               <Button type='button' onClick={() => remove(k)}>
-                Quitar Producto
+                <Image src='/images/icons/delete.png' width={20} height={20} />
               </Button>
             )}
-          </div>
+          </InputGroup>
         );
       })}
       <FormControl>

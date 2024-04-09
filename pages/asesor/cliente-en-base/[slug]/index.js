@@ -16,6 +16,7 @@ import moment from 'moment';
 import {
   setVisitaActual,
   prevStage,
+  resetStage,
 } from '@/store/visitaActual/visitaActual.reducer';
 import {
   selectCurrentStage,
@@ -41,6 +42,7 @@ export default function VisitaPage({ cliente, session }) {
       return;
     }
     const inicioVisita = moment().format();
+    dispatch(resetStage());
     dispatch(
       setVisitaActual({
         asesor: session.user.userId,

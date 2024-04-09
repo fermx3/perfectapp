@@ -2,13 +2,18 @@
 
 .formControl {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: baseline;
   gap: 0.2rem;
   padding: 0 0.3rem;
   padding-bottom: 0.5rem;
   max-width: 600px;
   margin: 0 1px;
   position: relative;
+
+  div {
+    width: 100%;
+  }
 
   &:focus {
     border-color: $white-color;
@@ -17,6 +22,7 @@
 
   label {
     font-size: 0.9rem;
+    width: 100%;
   }
 
   input {
@@ -77,7 +83,7 @@
   margin: 1rem 0;
 }
 
-.loginInput {
+.login {
   @extend .formControl;
 
   img {
@@ -92,9 +98,22 @@
     border: solid $white-color;
     background-color: transparent;
     color: $white-color;
+    width: 100%;
 
     &::placeholder {
       color: white;
     }
+  }
+}
+
+.fullWidth {
+  @extend .formControl;
+
+  min-width: 100%;
+
+  input,
+  select,
+  textarea {
+    min-width: 100%;
   }
 }

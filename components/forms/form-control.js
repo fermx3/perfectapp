@@ -1,60 +1,33 @@
-import ReactSwitch from 'react-switch';
-import Button from '../button';
-
 import classes from './form-control.module.scss';
 
-export default function FormControl({ children, login }) {
-  // if (type === 'button') {
-  //   return (
-  //     <div className={classes.formControl}>
-  //       <Button>{label}</Button>
-  //     </div>
-  //   );
-  // }
+export const INPUT_TYPE_CLASSES = {
+  base: 'base',
+  login: 'login',
+  fullWidth: 'fullWidh',
+};
 
-  // if (type === 'select') {
-  //   return (
-  //     <div className={classes.formControl}>
-  //       <label htmlFor={id}>{label}</label>
-  //       <select onChange={onChange}>
-  //         {defaultOption && (
-  //           <option value='' selected disabled hidden>
-  //             {defaultOption}
-  //           </option>
-  //         )}
-  //         {options.map((object) => {
-  //           return (
-  //             <option value={object} key={object}>
-  //               {object}
-  //             </option>
-  //           );
-  //         })}
-  //       </select>
-  //     </div>
-  //   );
-  // }
+const getInput = (inputType = INPUT_TYPE_CLASSES.base) =>
+  ({
+    [INPUT_TYPE_CLASSES.base]: classes.formControl,
+    [INPUT_TYPE_CLASSES.login]: classes.login,
+    [INPUT_TYPE_CLASSES.fullWidth]: classes.fullWidth,
+  }[inputType]);
 
-  // if (type === 'textarea') {
-  //   return (
-  //     <div className={classes.textArea}>
-  //       <label htmlFor={id}>{label}</label>
-  //       <textarea id={id} value={value} onChange={onChange} rows='4' required />
-  //     </div>
-  //   );
-  // }
-
-  // if (type === 'switch') {
-  //   return (
-  //     <div className={classes.formControl}>
-  //       <label htmlFor={id}>{label}</label>
-  //       <ReactSwitch id={id} checked={value} onChange={onChange} />
-  //     </div>
-  //   );
-  // }
+export default function FormControl({
+  children,
+  inputType,
+  prefix,
+  label,
+  unit,
+}) {
+  const customInput = getInput(inputType);
 
   return (
-    <div className={login ? classes.loginInput : classes.formControl}>
+    <div className={customInput}>
+      {label && <label>{label}</label>}
+      {prefix && <p>{prefix}</p>}
       {children}
+      {unit && <p>{unit}</p>}
     </div>
   );
 }
