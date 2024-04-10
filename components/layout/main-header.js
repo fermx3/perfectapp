@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import classes from './main-header.module.scss';
 import Button from '../button';
 import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
-import Container from './container';
 
 export default function MainHeader({ children }) {
   const session = useSession();
@@ -46,34 +45,34 @@ export default function MainHeader({ children }) {
         </ul>
       </nav>
       <div className={classes.mobileNav}>
-        {isMenuOpen ? (
-          <Image
-            src='/images/icons/close-circle.svg'
-            width={50}
-            height={50}
-            onClick={() => dispatch(toggleMenu())}
-          />
+        {session.status === 'authenticated' ? (
+          isMenuOpen ? (
+            <Image
+              src='/images/icons/close-circle.svg'
+              width={50}
+              height={50}
+              onClick={() => dispatch(toggleMenu())}
+            />
+          ) : (
+            <Image
+              src='/images/icons/hamburger.png'
+              width={50}
+              height={50}
+              onClick={() => dispatch(toggleMenu())}
+            />
+          )
         ) : (
-          <Image
-            src='/images/icons/hamburger.png'
-            width={50}
-            height={50}
-            onClick={() => dispatch(toggleMenu())}
-          />
+          <Button href='/login'>Inicia Sesión</Button>
         )}
       </div>
       {isMenuOpen && (
         <div className={classes.dropdown}>
           <nav>
             <ul>
-              {session.status === 'authenticated' ? (
+              {session.status === 'authenticated' && (
                 <li>
                   <Button onClick={logoutHandler}>Cerrar Sesion</Button>
                 </li>
-              ) : (
-                <Link href='/login' onClick={() => dispatch(toggleMenu())}>
-                  <li>Por favor inicia sesion</li>
-                </Link>
               )}
             </ul>
           </nav>
