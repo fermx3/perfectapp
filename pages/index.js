@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 
 import classes from './index.module.scss';
 import Logo from '@/components/logo/logo';
+import Loader from '@/components/ui/loader';
 import Container from '@/components/layout/container';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -19,10 +20,10 @@ export default function Home() {
         <link rel='icon' href='/favicon.png' />
       </Head>
       <main className={classes.main}>
-        <Logo />
         <div className={classes.header}>
           <Container md>
-            <h1>Bienvenido/a a perfect app!</h1>
+            <h1>Bienvenido/a a</h1>
+            <Logo />
             <Button href='/login'>Acceder</Button>
           </Container>
         </div>

@@ -7,50 +7,17 @@
   justify-content: space-evenly;
   height: 80vh;
 
-  .logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
   .header {
     padding-top: 2rem;
+    display: flex;
+    align-items: stretch;
+
     h1 {
       text-align: center;
+    }
+
+    img {
       margin-bottom: 2rem;
-    }
-  }
-
-  .buttonGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-top: 3rem;
-
-    a {
-      background-color: $primary-color;
-      display: inline-block;
-      padding: 0.3em 1.2em;
-      margin: 0 0.1em 0.1em 0;
-      border: 0.16em solid rgba(255, 255, 255, 0);
-      border-radius: 0.4rem;
-      box-sizing: border-box;
-      text-decoration: none;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 300;
-      color: $white-color;
-      text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
-      text-align: center;
-      transition: all 0.2s;
-    }
-    a:hover {
-      border-color: $white-color;
-    }
-    @media all and (max-width: 30em) {
-      a {
-        display: block;
-        margin: 0.2em auto;
-      }
     }
   }
 }

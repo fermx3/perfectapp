@@ -4,6 +4,8 @@
   display: flex;
   justify-content: center;
   margin: 1rem 0;
+  background-color: $white-color;
+  border-radius: 50%;
 }
 
 .loader {
@@ -12,7 +14,7 @@
 }
 .loader:before,
 .loader:after {
-  background-image: url('/images/perfect-logo.png');
+  background-image: url('/images/perfect-logo-icon.png');
   background-size: 50px;
   display: inline-block;
   width: 50px;

@@ -40,12 +40,8 @@
       align-items: center;
       padding: 1.5rem;
 
-      img {
-        filter: invert(100%);
-      }
-
       .horizontalLine {
-        height: 1px;
+        height: 2px;
         width: 100%;
         margin: 0 0.5rem;
         background-color: $white-color;

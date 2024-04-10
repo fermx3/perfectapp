@@ -1,9 +1,6 @@
 import { useForm } from 'react-hook-form';
 import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import { useDispatch, useSelector } from 'react-redux';
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import { clienteEnBaseSchema } from '@/lib/schemas/schemas';
 
 import Button from '../button';
 import InfoMessage from '../ui/info-message';

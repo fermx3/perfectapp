@@ -2,17 +2,16 @@ import Image from 'next/image';
 
 import classes from './logo.module.scss';
 
-export default function Logo({ horizontal, priority }) {
+export default function Logo({ priority }) {
   return (
-    <div className={horizontal ? classes.horizontalLogo : classes.logo}>
+    <div className={classes.logo}>
       <Image
         src={'/images/perfect-logo.png'}
-        width={80}
-        height={80}
-        alt='perfect logo'
+        width={300}
+        height={97}
+        alt='perfectapp logo'
         priority={priority}
       />
-      <h1>perfect app</h1>
     </div>
   );
 }

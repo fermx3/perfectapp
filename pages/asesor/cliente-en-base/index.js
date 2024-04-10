@@ -43,7 +43,7 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
           label='Nombre del cliente'
           inputType={INPUT_TYPE_CLASSES.fullWidth}
         >
-          <input
+          {/* <input
             list='clientesLista'
             placeholder='Busqueda por nombre'
             onChange={listaChangeHandler}
@@ -54,7 +54,7 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
                 {cliente.nombre}
               </option>
             ))}
-          </datalist>
+          </datalist> */}
           <input
             type='search'
             placeholder='Busqueda por nombre'
