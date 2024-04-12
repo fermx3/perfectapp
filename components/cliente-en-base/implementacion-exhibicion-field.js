@@ -23,7 +23,7 @@ export default function ImplementacionExhibicionField({
     <>
       {fields.map((exhibicion, index) => (
         <FormGroup titulo={`Exhibición ${index + 1}`} key={exhibicion.id}>
-          <FormControl>
+          <FormControl label='Producto: '>
             <select
               {...register(`exhibiciones.${index}.producto`, {
                 required: 'Por favor, selecciona una exhibición.',
@@ -40,7 +40,7 @@ export default function ImplementacionExhibicionField({
               ))}
             </select>
           </FormControl>
-          <FormControl>
+          <FormControl label='Periodo Negociado:'>
             <select
               {...register(`exhibiciones.${index}.periodoNegociado`, {
                 required: 'Por favor, selecciona un periodo.',
@@ -72,7 +72,12 @@ export default function ImplementacionExhibicionField({
           </Button>
         </FormGroup>
       ))}
-      <Button type='button' onClick={() => append()}>
+      <Button
+        type='button'
+        onClick={() =>
+          append({ periodoNegociado: '', pop: false, producto: '' })
+        }
+      >
         Agregar exhibición
       </Button>
     </>

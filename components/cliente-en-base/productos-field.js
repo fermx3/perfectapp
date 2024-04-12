@@ -22,8 +22,6 @@ export default function ProductosField({
 
   const competidor = watch(`competidores.${nestIndex}`);
 
-  console.log(errors);
-
   return (
     <>
       {fields.map((producto, k) => {
@@ -33,6 +31,7 @@ export default function ProductosField({
             <FormControl label='Gramos' unit='gr'>
               <input
                 type='number'
+                min={0}
                 {...register(
                   `competidores.${nestIndex}.productos.${k}.gramos`,
                   {
@@ -149,7 +148,12 @@ export default function ProductosField({
         );
       })}
       <FormControl>
-        <Button type='button' onClick={() => append()}>
+        <Button
+          type='button'
+          onClick={() =>
+            append({ gramos: '', precio: '', hasPromo: false, pop: false })
+          }
+        >
           Agregar Producto
         </Button>
       </FormControl>

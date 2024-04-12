@@ -60,7 +60,9 @@ export default function ClienteEnBase3({ prevHandler }) {
   const defaultValues = {
     planDeComunicacion: visitaActual.planDeComunicacion || planDeComunicacion,
     materiales: visitaActual.materiales || [{ material: '', pop: false }],
-    excibiciones: visitaActual.excibiciones || [],
+    exhibiciones: visitaActual.exhibiciones || [
+      { periodoNegociado: '', pop: false, producto: '' },
+    ],
     comentarios3: visitaActual.comentarios3 || '',
   };
 

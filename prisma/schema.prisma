@@ -8,8 +8,11 @@ datasource db {
 }
 
 type UserInfo {
-  nivelDeCliente   String?
   nombre           String
+  nivelDeCliente   String?
+  cadena           String?
+  frecuencia       String[]
+  leales           String?
 }
 
 model users {
@@ -27,12 +30,65 @@ enum Role {
   CLIENTE
 }
 
-model clientes {
-    id              String        @id @default(auto()) @map("_id") @db.ObjectId
-    nombre          String
-    cadena          String
-    leales          String
-    nivelDeCliente  String
-    userId          String @unique
-    frecuencia      String
+type Competidores {
+  nombre String
+  productos Productos[]
+}
+
+type Productos {
+  gramos               Int
+  precio               Int
+  hasPromo             Boolean
+  pop                  Boolean?
+  precioConPromo       Int?
+  precioConPromoReason String?
+}
+
+type Promociones {
+  implementada Boolean
+  promo        String
+}
+
+type OrdenDeCompra {
+  cajas     Int
+  objetivo  Int?
+  producto  String
+  promocion Boolean?
+  puntos    Int?
+}
+
+type PlanDeComunicacion {
+  alcance    Boolean
+  materiales String
+}
+
+type Materiales {
+  material String
+  pop      Boolean
+}
+
+type Exhibiciones {
+  periodoNegociado String
+  pop              Boolean
+  producto         String
+}
+
+model visitas {
+  id                  String        @id @default(auto()) @map("_id") @db.ObjectId
+  asesor              String
+  inicioVisita        String
+  finVisita           String
+  numeroDeCliente     String
+  competidores        Competidores[]
+  comentarios1        String
+  promociones         Promociones[]
+  cuentaConInventario Boolean
+  hayOrdenDeCompra    Boolean
+  comentarios2        String
+  ordenDeCompra       OrdenDeCompra[]
+  planDeComunicacion  PlanDeComunicacion[]
+  materiales          Materiales[]
+  exhibiciones        Exhibiciones[]
+  comentarios3        String
+
 }

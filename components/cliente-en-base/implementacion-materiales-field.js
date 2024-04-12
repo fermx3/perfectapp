@@ -54,7 +54,10 @@ export default function ImplementacionMaterialesField({
           </Button>
         </FormGroup>
       ))}
-      <Button type='button' onClick={() => append()}>
+      <Button
+        type='button'
+        onClick={() => append({ material: '', pop: false })}
+      >
         Agregar material
       </Button>
     </>

@@ -2,6 +2,25 @@ import Link from 'next/link';
 
 import { getSession } from 'next-auth/react';
 import Container from '@/components/layout/container';
+import LinksGroup from '@/components/ui/links-group';
+
+const links = [
+  {
+    titulo: 'Crear Leal',
+    link: '/admin/crear-cliente',
+    desc: 'Haz click aquí para crear un cliente LEAL.',
+  },
+  {
+    titulo: 'Crear Asesor',
+    link: '#',
+    desc: 'Haz click aquí para crear un Asesor.',
+  },
+  {
+    titulo: 'Crear Leal',
+    link: '#',
+    desc: 'Haz click aquí para crear un Cliente.',
+  },
+];
 
 export default function AdminPage() {
   return (
@@ -11,19 +30,7 @@ export default function AdminPage() {
         <h3>Bienvenido</h3>
       </header>
       <main>
-        <nav>
-          <ul>
-            <li>
-              <Link href={'/admin/crear-cliente'}>Crear Leal</Link>
-            </li>
-            <li>
-              <Link href={'/admin'}>Crear Asesor</Link>
-            </li>
-            <li>
-              <Link href={'/admin'}>Crear Cliente</Link>
-            </li>
-          </ul>
-        </nav>
+        <LinksGroup links={links} />
       </main>
     </Container>
   );

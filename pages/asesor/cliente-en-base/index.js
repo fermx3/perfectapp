@@ -11,13 +11,14 @@ import { getClientes, getUserInfo } from '@/lib/prismaDB';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
+import { frecuencias } from '@/lib/schemas/schemas';
 
 export default function ClienteEnBasePage({ clientes, userInfo }) {
   const [value, setValue] = useState('');
   const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
 
   const filteredClientes = clientes.filter((cliente) => {
-    return cliente.frecuencia === frecuenciaIsSelected;
+    return cliente.frecuencia.some((i) => i === frecuenciaIsSelected);
   });
 
   const router = useRouter();
@@ -86,14 +87,7 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
             <option value={0} selected disabled hidden>
               Elije una opción
             </option>
-            {[
-              'Lunes',
-              'Martes',
-              'Miércoles',
-              'Jueves',
-              'Sábado',
-              'Domingo',
-            ].map((dia) => (
+            {frecuencias.map((dia) => (
               <option key={dia}>{dia}</option>
             ))}
           </select>
@@ -103,7 +97,7 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
           <ul className={classes.clientes}>
             {filteredClientes.length !== 0 ? (
               filteredClientes.map((cliente) => (
-                <li key={cliente.userId}>
+                <li key={cliente.nombre}>
                   <Link href={`/asesor/cliente-en-base/${cliente.userId}`}>
                     {cliente.nombre}
                   </Link>

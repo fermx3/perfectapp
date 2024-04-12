@@ -62,7 +62,12 @@ export default function CompetidoresField({
         <Button
           type='button'
           onClick={() => {
-            append();
+            append({
+              nombre: '',
+              productos: [
+                { gramos: '', precio: '', hasPromo: false, pop: false },
+              ],
+            });
           }}
         >
           Agregar competidor

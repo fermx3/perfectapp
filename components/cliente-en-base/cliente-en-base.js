@@ -22,7 +22,7 @@ export default function ClienteEnBase1() {
     competidores: visitaActual.competidores || [
       {
         nombre: '',
-        productos: [{ gramos: 100, precio: 0, hasPromo: false, pop: false }],
+        productos: [{ gramos: '', precio: '', hasPromo: false, pop: false }],
       },
     ],
     comentarios1: visitaActual.comentarios1 || '',

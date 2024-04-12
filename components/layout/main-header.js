@@ -16,7 +16,9 @@ export default function MainHeader({ children }) {
 
   function logoutHandler() {
     signOut();
-    dispatch(toggleMenu());
+    if (isMenuOpen) {
+      dispatch(toggleMenu());
+    }
   }
 
   return (
@@ -28,6 +30,7 @@ export default function MainHeader({ children }) {
             width={170}
             height={55}
             alt='perfectapp logo'
+            priority
           />
         </Link>
       </div>

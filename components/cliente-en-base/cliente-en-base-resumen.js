@@ -10,18 +10,58 @@ import {
   resetStage,
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
+import { useState } from 'react';
 
 export default function ClienteEnBaseResumen({ prevHandler }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const router = useRouter();
 
-  const submitHandler = function () {
-    alert('Order Sent!');
+  async function uploadVisita(data, finVisita) {
+    console.log('upload: ', data);
+    const response = await fetch('/api/leal/visita', {
+      method: 'POST',
+      body: JSON.stringify({ ...data, finVisita: finVisita }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log('data: ', data);
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.error.message || 'Something went wrong');
+    }
+
+    return responseData;
+  }
+
+  const submitHandler = async function () {
+    setErrorMessage('');
+    setSuccessMessage('');
+
     const finVisita = moment().format();
+    console.log('final: ', visitaActual);
     //Upload to DB with finVisita
+    try {
+      const result = await uploadVisita(visitaActual, finVisita);
+      setSuccessMessage(result.message);
+    } catch (error) {
+      setErrorMessage(
+        'Algo salio mal, intenta de nuevo o contacta al administrador.'
+      );
+      alert(errorMessage);
+      return;
+    }
+
     //Send to mail
+
+    alert(successMessage);
     dispatch(resetStage());
     dispatch(setVisitaActual({}));
     router.replace('/');

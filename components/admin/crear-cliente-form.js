@@ -7,6 +7,16 @@ import { crearLealSchema } from '@/lib/schemas/schemas';
 import FormControl from '../forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import Loader from '../ui/loader';
+import InputGroup from '../forms/input-group';
+
+import {
+  nivelesDeLeales,
+  tiposDeCadena,
+  tiposDeLeales,
+  frecuencias,
+} from '@/lib/schemas/schemas';
+import InfoMessage from '../ui/info-message';
+import ErrorMessage from '../ui/error-message';
 
 export default function CrearClienteForm() {
   const {
@@ -22,12 +32,16 @@ export default function CrearClienteForm() {
       confirmPassword: '',
       nivelDeCliente: '',
       nombre: '',
+      cadena: '',
+      leales: '',
+      frecuencia: '',
       role: 'LEAL',
     },
     resolver: zodResolver(crearLealSchema),
   });
 
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function createCliente(data) {
     const response = await fetch('/api/auth/signup', {
@@ -38,10 +52,12 @@ export default function CrearClienteForm() {
       },
     });
 
+    console.log(data);
+
     const responseData = await response.json();
 
     if (!response.ok) {
-      throw new Error(responseData.message || 'Something went wrong!');
+      throw new Error(responseData.error.message || 'Something went wrong!');
     }
 
     if (responseData.errors) {
@@ -72,16 +88,30 @@ export default function CrearClienteForm() {
           type: 'server',
           message: errors.nivelDeCliente,
         });
+      } else if (errors.cadena) {
+        setError('cadena', {
+          type: 'server',
+          message: errors.cadena,
+        });
+      } else if (errors.leales) {
+        setError('leales', {
+          type: 'server',
+          message: errors.leales,
+        });
+      } else if (errors.frecuencia) {
+        setError('frecuencia', {
+          type: 'server',
+          message: errors.frecuencia,
+        });
       }
     }
 
     return responseData;
   }
 
-  const tiposDeClientes = ['Básico', 'Oro', 'Platino'];
-
   const onSubmit = async (data) => {
     setSuccessMessage('');
+    setErrorMessage('');
     // submit to server
     try {
       const result = await createCliente(data);
@@ -91,7 +121,9 @@ export default function CrearClienteForm() {
         reset();
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage(
+        'Algo salio mal, intenta de nuevo o contacta al administrador.'
+      );
       //Fail on create user
     }
   };
@@ -99,49 +131,85 @@ export default function CrearClienteForm() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl>
-          <input
-            type='number'
-            min={0}
-            {...register('userId')}
-            placeholder='Numero de cliente'
-          />
-          {errors.userId && <p>{errors.userId.message}</p>}
-        </FormControl>
-        <FormControl>
-          <input
-            type='text'
-            {...register('password')}
-            placeholder='Contraseña'
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </FormControl>
-        <FormControl>
-          <input
-            type='password'
-            {...register('confirmPassword')}
-            placeholder='Confirmar Contraseña'
-          />
-          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
-        </FormControl>
-        <FormControl>
-          <input type='text' {...register('nombre')} placeholder='Nombre' />
-          {errors.nombre && <p>{errors.nombre.message}</p>}
-        </FormControl>
-        <FormControl>
-          <label>Nivel de cliente:</label>
-          <select
-            {...register('nivelDeCliente')}
-            placeholder='Nivel de cliente'
-          >
-            {tiposDeClientes.map((option) => (
-              <option value={option} key={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.nivelDeCliente && <p>{errors.nivelDeCliente.message}</p>}
-        </FormControl>
+        <InputGroup>
+          <FormControl>
+            <input
+              type='number'
+              min={0}
+              {...register('userId')}
+              placeholder='Numero de cliente'
+            />
+            {errors.userId && <p>{errors.userId.message}</p>}
+          </FormControl>
+          <FormControl>
+            <input
+              type='text'
+              {...register('password')}
+              placeholder='Contraseña'
+            />
+            {errors.password && <p>{errors.password.message}</p>}
+          </FormControl>
+          <FormControl>
+            <input
+              type='password'
+              {...register('confirmPassword')}
+              placeholder='Confirmar Contraseña'
+            />
+            {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          </FormControl>
+          <FormControl>
+            <input type='text' {...register('nombre')} placeholder='Nombre' />
+            {errors.nombre && <p>{errors.nombre.message}</p>}
+          </FormControl>
+          <FormControl label='Nivel de cliente:'>
+            <select
+              {...register('nivelDeCliente')}
+              placeholder='Nivel de cliente'
+            >
+              {nivelesDeLeales.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.nivelDeCliente && <p>{errors.nivelDeCliente.message}</p>}
+          </FormControl>
+          <FormControl label='Cadena:'>
+            <select {...register('cadena')} placeholder='Cadena'>
+              {tiposDeCadena.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.cadena && <p>{errors.cadena.message}</p>}
+          </FormControl>
+          <FormControl label='Leales:'>
+            <select {...register('leales')} placeholder='Leales'>
+              {tiposDeLeales.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.leales && <p>{errors.leales.message}</p>}
+          </FormControl>
+          <FormControl label='Frecuencia:'>
+            <select
+              {...register('frecuencia')}
+              placeholder='Frecuencia'
+              multiple
+            >
+              {frecuencias.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <p>Usa control o shift para seleccionar más de una</p>
+            {errors.frecuencia && <p>{errors.frecuencia.message}</p>}
+          </FormControl>
+        </InputGroup>
         <input type='hidden' value='LEAL' {...register('role')} />
         <FormControl>
           {isSubmitting && <Loader />}
@@ -155,8 +223,9 @@ export default function CrearClienteForm() {
           >
             Crear Leal
           </Button>
-          {successMessage && <p>{successMessage}</p>}
         </FormControl>
+        {successMessage && <InfoMessage titulo={successMessage} />}
+        {errorMessage && <ErrorMessage error={errorMessage} />}
       </form>
     </>
   );

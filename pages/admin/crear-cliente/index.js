@@ -3,10 +3,12 @@ import Container from '@/components/layout/container';
 
 import { getSession } from 'next-auth/react';
 
+import classes from './index.module.scss';
+
 export default function CrearClientePage() {
   return (
     <Container md>
-      <header>
+      <header className={classes.header}>
         <h1>Crear Leal</h1>
         <p>Escribe los datos para crear un nuevo Leal en la base de datos.</p>
       </header>

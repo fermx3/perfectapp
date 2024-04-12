@@ -9,39 +9,51 @@ async function handler(req, res) {
 
   const prisma = new PrismaClient();
 
-  const data = await req.body;
+  // const response = crearLealSchema.safeParse(req.body);
 
-  const { userId, password, nivelDeCliente, nombre, role } = data;
+  // if (!response.success) {
+  //   const { errors } = response.error;
 
-  //zod
-  // const result = crearLealSchema.safeParse(data);
-  // let zodErrors = {};
-  // if (!result.success) {
-  //   result.error.issues.forEach((issue) => {
-  //     zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
+  //   return res.status(400).json({
+  //     error: { message: 'Invalid request :(', errors },
   //   });
   // }
 
-  // res.json(
-  //   Object.keys(zodErrors).length > 0
-  //     ? { errors: zodErrors }
-  //     : { success: true }
-  // );
-
-  if (
-    !userId ||
-    /\D/.test(userId) ||
-    !password ||
-    password.trim().length < 8 ||
-    !nivelDeCliente ||
-    !nombre ||
-    !role
-  ) {
-    res.status(422).json({
-      message: 'Entrada invalida',
+  //zod
+  const response = crearLealSchema.safeParse(req.body);
+  let zodErrors = {};
+  if (!response.success) {
+    response.error.issues.forEach((issue) => {
+      zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
     });
-    return;
+    res.json(Object.keys(zodErrors).length > 0 && { errors: zodErrors });
   }
+
+  const {
+    userId,
+    password,
+    nivelDeCliente,
+    nombre,
+    role,
+    cadena,
+    leales,
+    frecuencia,
+  } = response.data;
+
+  // if (
+  //   !userId ||
+  //   /\D/.test(userId) ||
+  //   !password ||
+  //   password.trim().length < 8 ||
+  //   !nivelDeCliente ||
+  //   !nombre ||
+  //   !role
+  // ) {
+  //   res.status(422).json({
+  //     message: 'Entrada invalida',
+  //   });
+  //   return;
+  // }
 
   async function main() {
     //Check if the userId already exists
@@ -69,6 +81,9 @@ async function handler(req, res) {
         userInfo: {
           nombre: nombre,
           nivelDeCliente: nivelDeCliente,
+          cadena: cadena,
+          leales: leales,
+          frecuencia: frecuencia,
         },
       },
     });
