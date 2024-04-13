@@ -28,22 +28,21 @@ async function handler(req, res) {
               ${competidor.productos.map(
                 (producto) =>
                   `<div>
-                  <p>Gramos: ${producto.gramos}</p>
-                  <p>Precio: ${producto.precio}</p>
+                  <p>Gramos: ${producto.gramos}gr</p>
+                  <p>Precio: $${producto.precio}</p>
                   ${
-                    producto.hasPromo && (
-                      <div>
-                        <p>Precio con promoción: {producto.precioConPromo}</p>
-                        <p>{producto.precioConPromoReason}</p>
-                      </div>
-                    )
+                    producto.hasPromo &&
+                    `<div>
+                        <p>Precio con promoción: $${producto.precioConPromo}</p>
+                        <p>${producto.precioConPromoReason}</p>
+                      </div>`
                   }
                   <p>PoP: ${producto.pop ? 'Si' : 'No'}</p>
                 </div>`
               )}
             </div>`
           )}
-          <p>${data.comentarios1}</p>
+          <p>Comentarios: ${data.comentarios1}</p>
         </div>
         <div>
           <h3>Promociones</h3>
@@ -68,7 +67,7 @@ async function handler(req, res) {
             ${
               data.hayOrdenDeCompra
                 ? `<div>
-                  <h5>Orden de compra:</h5>$
+                  <h5>Orden de compra:</h5>
                   ${data.ordenDeCompra.map(
                     (item) =>
                       `<div>
@@ -80,7 +79,7 @@ async function handler(req, res) {
                 : `<p>No hay orden de compra.</p>`
             }
           </div>
-          <p>${data.comentarios2}</p>
+          <p>Comentarios: ${data.comentarios2}</p>
         </div>
         <div>
           <h3>Comunicación</h3>
@@ -115,7 +114,7 @@ async function handler(req, res) {
               </div>`
             )}
           </div>
-          <p>${data.comentarios3}</p>
+          <p>Comentarios: ${data.comentarios3}</p>
         </div>
       </div>
   `;
