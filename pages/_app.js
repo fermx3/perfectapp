@@ -8,7 +8,6 @@ import Loader from '@/components/ui/loader';
 import '@/styles/globals.scss';
 
 import { SessionProvider } from 'next-auth/react';
-import { getUserInfo } from '@/lib/prismaDB';
 
 export default function App({ Component, pageProps, session }) {
   return (

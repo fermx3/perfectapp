@@ -65,9 +65,14 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
   };
 
   const handleEndVisita = function () {
+    if (errorMessage) {
+      setErrorMessage('');
+      setIsSending(false);
+      return;
+    }
+
     dispatch(resetStage());
     dispatch(setVisitaActual({}));
-    setErrorMessage('');
     setSuccessMessage('');
     router.replace('/');
   };
@@ -100,9 +105,9 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
                   <p>PoP: {producto.pop ? 'Si' : 'No'}</p>
                 </div>
               ))}
-              <p>{visitaActual.comentarios1}</p>
             </div>
           ))}
+          <p>Comentarios: {visitaActual.comentarios1}</p>
         </div>
         <div>
           <h3>Promociones</h3>
@@ -137,7 +142,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               <p>No hay orden de compra.</p>
             )}
           </div>
-          <p>{visitaActual.comentarios2}</p>
+          <p>Comentarios: {visitaActual.comentarios2}</p>
         </div>
         <div>
           <h3>Comunicación</h3>
@@ -169,7 +174,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               </div>
             ))}
           </div>
-          <p>{visitaActual.comentarios3}</p>
+          <p>Comentarios: {visitaActual.comentarios3}</p>
         </div>
         <Button type='button' onClick={prevHandler}>
           Anterior
