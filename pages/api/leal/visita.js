@@ -13,9 +13,7 @@ async function handler(req, res) {
     console.log(data);
     const result = await prisma.visitas.create({ data: data });
 
-    res
-      .status(201)
-      .json({ message: 'Informacion enviada. Visita completa.', result });
+    res.status(201).json({ message: 'Informacion enviada. Visita completa.' });
   }
 
   main()
