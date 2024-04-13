@@ -9,7 +9,7 @@ import classes from './main-header.module.scss';
 import Button from '../button';
 import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
 
-export default function MainHeader({ children }) {
+export default function MainHeader() {
   const session = useSession();
   const isMenuOpen = useSelector(selectIsMenuOpen);
   const dispatch = useDispatch();
@@ -73,9 +73,14 @@ export default function MainHeader({ children }) {
           <nav>
             <ul>
               {session.status === 'authenticated' && (
-                <li>
-                  <Button onClick={logoutHandler}>Cerrar Sesion</Button>
-                </li>
+                <>
+                  <li>
+                    <h4>Usuario: {session.data.user.userId}</h4>
+                  </li>
+                  <li>
+                    <Button onClick={logoutHandler}>Cerrar Sesion</Button>
+                  </li>
+                </>
               )}
             </ul>
           </nav>
