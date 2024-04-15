@@ -4,8 +4,9 @@ import Container from '@/components/layout/container';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
+import { getAsesores } from '@/lib/prismaDB';
 
-export default function CrearClientePage() {
+export default function CrearClientePage({ asesores }) {
   return (
     <Container md>
       <header className={classes.header}>
@@ -13,7 +14,7 @@ export default function CrearClientePage() {
         <p>Escribe los datos para crear un nuevo Leal en la base de datos.</p>
       </header>
       <main>
-        <CrearClienteForm />
+        <CrearClienteForm asesores={asesores} />
       </main>
     </Container>
   );
@@ -21,6 +22,7 @@ export default function CrearClientePage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
+  const asesores = await getAsesores();
 
   if (!session || session.user.role !== 'ADMIN') {
     return {
@@ -32,6 +34,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session },
+    props: { session, asesores },
   };
 }

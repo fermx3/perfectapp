@@ -7,12 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Frecuencia {
+  Lunes
+  Martes
+  Miércoles
+  Jueves
+  Viernes
+  Sábado
+  Domingo
+}
+
 type UserInfo {
   nombre           String
   nivelDeCliente   String?
   cadena           String?
-  frecuencia       String[]
+  frecuencia       Frecuencia[]
   leales           String?
+  asesorAsignado   String[]
 }
 
 model users {

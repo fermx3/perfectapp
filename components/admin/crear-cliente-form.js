@@ -18,7 +18,7 @@ import {
 import InfoMessage from '../ui/info-message';
 import ErrorMessage from '../ui/error-message';
 
-export default function CrearClienteForm() {
+export default function CrearClienteForm({ asesores }) {
   const {
     register,
     handleSubmit,
@@ -35,6 +35,7 @@ export default function CrearClienteForm() {
       cadena: '',
       leales: '',
       frecuencia: '',
+      asesorAsignado: '',
       role: 'LEAL',
     },
     resolver: zodResolver(crearLealSchema),
@@ -103,6 +104,11 @@ export default function CrearClienteForm() {
           type: 'server',
           message: errors.frecuencia,
         });
+      } else if (errors.asesorAsignado) {
+        setError('frecuencia', {
+          type: 'server',
+          message: errors.asesorAsignado,
+        });
       }
     }
 
@@ -134,7 +140,7 @@ export default function CrearClienteForm() {
         <InputGroup>
           <FormControl>
             <input
-              type='number'
+              type='text'
               min={0}
               {...register('userId')}
               placeholder='Numero de cliente'
@@ -208,6 +214,21 @@ export default function CrearClienteForm() {
             </select>
             <p>Usa control o shift para seleccionar más de una</p>
             {errors.frecuencia && <p>{errors.frecuencia.message}</p>}
+          </FormControl>
+          <FormControl label='Asesor Asignado:'>
+            <select
+              {...register('asesorAsignado')}
+              placeholder='Asesor Asignado'
+              multiple
+            >
+              {asesores.map((option) => (
+                <option value={option.userId} key={option.userId}>
+                  {option.nombre}
+                </option>
+              ))}
+            </select>
+            <p>Usa control o shift para seleccionar más de una</p>
+            {errors.asesorAsignado && <p>{errors.asesorAsignado.message}</p>}
           </FormControl>
         </InputGroup>
         <input type='hidden' value='LEAL' {...register('role')} />

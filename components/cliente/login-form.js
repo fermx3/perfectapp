@@ -94,7 +94,7 @@ export default function LoginForm() {
         <FormControl inputType={INPUT_TYPE_CLASSES.login}>
           <Image src={'/images/icons/user.png'} width={13} height={13} />
           <input
-            type='number'
+            type='text'
             placeholder='Numero de usuario'
             {...register('userId', {
               required: 'Por favor introduce tu número de usuario.',
