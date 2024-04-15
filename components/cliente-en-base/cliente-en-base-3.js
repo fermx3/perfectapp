@@ -47,13 +47,26 @@ export default function ClienteEnBase3({ prevHandler }) {
   ];
 
   const implementacionMateriales = [
-    'Stopper',
-    'Display',
-    'Electro 1',
-    'Electro 2',
+    'Letrero con palo',
+    'Letrero plumón',
+    'Poster 1',
+    'Poster 2',
+    'Poster 3',
+    'Poster 4',
+    'Sticker 1',
+    'Sticker 2',
+    'Sticker 3',
+    'Sticker 4',
   ];
 
-  const productos = ['Iberia 90g', 'Iberia 1kg', 'Iberia 110g'];
+  const productos = [
+    'Iberia 90g',
+    'Iberia 225g',
+    'Iberia 1kg',
+    'Chantilly 190g',
+    'Chantilly 110g',
+    'Primavera 360g',
+  ];
 
   const periodoNegociado = ['1 semana', '2 semanas', '3 semanas'];
 

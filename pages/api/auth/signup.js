@@ -29,16 +29,7 @@ async function handler(req, res) {
     res.json(Object.keys(zodErrors).length > 0 && { errors: zodErrors });
   }
 
-  const {
-    userId,
-    password,
-    nivelDeCliente,
-    nombre,
-    role,
-    cadena,
-    leales,
-    frecuencia,
-  } = response.data;
+  const { userId, password, role, userInfo } = response.data;
 
   // if (
   //   !userId ||
@@ -78,13 +69,7 @@ async function handler(req, res) {
         userId: userId,
         password: hashedPassword,
         role: role,
-        userInfo: {
-          nombre: nombre,
-          nivelDeCliente: nivelDeCliente,
-          cadena: cadena,
-          leales: leales,
-          frecuencia: frecuencia,
-        },
+        userInfo: userInfo,
       },
     });
 

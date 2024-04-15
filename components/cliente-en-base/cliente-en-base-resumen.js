@@ -131,6 +131,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
             {visitaActual.hayOrdenDeCompra ? (
               <div>
                 <h5>Orden de compra:</h5>
+                <p>Distribuidor: {visitaActual.distribuidor}</p>
                 {visitaActual.ordenDeCompra.map((item) => (
                   <div>
                     <h6>{item.producto}</h6>

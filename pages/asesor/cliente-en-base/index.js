@@ -13,12 +13,17 @@ import { getSession } from 'next-auth/react';
 import classes from './index.module.scss';
 import { frecuencias } from '@/lib/schemas/schemas';
 
-export default function ClienteEnBasePage({ clientes, userInfo }) {
+export default function ClienteEnBasePage({ clientes, userInfo, session }) {
   const [value, setValue] = useState('');
   const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
 
+  console.log(clientes);
+  console.log(userInfo);
+  console.log(session.user.userId);
+
   const filteredClientes = clientes.filter((cliente) => {
-    return cliente.frecuencia.some((i) => i === frecuenciaIsSelected);
+    if (cliente.asesorAsignado.some((i) => i === session.user.userId))
+      return cliente.frecuencia.some((i) => i === frecuenciaIsSelected);
   });
 
   const router = useRouter();
@@ -69,7 +74,10 @@ export default function ClienteEnBasePage({ clientes, userInfo }) {
               .filter((cliente) => {
                 const searchTerm = value.toLowerCase();
                 const nombre = cliente.nombre.toLowerCase();
-                return searchTerm && nombre.includes(searchTerm);
+                if (
+                  cliente.asesorAsignado.some((i) => i === session.user.userId)
+                )
+                  return searchTerm && nombre.includes(searchTerm);
               })
               .map((cliente) => (
                 <li key={cliente.userId}>

@@ -12,6 +12,7 @@ export default function AsesorPage({ userInfo, session }) {
         nombre={userInfo.nombre}
         userId={session.user.userId}
         role={session.user.role}
+        asesores={userInfo.asesores}
       />
       <LinksGroup
         links={[

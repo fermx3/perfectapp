@@ -1,3 +1,4 @@
+@import '@/styles/variables';
 .nav ul {
   list-style: none;
   margin: 0;
@@ -6,4 +7,24 @@
   gap: 1.5rem;
   /* font-family: 'Montserrat', sans-serif; */
   font-size: 1.25rem;
+}
+
+.asesores {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  gap: 0.5rem;
+
+  div {
+    border: solid;
+    border-radius: $border-radius-1;
+    padding: 0.5rem 1rem;
+  }
+
+  h4 {
+    width: 100%;
+  }
+
+  div {
+  }
 }

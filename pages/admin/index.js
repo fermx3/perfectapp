@@ -16,7 +16,7 @@ const links = [
     desc: 'Haz click aquí para crear un Asesor.',
   },
   {
-    titulo: 'Crear Leal',
+    titulo: 'Crear Cliente',
     link: '#',
     desc: 'Haz click aquí para crear un Cliente.',
   },

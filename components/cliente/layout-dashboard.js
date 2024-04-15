@@ -15,12 +15,14 @@ export default function LayoutDashboard({
   cadena,
   role,
   userId,
+  asesores,
 }) {
   return (
     <Container>
       <header>
         <div>
-          {role === 'ASESOR' && <h4>Asesor</h4>}
+          {role === 'ASESOR' &&
+            (asesores ? <h4>Coordinador</h4> : <h4>Asesor</h4>)}
           <h1>{nombre}</h1>
           {userId && (
             <p>
@@ -30,6 +32,16 @@ export default function LayoutDashboard({
             </p>
           )}
           {role === 'ASESOR' && <p>{moment().format('LL')}</p>}
+          {asesores && (
+            <div className={classes.asesores}>
+              <h4>Asesores:</h4>
+              {asesores.map((asesor) => (
+                <div key={asesor}>
+                  <p>{asesor}</p>
+                </div>
+              ))}
+            </div>
+          )}
           {nivelDeCliente && <p>Cliente {nivelDeCliente}</p>}
           {cadena && <p>{`Cadena: ${cadena}`}</p>}
           {leales && <p>{`Leales: ${leales}`}</p>}

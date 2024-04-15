@@ -2,7 +2,7 @@ import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { clienteEnBaseSchema2 } from '@/lib/schemas/schemas';
+import { clienteEnBaseSchema2, distribuidores } from '@/lib/schemas/schemas';
 
 import ReactSwitch from 'react-switch';
 import InfoMessage from '../ui/info-message';
@@ -26,28 +26,22 @@ export default function ClienteEnBase2({ prevHandler }) {
 
   const promociones = [
     {
-      promo: '10 cajas + 1 caja Iberia 90g',
+      promo: '6 cajas por pallete en 90g',
       sku: 'Iberia 90g',
-      desc: 'Compra 10 cajas + 1 caja de regalo',
+      desc: '',
       implementada: false,
     },
     {
-      promo: '-3% descuento Iberia 1Kg',
+      promo: '6 cajas por pallete en 225g',
+      sku: 'Iberia 225g',
+      desc: '',
+      implementada: false,
+    },
+    {
+      promo: '3 cajas por pallete en 1Kg',
       sku: 'Iberia 1Kg',
-      desc: '3% descuento en 25 cajas acumuladas',
-      implementada: false,
-    },
-    {
-      promo: 'Plan de Fidelización',
-      sku: 'Total portafolio',
-      desc: 'Posibilidad puntos leales 35000',
+      desc: '',
       implementada: true,
-    },
-    {
-      promo: 'Kit Sell Out',
-      sku: 'Total portafolio',
-      desc: 'Cuota para lograr Kit',
-      implementada: false,
     },
   ];
 
@@ -57,6 +51,7 @@ export default function ClienteEnBase2({ prevHandler }) {
     hayOrdenDeCompra: visitaActual.hayOrdenDeCompra || false,
     comentarios2: visitaActual.comentarios2 || '',
     ordenDeCompra: visitaActual.ordenDeCompra || [],
+    distribuidor: visitaActual.distribuidor || '',
   };
 
   const {
@@ -134,16 +129,28 @@ export default function ClienteEnBase2({ prevHandler }) {
           />
         </FormControl>
         {hayOrden && (
-          <OrdenDeCompraField
-            {...{
-              control,
-              register,
-              defaultValues,
-              errors,
-              getValues,
-              setValue,
-            }}
-          />
+          <>
+            <FormControl label='Distribuidor:'>
+              <select {...register('distribuidor')} placeholder='Distribuidor'>
+                {distribuidores.map((option) => (
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              {errors.canal && <p>{errors.canal.message}</p>}
+            </FormControl>
+            <OrdenDeCompraField
+              {...{
+                control,
+                register,
+                defaultValues,
+                errors,
+                getValues,
+                setValue,
+              }}
+            />
+          </>
         )}
       </FormSection>
       <FormControl

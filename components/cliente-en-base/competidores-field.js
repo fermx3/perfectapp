@@ -5,6 +5,7 @@ import FormGroup from '../forms/form-group';
 import Button from '../button';
 import ProductosField from './productos-field';
 import FormError from '../ui/form-error';
+import { competidores } from '@/lib/schemas/schemas';
 
 export default function CompetidoresField({
   control,
@@ -32,7 +33,7 @@ export default function CompetidoresField({
               <option value={null} selected disabled hidden>
                 Nombre del competidor
               </option>
-              {['Chipilo', 'Chilchota', 'Lala', 'Otra'].map((option) => (
+              {competidores.map((option) => (
                 <option value={option} key={option}>
                   {option}
                 </option>

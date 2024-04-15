@@ -14,6 +14,11 @@ type UserInfo {
   frecuencia       String[]
   leales           String?
   asesorAsignado   String[]
+  central          String?
+  ubicacion        String?
+  canal            String?
+  coordinador      String?
+  asesores         String[]
 }
 
 model users {
@@ -28,6 +33,7 @@ enum Role {
   ADMIN
   LEAL
   ASESOR
+  COORDINADOR
   CLIENTE
 }
 

@@ -42,21 +42,14 @@ export default function OrdenDeCompraField({
       objetivo: 100,
     },
     {
-      producto: 'Iberia 500g',
+      producto: 'Chantilly 190g',
       cajas: 0,
       promocion: false,
       puntos: 400,
       objetivo: 40,
     },
     {
-      producto: 'Iberia 170g',
-      cajas: 0,
-      promocion: false,
-      puntos: 350,
-      objetivo: 35,
-    },
-    {
-      producto: 'Primavera 110g',
+      producto: 'Chantilly 110g',
       cajas: 0,
       promocion: false,
       puntos: 350,

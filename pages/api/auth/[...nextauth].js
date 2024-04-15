@@ -45,14 +45,12 @@ export default NextAuth({
       if (user) {
         token.role = user.role;
         token.userId = user.userId;
-        token.nombreDelNegocio = user.nombreDelNegocio;
       }
       return token;
     },
     session({ session, token }) {
       session.user.role = token.role;
       session.user.userId = token.userId;
-      session.user.nombreDelNegocio = token.nombreDelNegocio;
       return session;
     },
   },

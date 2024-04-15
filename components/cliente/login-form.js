@@ -60,6 +60,9 @@ export default function LoginForm() {
       case 'ASESOR':
         router.replace(`/asesor/${session.data.user.userId}`);
         break;
+      case 'COORDINADOR':
+        router.replace(`/asesor/${session.data.user.userId}`);
+        break;
       case 'ADMIN':
         router.replace(`/admin`);
         break;

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { crearLealSchema } from '@/lib/schemas/schemas';
+import { canales, centrales, crearLealSchema } from '@/lib/schemas/schemas';
 
 import FormControl from '../forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
@@ -30,13 +30,18 @@ export default function CrearClienteForm({ asesores }) {
       userId: '',
       password: '',
       confirmPassword: '',
-      nivelDeCliente: '',
-      nombre: '',
-      cadena: '',
-      leales: '',
-      frecuencia: '',
-      asesorAsignado: '',
       role: 'LEAL',
+      userInfo: {
+        nivelDeCliente: '',
+        nombre: '',
+        cadena: '',
+        leales: '',
+        frecuencia: '',
+        asesorAsignado: '',
+        central: '',
+        ubicacion: '',
+        canal: '',
+      },
     },
     resolver: zodResolver(crearLealSchema),
   });
@@ -52,8 +57,6 @@ export default function CrearClienteForm({ asesores }) {
         'Content-Type': 'application/json',
       },
     });
-
-    console.log(data);
 
     const responseData = await response.json();
 
@@ -79,35 +82,50 @@ export default function CrearClienteForm({ asesores }) {
           type: 'server',
           message: errors.confirmPassword,
         });
-      } else if (errors.nombre) {
-        setError('nombre', {
+      } else if (errors.userInfo.nombre) {
+        setError('userInfo.nombre', {
           type: 'server',
-          message: errors.nombre,
+          message: errors.userInfo.nombre,
         });
-      } else if (errors.nivelDeCliente) {
-        setError('nivelDeCliente', {
+      } else if (errors.userInfo.nivelDeCliente) {
+        setError('userInfo.nivelDeCliente', {
           type: 'server',
-          message: errors.nivelDeCliente,
+          message: errors.userInfo.nivelDeCliente,
         });
-      } else if (errors.cadena) {
-        setError('cadena', {
+      } else if (errors.userInfo.cadena) {
+        setError('userInfo.cadena', {
           type: 'server',
-          message: errors.cadena,
+          message: errors.userInfo.cadena,
         });
-      } else if (errors.leales) {
-        setError('leales', {
+      } else if (errors.userInfo.leales) {
+        setError('userInfo.leales', {
           type: 'server',
-          message: errors.leales,
+          message: errors.userInfo.leales,
         });
-      } else if (errors.frecuencia) {
-        setError('frecuencia', {
+      } else if (errors.userInfo.frecuencia) {
+        setError('userInfo.frecuencia', {
           type: 'server',
-          message: errors.frecuencia,
+          message: errors.userInfo.frecuencia,
         });
-      } else if (errors.asesorAsignado) {
-        setError('frecuencia', {
+      } else if (errors.userInfo.asesorAsignado) {
+        setError('userInfo.asesorAsignado', {
           type: 'server',
-          message: errors.asesorAsignado,
+          message: errors.userInfo.asesorAsignado,
+        });
+      } else if (errors.userInfo.central) {
+        setError('userInfo.central', {
+          type: 'server',
+          message: errors.userInfo.central,
+        });
+      } else if (errors.userInfo.ubicacion) {
+        setError('userInfo.ubicacion', {
+          type: 'server',
+          message: errors.userInfo.ubicacion,
+        });
+      } else if (errors.userInfo.canal) {
+        setError('userInfo.canal', {
+          type: 'server',
+          message: errors.userInfo.canal,
         });
       }
     }
@@ -118,6 +136,7 @@ export default function CrearClienteForm({ asesores }) {
   const onSubmit = async (data) => {
     setSuccessMessage('');
     setErrorMessage('');
+
     // submit to server
     try {
       const result = await createCliente(data);
@@ -133,7 +152,7 @@ export default function CrearClienteForm({ asesores }) {
       //Fail on create user
     }
   };
-
+  console.log(errors);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -164,12 +183,16 @@ export default function CrearClienteForm({ asesores }) {
             {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
           </FormControl>
           <FormControl>
-            <input type='text' {...register('nombre')} placeholder='Nombre' />
-            {errors.nombre && <p>{errors.nombre.message}</p>}
+            <input
+              type='text'
+              {...register('userInfo.nombre')}
+              placeholder='Nombre'
+            />
+            {errors.userInfo?.nombre && <p>{errors.userInfo.nombre.message}</p>}
           </FormControl>
           <FormControl label='Nivel de cliente:'>
             <select
-              {...register('nivelDeCliente')}
+              {...register('userInfo.nivelDeCliente')}
               placeholder='Nivel de cliente'
             >
               {nivelesDeLeales.map((option) => (
@@ -178,31 +201,65 @@ export default function CrearClienteForm({ asesores }) {
                 </option>
               ))}
             </select>
-            {errors.nivelDeCliente && <p>{errors.nivelDeCliente.message}</p>}
+            {errors.userInfo?.nivelDeCliente && (
+              <p>{errors.userInfo.nivelDeCliente.message}</p>
+            )}
           </FormControl>
           <FormControl label='Cadena:'>
-            <select {...register('cadena')} placeholder='Cadena'>
+            <select {...register('userInfo.cadena')} placeholder='Cadena'>
               {tiposDeCadena.map((option) => (
                 <option value={option} key={option}>
                   {option}
                 </option>
               ))}
             </select>
-            {errors.cadena && <p>{errors.cadena.message}</p>}
+            {errors.userInfo?.cadena && <p>{errors.userInfo.cadena.message}</p>}
           </FormControl>
           <FormControl label='Leales:'>
-            <select {...register('leales')} placeholder='Leales'>
+            <select {...register('userInfo.leales')} placeholder='Leales'>
               {tiposDeLeales.map((option) => (
                 <option value={option} key={option}>
                   {option}
                 </option>
               ))}
             </select>
-            {errors.leales && <p>{errors.leales.message}</p>}
+            {errors.userInfo?.leales && <p>{errors.userInfo.leales.message}</p>}
+          </FormControl>
+          <FormControl label='CEDAS:'>
+            <select {...register('userInfo.central')} placeholder='CEDAS'>
+              {centrales.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.userInfo?.central && (
+              <p>{errors.userInfo.central.message}</p>
+            )}
+          </FormControl>
+          <FormControl>
+            <input
+              type='text'
+              {...register('userInfo.ubicacion')}
+              placeholder='Ubicacion'
+            />
+            {errors.userInfo?.ubicacion && (
+              <p>{errors.userInfo.ubicacion.message}</p>
+            )}
+          </FormControl>
+          <FormControl label='Canal:'>
+            <select {...register('userInfo.canal')} placeholder='Canal'>
+              {canales.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.userInfo?.canal && <p>{errors.userInfo.canal.message}</p>}
           </FormControl>
           <FormControl label='Frecuencia:'>
             <select
-              {...register('frecuencia')}
+              {...register('userInfo.frecuencia')}
               placeholder='Frecuencia'
               multiple
             >
@@ -213,11 +270,13 @@ export default function CrearClienteForm({ asesores }) {
               ))}
             </select>
             <p>Usa control o shift para seleccionar más de una</p>
-            {errors.frecuencia && <p>{errors.frecuencia.message}</p>}
+            {errors.userInfo?.frecuencia && (
+              <p>{errors.userInfo.frecuencia.message}</p>
+            )}
           </FormControl>
           <FormControl label='Asesor Asignado:'>
             <select
-              {...register('asesorAsignado')}
+              {...register('userInfo.asesorAsignado')}
               placeholder='Asesor Asignado'
               multiple
             >
@@ -228,7 +287,9 @@ export default function CrearClienteForm({ asesores }) {
               ))}
             </select>
             <p>Usa control o shift para seleccionar más de una</p>
-            {errors.asesorAsignado && <p>{errors.asesorAsignado.message}</p>}
+            {errors.userInfo?.asesorAsignado && (
+              <p>{errors.userInfo.asesorAsignado.message}</p>
+            )}
           </FormControl>
         </InputGroup>
         <input type='hidden' value='LEAL' {...register('role')} />

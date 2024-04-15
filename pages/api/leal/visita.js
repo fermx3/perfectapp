@@ -68,6 +68,7 @@ async function handler(req, res) {
               data.hayOrdenDeCompra
                 ? `<div>
                   <h5>Orden de compra:</h5>
+                  <p>Distribuidor: ${visitaActual.distribuidor}</p>
                   ${data.ordenDeCompra.map(
                     (item) =>
                       `<div>
@@ -140,7 +141,7 @@ async function handler(req, res) {
 
     try {
       const mail = await transporter.sendMail({
-        from: 'Fernando',
+        from: 'perfectapp',
         to: email1,
         replyTo: SMTPuser,
         subject: 'Registro de Visita',
