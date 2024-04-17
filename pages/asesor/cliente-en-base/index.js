@@ -17,10 +17,6 @@ export default function ClienteEnBasePage({ clientes, userInfo, session }) {
   const [value, setValue] = useState('');
   const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
 
-  console.log(clientes);
-  console.log(userInfo);
-  console.log(session.user.userId);
-
   const filteredClientes = clientes.filter((cliente) => {
     if (cliente.asesorAsignado.some((i) => i === session.user.userId))
       return cliente.frecuencia.some((i) => i === frecuenciaIsSelected);

@@ -21,12 +21,42 @@ type UserInfo {
   asesores         String[]
 }
 
+type CuotaPallets {
+  iberia90g  String?
+  iberia225g String?
+  iberia1Kg  String?
+}
+
+type ValorDePuntos {
+  iberia90g  String?
+  iberia225g String?
+  iberia1Kg  String?
+}
+
+type PlanPromocional {
+  promocionales String?
+  materialesPop String?
+  planDemo      String?
+  recompensas   String?
+}
+
+type LealDetalles {
+  nombreDeEncargado   String?
+  email               String?
+  telefono            String?
+  fechaDeAniversario  String?
+}
+
 model users {
-  id       String        @id @default(auto()) @map("_id") @db.ObjectId
-  password String
-  role     Role
-  userId   String @unique
-  userInfo UserInfo
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  password        String
+  role            Role
+  userId          String @unique
+  userInfo        UserInfo
+  cuotaPallets    CuotaPallets
+  valorDePuntos   ValorDePuntos
+  planPromocional PlanPromocional
+  lealDetalles    LealDetalles
 }
 
 enum Role {
