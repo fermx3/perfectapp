@@ -18,7 +18,7 @@ import {
 import InfoMessage from '../ui/info-message';
 import ErrorMessage from '../ui/error-message';
 
-export default function CrearClienteForm({ asesores }) {
+export default function CrearLealForm({ asesores }) {
   const {
     register,
     handleSubmit,
@@ -49,7 +49,7 @@ export default function CrearClienteForm({ asesores }) {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  async function createCliente(data) {
+  async function createLeal(data) {
     const response = await fetch('/api/auth/signup', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -139,7 +139,7 @@ export default function CrearClienteForm({ asesores }) {
 
     // submit to server
     try {
-      const result = await createCliente(data);
+      const result = await createLeal(data);
       //Successfuly create user
       setSuccessMessage(result.message);
       if (result.message) {

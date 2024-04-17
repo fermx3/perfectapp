@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getCliente } from '@/lib/prismaDB';
+import { getLeal } from '@/lib/prismaDB';
 
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
@@ -23,7 +23,7 @@ import {
   selectVisitaActual,
 } from '@/store/visitaActual/visitaActual.selector';
 
-export default function VisitaPage({ cliente, session }) {
+export default function VisitaPage({ leal, session }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
   const currentStage = useSelector(selectCurrentStage);
@@ -46,7 +46,7 @@ export default function VisitaPage({ cliente, session }) {
     dispatch(
       setVisitaActual({
         asesor: session.user.userId,
-        numeroDeCliente: cliente.userId,
+        numeroDeCliente: leal.userId,
         inicioVisita: inicioVisita,
       })
     );
@@ -56,12 +56,13 @@ export default function VisitaPage({ cliente, session }) {
     <>
       <LayoutDashboard
         session={session}
+        ubicacion={leal.ubicacion}
         userId={router.query.slug}
         role='LEAL'
-        nombre={cliente.nombre}
-        nivelDeCliente={cliente.nivelDeCliente}
-        cadena={cliente.cadena}
-        leales={cliente.leales}
+        nombre={leal.nombre}
+        nivelDeCliente={leal.nivelDeCliente}
+        cadena={leal.cadena}
+        leales={leal.leales}
       >
         <Button
           onClick={onClickHandler}
@@ -110,9 +111,9 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const cliente = await getCliente(slug);
+  const leal = await getLeal(slug);
 
   return {
-    props: { session, cliente },
+    props: { session, leal },
   };
 }

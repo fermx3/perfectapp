@@ -7,19 +7,19 @@ import FormControl, {
   INPUT_TYPE_CLASSES,
 } from '@/components/forms/form-control';
 
-import { getClientes, getUserInfo } from '@/lib/prismaDB';
+import { getLeales, getUserInfo } from '@/lib/prismaDB';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
 import { frecuencias } from '@/lib/schemas/schemas';
 
-export default function ClienteEnBasePage({ clientes, userInfo, session }) {
+export default function ClienteEnBasePage({ leales, userInfo, session }) {
   const [value, setValue] = useState('');
   const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
 
-  const filteredClientes = clientes.filter((cliente) => {
-    if (cliente.asesorAsignado.some((i) => i === session.user.userId))
-      return cliente.frecuencia.some((i) => i === frecuenciaIsSelected);
+  const filteredLeales = leales.filter((leal) => {
+    if (leal.asesorAsignado.some((i) => i === session.user.userId))
+      return leal.frecuencia.some((i) => i === frecuenciaIsSelected);
   });
 
   const router = useRouter();
@@ -65,20 +65,18 @@ export default function ClienteEnBasePage({ clientes, userInfo, session }) {
           />
         </FormControl>
         {value !== '' && (
-          <ul className={classes.clientes}>
-            {clientes
-              .filter((cliente) => {
+          <ul className={classes.leales}>
+            {leales
+              .filter((leal) => {
                 const searchTerm = value.toLowerCase();
-                const nombre = cliente.nombre.toLowerCase();
-                if (
-                  cliente.asesorAsignado.some((i) => i === session.user.userId)
-                )
+                const nombre = leal.nombre.toLowerCase();
+                if (leal.asesorAsignado.some((i) => i === session.user.userId))
                   return searchTerm && nombre.includes(searchTerm);
               })
-              .map((cliente) => (
-                <li key={cliente.userId}>
-                  <Link href={`/asesor/cliente-en-base/${cliente.userId}`}>
-                    {cliente.nombre}
+              .map((leal) => (
+                <li key={leal.userId}>
+                  <Link href={`/asesor/cliente-en-base/${leal.userId}`}>
+                    {leal.nombre}
                   </Link>
                 </li>
               ))}
@@ -98,12 +96,12 @@ export default function ClienteEnBasePage({ clientes, userInfo, session }) {
         </FormControl>
 
         {frecuenciaIsSelected && (
-          <ul className={classes.clientes}>
-            {filteredClientes.length !== 0 ? (
-              filteredClientes.map((cliente) => (
-                <li key={cliente.nombre}>
-                  <Link href={`/asesor/cliente-en-base/${cliente.userId}`}>
-                    {cliente.nombre}
+          <ul className={classes.leales}>
+            {filteredLeales.length !== 0 ? (
+              filteredLeales.map((leal) => (
+                <li key={leal.nombre}>
+                  <Link href={`/asesor/cliente-en-base/${leal.userId}`}>
+                    {leal.nombre}
                   </Link>
                 </li>
               ))
@@ -129,12 +127,12 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const clientes = await getClientes();
+  const leales = await getLeales();
   const userId = session.user.userId;
 
   const userInfo = await getUserInfo(userId);
 
   return {
-    props: { session, clientes, userInfo },
+    props: { session, leales, userInfo },
   };
 }

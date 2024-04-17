@@ -68,7 +68,7 @@ async function handler(req, res) {
               data.hayOrdenDeCompra
                 ? `<div>
                   <h5>Orden de compra:</h5>
-                  <p>Distribuidor: ${visitaActual.distribuidor}</p>
+                  <p>Distribuidor: ${data.distribuidor}</p>
                   ${data.ordenDeCompra.map(
                     (item) =>
                       `<div>

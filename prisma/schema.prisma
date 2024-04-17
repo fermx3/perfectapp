@@ -53,10 +53,10 @@ model users {
   role            Role
   userId          String @unique
   userInfo        UserInfo
-  cuotaPallets    CuotaPallets
-  valorDePuntos   ValorDePuntos
-  planPromocional PlanPromocional
-  lealDetalles    LealDetalles
+  cuotaPallets    CuotaPallets?
+  valorDePuntos   ValorDePuntos?
+  planPromocional PlanPromocional?
+  lealDetalles    LealDetalles?
 }
 
 enum Role {
@@ -121,6 +121,7 @@ model visitas {
   promociones         Promociones[]
   cuentaConInventario Boolean
   hayOrdenDeCompra    Boolean
+  distribuidor        String?
   comentarios2        String
   ordenDeCompra       OrdenDeCompra[]
   planDeComunicacion  PlanDeComunicacion[]

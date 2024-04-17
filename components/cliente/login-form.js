@@ -55,7 +55,7 @@ export default function LoginForm() {
   if (session.status === 'authenticated') {
     switch (session.data.user.role) {
       case 'LEAL':
-        router.replace(`/cliente/${session.data.user.userId}`);
+        router.replace(`/leal/${session.data.user.userId}`);
         break;
       case 'ASESOR':
         router.replace(`/asesor/${session.data.user.userId}`);

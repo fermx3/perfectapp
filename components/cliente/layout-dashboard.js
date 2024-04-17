@@ -16,6 +16,7 @@ export default function LayoutDashboard({
   role,
   userId,
   asesores,
+  ubicacion,
 }) {
   return (
     <Container>
@@ -31,6 +32,7 @@ export default function LayoutDashboard({
                 : `Usuario: ${userId}`}
             </p>
           )}
+          {ubicacion && <p>{ubicacion}</p>}
           {role === 'ASESOR' && <p>{moment().format('LL')}</p>}
           {asesores && (
             <div className={classes.asesores}>
@@ -42,7 +44,7 @@ export default function LayoutDashboard({
               ))}
             </div>
           )}
-          {nivelDeCliente && <p>Cliente {nivelDeCliente}</p>}
+          {nivelDeCliente && <p>Prioridad {nivelDeCliente}</p>}
           {cadena && <p>{`Cadena: ${cadena}`}</p>}
           {leales && <p>{`Leales: ${leales}`}</p>}
         </div>
