@@ -1,9 +1,19 @@
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './[...nextauth]';
+
 import { hashPassword } from '@/lib/auth';
 import { PrismaClient } from '@prisma/client';
 import { crearLealSchema } from '@/lib/schemas/schemas';
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
+    return;
+  }
+
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session || session.user.role !== 'ADMIN') {
+    res.status(401).json({ error: { message: 'Not authenticated!' } });
     return;
   }
 
@@ -60,6 +70,7 @@ async function handler(req, res) {
             userId: 'El numero de usuario ya existe. Intenta otra vez.',
           },
         });
+      prisma.$disconnect();
       return;
     }
     //

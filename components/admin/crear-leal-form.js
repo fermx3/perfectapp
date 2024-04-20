@@ -18,7 +18,9 @@ import {
 import InfoMessage from '../ui/info-message';
 import ErrorMessage from '../ui/error-message';
 
-export default function CrearLealForm({ asesores }) {
+export default function CrearLealForm({ asesores, session }) {
+  console.log(session);
+
   const {
     register,
     handleSubmit,
@@ -147,6 +149,7 @@ export default function CrearLealForm({ asesores }) {
       }
     } catch (error) {
       setErrorMessage(
+        // error.message ||
         'Algo salio mal, intenta de nuevo o contacta al administrador.'
       );
       //Fail on create user

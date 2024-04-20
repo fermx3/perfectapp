@@ -13,6 +13,8 @@ export default function MainHeader() {
   const session = useSession();
   const isMenuOpen = useSelector(selectIsMenuOpen);
   const dispatch = useDispatch();
+  const userId = session.data?.user?.userId;
+  const role = session.data?.user?.role;
 
   function logoutHandler() {
     signOut();
@@ -36,6 +38,16 @@ export default function MainHeader() {
       </div>
       <nav className={classes.nav}>
         <ul>
+          {role === 'LEAL' && (
+            <>
+              <li>
+                <Link href={`/leal/${userId}`}>Mi perfil</Link>
+              </li>
+              <li>
+                <Link href={'/cambiar-password'}>Cambiar contraseña</Link>
+              </li>
+            </>
+          )}
           {session.status === 'authenticated' ? (
             <li>
               <Button onClick={logoutHandler}>Cerrar Sesion</Button>
@@ -75,8 +87,20 @@ export default function MainHeader() {
               {session.status === 'authenticated' && (
                 <>
                   <li>
-                    <h4>Usuario: {session.data.user.userId}</h4>
+                    <h4>Usuario: {userId}</h4>
                   </li>
+                  {role === 'LEAL' && (
+                    <>
+                      <li>
+                        <Button href={`/leal/${userId}`}>Mi perfil</Button>
+                      </li>
+                      <li>
+                        <Button href={'/cambiar-password'}>
+                          Cambiar contraseña
+                        </Button>
+                      </li>
+                    </>
+                  )}
                   <li>
                     <Button onClick={logoutHandler}>Cerrar Sesion</Button>
                   </li>

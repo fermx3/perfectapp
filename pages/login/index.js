@@ -1,4 +1,4 @@
-import LoginForm from '@/components/cliente/login-form';
+import LoginForm from '@/components/login/login-form';
 
 import classes from './index.module.scss';
 

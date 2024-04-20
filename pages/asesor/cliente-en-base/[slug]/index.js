@@ -22,6 +22,7 @@ import {
   selectCurrentStage,
   selectVisitaActual,
 } from '@/store/visitaActual/visitaActual.selector';
+import Dashboard from '@/components/dashboard/dashboard';
 
 export default function VisitaPage({ leal, session }) {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ export default function VisitaPage({ leal, session }) {
         cadena={leal.cadena}
         leales={leal.leales}
       >
+        <Dashboard cuota={leal.cuotaPallets} />
         <Button
           onClick={onClickHandler}
           buttonType={

@@ -1,0 +1,180 @@
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { getSession } from 'next-auth/react';
+
+import Container from '@/components/layout/container';
+import FormControl, {
+  INPUT_TYPE_CLASSES,
+} from '@/components/forms/form-control';
+import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { cambiarPasswordSchema } from '@/lib/schemas/schemas';
+import ErrorMessage from '@/components/ui/error-message';
+import Modal from '@/components/ui/modal';
+import { useRouter } from 'next/router';
+
+export default function CambiarPassPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+  } = useForm({
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    },
+    resolver: zodResolver(cambiarPasswordSchema),
+  });
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const router = useRouter();
+
+  async function changePassword(data) {
+    const response = await fetch('api/auth/changePass', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message || 'Algo salió mal!');
+    }
+
+    if (responseData.errors) {
+      if (errors.oldPassword) {
+        setError('oldPassword', {
+          type: 'server',
+          message: errors.oldPassword,
+        });
+      }
+      if (errors.newPassword) {
+        setError('newPassword', {
+          type: 'server',
+          message: errors.newPassword,
+        });
+      }
+      if (errors.confirmNewPassword) {
+        setError('confirmNewPassword', {
+          type: 'server',
+          message: errors.confirmNewPassword,
+        });
+      }
+    }
+
+    return responseData;
+  }
+
+  const onSubmit = async (data) => {
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    //submit to server
+    try {
+      const result = await changePassword(data);
+      // successfuly changed password
+      setSuccessMessage(result.message);
+    } catch (error) {
+      console.log(error);
+      if (error.message === 'La contraseña es incorrecta') {
+        setError('oldPassword', {
+          type: 'server',
+          message: error.message,
+        });
+      } else {
+        setErrorMessage(
+          error.message ||
+            'Algo salio mal, intenta de nuevo o contacta al administrador.'
+        );
+      }
+      //fail on change password
+    }
+  };
+
+  const handleClick = function () {
+    reset();
+    router.replace('/');
+  };
+
+  return (
+    <>
+      <Container md>
+        <h1>Cambia tu password</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
+            <input
+              type='password'
+              placeholder='Contraseña anterior'
+              {...register('oldPassword')}
+            />
+            {errors.oldPassword && <p>{errors.oldPassword.message}</p>}
+          </FormControl>
+          <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
+            <input
+              type='password'
+              placeholder='Contraseña nueva'
+              {...register('newPassword')}
+            />
+            {errors.newPassword && <p>{errors.newPassword.message}</p>}
+          </FormControl>
+          <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
+            <input
+              type='password'
+              placeholder='Confirma tu contraseña nueva'
+              {...register('confirmNewPassword')}
+            />
+            {errors.confirmNewPassword && (
+              <p>{errors.confirmNewPassword.message}</p>
+            )}
+          </FormControl>
+          {errorMessage && <ErrorMessage error={errorMessage} />}
+          <FormControl>
+            <Button
+              disabled={isSubmitting}
+              buttonType={
+                isSubmitting
+                  ? BUTTON_TYPE_CLASSES.disabled
+                  : BUTTON_TYPE_CLASSES.base
+              }
+            >
+              Iniciar Sesión
+            </Button>
+          </FormControl>
+        </form>
+      </Container>
+      {successMessage && (
+        <Modal>
+          <p>{successMessage}</p>
+          <Button onClick={handleClick} type='button'>
+            Ok
+          </Button>
+        </Modal>
+      )}
+    </>
+  );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
+
+  if (!session || session.user.role !== 'LEAL') {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+}

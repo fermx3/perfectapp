@@ -6,7 +6,7 @@ import { getSession } from 'next-auth/react';
 import classes from './index.module.scss';
 import { getAsesores } from '@/lib/prismaDB';
 
-export default function CrearLealPage({ asesores }) {
+export default function CrearLealPage({ asesores, session }) {
   return (
     <Container md>
       <header className={classes.header}>
@@ -14,7 +14,7 @@ export default function CrearLealPage({ asesores }) {
         <p>Escribe los datos para crear un nuevo Leal en la base de datos.</p>
       </header>
       <main>
-        <CrearLealForm asesores={asesores} />
+        <CrearLealForm asesores={asesores} session={session} />
       </main>
     </Container>
   );
