@@ -107,7 +107,7 @@ export default function CambiarPassPage() {
   return (
     <>
       <Container md>
-        <h1>Cambia tu password</h1>
+        <h1>Cambia tu contraseña</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
             <input
@@ -136,6 +136,7 @@ export default function CambiarPassPage() {
             )}
           </FormControl>
           {errorMessage && <ErrorMessage error={errorMessage} />}
+          {isSubmitting && <Loader />}
           <FormControl>
             <Button
               disabled={isSubmitting}
@@ -145,7 +146,7 @@ export default function CambiarPassPage() {
                   : BUTTON_TYPE_CLASSES.base
               }
             >
-              Iniciar Sesión
+              Cambiar Contraseña
             </Button>
           </FormControl>
         </form>

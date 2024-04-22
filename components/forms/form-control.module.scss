@@ -10,6 +10,7 @@
   max-width: 600px;
   margin: 0 1px;
   position: relative;
+  flex-basis: min-content;
 
   div {
     width: 100%;
@@ -115,5 +116,18 @@
   select,
   textarea {
     min-width: 100%;
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .formControl {
+    flex-basis: unset;
+    min-width: 100%;
+
+    input,
+    select,
+    textarea {
+      min-width: 100%;
+    }
   }
 }

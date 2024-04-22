@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { cambiarPasswordSchema } from '@/lib/schemas/schemas';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './[...nextauth]';
-import { changePassword, getUser } from '@/lib/prismaDB';
+import { changePassword, firstLogin, getUser } from '@/lib/prismaDB';
 
 async function handler(req, res) {
   if (req.method !== 'PATCH') {
@@ -54,6 +54,10 @@ async function handler(req, res) {
   const hashedPassword = await hashPassword(newPassword);
 
   const result = await changePassword(userId, hashedPassword);
+
+  if (!user.datosLeal) {
+    await firstLogin(userId);
+  }
 
   await prisma.$disconnect();
   res.status(200).json({ message: 'Contraseña cambiada' });

@@ -66,6 +66,7 @@ export default function MainHeader() {
               src='/images/icons/close-circle.svg'
               width={50}
               height={50}
+              alt='close icon'
               onClick={() => dispatch(toggleMenu())}
             />
           ) : (
@@ -73,6 +74,7 @@ export default function MainHeader() {
               src='/images/icons/hamburger.png'
               width={50}
               height={50}
+              alt='hamburger icon'
               onClick={() => dispatch(toggleMenu())}
             />
           )
@@ -92,10 +94,18 @@ export default function MainHeader() {
                   {role === 'LEAL' && (
                     <>
                       <li>
-                        <Button href={`/leal/${userId}`}>Mi perfil</Button>
+                        <Button
+                          href={`/leal/${userId}`}
+                          onClick={() => dispatch(toggleMenu())}
+                        >
+                          Mi perfil
+                        </Button>
                       </li>
                       <li>
-                        <Button href={'/cambiar-password'}>
+                        <Button
+                          href={'/cambiar-password'}
+                          onClick={() => dispatch(toggleMenu())}
+                        >
                           Cambiar contraseña
                         </Button>
                       </li>

@@ -1,10 +1,19 @@
+@import '@/styles/variables';
+
 .inputGroup {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  flex-basis: min-content;
 
   h4,
   h5 {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .inputGroup {
+    gap: 0rem;
   }
 }

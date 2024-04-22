@@ -40,11 +40,12 @@ type PlanPromocional {
   recompensas   String?
 }
 
-type LealDetalles {
-  nombreDeEncargado   String?
+type DatosLeal {
+  nombreDelEncargado   String?
   email               String?
   telefono            String?
   fechaDeAniversario  String?
+  puntosLeal          Int?
 }
 
 model users {
@@ -56,7 +57,7 @@ model users {
   cuotaPallets    CuotaPallets?
   valorDePuntos   ValorDePuntos?
   planPromocional PlanPromocional?
-  lealDetalles    LealDetalles?
+  datosLeal       DatosLeal?
 }
 
 enum Role {
