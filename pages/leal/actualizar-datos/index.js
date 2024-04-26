@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import Container from '@/components/layout/container';
@@ -18,7 +19,7 @@ export default function ActualizarDatosPage({ datosLeal }) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
     reset,
     setError,
   } = useForm({
@@ -33,6 +34,8 @@ export default function ActualizarDatosPage({ datosLeal }) {
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const router = useRouter();
 
   async function actualizarDatosLeal(data) {
     const response = await fetch('/api/leal/actualizar-datos', {
@@ -99,6 +102,7 @@ export default function ActualizarDatosPage({ datosLeal }) {
 
   const handleClick = function () {
     setSuccessMessage('');
+    router.reload();
   };
 
   return (
@@ -107,23 +111,23 @@ export default function ActualizarDatosPage({ datosLeal }) {
         <h1>Actualiza tus datos</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputGroup>
-            <FormControl label='Nombre del Encargado:'>
+            <FormControl label='Nombre del encargado:'>
               <input type='text' {...register('nombreDelEncargado')} />
               {errors.nombreDelEncargado && (
                 <p>{errors.nombreDelEncargado.message}</p>
               )}
             </FormControl>
-            <FormControl label='Correo Electrónico:'>
+            <FormControl label='Correo electrónico:'>
               <input type='text' {...register('email')} />
               {errors.email && <p>{errors.email.message}</p>}
             </FormControl>
           </InputGroup>
           <InputGroup>
-            <FormControl label='Telefono (10 dígitos):'>
+            <FormControl label='Teléfono (10 dígitos):'>
               <input type='number' {...register('telefono')} />
               {errors.telefono && <p>{errors.telefono.message}</p>}
             </FormControl>
-            <FormControl label='Fecha de Aniversario:'>
+            <FormControl label='Fecha de aniversario:'>
               <input type='date' {...register('fechaDeAniversario')} />
               {errors.fechaDeAniversario && (
                 <p>{errors.fechaDeAniversario.message}</p>
@@ -134,14 +138,14 @@ export default function ActualizarDatosPage({ datosLeal }) {
           {isSubmitting && <Loader />}
           <FormControl>
             <Button
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isDirty}
               buttonType={
-                isSubmitting
+                isSubmitting || !isDirty
                   ? BUTTON_TYPE_CLASSES.disabled
                   : BUTTON_TYPE_CLASSES.base
               }
             >
-              Actualizar Datos
+              ACTUALIZAR DATOS
             </Button>
           </FormControl>
         </form>

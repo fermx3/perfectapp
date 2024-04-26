@@ -1,17 +1,19 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { cambiarPasswordSchema } from '@/lib/schemas/schemas';
 
 import Container from '@/components/layout/container';
 import FormControl, {
   INPUT_TYPE_CLASSES,
 } from '@/components/forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { cambiarPasswordSchema } from '@/lib/schemas/schemas';
 import ErrorMessage from '@/components/ui/error-message';
 import Modal from '@/components/ui/modal';
-import { useRouter } from 'next/router';
+import Loader from '@/components/ui/loader';
 
 export default function CambiarPassPage() {
   const {
@@ -146,7 +148,7 @@ export default function CambiarPassPage() {
                   : BUTTON_TYPE_CLASSES.base
               }
             >
-              Cambiar Contraseña
+              CAMBIAR CONTRASEÑA
             </Button>
           </FormControl>
         </form>

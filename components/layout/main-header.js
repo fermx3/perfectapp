@@ -6,7 +6,7 @@ import { selectIsMenuOpen } from '@/store/mobileMenu/mobileMenu.selector';
 import { useSelector, useDispatch } from 'react-redux';
 
 import classes from './main-header.module.scss';
-import Button from '../button';
+import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
 
 export default function MainHeader() {
@@ -50,7 +50,12 @@ export default function MainHeader() {
           )}
           {session.status === 'authenticated' ? (
             <li>
-              <Button onClick={logoutHandler}>Cerrar Sesion</Button>
+              <Button
+                buttonType={BUTTON_TYPE_CLASSES.link}
+                onClick={logoutHandler}
+              >
+                Cerrar sesión
+              </Button>
             </li>
           ) : (
             <Link href='/login'>
@@ -112,7 +117,7 @@ export default function MainHeader() {
                     </>
                   )}
                   <li>
-                    <Button onClick={logoutHandler}>Cerrar Sesion</Button>
+                    <Button onClick={logoutHandler}>Cerrar sesión</Button>
                   </li>
                 </>
               )}

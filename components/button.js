@@ -5,6 +5,7 @@ import classes from './button.module.scss';
 export const BUTTON_TYPE_CLASSES = {
   base: 'base',
   secondary: 'secondary',
+  link: 'link',
   disabled: 'disabled',
 };
 
@@ -12,11 +13,20 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) =>
   ({
     [BUTTON_TYPE_CLASSES.base]: classes.button,
     [BUTTON_TYPE_CLASSES.secondary]: classes.secondaryButton,
+    [BUTTON_TYPE_CLASSES.link]: classes.link,
     [BUTTON_TYPE_CLASSES.disabled]: classes.disabledButton,
   }[buttonType]);
 
 export default function Button({ href, children, buttonType, ...props }) {
   const customButton = getButton(buttonType);
+
+  if (customButton === classes.link) {
+    return (
+      <a {...props} className={customButton}>
+        {children}
+      </a>
+    );
+  }
 
   if (!href) {
     return (

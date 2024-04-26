@@ -33,11 +33,11 @@ async function handler(req, res) {
   }
 
   const userId = session.user.userId;
-  const datosLeal = getDatosLeal(userId);
+  const datosLeal = await getDatosLeal(userId);
 
   const result = await actualizarDatosLeal(userId, response.data);
 
-  if (!datosLeal?.nombreDelEncargado) {
+  if (!datosLeal.nombreDelEncargado) {
     await firstLealDataUpdate(userId);
   }
 
