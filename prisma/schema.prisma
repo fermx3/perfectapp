@@ -122,6 +122,7 @@ model visitas {
   promociones         Promociones[]
   cuentaConInventario Boolean
   hayOrdenDeCompra    Boolean
+  porqueNoCompra      String?
   distribuidor        String?
   comentarios2        String
   ordenDeCompra       OrdenDeCompra[]

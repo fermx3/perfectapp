@@ -16,6 +16,12 @@
     width: 100%;
   }
 
+  .input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   &:focus {
     border-color: $white-color;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);

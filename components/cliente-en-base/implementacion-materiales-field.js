@@ -22,12 +22,11 @@ export default function ImplementacionMaterialesField({
     <>
       {fields.map((material, index) => (
         <FormGroup titulo={`Material ${index + 1}`} key={material.id}>
-          <FormControl>
+          <FormControl error={errors.materiales?.[index]?.material?.message}>
             <select
               {...register(`materiales.${index}.material`, {
                 required: 'Por favor, selecciona un material.',
               })}
-              required
             >
               <option value={null} selected disabled hidden>
                 Nombre del material

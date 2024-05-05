@@ -12,7 +12,6 @@ import {
   nextStage,
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
-import FormError from '../ui/form-error';
 
 export default function ClienteEnBase1() {
   const dispatch = useDispatch();
@@ -83,8 +82,11 @@ export default function ClienteEnBase1() {
         titulo='Informacion de Categoria'
         contenido='Aquí va el contenido de la noticia importante.'
       />
-      <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
-        <label>Comentarios:</label>
+      <FormControl
+        label='Comentarios:'
+        inputType={INPUT_TYPE_CLASSES.fullWidth}
+        error={errors.comentarios1?.message}
+      >
         <textarea
           {...register('comentarios1', {
             required: 'Por favor ingresa un comentario.',
@@ -92,9 +94,6 @@ export default function ClienteEnBase1() {
           rows={4}
         />
       </FormControl>
-      {errors.comentarios1 && (
-        <FormError>{errors.comentarios1.message}</FormError>
-      )}
       <Button>Siguiente</Button>
     </form>
   );

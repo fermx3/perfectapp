@@ -77,7 +77,12 @@ async function handler(req, res) {
                     </div>`
                   )}
                 </div>`
-                : `<p>No hay orden de compra.</p>`
+                : `
+                <div>
+                  <p>No hay orden de compra.</p>
+                  <p>¿Porqué no compra?: ${data.porqueNoCompra}</p>  
+                </div>
+                `
             }
           </div>
           <p>Comentarios: ${data.comentarios2}</p>

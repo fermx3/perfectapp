@@ -1,8 +1,7 @@
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { clienteEnBaseSchema2, distribuidores } from '@/lib/schemas/schemas';
+import { distribuidores } from '@/lib/schemas/schemas';
 
 import ReactSwitch from 'react-switch';
 import InfoMessage from '../ui/info-message';
@@ -11,7 +10,6 @@ import FormSection from '../forms/form-section';
 import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import OrdenDeCompraField from './orden-de-compra-field';
-import FormError from '../ui/form-error';
 
 import {
   setVisitaActual,
@@ -49,6 +47,7 @@ export default function ClienteEnBase2({ prevHandler }) {
     promociones: visitaActual.promociones || promociones,
     cuentaConInventario: visitaActual.cuentaConInventario || false,
     hayOrdenDeCompra: visitaActual.hayOrdenDeCompra || false,
+    porqueNoCompra: visitaActual.porqueNoCompra || '',
     comentarios2: visitaActual.comentarios2 || '',
     ordenDeCompra: visitaActual.ordenDeCompra || [],
     distribuidor: visitaActual.distribuidor || '',
@@ -128,17 +127,37 @@ export default function ClienteEnBase2({ prevHandler }) {
             )}
           />
         </FormControl>
+        {!hayOrden && (
+          <FormControl
+            label='¿Porqué no compra?'
+            error={errors.porqueNoCompra?.message}
+          >
+            <input
+              type='text'
+              {...register('porqueNoCompra', {
+                required: 'Por favor escribe una razón por la que no compra.',
+              })}
+            />
+          </FormControl>
+        )}
         {hayOrden && (
           <>
-            <FormControl label='Distribuidor:'>
-              <select {...register('distribuidor')} placeholder='Distribuidor'>
+            <FormControl
+              label='Distribuidor:'
+              error={errors.distribuidor?.message}
+            >
+              <select
+                {...register('distribuidor', {
+                  required: 'Por favor selecciona un distribuidor.',
+                })}
+                placeholder='Distribuidor'
+              >
                 {distribuidores.map((option) => (
                   <option value={option} key={option}>
                     {option}
                   </option>
                 ))}
               </select>
-              {errors.canal && <p>{errors.canal.message}</p>}
             </FormControl>
             <OrdenDeCompraField
               {...{
@@ -156,6 +175,7 @@ export default function ClienteEnBase2({ prevHandler }) {
       <FormControl
         label='Comentarios:'
         inputType={INPUT_TYPE_CLASSES.fullWidth}
+        error={errors.comentarios2?.message}
       >
         <textarea
           {...register('comentarios2', {
@@ -163,9 +183,6 @@ export default function ClienteEnBase2({ prevHandler }) {
           })}
           rows={4}
         />
-        {errors.comentarios2 && (
-          <FormError>{errors.comentarios2.message}</FormError>
-        )}
       </FormControl>
       <Button type='button' onClick={prevHandler}>
         Anterior

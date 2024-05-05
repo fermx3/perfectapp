@@ -1,3 +1,4 @@
+import FormError from '../ui/form-error';
 import classes from './form-control.module.scss';
 
 export const INPUT_TYPE_CLASSES = {
@@ -19,15 +20,23 @@ export default function FormControl({
   prefix,
   label,
   unit,
+  error,
 }) {
   const customInput = getInput(inputType);
 
   return (
     <div className={customInput}>
       {label && <label>{label}</label>}
-      {prefix && <p>{prefix}</p>}
-      {children}
-      {unit && <p>{unit}</p>}
+      {prefix || unit ? (
+        <div className={classes.input}>
+          {prefix && <p>{prefix}</p>}
+          {children}
+          {unit && <p>{unit}</p>}
+        </div>
+      ) : (
+        <>{children}</>
+      )}
+      {error && <FormError>{error}</FormError>}
     </div>
   );
 }

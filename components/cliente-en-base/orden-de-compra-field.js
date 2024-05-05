@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 
-import Button, { BUTTON_TYPE_CLASSES } from '../button';
+import Button from '../button';
 import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import InputGroup from '../forms/input-group';
@@ -124,14 +124,17 @@ export default function OrdenDeCompraField({
               <p>Promocion???:</p>
               <p>{orden.promocion ? 'si' : 'no'}</p>
             </div>
-            <FormControl label='Cajas:'>
+            <FormControl
+              label='Cajas:'
+              error={errors.ordenDeCompra?.[index]?.cajas?.message}
+            >
               <input
                 type='number'
                 min={1}
                 {...register(`ordenDeCompra.${index}.cajas`, {
                   valueAsNumber: true,
+                  required: 'Por favor llena este campo',
                 })}
-                required
               />
             </FormControl>
             <Button

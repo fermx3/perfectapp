@@ -5,7 +5,8 @@ import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import Button from '../button';
 import ReactSwitch from 'react-switch';
 import InputGroup from '../forms/input-group';
-import FormError from '../ui/form-error';
+
+const gramajes = [90, 110, 190, 225, 360, 1000];
 
 export default function ProductosField({
   nestIndex,
@@ -28,10 +29,15 @@ export default function ProductosField({
         return (
           <InputGroup key={producto.id}>
             <h5>Producto {k + 1}</h5>
-            <FormControl label='Gramos' unit='gr'>
-              <input
-                type='number'
-                min={0}
+            <FormControl
+              label='Gramos'
+              unit='gr'
+              error={
+                errors.competidores?.[nestIndex]?.productos?.[k]?.gramos
+                  ?.message
+              }
+            >
+              <select
                 {...register(
                   `competidores.${nestIndex}.productos.${k}.gramos`,
                   {
@@ -39,14 +45,25 @@ export default function ProductosField({
                     valueAsNumber: true,
                   }
                 )}
-              />
-              {errors.competidores?.[nestIndex]?.productos?.[k]?.gramos && (
-                <FormError>
-                  {errors.competidores[nestIndex].productos[k].gramos.message}
-                </FormError>
-              )}
+              >
+                <option value={null} selected disabled hidden>
+                  Nombre del competidor
+                </option>
+                {gramajes.map((option) => (
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </FormControl>
-            <FormControl prefix='$' label='Precio'>
+            <FormControl
+              prefix='$'
+              label='Precio'
+              error={
+                errors.competidores?.[nestIndex]?.productos?.[k]?.precio
+                  ?.message
+              }
+            >
               <input
                 type='number'
                 min={0}
@@ -62,11 +79,6 @@ export default function ProductosField({
                   }
                 )}
               />
-              {errors.competidores?.[nestIndex]?.productos?.[k]?.precio && (
-                <FormError>
-                  {errors.competidores[nestIndex].productos[k].precio.message}
-                </FormError>
-              )}
             </FormControl>
             <FormControl
               inputType={INPUT_TYPE_CLASSES.fullWidth}
@@ -82,7 +94,14 @@ export default function ProductosField({
             </FormControl>
             {competidor.productos[k].hasPromo && (
               <>
-                <FormControl prefix='$' label='Precio Con Promo'>
+                <FormControl
+                  prefix='$'
+                  label='Precio Con Promo'
+                  error={
+                    errors.competidores?.[nestIndex]?.productos?.[k]
+                      ?.precioConPromo.message
+                  }
+                >
                   <input
                     type='number'
                     min={0}
@@ -98,15 +117,6 @@ export default function ProductosField({
                       }
                     )}
                   />
-                  {errors.competidores?.[nestIndex]?.productos?.[k]
-                    ?.precioConPromo && (
-                    <FormError>
-                      {
-                        errors.competidores[nestIndex].productos[k]
-                          .precioConPromo.message
-                      }
-                    </FormError>
-                  )}
                 </FormControl>
                 <FormControl label='Razón de promo'>
                   <select

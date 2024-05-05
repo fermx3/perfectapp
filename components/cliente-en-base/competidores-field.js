@@ -4,7 +4,6 @@ import FormControl from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import Button from '../button';
 import ProductosField from './productos-field';
-import FormError from '../ui/form-error';
 import { competidores } from '@/lib/schemas/schemas';
 
 export default function CompetidoresField({
@@ -24,7 +23,7 @@ export default function CompetidoresField({
     <>
       {fields.map((competidor, index) => (
         <FormGroup titulo={`Competidor ${index + 1}`} key={competidor.id}>
-          <FormControl>
+          <FormControl error={errors.competidores?.[index]?.nombre?.message}>
             <select
               {...register(`competidores.${index}.nombre`, {
                 required: 'Por favor completa este campo',
@@ -39,9 +38,6 @@ export default function CompetidoresField({
                 </option>
               ))}
             </select>
-            {errors.competidores?.[index]?.nombre && (
-              <FormError>{errors.competidores[index].nombre.message}</FormError>
-            )}
           </FormControl>
           <ProductosField
             nestIndex={index}

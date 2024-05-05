@@ -18,8 +18,6 @@ import {
 import ImplementacionMaterialesField from './implementacion-materiales-field';
 import ImplementacionExhibicionField from './implementacion-exhibicion-field';
 import InputGroup from '../forms/input-group';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { clienteEnBaseSchema3 } from '@/lib/schemas/schemas';
 
 export default function ClienteEnBase3({ prevHandler }) {
   const dispatch = useDispatch();

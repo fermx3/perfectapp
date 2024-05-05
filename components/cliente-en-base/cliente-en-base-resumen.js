@@ -140,7 +140,10 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
                 ))}
               </div>
             ) : (
-              <p>No hay orden de compra.</p>
+              <div>
+                <p>No hay orden de compra.</p>
+                <p>¿Porqué no compra?: {visitaActual.porqueNoCompra}</p>
+              </div>
             )}
           </div>
           <p>Comentarios: {visitaActual.comentarios2}</p>
