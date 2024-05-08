@@ -80,7 +80,7 @@ export default function LoginForm() {
   return (
     <div className={classes.formContainer}>
       <div className={classes.formHeader}>
-        <h2>Inicia Sesión</h2>
+        <h2>Inicia sesión</h2>
         <p>Lorem ipsum sit amet, consectetuer adiposcing elit, sed.</p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
@@ -126,7 +126,7 @@ export default function LoginForm() {
                 : BUTTON_TYPE_CLASSES.base
             }
           >
-            Iniciar Sesión
+            Iniciar sesión
           </Button>
         </FormControl>
         {isSubmitting && <Loader />}

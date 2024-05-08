@@ -84,7 +84,7 @@ export default function MainHeader() {
             />
           )
         ) : (
-          <Button href='/login'>Inicia Sesión</Button>
+          <Button href='/login'>Inicia sesión</Button>
         )}
       </div>
       {isMenuOpen && (
