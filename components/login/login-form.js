@@ -81,7 +81,7 @@ export default function LoginForm() {
     <div className={classes.formContainer}>
       <div className={classes.formHeader}>
         <h2>Inicia sesión</h2>
-        <p>Lorem ipsum sit amet, consectetuer adiposcing elit, sed.</p>
+        <p>¡Bienvenidos, Leales! Aqui estamos todos en confianza.</p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <div className={classes.imgBreaker}>
