@@ -19,7 +19,11 @@ import ImplementacionMaterialesField from './implementacion-materiales-field';
 import ImplementacionExhibicionField from './implementacion-exhibicion-field';
 import InputGroup from '../forms/input-group';
 
-export default function ClienteEnBase3({ prevHandler }) {
+export default function ClienteEnBase3({
+  prevHandler,
+  sku,
+  materialesDeComunicacion,
+}) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
@@ -42,28 +46,6 @@ export default function ClienteEnBase3({ prevHandler }) {
       periodo: 'Semana 1 y 2',
       alcance: true,
     },
-  ];
-
-  const implementacionMateriales = [
-    'Letrero con palo',
-    'Letrero plumón',
-    'Poster 1',
-    'Poster 2',
-    'Poster 3',
-    'Poster 4',
-    'Sticker 1',
-    'Sticker 2',
-    'Sticker 3',
-    'Sticker 4',
-  ];
-
-  const productos = [
-    'Iberia 90g',
-    'Iberia 225g',
-    'Iberia 1kg',
-    'Chantilly 190g',
-    'Chantilly 110g',
-    'Primavera 360g',
   ];
 
   const periodoNegociado = ['1 semana', '2 semanas', '3 semanas'];
@@ -132,7 +114,7 @@ export default function ClienteEnBase3({ prevHandler }) {
       </FormSection>
       <FormSection titulo='Implementación'>
         <ImplementacionMaterialesField
-          implementacionMateriales={implementacionMateriales}
+          implementacionMateriales={materialesDeComunicacion}
           {...{
             control,
             register,
@@ -145,7 +127,7 @@ export default function ClienteEnBase3({ prevHandler }) {
       </FormSection>
       <FormSection titulo='Implementación'>
         <ImplementacionExhibicionField
-          productos={productos}
+          productos={sku}
           periodoNegociado={periodoNegociado}
           {...{
             control,

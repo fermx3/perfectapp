@@ -1,8 +1,6 @@
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { distribuidores } from '@/lib/schemas/schemas';
-
 import ReactSwitch from 'react-switch';
 import InfoMessage from '../ui/info-message';
 import Button from '../button';
@@ -18,7 +16,11 @@ import {
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 import InputGroup from '../forms/input-group';
 
-export default function ClienteEnBase2({ prevHandler }) {
+export default function ClienteEnBase2({
+  prevHandler,
+  opcionesDeNoCompra,
+  distribuidores,
+}) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
@@ -132,12 +134,18 @@ export default function ClienteEnBase2({ prevHandler }) {
             label='¿Porqué no compra?'
             error={errors.porqueNoCompra?.message}
           >
-            <input
-              type='text'
+            <select
               {...register('porqueNoCompra', {
                 required: 'Por favor escribe una razón por la que no compra.',
               })}
-            />
+              placeholder='Selecciona una opción.'
+            >
+              {opcionesDeNoCompra.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </FormControl>
         )}
         {hayOrden && (

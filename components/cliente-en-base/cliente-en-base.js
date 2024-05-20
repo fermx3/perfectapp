@@ -13,14 +13,14 @@ import {
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 
-export default function ClienteEnBase1() {
+export default function ClienteEnBase1({ competidores, gramajes }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
   const defaultValues = {
     competidores: visitaActual.competidores || [
       {
-        nombre: '',
+        nombre: 'Iberia',
         productos: [{ gramos: '', precio: '', hasPromo: false, pop: false }],
       },
     ],
@@ -76,6 +76,8 @@ export default function ClienteEnBase1() {
             watch,
             setError,
           }}
+          competidores={competidores}
+          gramajes={gramajes}
         />
       </FormSection>
       <InfoMessage

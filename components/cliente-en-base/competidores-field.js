@@ -4,7 +4,6 @@ import FormControl from '../forms/form-control';
 import FormGroup from '../forms/form-group';
 import Button from '../button';
 import ProductosField from './productos-field';
-import { competidores } from '@/lib/schemas/schemas';
 
 export default function CompetidoresField({
   control,
@@ -13,6 +12,8 @@ export default function CompetidoresField({
   getValues,
   errors,
   watch,
+  competidores,
+  gramajes,
 }) {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -42,6 +43,7 @@ export default function CompetidoresField({
           <ProductosField
             nestIndex={index}
             {...{ control, register, getValues, watch, errors }}
+            gramajes={gramajes}
           />
           {index > 0 && (
             <Button

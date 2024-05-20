@@ -6,8 +6,6 @@ import Button from '../button';
 import ReactSwitch from 'react-switch';
 import InputGroup from '../forms/input-group';
 
-const gramajes = [90, 110, 190, 225, 360, 1000];
-
 export default function ProductosField({
   nestIndex,
   control,
@@ -15,6 +13,7 @@ export default function ProductosField({
   getValues,
   watch,
   errors,
+  gramajes,
 }) {
   const { fields, remove, append } = useFieldArray({
     control,
@@ -31,7 +30,6 @@ export default function ProductosField({
             <h5>Producto {k + 1}</h5>
             <FormControl
               label='Gramos'
-              unit='gr'
               error={
                 errors.competidores?.[nestIndex]?.productos?.[k]?.gramos
                   ?.message

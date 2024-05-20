@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getLeal } from '@/lib/prismaDB';
+import { getLeal, getSettings } from '@/lib/prismaDB';
 
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
@@ -24,7 +24,17 @@ import {
 } from '@/store/visitaActual/visitaActual.selector';
 import Dashboard from '@/components/dashboard/dashboard';
 
-export default function VisitaPage({ leal, session }) {
+export default function VisitaPage({
+  leal,
+  session,
+  promocionesDisponibles,
+  opcionesDeNoCompra,
+  distribuidores,
+  competidores,
+  gramajes,
+  sku,
+  materialesDeComunicacion,
+}) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
   const currentStage = useSelector(selectCurrentStage);
@@ -65,7 +75,10 @@ export default function VisitaPage({ leal, session }) {
         cadena={leal.cadena}
         leales={leal.leales}
       >
-        <Dashboard cuota={leal.cuotaPallets} />
+        <Dashboard
+          cuota={leal.cuotaPallets}
+          promocionesDisponibles={promocionesDisponibles}
+        />
         <Button
           onClick={onClickHandler}
           buttonType={
@@ -83,13 +96,27 @@ export default function VisitaPage({ leal, session }) {
         </Button>
         {visitaActual.inicioVisita &&
           visitaActual.numeroDeCliente === router.query.slug &&
-          currentStage === 0 && <ClienteEnBase1 />}
+          currentStage === 0 && (
+            <ClienteEnBase1 competidores={competidores} gramajes={gramajes} />
+          )}
         {visitaActual.inicioVisita &&
           visitaActual.numeroDeCliente === router.query.slug &&
-          currentStage === 1 && <ClienteEnBase2 prevHandler={prevHandler} />}
+          currentStage === 1 && (
+            <ClienteEnBase2
+              prevHandler={prevHandler}
+              opcionesDeNoCompra={opcionesDeNoCompra}
+              distribuidores={distribuidores}
+            />
+          )}
         {visitaActual.inicioVisita &&
           visitaActual.numeroDeCliente === router.query.slug &&
-          currentStage === 2 && <ClienteEnBase3 prevHandler={prevHandler} />}
+          currentStage === 2 && (
+            <ClienteEnBase3
+              prevHandler={prevHandler}
+              sku={sku}
+              materialesDeComunicacion={materialesDeComunicacion}
+            />
+          )}
         {visitaActual.inicioVisita &&
           visitaActual.numeroDeCliente === router.query.slug &&
           currentStage === 3 && (
@@ -114,8 +141,37 @@ export async function getServerSideProps(context) {
   }
 
   const leal = await getLeal(slug);
+  const {
+    promocionesDelMes,
+    distribuidores,
+    competidores,
+    gramajes,
+    opcionesDeNoCompra,
+    sku,
+    materialesDeComunicacion,
+  } = await getSettings('upfield');
+  // const promociones = await getPromociones('upfield');
+  const nivelDeCliente = leal.nivelDeCliente.toLowerCase();
+  const promocionesDisponibles = promocionesDelMes
+    .filter((promocion) => {
+      const promociones = promocion.nivelDeCliente.includes(nivelDeCliente);
+      return promociones;
+    })
+    .map((promocion) => promocion.promo);
+  // const opcionesDeNoCompra = await getOpcionesDeNoCompra('upfield');
+  // const distribuidores = await getDistribuidores('upfield');
 
   return {
-    props: { session, leal },
+    props: {
+      session,
+      leal,
+      promocionesDisponibles,
+      opcionesDeNoCompra,
+      distribuidores,
+      competidores,
+      gramajes,
+      sku,
+      materialesDeComunicacion,
+    },
   };
 }

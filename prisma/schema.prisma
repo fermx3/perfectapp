@@ -130,5 +130,21 @@ model visitas {
   materiales          Materiales[]
   exhibiciones        Exhibiciones[]
   comentarios3        String
+}
 
+type PromocionesDelMes {
+  promo          String
+  nivelDeCliente String[]
+}
+
+model config {
+  id                        String        @id @default(auto()) @map("_id") @db.ObjectId
+  empresa                   String    @unique
+  distribuidores            String[]
+  competidores              String[]
+  gramajes                  String[]
+  opcionesDeNoCompra        String[]
+  promocionesDelMes         PromocionesDelMes[]
+  sku                       String[]
+  materialesDeComunicacion  String[]
 }
