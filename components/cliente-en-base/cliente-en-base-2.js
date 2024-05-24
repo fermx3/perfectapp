@@ -20,6 +20,7 @@ export default function ClienteEnBase2({
   prevHandler,
   opcionesDeNoCompra,
   distribuidores,
+  infoFidelizacion,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
@@ -82,10 +83,12 @@ export default function ClienteEnBase2({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InfoMessage
-        titulo='Noticia importante de fidelizacion'
-        contenido='Aquí va el contenido de la noticia importante.'
-      />
+      {infoFidelizacion && (
+        <InfoMessage
+          titulo='Noticia importante de fidelizacion'
+          contenido='Aquí va el contenido de la noticia importante.'
+        />
+      )}
       <FormSection titulo='Promoción del mes'>
         <InputGroup>
           {fields.map((promocion, index) => (

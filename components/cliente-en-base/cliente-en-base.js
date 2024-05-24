@@ -13,7 +13,11 @@ import {
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 
-export default function ClienteEnBase1({ competidores, gramajes }) {
+export default function ClienteEnBase1({
+  competidores,
+  gramajes,
+  infoDeCategoria,
+}) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
@@ -80,10 +84,12 @@ export default function ClienteEnBase1({ competidores, gramajes }) {
           gramajes={gramajes}
         />
       </FormSection>
-      <InfoMessage
-        titulo='Informacion de Categoria'
-        contenido='Aquí va el contenido de la noticia importante.'
-      />
+      {infoDeCategoria && (
+        <InfoMessage
+          titulo='Informacion de Categoria'
+          contenido='Aquí va el contenido de la noticia importante.'
+        />
+      )}
       <FormControl
         label='Comentarios:'
         inputType={INPUT_TYPE_CLASSES.fullWidth}

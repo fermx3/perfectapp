@@ -39,6 +39,12 @@
   }
 }
 
+.disabledLink {
+  @extend .link;
+  background-color: $gray-color !important;
+  opacity: 0.2;
+}
+
 @media screen and (min-width: $mobile-size) {
   .linksGroup {
     display: flex;

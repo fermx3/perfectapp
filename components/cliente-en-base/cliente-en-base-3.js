@@ -23,6 +23,7 @@ export default function ClienteEnBase3({
   prevHandler,
   sku,
   materialesDeComunicacion,
+  infoComunicacion,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
@@ -84,10 +85,12 @@ export default function ClienteEnBase3({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InfoMessage
-        titulo='Noticia importante de comunicación'
-        contenido='Aquí va el contenido de la noticia importante.'
-      />
+      {infoComunicacion && (
+        <InfoMessage
+          titulo='Noticia importante de comunicación'
+          contenido='Aquí va el contenido de la noticia importante.'
+        />
+      )}
       <FormSection titulo='Plan de comunicación del mes'>
         <InputGroup>
           {fields.map((item, index) => (
