@@ -74,7 +74,7 @@ type Competidores {
 }
 
 type Productos {
-  gramos               Int
+  gramos               String
   precio               Int
   hasPromo             Boolean
   pop                  Boolean?
@@ -115,7 +115,7 @@ model visitas {
   id                  String        @id @default(auto()) @map("_id") @db.ObjectId
   asesor              String
   inicioVisita        String
-  finVisita           String
+  finVisita            String
   numeroDeCliente     String
   competidores        Competidores[]
   comentarios1        String
