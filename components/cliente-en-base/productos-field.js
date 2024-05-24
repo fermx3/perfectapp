@@ -40,7 +40,6 @@ export default function ProductosField({
                   `competidores.${nestIndex}.productos.${k}.gramos`,
                   {
                     required: 'Por favor completa este campo',
-                    valueAsNumber: true,
                   }
                 )}
               >
