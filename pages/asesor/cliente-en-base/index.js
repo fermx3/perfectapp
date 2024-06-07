@@ -7,19 +7,23 @@ import FormControl, {
   INPUT_TYPE_CLASSES,
 } from '@/components/forms/form-control';
 
-import { getLeales, getUserInfo } from '@/lib/prismaDB';
+import { getUserInfo } from '@/lib/prismaDB';
+import { getLealesAsignados } from '@/lib/db';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
 import { frecuencias } from '@/lib/schemas/schemas';
 
-export default function ClienteEnBasePage({ leales, userInfo, session }) {
+export default function ClienteEnBasePage({
+  lealesAsignados,
+  userInfo,
+  session,
+}) {
   const [value, setValue] = useState('');
   const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
 
-  const filteredLeales = leales.filter((leal) => {
-    if (leal.asesorAsignado.some((i) => i === session.user.userId))
-      return leal.frecuencia.some((i) => i === frecuenciaIsSelected);
+  const filteredLeales = lealesAsignados.filter((leal) => {
+    return leal.frecuencia.some((i) => i === frecuenciaIsSelected);
   });
 
   const router = useRouter();
@@ -66,12 +70,11 @@ export default function ClienteEnBasePage({ leales, userInfo, session }) {
         </FormControl>
         {value !== '' && (
           <ul className={classes.leales}>
-            {leales
+            {lealesAsignados
               .filter((leal) => {
                 const searchTerm = value.toLowerCase();
                 const nombre = leal.nombre.toLowerCase();
-                if (leal.asesorAsignado.some((i) => i === session.user.userId))
-                  return searchTerm && nombre.includes(searchTerm);
+                return searchTerm && nombre.includes(searchTerm);
               })
               .map((leal) => (
                 <li key={leal.userId}>
@@ -127,12 +130,12 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const leales = await getLeales();
   const userId = session.user.userId;
 
   const userInfo = await getUserInfo(userId);
+  const lealesAsignados = await getLealesAsignados(userInfo.zonaAsignada);
 
   return {
-    props: { session, leales, userInfo },
+    props: { session, userInfo, lealesAsignados },
   };
 }
