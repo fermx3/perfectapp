@@ -14,11 +14,7 @@ import { getSession } from 'next-auth/react';
 import classes from './index.module.scss';
 import { frecuencias } from '@/lib/schemas/schemas';
 
-export default function ClienteEnBasePage({
-  lealesAsignados,
-  userInfo,
-  session,
-}) {
+export default function ClienteEnBasePage({ lealesAsignados, userInfo }) {
   const [value, setValue] = useState('');
   const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
 
@@ -79,7 +75,7 @@ export default function ClienteEnBasePage({
               .map((leal) => (
                 <li key={leal.userId}>
                   <Link href={`/asesor/cliente-en-base/${leal.userId}`}>
-                    {leal.nombre}
+                    {leal.nombre} ({leal.central})
                   </Link>
                 </li>
               ))}
@@ -104,7 +100,7 @@ export default function ClienteEnBasePage({
               filteredLeales.map((leal) => (
                 <li key={leal.nombre}>
                   <Link href={`/asesor/cliente-en-base/${leal.userId}`}>
-                    {leal.nombre}
+                    {leal.nombre} ({leal.central})
                   </Link>
                 </li>
               ))
