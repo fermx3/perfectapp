@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import classes from './main-header.module.scss';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
+import { useRouter } from 'next/router';
 
 export default function MainHeader() {
   const session = useSession();
@@ -15,6 +16,7 @@ export default function MainHeader() {
   const dispatch = useDispatch();
   const userId = session.data?.user?.userId;
   const role = session.data?.user?.role;
+  const router = useRouter();
 
   function logoutHandler() {
     signOut();
@@ -37,32 +39,46 @@ export default function MainHeader() {
         </Link>
       </div>
       <nav className={classes.nav}>
-        <ul>
-          {role === 'LEAL' && (
-            <>
-              <li>
-                <Link href={`/leal/${userId}`}>Mi perfil</Link>
-              </li>
-              <li>
-                <Link href={'/cambiar-password'}>Cambiar contraseña</Link>
-              </li>
-            </>
-          )}
-          {session.status === 'authenticated' ? (
-            <li>
-              <Button
-                buttonType={BUTTON_TYPE_CLASSES.link}
-                onClick={logoutHandler}
-              >
-                Cerrar sesión
-              </Button>
-            </li>
-          ) : (
-            <Link href='/login'>
-              <li>Por favor inicia sesion</li>
-            </Link>
-          )}
-        </ul>
+        {role === 'LEAL' && (
+          <>
+            <div>
+              <Link href={`/leal/${userId}`}>Mi perfil</Link>
+            </div>
+            <div>
+              <Link href={'/cambiar-password'}>Cambiar contraseña</Link>
+            </div>
+          </>
+        )}
+        {router.pathname === '/' && (
+          <div className={classes.homeMenu}>
+            <div>
+              <Link href={'#'}>Home</Link>
+            </div>
+            <div>
+              <Link href={'#'}>Nosotros</Link>
+            </div>
+            <div>
+              <Link href={'#'}>Soluciones</Link>
+            </div>
+            <div>
+              <Link href={'#'}>Ayuda</Link>
+            </div>
+          </div>
+        )}
+        {session.status === 'authenticated' ? (
+          <div>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.link}
+              onClick={logoutHandler}
+            >
+              Cerrar sesión
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Button href='/login'>Ingresa a tu cuenta</Button>
+          </div>
+        )}
       </nav>
       <div className={classes.mobileNav}>
         {session.status === 'authenticated' ? (
