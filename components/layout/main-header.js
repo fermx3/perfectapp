@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Nunito } from 'next/font/google';
 
 import { useSession, signOut } from 'next-auth/react';
 import { selectIsMenuOpen } from '@/store/mobileMenu/mobileMenu.selector';
@@ -10,7 +11,7 @@ import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
 import { useRouter } from 'next/router';
 
-export default function MainHeader() {
+export default function MainHeader({ className }) {
   const session = useSession();
   const isMenuOpen = useSelector(selectIsMenuOpen);
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export default function MainHeader() {
   }
 
   return (
-    <header className={classes.header}>
+    <header className={`${classes.header} ${className}`}>
       <div className={classes.logo}>
         <Link href={'/'}>
           <Image
@@ -52,16 +53,16 @@ export default function MainHeader() {
         {router.pathname === '/' && (
           <div className={classes.homeMenu}>
             <div>
-              <Link href={'#'}>Home</Link>
+              <Link href={'/'}>Home</Link>
             </div>
             <div>
-              <Link href={'#'}>Nosotros</Link>
+              <Link href={'/#nosotros'}>Nosotros</Link>
             </div>
             <div>
-              <Link href={'#'}>Soluciones</Link>
+              <Link href={'/#soluciones'}>Soluciones</Link>
             </div>
             <div>
-              <Link href={'#'}>Ayuda</Link>
+              <Link href={'/#ayuda'}>Ayuda</Link>
             </div>
           </div>
         )}

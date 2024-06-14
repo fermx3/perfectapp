@@ -1,12 +1,13 @@
+import { Fragment } from 'react';
 import MainFooter from './main-footer';
 import MainHeader from './main-header';
 
-export default function MainLayout({ children }) {
+export default function MainLayout({ children, className }) {
   return (
     <>
-      <MainHeader />
-      <main>{children}</main>
-      <MainFooter />
+      <MainHeader className={className} />
+      <main className={className}>{children}</main>
+      <MainFooter className={className} />
     </>
   );
 }

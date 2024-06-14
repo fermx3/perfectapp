@@ -4,6 +4,7 @@ import { cambiarPasswordSchema } from '@/lib/schemas/schemas';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './[...nextauth]';
 import { changePassword, firstLogin, getUser } from '@/lib/prismaDB';
+import { redirect } from 'next/dist/server/api-utils';
 
 async function handler(req, res) {
   if (req.method !== 'PATCH') {

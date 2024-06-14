@@ -2,13 +2,12 @@
 .button {
   background-color: $primary-color;
   display: inline-block;
-  padding: 0.3em 1.2em;
+  padding: 0.6em 1.2em;
   margin: 0.1em auto;
   border: 0.16em solid rgba(255, 255, 255, 0);
   border-radius: $border-radius-1;
   box-sizing: border-box;
   text-decoration: none;
-  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   color: $white-color;
   text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
@@ -26,6 +25,11 @@
     margin: 0.2em auto;
     width: 100%;
   }
+}
+
+.secondaryButton {
+  @extend .button;
+  background-color: $tertiary-color;
 }
 
 .disabledButton {

@@ -1,14 +1,11 @@
 import Head from 'next/head';
-import Button from '@/components/button';
 
-import { Inter } from 'next/font/google';
+import HomeHero from '@/components/home-page/hero';
+import NosotrosSection from '@/components/home-page/nosotros';
+import SolucionSection from '@/components/home-page/solucion';
 
 import classes from './index.module.scss';
-import Logo from '@/components/logo/logo';
-import Loader from '@/components/ui/loader';
-import Container from '@/components/layout/container';
-
-const inter = Inter({ subsets: ['latin'] });
+import AyudaSection from '@/components/home-page/ayuda';
 
 export default function Home() {
   return (
@@ -20,13 +17,10 @@ export default function Home() {
         <link rel='icon' href='/favicon.png' />
       </Head>
       <main className={classes.main}>
-        <div className={classes.header}>
-          <Container md>
-            <h1>Bienvenido/a a</h1>
-            <Logo />
-            <Button href='/login'>Acceder</Button>
-          </Container>
-        </div>
+        <HomeHero />
+        <NosotrosSection />
+        <SolucionSection />
+        <AyudaSection />
       </main>
     </>
   );

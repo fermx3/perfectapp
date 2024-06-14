@@ -1,0 +1,71 @@
+@import '@/styles/variables.scss';
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  input {
+    background-color: transparent;
+    border: none;
+    border-bottom: solid $black-color 0.8px;
+    // font-size: 0.5rem;
+    font-size: 0.8rem;
+    width: 250px;
+    padding-bottom: 0.4rem;
+    color: $black-color;
+
+    &:focus-visible {
+      border: none;
+      outline: none;
+      border-bottom: solid $black-color 1px;
+      color: $black-color;
+    }
+
+    &::placeholder {
+      color: $black-color;
+      opacity: 1;
+      color: $black-color;
+    }
+
+    &:placeholder-shown {
+      font-size: 0.5rem;
+      font-size: 0.8rem;
+      padding-bottom: 0.4rem;
+      color: $black-color;
+    }
+  }
+
+  button {
+    padding: 0.2rem;
+    background: transparent;
+    border: none;
+  }
+
+  p {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .form {
+    // flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // input {
+    //   text-align: center;
+    //   font-size: 0.8rem;
+    //   margin-bottom: 0.5rem;
+    //   width: 100%;
+    //   &:placeholder-shown {
+    //     font-size: 0.8rem;
+    //     text-align: center;
+    //   }
+    // }
+
+    // button {
+    //   width: 100%;
+    //   padding: 0.5rem;
+    // }
+  }
+}

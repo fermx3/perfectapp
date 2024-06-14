@@ -4,17 +4,24 @@ import { persistor, store } from '@/store/store';
 
 import MainLayout from '@/components/layout/main-layout';
 import Loader from '@/components/ui/loader';
+import { Nunito } from 'next/font/google';
 
 import '@/styles/globals.scss';
 
 import { SessionProvider } from 'next-auth/react';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+});
 
 export default function App({ Component, pageProps, session }) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
-          <MainLayout>
+          <MainLayout className={nunito.className}>
             <Component {...pageProps} />
           </MainLayout>
         </PersistGate>

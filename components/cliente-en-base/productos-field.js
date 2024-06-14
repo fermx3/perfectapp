@@ -148,7 +148,12 @@ export default function ProductosField({
             )}
             {k > 0 && (
               <Button type='button' onClick={() => remove(k)}>
-                <Image src='/images/icons/delete.png' width={20} height={20} />
+                <Image
+                  src='/images/icons/delete.png'
+                  width={20}
+                  height={20}
+                  alt=''
+                />
               </Button>
             )}
           </InputGroup>

@@ -1,0 +1,63 @@
+@import '@/styles/variables.scss';
+
+.grid {
+  max-width: 1200px;
+  margin: auto;
+  margin-bottom: -0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr));
+  min-height: 100vh;
+  place-content: center;
+  align-items: center;
+  grid-template-rows: 1fr;
+
+  .image {
+    justify-self: center;
+  }
+
+  .text {
+    padding-left: 4rem;
+
+    h3 {
+      font-size: 1.2rem;
+      color: $tertiary-color;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 3rem;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 4rem 0;
+      .punto {
+        .puntoHeader {
+          display: flex;
+          gap: 0.5rem;
+          h4 {
+            font-size: 1.2rem;
+          }
+        }
+        .puntoDesc {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .grid {
+    .image {
+      height: 500px;
+      overflow-y: clip;
+    }
+
+    .text {
+      padding-left: unset;
+    }
+  }
+}

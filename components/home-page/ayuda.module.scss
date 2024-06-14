@@ -1,0 +1,21 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr));
+  max-width: 1200px;
+  margin: auto;
+  place-content: center;
+  align-items: center;
+
+  .content {
+    max-width: 500px;
+    .header {
+      margin-bottom: 2rem;
+      h3 {
+        margin-bottom: 1rem;
+      }
+    }
+    .text {
+      margin-bottom: 2rem;
+    }
+  }
+}

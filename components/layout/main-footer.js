@@ -3,9 +3,9 @@ import Container from './container';
 
 import classes from './main-footer.module.scss';
 
-export default function MainFooter() {
+export default function MainFooter({ className }) {
   return (
-    <footer className={classes.mainFooter}>
+    <footer className={`${classes.mainFooter} ${className}`}>
       <Container md>
         <p>Perfectapp {moment().format('YYYY')}. Derechos Reservados.</p>
       </Container>

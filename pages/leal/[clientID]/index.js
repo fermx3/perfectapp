@@ -28,7 +28,7 @@ export default function PanelDeLeal({ leal }) {
         <p>Acércate a tu asesor.</p>
         {!leal.datosLeal?.nombreDelEncargado && (
           <Link href='/leal/actualizar-datos'>
-            Actualiza tus datos y gana 100 puntos
+            Actualiza tus datos y gana 3,000 puntos
           </Link>
         )}
       </main>

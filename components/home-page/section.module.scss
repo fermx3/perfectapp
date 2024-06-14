@@ -1,0 +1,24 @@
+@import '@/styles/variables.scss';
+
+.section {
+  min-height: 100vh;
+  //   display: flex;
+  //   align-items: center;
+  padding: 6rem 1rem 0;
+}
+
+.secondarySection {
+  @extend .section;
+  background: $secondary-color;
+  color: $white-color;
+}
+
+.gradientSection {
+  @extend .section;
+  background: linear-gradient(
+    0deg,
+    $tertiary-color-trans 0%,
+    $white-color 100%
+  );
+  border-radius: 0 0 1rem 1rem;
+}

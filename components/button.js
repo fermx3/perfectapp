@@ -37,7 +37,7 @@ export default function Button({ href, children, buttonType, ...props }) {
   }
 
   return (
-    <Link href={href} className={classes.button} {...props}>
+    <Link href={href} className={customButton} {...props}>
       {children}
     </Link>
   );
