@@ -11,6 +11,10 @@
   align-items: center;
   grid-template-rows: 1fr;
 
+  .mobileHeader {
+    display: none;
+  }
+
   .image {
     justify-self: center;
   }
