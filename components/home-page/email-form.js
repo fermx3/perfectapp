@@ -27,7 +27,7 @@ export default function EmailForm() {
   });
 
   async function sendEmail(data) {
-    const response = await fetch('/api/send-email', {
+    const response = await fetch('/api/home/send-email', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
