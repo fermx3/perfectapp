@@ -28,6 +28,10 @@ export default function NosotrosSection() {
   return (
     <HomeSection id='nosotros'>
       <div className={classes.grid}>
+        <div className={classes.mobileHeader}>
+          <h3>PERFECTAPP</h3>
+          <h2>¿Cómo me puede ayudar?</h2>
+        </div>
         <div className={classes.image}>
           <Image
             src='/images/home/img-2.png'
@@ -45,7 +49,7 @@ export default function NosotrosSection() {
             {bulletpoints.map((punto, index) => (
               <div className={classes.punto}>
                 <div className={classes.puntoHeader}>
-                  <h4>0{index + 1}</h4>
+                  <h4 className={classes.number}>0{index + 1}</h4>
                   <h4>{punto.titulo}</h4>
                 </div>
                 <div className={classes.puntoDesc}>

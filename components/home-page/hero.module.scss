@@ -59,6 +59,7 @@
 @media screen and (max-width: $mobile-size) {
   .heroContainer {
     height: 100vh;
+    margin-top: 3rem;
 
     position: relative;
     z-index: -1;

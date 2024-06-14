@@ -15,6 +15,14 @@ export default function HomeFooter() {
         />
         <div className={classes.line} />
       </div>
+      <div className={classes.mobileImage}>
+        <Image
+          src='/images/home/icons/ruta.png'
+          width={80}
+          height={80}
+          alt=''
+        />
+      </div>
       <div className={classes.footerContent}>
         <div className={classes.col}>
           <h5>SUBSCRÍBETE A NUESTRO NEWSLETTER</h5>

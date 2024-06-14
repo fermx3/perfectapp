@@ -60,3 +60,15 @@
     }
   }
 }
+
+@media screen and (max-width: $mobile-size) {
+  .grid {
+    .cardsContainer {
+      .card {
+        .button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

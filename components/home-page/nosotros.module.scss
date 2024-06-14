@@ -56,8 +56,39 @@
       overflow-y: clip;
     }
 
+    .mobileHeader {
+      margin-bottom: 2rem;
+      text-align: center;
+      h3 {
+        color: $tertiary-color;
+      }
+    }
+
+    .header {
+      display: none;
+    }
+
     .text {
       padding-left: unset;
+
+      .content {
+        text-align: center;
+        gap: 5rem;
+        .punto {
+          .puntoHeader {
+            flex-direction: column;
+
+            h4 {
+              margin-bottom: 1rem;
+            }
+
+            .number {
+              font-size: 2rem;
+              color: $primary-color;
+            }
+          }
+        }
+      }
     }
   }
 }

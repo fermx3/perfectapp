@@ -14,6 +14,10 @@
     }
   }
 
+  .mobileImage {
+    display: none;
+  }
+
   .footerContent {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
@@ -39,6 +43,41 @@
         grid-column: span 2;
         h5 {
           margin-bottom: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .footer {
+    .breaker {
+      img {
+        display: none;
+      }
+      .line {
+        margin-left: unset;
+      }
+    }
+
+    .mobileImage {
+      display: block;
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .footerContent {
+      text-align: center;
+      gap: 2rem;
+      padding: 3rem 1rem;
+      .col {
+        grid-column: unset !important;
+        width: 100%;
+        max-width: unset;
+
+        ul {
+          display: flex;
+          justify-content: space-between;
         }
       }
     }
