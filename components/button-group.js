@@ -3,12 +3,14 @@ import Container from './layout/container';
 
 import classes from './button-group.module.scss';
 
-export default function ButtonGroup({ question, options }) {
+export default function ButtonGroup({ title, options }) {
   return (
-    <Container>
-      <div className={classes.header}>
-        <h2>{question}</h2>
-      </div>
+    <>
+      {title && (
+        <div className={classes.header}>
+          <h2>{title}</h2>
+        </div>
+      )}
       <div className={classes.buttonGroup}>
         {options.map((option) => (
           <Button href={option.link} key={option.name}>
@@ -16,6 +18,6 @@ export default function ButtonGroup({ question, options }) {
           </Button>
         ))}
       </div>
-    </Container>
+    </>
   );
 }

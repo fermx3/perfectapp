@@ -1,0 +1,25 @@
+@import '@/styles/variables.scss';
+
+.homeMenu {
+  display: flex;
+  gap: 2rem;
+  margin: auto;
+}
+
+.mobileHomeMenu {
+  @extend .homeMenu;
+
+  flex-direction: column;
+  color: $white-color;
+  text-align: center;
+  padding-bottom: 2rem;
+  border-bottom: solid;
+  width: 100%;
+
+  div {
+    padding: 0.5rem;
+    a {
+      font-size: 1.5rem !important;
+    }
+  }
+}

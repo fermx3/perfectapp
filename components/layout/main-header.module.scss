@@ -1,6 +1,7 @@
 @import '@/styles/variables';
 
 .header {
+  background-color: $white-color;
   max-width: 1200px;
   margin: auto;
   display: flex;
@@ -9,6 +10,9 @@
   padding: 1vh 0;
   min-height: 3rem;
   max-height: 5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   .nav {
     display: flex;
@@ -22,12 +26,6 @@
       text-decoration: none;
       list-style: none;
       color: $black-color;
-    }
-
-    .homeMenu {
-      display: flex;
-      gap: 2rem;
-      margin: auto;
     }
   }
 
@@ -43,10 +41,9 @@
     justify-content: space-between;
     padding: 2rem;
     position: fixed;
-    top: 65px;
+    top: 79px;
     left: 0;
     width: 100%;
-    animation: slideIn 1s ease 0s 1 normal forwards;
     z-index: 9;
     nav {
       display: flex;
@@ -80,31 +77,7 @@
     }
 
     .mobileNav {
-      display: block;
+      display: flex;
     }
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  0% {
-    transform: scaleY(0);
-    transform-origin: 100% 0%;
-  }
-
-  100% {
-    transform: scaleY(1);
-    transform-origin: 100% 0%;
   }
 }

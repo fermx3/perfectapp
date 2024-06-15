@@ -2,7 +2,6 @@ import { getSession } from 'next-auth/react';
 import { getUserInfo } from '@/lib/prismaDB';
 
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
-import ButtonGroup from '@/components/button-group';
 import LinksGroup from '@/components/ui/links-group';
 
 export default function AsesorPage({ userInfo, session }) {

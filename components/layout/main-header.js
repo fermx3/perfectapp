@@ -10,6 +10,7 @@ import classes from './main-header.module.scss';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
 import { useRouter } from 'next/router';
+import HomeMenu, { HOMEMENU_TYPE_CLASSES } from './home-menu';
 
 export default function MainHeader({ className }) {
   const session = useSession();
@@ -27,7 +28,7 @@ export default function MainHeader({ className }) {
   }
 
   return (
-    <header className={`${classes.header} ${className}`}>
+    <div className={`${classes.header} ${className}`}>
       <div className={classes.logo}>
         <Link href={'/'}>
           <Image
@@ -50,22 +51,20 @@ export default function MainHeader({ className }) {
             </div>
           </>
         )}
-        {router.pathname === '/' && (
-          <div className={classes.homeMenu}>
-            <div>
-              <Link href={'/'}>Home</Link>
-            </div>
-            <div>
-              <Link href={'/#nosotros'}>Nosotros</Link>
-            </div>
-            <div>
-              <Link href={'/#soluciones'}>Soluciones</Link>
-            </div>
-            <div>
-              <Link href={'/#ayuda'}>Ayuda</Link>
-            </div>
+        {session.status === 'authenticated' && role !== 'LEAL' && (
+          <div>
+            <Button
+              href={
+                role === 'ADMIN'
+                  ? `/${role.toLowerCase()}`
+                  : `/${role.toLowerCase()}/${userId}`
+              }
+            >
+              Mi perfil
+            </Button>
           </div>
         )}
+        {router.pathname === '/' && <HomeMenu />}
         {session.status === 'authenticated' ? (
           <div>
             <Button
@@ -82,56 +81,57 @@ export default function MainHeader({ className }) {
         )}
       </nav>
       <div className={classes.mobileNav}>
-        {session.status === 'authenticated' ? (
-          isMenuOpen ? (
-            <Image
-              src='/images/icons/close-circle.svg'
-              width={50}
-              height={50}
-              alt='close icon'
-              onClick={() => dispatch(toggleMenu())}
-            />
-          ) : (
-            <Image
-              src='/images/icons/hamburger.png'
-              width={50}
-              height={50}
-              alt='hamburger icon'
-              onClick={() => dispatch(toggleMenu())}
-            />
-          )
-        ) : (
+        {session.status !== 'authenticated' && (
           <Button href='/login'>Inicia sesión</Button>
+        )}
+        {isMenuOpen ? (
+          <Image
+            src='/images/icons/close-circle.svg'
+            width={50}
+            height={50}
+            alt='close icon'
+            onClick={() => dispatch(toggleMenu())}
+          />
+        ) : (
+          <Image
+            src='/images/icons/hamburger.png'
+            width={50}
+            height={50}
+            alt='hamburger icon'
+            onClick={() => dispatch(toggleMenu())}
+          />
         )}
       </div>
       {isMenuOpen && (
         <div className={classes.dropdown}>
           <nav>
-            <ul>
+            <HomeMenu
+              homeMenuType={HOMEMENU_TYPE_CLASSES.mobile}
+              onClick={() => dispatch(toggleMenu())}
+            />
+            <ul className={classes.buttons}>
               {session.status === 'authenticated' && (
                 <>
                   <li>
                     <h4>Usuario: {userId}</h4>
                   </li>
+                  <li>
+                    <Button
+                      href={`/leal/${userId}`}
+                      onClick={() => dispatch(toggleMenu())}
+                    >
+                      Mi perfil
+                    </Button>
+                  </li>
                   {role === 'LEAL' && (
-                    <>
-                      <li>
-                        <Button
-                          href={`/leal/${userId}`}
-                          onClick={() => dispatch(toggleMenu())}
-                        >
-                          Mi perfil
-                        </Button>
-                      </li>
-                      <li>
-                        <Button
-                          href={'/cambiar-password'}
-                          onClick={() => dispatch(toggleMenu())}
-                        >
-                          Cambiar contraseña
-                        </Button>
-                      </li>
-                    </>
+                    <li>
+                      <Button
+                        href={'/cambiar-password'}
+                        onClick={() => dispatch(toggleMenu())}
+                      >
+                        Cambiar contraseña
+                      </Button>
+                    </li>
                   )}
                   <li>
                     <Button onClick={logoutHandler}>Cerrar sesión</Button>
@@ -142,6 +142,6 @@ export default function MainHeader({ className }) {
           </nav>
         </div>
       )}
-    </header>
+    </div>
   );
 }

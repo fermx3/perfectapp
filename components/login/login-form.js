@@ -66,6 +66,9 @@ export default function LoginForm() {
       case 'ADMIN':
         router.replace(`/admin`);
         break;
+      case 'USUARIO':
+        router.replace(`/usuario`);
+        break;
       default:
         router.replace('/login-error');
     }
@@ -132,11 +135,11 @@ export default function LoginForm() {
         {isSubmitting && <Loader />}
         {isError && <ErrorMessage error={isError} />}
       </form>
-      <div className={classes.formFooter}>
+      {/* <div className={classes.formFooter}>
         <Link href='/cliente/cliente-nuevo'>
           ¿No tienes cuenta? Registrate aquí
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
