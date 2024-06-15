@@ -24,10 +24,12 @@ export default function UsuarioPage({ usuario }) {
           {
             name: 'Base de datos',
             link: `/${role.toLowerCase()}/${userId}/base-de-datos`,
+            disabled: true,
           },
           {
             name: 'Ver PowerBI',
             link: '#',
+            disabled: true,
           },
         ]}
       />

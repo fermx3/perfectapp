@@ -67,7 +67,7 @@ export default function LoginForm() {
         router.replace(`/admin`);
         break;
       case 'USUARIO':
-        router.replace(`/usuario`);
+        router.replace(`/usuario/${session.data.user.userId}`);
         break;
       default:
         router.replace('/login-error');

@@ -27,7 +27,7 @@ export default function BaseDeDatos({ usuario }) {
 
     setIsLoading(false);
     console.log(responseData);
-    router.push('/downloads/visitas.csv');
+    router.push('/tmp/visitas.csv');
     return responseData;
   };
 
@@ -47,6 +47,7 @@ export default function BaseDeDatos({ usuario }) {
           {
             name: 'Ver PowerBI',
             link: '#',
+            disabled: true,
           },
         ]}
       />
