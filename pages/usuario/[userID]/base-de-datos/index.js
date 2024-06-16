@@ -8,27 +8,27 @@ import { useState } from 'react';
 import Loader from '@/components/ui/loader';
 import { useRouter } from 'next/router';
 
-export default function BaseDeDatos({ usuario }) {
+export default function BaseDeDatos({ usuario, linkVisitas }) {
   const { role, userId, userInfo } = usuario;
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleFullDownload = async function () {
-    setIsLoading(true);
-    const response = await fetch('/api/usuario/all-visitas', {
-      method: 'GET',
-    });
+    router.push(linkVisitas);
+    // setIsLoading(true);
+    // const response = await fetch('/api/usuario/all-visitas', {
+    //   method: 'GET',
+    // });
 
-    const responseData = await response.json();
+    // const responseData = await response.json();
 
-    if (!response.ok) {
-      throw new Error(responseData.error.message || 'Something went wrong');
-    }
+    // if (!response.ok) {
+    //   throw new Error(responseData.error.message || 'Something went wrong');
+    // }
 
-    setIsLoading(false);
-    console.log(responseData);
-    router.push('/tmp/visitas.csv');
-    return responseData;
+    // setIsLoading(false);
+    // router.push('/tmp/visitas.csv');
+    // return responseData;
   };
 
   return (
@@ -74,6 +74,8 @@ export async function getServerSideProps(context) {
 
   const usuario = await getUsuario(userID);
 
+  const linkVisitas = process.env.LINK_BASE_VISITAS;
+
   if (
     !session ||
     session.user.role !== 'USUARIO' ||
@@ -88,6 +90,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, usuario },
+    props: { session, usuario, linkVisitas },
   };
 }

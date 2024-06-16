@@ -47,7 +47,12 @@ async function handler(req, res) {
 
       const json2csvParser = new Json2csvParser({ header: true });
       const csvData = json2csvParser.parse(allVisitas);
-      const newPath = path.join(process.cwd(), 'tmp', 'visitas.csv');
+      const newPath = path.join(
+        process.cwd(),
+        'public',
+        'downloads',
+        'visitas.csv'
+      );
       //   res.sendFile(csvData);
 
       fs.writeFile(newPath, csvData, function (error) {
