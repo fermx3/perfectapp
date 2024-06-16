@@ -1,3 +1,5 @@
+@import '@/styles/variables';
+
 .grafica {
   height: 100vh;
   width: 100%;
@@ -6,5 +8,11 @@
 
   img {
     object-fit: contain;
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .grafica {
+    height: 50vh;
   }
 }

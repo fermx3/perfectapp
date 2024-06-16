@@ -1,7 +1,16 @@
+@import '@/styles/variables.scss';
+
 .buttonGroup {
   display: flex;
   gap: 1rem;
   a {
     margin: 0 !important;
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .buttonGroup {
+    flex-wrap: wrap;
+    flex-direction: column;
   }
 }
