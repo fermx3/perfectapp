@@ -23,7 +23,9 @@ export default function AyudaSection() {
             para ayudarte a conseguir tus objetivos.
           </div>
           <div className={classes.button}>
-            <Button>Solicita una demostración</Button>
+            <Button href='mailto:hola@ruta-perfectapp.com'>
+              Solicita una demostración
+            </Button>
           </div>
         </div>
         <div className={classes.image}>

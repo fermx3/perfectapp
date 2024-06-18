@@ -15,7 +15,10 @@ export default function HomeHero() {
             <h2>Centraliza tu información en un solo lugar.</h2>
           </div>
           <div className={classes.cta}>
-            <Button href='#' buttonType={BUTTON_TYPE_CLASSES.secondary}>
+            <Button
+              href='mailto:hola@ruta-perfectapp.com'
+              buttonType={BUTTON_TYPE_CLASSES.secondary}
+            >
               Solicita una demostración
             </Button>
             <p>Una app tan potente como sencilla.</p>
@@ -54,6 +57,7 @@ export default function HomeHero() {
             width={707 / 1.3}
             height={809 / 1.3}
             alt=''
+            priority
           />
         </div>
       </div>

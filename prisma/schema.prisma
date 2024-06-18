@@ -156,4 +156,6 @@ model config {
   promocionesDelMes        PromocionesDelMes[]
   sku                      String[]
   materialesDeComunicacion String[]
+  avisoDePrivacidad        String
+  terminosYCondiciones     String
 }

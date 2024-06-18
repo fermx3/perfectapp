@@ -1,17 +1,34 @@
 import classes from './dashboard.module.scss';
 
-export default function Dashboard({ cuota, puntos, promocionesDisponibles }) {
-  const cuotaTotal = Object.values(cuota).reduce(
-    (a, b) => Number(a) + Number(b),
-    0
-  );
-  const skus = Object.keys(cuota).length;
+export default function Dashboard({
+  cuota,
+  puntos,
+  promocionesDisponibles,
+  avance,
+}) {
+  const cuotaTotal = cuota
+    ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
+    : 0;
+
+  const avanceTotal = avance
+    ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
+    : 0;
+  // const skus = cuota ? Object.keys(cuota).length : 0;
+
+  console.log(cuota);
 
   return (
     <div className={classes.dashboard}>
       <div>
         <h5>Cuota del mes:</h5>
         <p>{cuotaTotal} pallets</p>
+        <ul>
+          {Object.keys(cuota).map((key, i) => (
+            <li key={i}>
+              {key}: {cuota[key]}
+            </li>
+          ))}
+        </ul>
       </div>
       {/* <div>
         <h5>SKUs:</h5>
@@ -23,7 +40,7 @@ export default function Dashboard({ cuota, puntos, promocionesDisponibles }) {
       </div> */}
       <div>
         <h5>Avance de compra:</h5>
-        <p>?</p>
+        <p>{avanceTotal}</p>
       </div>
       <div>
         <h5>Puntos Leales:</h5>

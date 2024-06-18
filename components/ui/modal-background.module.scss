@@ -1,0 +1,13 @@
+@import './styles/variables';
+
+.modalBackground {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: $white-color;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(7.3px);
+  top: 0;
+  left: 0;
+  z-index: 9;
+}

@@ -47,7 +47,7 @@ export default function NosotrosSection() {
           </div>
           <div className={classes.content}>
             {bulletpoints.map((punto, index) => (
-              <div className={classes.punto}>
+              <div className={classes.punto} key={index}>
                 <div className={classes.puntoHeader}>
                   <h4 className={classes.number}>0{index + 1}</h4>
                   <h4>{punto.titulo}</h4>
@@ -59,7 +59,9 @@ export default function NosotrosSection() {
             ))}
           </div>
           <div className={classes.button}>
-            <Button href='#'>Solicita una demostración</Button>
+            <Button href='mailto:hola@ruta-perfectapp.com'>
+              Solicita una demostración
+            </Button>
           </div>
         </div>
       </div>

@@ -1,38 +1,22 @@
 @import '@/styles/variables';
 
 .main {
-  display: flex;
-  justify-content: stretch;
-  align-items: stretch;
-
-  .section {
-    border: solid;
-    border-radius: 0.3rem;
-    margin: 0.5rem;
-    padding: 0.3rem;
-    width: 80%;
+  a {
+    margin-top: 2rem;
   }
 }
 
-.preview {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
+.header {
+  width: 100%;
+  padding-bottom: 3rem;
 
-  header {
-    width: 100%;
-    padding-bottom: 3rem;
-
-    p {
-      color: $gray-color;
-    }
+  .nivel {
+    color: $gray-color;
   }
+}
 
-  main {
-    h1 {
-      padding-bottom: 0.3rem;
-    }
+.main {
+  h1 {
+    padding-bottom: 0.3rem;
   }
 }

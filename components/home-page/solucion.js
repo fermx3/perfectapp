@@ -45,8 +45,8 @@ export default function SolucionSection() {
           </p>
         </div>
         <div className={classes.cardsContainer}>
-          {cards.map((card) => (
-            <div className={classes.card}>
+          {cards.map((card, index) => (
+            <div className={classes.card} key={index}>
               <div className={classes.icon}>
                 <Image src={`/images/home/icons/${card.icon}`} fill alt='' />
               </div>
@@ -55,7 +55,9 @@ export default function SolucionSection() {
                 <p>{card.desc}</p>
               </div>
               <div className={classes.button}>
-                <Button>Más información</Button>
+                <Button href='mailto:hola@ruta-perfectapp.com'>
+                  Más información
+                </Button>
               </div>
             </div>
           ))}

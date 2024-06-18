@@ -3,4 +3,30 @@
 .mainFooter {
   color: $gray-color;
   text-align: center;
+
+  .links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.8rem;
+    flex-wrap: wrap;
+
+    .line {
+      height: 10px;
+      width: 1px;
+      background-color: $gray-color;
+    }
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .mainFooter {
+    .links {
+      .line {
+        display: none;
+      }
+    }
+  }
 }

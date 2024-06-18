@@ -1,0 +1,22 @@
+.closeModal {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.container {
+  position: relative;
+
+  .header {
+    padding-bottom: 2rem;
+  }
+
+  .body {
+    max-height: 80vh;
+    width: 80vw;
+    overflow-y: scroll;
+    white-space: pre-line;
+  }
+}

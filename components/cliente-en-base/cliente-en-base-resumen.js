@@ -196,7 +196,9 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
       </Container>
       {(successMessage || errorMessage) && (
         <Modal>
-          <p>{successMessage || errorMessage}</p>
+          <p style={{ marginBottom: '1rem' }}>
+            {successMessage || errorMessage}
+          </p>
           <Button type='button' onClick={handleEndVisita}>
             Ok
           </Button>

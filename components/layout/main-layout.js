@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import MainFooter from './main-footer';
 import MainHeader from './main-header';
 
