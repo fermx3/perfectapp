@@ -19,8 +19,6 @@ import InfoMessage from '../ui/info-message';
 import ErrorMessage from '../ui/error-message';
 
 export default function CrearLealForm({ asesores, session }) {
-  console.log(session);
-
   const {
     register,
     handleSubmit,

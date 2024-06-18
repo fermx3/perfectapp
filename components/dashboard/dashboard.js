@@ -15,7 +15,7 @@ export default function Dashboard({
     : 0;
   // const skus = cuota ? Object.keys(cuota).length : 0;
 
-  console.log(cuota);
+  console.log(avance);
 
   return (
     <div className={classes.dashboard}>
