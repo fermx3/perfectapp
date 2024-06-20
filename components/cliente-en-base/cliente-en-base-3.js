@@ -21,7 +21,7 @@ import InputGroup from '../forms/input-group';
 
 export default function ClienteEnBase3({
   prevHandler,
-  sku,
+  skus,
   materialesDeComunicacion,
   infoComunicacion,
 }) {
@@ -130,7 +130,7 @@ export default function ClienteEnBase3({
       </FormSection>
       <FormSection titulo='Implementación'>
         <ImplementacionExhibicionField
-          productos={sku}
+          productos={skus}
           periodoNegociado={periodoNegociado}
           {...{
             control,

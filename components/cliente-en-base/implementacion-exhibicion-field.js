@@ -36,8 +36,8 @@ export default function ImplementacionExhibicionField({
                 Producto
               </option>
               {productos.map((option) => (
-                <option value={option} key={option}>
-                  {option}
+                <option value={option.producto} key={option.sku}>
+                  {option.producto}
                 </option>
               ))}
             </select>

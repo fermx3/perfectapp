@@ -65,6 +65,19 @@ async function handler(req, res) {
               ${data.cuentaConInventario ? 'Si' : 'No'}
             </p>
             ${
+              data.cuentaConInventario &&
+              `<div>
+                  <h5>Inventario:</h5>
+                  ${data.inventario.map(
+                    (item) =>
+                      `<div>
+                      <h6>${item.producto}</h6>
+                      <p>${item.cajas} cajas</p>
+                    </div>`
+                  )}
+                </div>`
+            }
+            ${
               data.hayOrdenDeCompra
                 ? `<div>
                   <h5>Orden de compra:</h5>

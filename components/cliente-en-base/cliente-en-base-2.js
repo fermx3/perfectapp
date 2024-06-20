@@ -15,40 +15,22 @@ import {
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 import InputGroup from '../forms/input-group';
+import InventarioField from './inventario-field';
 
 export default function ClienteEnBase2({
   prevHandler,
   opcionesDeNoCompra,
   distribuidores,
   infoFidelizacion,
+  promociones,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
-  const promociones = [
-    {
-      promo: '6 cajas por pallete en 90g',
-      sku: 'Iberia 90g',
-      desc: '',
-      implementada: false,
-    },
-    {
-      promo: '6 cajas por pallete en 225g',
-      sku: 'Iberia 225g',
-      desc: '',
-      implementada: false,
-    },
-    {
-      promo: '3 cajas por pallete en 1Kg',
-      sku: 'Iberia 1Kg',
-      desc: '',
-      implementada: true,
-    },
-  ];
-
   const defaultValues = {
     promociones: visitaActual.promociones || promociones,
     cuentaConInventario: visitaActual.cuentaConInventario || false,
+    inventario: visitaActual.inventario || [],
     hayOrdenDeCompra: visitaActual.hayOrdenDeCompra || false,
     porqueNoCompra: visitaActual.porqueNoCompra || '',
     comentarios2: visitaActual.comentarios2 || '',
@@ -80,6 +62,7 @@ export default function ClienteEnBase2({
   };
 
   const hayOrden = watch('hayOrdenDeCompra');
+  const hayInventario = watch('cuentaConInventario');
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -123,6 +106,18 @@ export default function ClienteEnBase2({
             )}
           />
         </FormControl>
+        {hayInventario && (
+          <InventarioField
+            {...{
+              control,
+              register,
+              defaultValues,
+              errors,
+              getValues,
+              setValue,
+            }}
+          />
+        )}
         <FormControl label='¿Orden de compra?'>
           <Controller
             name={`hayOrdenDeCompra`}

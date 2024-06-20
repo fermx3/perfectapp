@@ -29,8 +29,8 @@ export default function HomeFooter() {
           <EmailForm />
         </div>
         <div className={classes.col}>
-          <h5>PÚBLICO CONDESA</h5>
-          <p>PUEBLA 403 COLONIA ROMA NORTE, CIUDAD DE MÉXICO, C.P. 06700</p>
+          <h5>ROMA NORTE</h5>
+          <p>CUAUHTÉMOC, CDMX</p>
         </div>
         <div className={classes.col}>
           <h5>SÍGUENOS</h5>

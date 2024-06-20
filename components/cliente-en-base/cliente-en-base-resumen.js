@@ -128,6 +128,17 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               Cuenta con inventario:{' '}
               {visitaActual.cuentaConInventario ? 'Si' : 'No'}
             </p>
+            {visitaActual.cuentaConInventario && (
+              <div>
+                <h5>Inventario:</h5>
+                {visitaActual.inventario.map((item) => (
+                  <div>
+                    <h6>{item.producto}</h6>
+                    <p>{item.cajas} cajas</p>
+                  </div>
+                ))}
+              </div>
+            )}
             {visitaActual.hayOrdenDeCompra ? (
               <div>
                 <h5>Orden de compra:</h5>

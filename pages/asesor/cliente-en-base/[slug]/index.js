@@ -33,7 +33,7 @@ export default function VisitaPage({
   distribuidores,
   competidores,
   gramajes,
-  sku,
+  skus,
   materialesDeComunicacion,
   visitasConOrdenes,
 }) {
@@ -113,6 +113,7 @@ export default function VisitaPage({
               prevHandler={prevHandler}
               opcionesDeNoCompra={opcionesDeNoCompra}
               distribuidores={distribuidores}
+              promociones={promocionesDisponibles}
             />
           )}
         {visitaActual.inicioVisita &&
@@ -120,7 +121,7 @@ export default function VisitaPage({
           currentStage === 2 && (
             <ClienteEnBase3
               prevHandler={prevHandler}
-              sku={sku}
+              skus={skus}
               materialesDeComunicacion={materialesDeComunicacion}
             />
           )}
@@ -154,7 +155,7 @@ export async function getServerSideProps(context) {
     competidores,
     gramajes,
     opcionesDeNoCompra,
-    sku,
+    skus,
     materialesDeComunicacion,
   } = await getSettings('upfield');
   // const promociones = await getPromociones('upfield');
@@ -184,7 +185,7 @@ export async function getServerSideProps(context) {
       distribuidores,
       competidores,
       gramajes,
-      sku,
+      skus,
       materialesDeComunicacion,
       visitasConOrdenes: visitasConOrdenes || [],
     },
