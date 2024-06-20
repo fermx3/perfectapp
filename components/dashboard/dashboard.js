@@ -5,20 +5,30 @@ export default function Dashboard({
   puntos,
   promocionesDisponibles,
   avance,
+  session,
 }) {
   const cuotaTotal = cuota
     ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
     : 0;
 
-  const avanceTotal = avance
-    ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
-    : 0;
+  const avanceTotal =
+    avance.lenght !== 0
+      ? avance[0]?.ordenesDeCompra?.reduce((a, b) => a + b.cajas, 0)
+      : 0;
+
+  // const avanceTotal = avance[0].ordenesDeCompra.map((i) => <p>{i.cajas}</p>);
+
+  console.log('avance: ', avance);
   // const skus = cuota ? Object.keys(cuota).length : 0;
 
-  console.log(avance);
+  console.log(session);
 
   return (
-    <div className={classes.dashboard}>
+    <div
+      className={
+        session.user.role === 'LEAL' ? classes.dashboardLeal : classes.dashboard
+      }
+    >
       <div>
         <h5>Cuota del mes:</h5>
         <p>{cuotaTotal} pallets</p>
@@ -40,7 +50,7 @@ export default function Dashboard({
       </div> */}
       <div>
         <h5>Avance de compra:</h5>
-        <p>{avanceTotal}</p>
+        <p>{avanceTotal ? avanceTotal : 0} cajas</p>
       </div>
       <div>
         <h5>Puntos Leales:</h5>

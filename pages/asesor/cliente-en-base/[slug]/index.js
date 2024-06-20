@@ -23,6 +23,7 @@ import {
   selectVisitaActual,
 } from '@/store/visitaActual/visitaActual.selector';
 import Dashboard from '@/components/dashboard/dashboard';
+import { getVisitasConOrdenesPorCliente } from '@/lib/db';
 
 export default function VisitaPage({
   leal,
@@ -34,12 +35,15 @@ export default function VisitaPage({
   gramajes,
   sku,
   materialesDeComunicacion,
+  visitasConOrdenes,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
   const currentStage = useSelector(selectCurrentStage);
 
   const router = useRouter();
+
+  console.log(visitasConOrdenes);
 
   function prevHandler() {
     dispatch(prevStage());
@@ -78,6 +82,9 @@ export default function VisitaPage({
         <Dashboard
           cuota={leal.cuotaPallets}
           promocionesDisponibles={promocionesDisponibles}
+          puntos={leal.datosLeal?.puntosLeal}
+          avance={visitasConOrdenes}
+          session={session}
         />
         <Button
           onClick={onClickHandler}
@@ -161,6 +168,13 @@ export async function getServerSideProps(context) {
   // const opcionesDeNoCompra = await getOpcionesDeNoCompra('upfield');
   // const distribuidores = await getDistribuidores('upfield');
 
+  const yearMonth = moment().format('YYYY-MM');
+
+  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(
+    yearMonth,
+    slug
+  );
+
   return {
     props: {
       session,
@@ -172,6 +186,7 @@ export async function getServerSideProps(context) {
       gramajes,
       sku,
       materialesDeComunicacion,
+      visitasConOrdenes: visitasConOrdenes || [],
     },
   };
 }

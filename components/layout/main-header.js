@@ -43,28 +43,25 @@ export default function MainHeader({ className }) {
           </Link>
         </div>
         <nav className={classes.nav}>
-          {role === 'LEAL' && (
+          {session.status === 'authenticated' && (
             <>
               <div>
-                <Link href={`/leal/${userId}`}>Mi perfil</Link>
+                <Button
+                  href={
+                    role === 'ADMIN'
+                      ? `/${role.toLowerCase()}`
+                      : `/${role.toLowerCase()}/${userId}`
+                  }
+                >
+                  Mi perfil
+                </Button>
               </div>
-              <div>
-                <Link href={'/cambiar-password'}>Cambiar contraseña</Link>
-              </div>
+              {role === 'LEAL' && (
+                <div>
+                  <Link href={'/cambiar-password'}>Cambiar contraseña</Link>
+                </div>
+              )}
             </>
-          )}
-          {session.status === 'authenticated' && role !== 'LEAL' && (
-            <div>
-              <Button
-                href={
-                  role === 'ADMIN'
-                    ? `/${role.toLowerCase()}`
-                    : `/${role.toLowerCase()}/${userId}`
-                }
-              >
-                Mi perfil
-              </Button>
-            </div>
           )}
           {router.pathname === '/' && <HomeMenu />}
           {session.status === 'authenticated' ? (

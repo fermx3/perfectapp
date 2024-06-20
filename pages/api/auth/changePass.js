@@ -56,7 +56,7 @@ async function handler(req, res) {
 
   const result = await changePassword(userId, hashedPassword);
 
-  if (!user.datosLeal) {
+  if (!user.datosLeal?.nombreDelEncargado) {
     await firstLogin(userId);
   }
 

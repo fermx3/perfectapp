@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react';
 import { getLeal, getSettings } from '@/lib/prismaDB';
-import { motion } from 'framer-motion';
+import moment from 'moment';
 
 import Dashboard from '@/components/dashboard/dashboard';
 import ButtonGroup from '@/components/button-group';
@@ -8,8 +8,14 @@ import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 
 import classes from './index.module.scss';
 import Container from '@/components/layout/container';
+import { getVisitasConOrdenesPorCliente } from '@/lib/db';
 
-export default function PanelDeLeal({ leal, promocionesDisponibles }) {
+export default function PanelDeLeal({
+  leal,
+  promocionesDisponibles,
+  session,
+  visitasConOrdenes,
+}) {
   return (
     <Container>
       <header className={classes.header}>
@@ -18,11 +24,26 @@ export default function PanelDeLeal({ leal, promocionesDisponibles }) {
           <p className={classes.nivel}>
             Nivel {leal.nivelDeCliente.toLowerCase()}
           </p>
+          <Container>
+            <h1>¡Bienvenido a la experiencia LEAL!</h1>
+            <p>Pronto descubrirás cómo puedes ganar por tu lealtad.</p>
+            <p>Acércate a tu asesor.</p>
+            {!leal.datosLeal?.nombreDelEncargado && (
+              <Button
+                href='/leal/actualizar-datos'
+                buttonType={BUTTON_TYPE_CLASSES.secondary}
+              >
+                Actualiza tus datos y gana 3,000 puntos
+              </Button>
+            )}
+          </Container>
         </div>
         <Dashboard
           cuota={leal.cuotaPallets}
           puntos={leal.datosLeal?.puntosLeal}
           promocionesDisponibles={promocionesDisponibles}
+          session={session}
+          avance={visitasConOrdenes}
         />
         <ButtonGroup
           options={[
@@ -32,19 +53,17 @@ export default function PanelDeLeal({ leal, promocionesDisponibles }) {
         />
       </header>
       <main className={classes.main}>
-        <Container md>
-          <h1>¡Bienvenido a la experiencia LEAL!</h1>
-          <p>Pronto descubrirás cómo puedes ganar por tu lealtad.</p>
-          <p>Acércate a tu asesor.</p>
-          {!leal.datosLeal?.nombreDelEncargado && (
-            <Button
-              href='/leal/actualizar-datos'
-              buttonType={BUTTON_TYPE_CLASSES.secondary}
-            >
-              Actualiza tus datos y gana 3,000 puntos
-            </Button>
-          )}
-        </Container>
+        <ButtonGroup
+          options={[
+            { name: 'Whatsapp', link: '#', disabled: true },
+            {
+              name: 'e-mail',
+              link: '#',
+              disabled: true,
+            },
+            { name: 'Encuesta', link: '#', disabled: true },
+          ]}
+        />
       </main>
     </Container>
   );
@@ -78,7 +97,14 @@ export async function getServerSideProps(context) {
     })
     .map((promocion) => promocion.promo);
 
-  if (!leal.datosLeal) {
+  const yearMonth = moment().format('YYYY-MM');
+
+  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(
+    yearMonth,
+    clientID
+  );
+
+  if (!leal.datosLeal?.firstLoginDate) {
     return {
       redirect: {
         destination: '/cambiar-password',
@@ -88,6 +114,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, leal, promocionesDisponibles },
+    props: { session, leal, promocionesDisponibles, visitasConOrdenes },
   };
 }

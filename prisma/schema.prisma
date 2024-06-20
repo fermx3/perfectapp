@@ -55,6 +55,7 @@ type DatosLeal {
   telefono           String?
   fechaDeAniversario String?
   puntosLeal         Int?
+  firstLoginDate     String?
 }
 
 model users {

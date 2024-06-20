@@ -1,7 +1,50 @@
+@import '@/styles/variables.scss';
+
 .dashboard {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 2rem;
   gap: 1rem;
   text-align: center;
+}
+
+.dashboardLeal {
+  @extend .dashboard;
+  gap: 0.5rem;
+
+  div {
+    border-radius: $border-radius-2;
+    margin: 0 10px;
+    padding: 1.2rem 2rem;
+    min-height: 150px;
+    position: relative;
+    box-shadow: $white-shadow;
+    border: solid $primary-color 2px;
+
+    &:nth-child(3n + 1) {
+      border-color: $primary-color;
+    }
+    &:nth-child(3n + 2) {
+      border-color: $secondary-color;
+    }
+    &:nth-child(3n + 3) {
+      border-color: $tertiary-color;
+    }
+
+    h5 {
+      margin-bottom: 0.8rem;
+    }
+
+    ul {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: $mobile-size) {
+  .dashboardLeal {
+    div {
+      width: 100%;
+    }
+  }
 }
