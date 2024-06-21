@@ -23,12 +23,18 @@ export default function ClienteEnBase2({
   distribuidores,
   infoFidelizacion,
   promociones,
+  skus,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
+  const promocionesObj = promociones.reduce(
+    (a, i) => [...a, { promo: i, implementada: false }],
+    []
+  );
+
   const defaultValues = {
-    promociones: visitaActual.promociones || promociones,
+    promociones: visitaActual.promociones || promocionesObj,
     cuentaConInventario: visitaActual.cuentaConInventario || false,
     inventario: visitaActual.inventario || [],
     hayOrdenDeCompra: visitaActual.hayOrdenDeCompra || false,
@@ -116,6 +122,7 @@ export default function ClienteEnBase2({
               getValues,
               setValue,
             }}
+            rawSkus={skus}
           />
         )}
         <FormControl label='¿Orden de compra?'>
@@ -174,6 +181,7 @@ export default function ClienteEnBase2({
                 getValues,
                 setValue,
               }}
+              rawSkus={skus}
             />
           </>
         )}

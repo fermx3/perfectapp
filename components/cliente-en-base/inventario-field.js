@@ -12,6 +12,7 @@ export default function InventarioField({
   errors,
   getValues,
   setValue,
+  rawSkus,
 }) {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -19,32 +20,7 @@ export default function InventarioField({
   });
   const [searchValue, setSearchValue] = useState('');
 
-  const skus = [
-    {
-      producto: 'Iberia 90g',
-      cajas: 0,
-    },
-    {
-      producto: 'Iberia 225g',
-      cajas: 0,
-    },
-    {
-      producto: 'Iberia 1Kg',
-      cajas: 0,
-    },
-    {
-      producto: 'Chantilly 190g',
-      cajas: 0,
-    },
-    {
-      producto: 'Chantilly 110g',
-      cajas: 0,
-    },
-    {
-      producto: 'Primavera 360g',
-      cajas: 0,
-    },
-  ];
+  const skus = rawSkus.map((v) => ({ ...v, cajas: 0 }));
 
   const inventario = getValues('inventario');
   return (

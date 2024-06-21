@@ -12,6 +12,7 @@ export default function OrdenDeCompraField({
   errors,
   getValues,
   setValue,
+  rawSkus,
 }) {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -19,50 +20,52 @@ export default function OrdenDeCompraField({
   });
   const [searchValue, setSearchValue] = useState('');
 
-  const skus = [
-    {
-      producto: 'Iberia 90g',
-      cajas: 0,
-      promocion: false,
-      puntos: 1800,
-      objetivo: 180,
-    },
-    {
-      producto: 'Iberia 225g',
-      cajas: 0,
-      promocion: false,
-      puntos: 500,
-      objetivo: 50,
-    },
-    {
-      producto: 'Iberia 1Kg',
-      cajas: 0,
-      promocion: true,
-      puntos: 1000,
-      objetivo: 100,
-    },
-    {
-      producto: 'Chantilly 190g',
-      cajas: 0,
-      promocion: false,
-      puntos: 400,
-      objetivo: 40,
-    },
-    {
-      producto: 'Chantilly 110g',
-      cajas: 0,
-      promocion: false,
-      puntos: 350,
-      objetivo: 35,
-    },
-    {
-      producto: 'Primavera 360g',
-      cajas: 0,
-      promocion: false,
-      puntos: 150,
-      objetivo: 35,
-    },
-  ];
+  const skus = rawSkus.map((v) => ({ ...v, cajas: 0 }));
+
+  // const skus = [
+  //   {
+  //     producto: 'Iberia 90g',
+  //     cajas: 0,
+  //     promocion: false,
+  //     puntos: 1800,
+  //     objetivo: 180,
+  //   },
+  //   {
+  //     producto: 'Iberia 225g',
+  //     cajas: 0,
+  //     promocion: false,
+  //     puntos: 500,
+  //     objetivo: 50,
+  //   },
+  //   {
+  //     producto: 'Iberia 1Kg',
+  //     cajas: 0,
+  //     promocion: true,
+  //     puntos: 1000,
+  //     objetivo: 100,
+  //   },
+  //   {
+  //     producto: 'Chantilly 190g',
+  //     cajas: 0,
+  //     promocion: false,
+  //     puntos: 400,
+  //     objetivo: 40,
+  //   },
+  //   {
+  //     producto: 'Chantilly 110g',
+  //     cajas: 0,
+  //     promocion: false,
+  //     puntos: 350,
+  //     objetivo: 35,
+  //   },
+  //   {
+  //     producto: 'Primavera 360g',
+  //     cajas: 0,
+  //     promocion: false,
+  //     puntos: 150,
+  //     objetivo: 35,
+  //   },
+  // ];
 
   const ordenDeCompra = getValues('ordenDeCompra');
   return (
@@ -121,7 +124,7 @@ export default function OrdenDeCompraField({
               <p>{orden.objetivo}</p>
             </div>
             <div>
-              <p>Promocion???:</p>
+              <p>Promocion:</p>
               <p>{orden.promocion ? 'si' : 'no'}</p>
             </div>
             <FormControl

@@ -43,8 +43,6 @@ export default function VisitaPage({
 
   const router = useRouter();
 
-  console.log(visitasConOrdenes);
-
   function prevHandler() {
     dispatch(prevStage());
   }
@@ -114,6 +112,7 @@ export default function VisitaPage({
               opcionesDeNoCompra={opcionesDeNoCompra}
               distribuidores={distribuidores}
               promociones={promocionesDisponibles}
+              skus={skus}
             />
           )}
         {visitaActual.inicioVisita &&

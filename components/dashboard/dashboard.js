@@ -61,7 +61,7 @@ export default function Dashboard({
         {promocionesDisponibles ? (
           <ul>
             {promocionesDisponibles.map((promo) => (
-              <li>{promo}</li>
+              <li key={promo}>{promo}</li>
             ))}
           </ul>
         ) : (
