@@ -22,14 +22,16 @@ export default function ClienteEnBase2({
   opcionesDeNoCompra,
   distribuidores,
   infoFidelizacion,
-  promociones,
   skus,
+  valorDePuntos,
+  cuotaPallets,
+  promocionesDisponibles,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
-  const promocionesObj = promociones.reduce(
-    (a, i) => [...a, { promo: i, implementada: false }],
+  const promocionesObj = promocionesDisponibles.reduce(
+    (a, i) => [...a, { promo: i.desc, sku: i.sku, implementada: false }],
     []
   );
 
@@ -86,9 +88,10 @@ export default function ClienteEnBase2({
                 {promocion.promo}
               </h4>
               <p>
-                <span>{promocion.sku}</span>
+                <span {...register(`promociones.${index}.sku`)}>
+                  sku: {promocion.sku}
+                </span>
               </p>
-              <p>{promocion.desc}</p>
               <FormControl label='¿Implementada?'>
                 <Controller
                   name={`promociones.${index}.implementada`}
@@ -182,6 +185,9 @@ export default function ClienteEnBase2({
                 setValue,
               }}
               rawSkus={skus}
+              valorDePuntos={valorDePuntos}
+              cuotaPallets={cuotaPallets}
+              promocionesDisponibles={promocionesDisponibles}
             />
           </>
         )}

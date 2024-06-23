@@ -114,6 +114,9 @@ export default function VisitaPage({
             distribuidores={distribuidores}
             promociones={promocionesDisponibles}
             skus={skus}
+            valorDePuntos={leal.valorDePuntos}
+            cuotaPallets={leal.cuotaPallets}
+            promocionesDisponibles={promocionesDisponibles}
           />
         )}
       {visitaActual.inicioVisita &&
@@ -164,7 +167,7 @@ export async function getServerSideProps(context) {
       const promociones = promocion.nivelDeCliente.includes(nivelDeCliente);
       return promociones;
     })
-    .map((promocion) => promocion.promo);
+    .map((promocion) => ({ desc: promocion.promo, sku: promocion.sku }));
   // const opcionesDeNoCompra = await getOpcionesDeNoCompra('upfield');
   // const distribuidores = await getDistribuidores('upfield');
 
@@ -185,7 +188,7 @@ export async function getServerSideProps(context) {
       gramajes,
       skus,
       materialesDeComunicacion,
-      visitasConOrdenes: visitasConOrdenes || [],
+      visitasConOrdenes,
     },
   };
 }

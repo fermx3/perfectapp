@@ -72,7 +72,7 @@ export async function getServerSideProps(context) {
 
   const promocionesDisponibles = promocionesDelMes.map((promocion) => {
     const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
-    return `${promocion.promo} [ ${nivelDeClienteString} ]`;
+    return { desc: `${promocion.promo} [ ${nivelDeClienteString} ]` };
   });
 
   const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(

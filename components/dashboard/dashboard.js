@@ -1,3 +1,4 @@
+import PieGraphic from '../graphics/pie-graphic';
 import classes from './dashboard.module.scss';
 
 export default function Dashboard({
@@ -111,6 +112,10 @@ export default function Dashboard({
         {efectividad !== undefined && (
           <div className={classes.estadisticaContainer}>
             <div className={classes.cuadro}>
+              {/* <PieGraphic
+                percentage={(efectividad * 100)}
+                colour={'blue'}
+              /> */}
               <p>{(efectividad * 100).toFixed(2)}%</p>
             </div>
             <h5>Efectividad</h5>
@@ -120,8 +125,8 @@ export default function Dashboard({
           <div className={classes.cuadro}>
             {promocionesDisponibles.length !== 0 ? (
               <ul>
-                {promocionesDisponibles.map((promo) => (
-                  <li key={promo}>{promo}</li>
+                {promocionesDisponibles.map((promo, index) => (
+                  <li key={index}>{promo.desc}</li>
                 ))}
               </ul>
             ) : (

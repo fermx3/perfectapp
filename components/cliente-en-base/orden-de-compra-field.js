@@ -13,6 +13,9 @@ export default function OrdenDeCompraField({
   getValues,
   setValue,
   rawSkus,
+  valorDePuntos,
+  cuotaPallets,
+  promocionesDisponibles,
 }) {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -20,52 +23,20 @@ export default function OrdenDeCompraField({
   });
   const [searchValue, setSearchValue] = useState('');
 
-  const skus = rawSkus.map((v) => ({ ...v, cajas: 0 }));
+  const skus = rawSkus.map((v) => {
+    let puntos = 0;
+    let objetivo = 0;
+    let promo = 'No hay promo';
 
-  // const skus = [
-  //   {
-  //     producto: 'Iberia 90g',
-  //     cajas: 0,
-  //     promocion: false,
-  //     puntos: 1800,
-  //     objetivo: 180,
-  //   },
-  //   {
-  //     producto: 'Iberia 225g',
-  //     cajas: 0,
-  //     promocion: false,
-  //     puntos: 500,
-  //     objetivo: 50,
-  //   },
-  //   {
-  //     producto: 'Iberia 1Kg',
-  //     cajas: 0,
-  //     promocion: true,
-  //     puntos: 1000,
-  //     objetivo: 100,
-  //   },
-  //   {
-  //     producto: 'Chantilly 190g',
-  //     cajas: 0,
-  //     promocion: false,
-  //     puntos: 400,
-  //     objetivo: 40,
-  //   },
-  //   {
-  //     producto: 'Chantilly 110g',
-  //     cajas: 0,
-  //     promocion: false,
-  //     puntos: 350,
-  //     objetivo: 35,
-  //   },
-  //   {
-  //     producto: 'Primavera 360g',
-  //     cajas: 0,
-  //     promocion: false,
-  //     puntos: 150,
-  //     objetivo: 35,
-  //   },
-  // ];
+    puntos = Number(valorDePuntos[v.sku]);
+    objetivo = Number(cuotaPallets[v.sku]);
+
+    promocionesDisponibles.map(
+      (promocion) => v.sku === promocion.sku && (promo = promocion.desc)
+    );
+
+    return { ...v, cajas: 0, puntos, objetivo, promo };
+  });
 
   const ordenDeCompra = getValues('ordenDeCompra');
   return (
@@ -91,7 +62,7 @@ export default function OrdenDeCompraField({
                 {!ordenDeCompra.some(
                   (item) => item.producto === sku.producto
                 ) && (
-                  <li key={sku.producto}>
+                  <li key={sku.index}>
                     <div>
                       <p>{sku.producto}</p>
                       <Button
@@ -116,16 +87,18 @@ export default function OrdenDeCompraField({
               {orden.producto}
             </h4>
             <div>
-              <p>Puntos:</p>
-              <p>{orden.puntos}</p>
+              <p {...register(`ordenDeCompra.${index}.puntos`)}>
+                Puntos: {orden.puntos} x caja
+              </p>
             </div>
             <div>
-              <p>Objetivo:</p>
-              <p>{orden.objetivo}</p>
+              <p {...register(`ordenDeCompra.${index}.objetivo`)}>
+                Objetivo: {orden.objetivo} pallets
+              </p>
             </div>
             <div>
               <p>Promocion:</p>
-              <p>{orden.promocion ? 'si' : 'no'}</p>
+              <p {...register(`ordenDeCompra.${index}.promo`)}>{orden.promo}</p>
             </div>
             <FormControl
               label='Cajas:'
