@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import ErrorMessage from '../ui/error-message';
 
@@ -13,7 +12,6 @@ import { signIn } from 'next-auth/react';
 
 import classes from './login-form.module.scss';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
-import Container from '../layout/container';
 import Loader from '../ui/loader';
 
 export default function LoginForm() {
@@ -72,12 +70,6 @@ export default function LoginForm() {
       default:
         router.replace('/login-error');
     }
-    return (
-      <Container md>
-        <Loader />
-        <h1>Cargando...</h1>
-      </Container>
-    );
   }
 
   return (
@@ -98,7 +90,7 @@ export default function LoginForm() {
           <div className={classes.horizontalLine}></div>
         </div>
         <FormControl inputType={INPUT_TYPE_CLASSES.login}>
-          <Image src={'/images/icons/user.png'} width={13} height={13} />
+          <Image src={'/images/icons/user.png'} width={13} height={13} alt='' />
           <input
             type='text'
             placeholder='Numero de usuario'
@@ -109,7 +101,12 @@ export default function LoginForm() {
           {errors.userId && <p>{errors.userId.message}</p>}
         </FormControl>
         <FormControl inputType={INPUT_TYPE_CLASSES.login}>
-          <Image src={'/images/icons/password.png'} width={13} height={13} />
+          <Image
+            src={'/images/icons/password.png'}
+            width={13}
+            height={13}
+            alt=''
+          />
           <input
             type='password'
             placeholder='Contraseña'

@@ -8,6 +8,7 @@ import Dashboard from '@/components/dashboard/dashboard';
 import {
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
+  getUserIdsFromGivenZonasThatPurchased,
   getVisitasConOrdenesPorCliente,
 } from '@/lib/db';
 import moment from 'moment';
@@ -18,6 +19,8 @@ export default function AsesorPage({
   cuotaTotal,
   visitasConOrdenes,
   promocionesDisponibles,
+  clientesQueCompraron,
+  userIdsFromAsesorZonas,
 }) {
   return (
     <Container>
@@ -32,6 +35,8 @@ export default function AsesorPage({
         cuota={cuotaTotal}
         avance={visitasConOrdenes}
         promocionesDisponibles={promocionesDisponibles}
+        clientesQueCompraron={clientesQueCompraron}
+        clientesTotales={userIdsFromAsesorZonas}
       />
       <LinksGroup
         links={[
@@ -81,6 +86,15 @@ export async function getServerSideProps(context) {
     userIdsFromAsesorZonas
   );
 
+  const asesores = userInfo.asesores
+    ? userInfo.asesores
+    : [session.user.userId];
+
+  const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
+    yearMonth,
+    asesores
+  );
+
   if (
     !session ||
     session.user.role !== 'ASESOR' ||
@@ -101,6 +115,8 @@ export async function getServerSideProps(context) {
       cuotaTotal,
       visitasConOrdenes,
       promocionesDisponibles,
+      clientesQueCompraron,
+      userIdsFromAsesorZonas,
     },
   };
 }

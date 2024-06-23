@@ -101,6 +101,7 @@ type OrdenDeCompra {
   cajas     Int
   objetivo  Int?
   producto  String
+  sku       String?
   promocion Boolean?
   puntos    Int?
 }

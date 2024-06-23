@@ -10,7 +10,7 @@ import classes from './main-header.module.scss';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
 import { useRouter } from 'next/router';
-import HomeMenu, { HOMEMENU_TYPE_CLASSES } from './home-menu';
+import HomeMenu from './home-menu';
 import MenuModal from './menu-modal';
 
 export default function MainHeader({ className }) {
@@ -63,7 +63,7 @@ export default function MainHeader({ className }) {
               )}
             </>
           )}
-          {router.pathname === '/' && <HomeMenu />}
+          <HomeMenu />
           {session.status === 'authenticated' ? (
             <div>
               <Button
@@ -74,15 +74,20 @@ export default function MainHeader({ className }) {
               </Button>
             </div>
           ) : (
-            <div>
-              <Button href='/login'>Ingresa a tu cuenta</Button>
-            </div>
+            <>
+              {router.pathname !== '/login' && (
+                <div>
+                  <Button href='/login'>Ingresa a tu cuenta</Button>
+                </div>
+              )}
+            </>
           )}
         </nav>
         <div className={classes.mobileNav}>
-          {session.status !== 'authenticated' && (
-            <Button href='/login'>Inicia sesión</Button>
-          )}
+          {session.status !== 'authenticated' &&
+            router.pathname !== '/login' && (
+              <Button href='/login'>Inicia sesión</Button>
+            )}
           {isMenuOpen ? (
             <Image
               src='/images/icons/close-circle.svg'

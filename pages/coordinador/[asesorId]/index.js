@@ -4,6 +4,7 @@ import Container from '@/components/layout/container';
 import {
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
+  getUserIdsFromGivenZonasThatPurchased,
   getVisitasConOrdenesPorCliente,
 } from '@/lib/db';
 import { getPromociones, getUserInfo } from '@/lib/prismaDB';
@@ -16,6 +17,8 @@ export default function AsesorMonitoreoPage({
   cuotaTotal,
   promocionesDisponibles,
   visitasConOrdenes,
+  clientesQueCompraron = [],
+  userIdsFromAsesorZonas,
 }) {
   return (
     <Container>
@@ -30,6 +33,8 @@ export default function AsesorMonitoreoPage({
         promocionesDisponibles={promocionesDisponibles}
         avance={visitasConOrdenes}
         session={session}
+        clientesQueCompraron={clientesQueCompraron}
+        clientesTotales={userIdsFromAsesorZonas}
       />
     </Container>
   );
@@ -58,6 +63,11 @@ export async function getServerSideProps(context) {
     userIdsFromAsesorZonas
   );
 
+  const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
+    yearMonth,
+    [asesorId]
+  );
+
   if (
     !session ||
     session.user.role !== 'ASESOR' ||
@@ -78,6 +88,8 @@ export async function getServerSideProps(context) {
       cuotaTotal,
       promocionesDisponibles,
       visitasConOrdenes,
+      clientesQueCompraron,
+      userIdsFromAsesorZonas,
     },
   };
 }

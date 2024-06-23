@@ -9,6 +9,7 @@ import { Nunito } from 'next/font/google';
 import '@/styles/globals.scss';
 
 import { SessionProvider } from 'next-auth/react';
+import PageLoader from '@/components/ui/page-loader/page-loader';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -22,7 +23,10 @@ export default function App({ Component, pageProps, session }) {
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <MainLayout className={nunito.className}>
-            <Component {...pageProps} />
+            <>
+              <PageLoader />
+              <Component {...pageProps} />
+            </>
           </MainLayout>
         </PersistGate>
       </Provider>

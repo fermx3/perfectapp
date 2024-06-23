@@ -6,6 +6,8 @@ export default function Dashboard({
   promocionesDisponibles,
   avance,
   session,
+  clientesQueCompraron,
+  clientesTotales,
 }) {
   const cuotaTotal = cuota
     ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
@@ -30,6 +32,10 @@ export default function Dashboard({
         .filter((item) => item.producto === 'Iberia 225g')
         .reduce((a, b) => a + b.cajas, 0)
     : 0;
+
+  const efectividad = clientesTotales
+    ? clientesTotales.length / clientesQueCompraron.length
+    : undefined;
 
   // const avanceTotal = avance[0].ordenesDeCompra.map((i) => <p>{i.cajas}</p>);
   // const skus = cuota ? Object.keys(cuota).length : 0;
@@ -84,6 +90,30 @@ export default function Dashboard({
               <p>{puntos}</p>
             </div>
             <h5>Puntos Leales</h5>
+          </div>
+        )}
+        {clientesTotales && (
+          <div className={classes.estadisticaContainer}>
+            <div className={classes.cuadro}>
+              <p>{clientesTotales.length}</p>
+            </div>
+            <h5>clientesTotales</h5>
+          </div>
+        )}
+        {clientesQueCompraron && (
+          <div className={classes.estadisticaContainer}>
+            <div className={classes.cuadro}>
+              <p>{clientesQueCompraron.length}</p>
+            </div>
+            <h5>Clientes que compraron</h5>
+          </div>
+        )}
+        {efectividad && (
+          <div className={classes.estadisticaContainer}>
+            <div className={classes.cuadro}>
+              <p>{efectividad !== Infinity ? efectividad / 100 : 0}%</p>
+            </div>
+            <h5>Efectividad</h5>
           </div>
         )}
         <div className={classes.estadisticaContainer}>

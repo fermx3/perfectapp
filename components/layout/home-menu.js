@@ -18,29 +18,21 @@ export default function HomeMenu({ homeMenuType, onClick }) {
   const customHomeMenu = getHomeMenu(homeMenuType);
   const router = useRouter();
 
-  if (router.pathname === '/') {
+  if (router.pathname === '/' || '/login') {
     return (
       <div className={customHomeMenu}>
-        <div>
-          <Link href={'/'} onClick={onClick && onClick}>
-            Home
-          </Link>
-        </div>
-        <div>
-          <Link href={'/#nosotros'} onClick={onClick && onClick}>
-            Nosotros
-          </Link>
-        </div>
-        <div>
-          <Link href={'/#soluciones'} onClick={onClick && onClick}>
-            Soluciones
-          </Link>
-        </div>
-        <div>
-          <Link href={'/#ayuda'} onClick={onClick && onClick}>
-            Ayuda
-          </Link>
-        </div>
+        <Link href={'/'} onClick={onClick && onClick}>
+          Home
+        </Link>
+        <Link href={'/#nosotros'} onClick={onClick && onClick}>
+          Nosotros
+        </Link>
+        <Link href={'/#soluciones'} onClick={onClick && onClick}>
+          Soluciones
+        </Link>
+        <Link href={'/#ayuda'} onClick={onClick && onClick}>
+          Ayuda
+        </Link>
       </div>
     );
   } else {
