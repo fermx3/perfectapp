@@ -138,7 +138,7 @@ export async function getServerSideProps(context) {
       const promociones = promocion.nivelDeCliente.includes(nivelDeCliente);
       return promociones;
     })
-    .map((promocion) => promocion.promo);
+    .map((promocion) => ({ desc: promocion.promo }));
 
   const yearMonth = moment().format('YYYY-MM');
 

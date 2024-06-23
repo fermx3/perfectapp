@@ -1,4 +1,6 @@
-import PieGraphic from '../graphics/pie-graphic';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 import classes from './dashboard.module.scss';
 
 export default function Dashboard({
@@ -35,9 +37,10 @@ export default function Dashboard({
     : 0;
 
   const efectividad = clientesTotales
-    ? clientesQueCompraron.length / clientesTotales.length
+    ? ((clientesQueCompraron.length / clientesTotales.length) * 100).toFixed(2)
     : undefined;
 
+  const percentage = 66;
   // const avanceTotal = avance[0].ordenesDeCompra.map((i) => <p>{i.cajas}</p>);
   // const skus = cuota ? Object.keys(cuota).length : 0;
   return (
@@ -94,7 +97,7 @@ export default function Dashboard({
           </div>
         )}
         {clientesTotales && (
-          <div className={classes.estadisticaContainer}>
+          <div className={classes.estadisticaContainerSM}>
             <div className={classes.cuadro}>
               <p>{clientesTotales.length}</p>
             </div>
@@ -102,7 +105,7 @@ export default function Dashboard({
           </div>
         )}
         {clientesQueCompraron && (
-          <div className={classes.estadisticaContainer}>
+          <div className={classes.estadisticaContainerSM}>
             <div className={classes.cuadro}>
               <p>{clientesQueCompraron.length}</p>
             </div>
@@ -110,13 +113,22 @@ export default function Dashboard({
           </div>
         )}
         {efectividad !== undefined && (
-          <div className={classes.estadisticaContainer}>
+          <div className={classes.estadisticaContainerSM}>
             <div className={classes.cuadro}>
-              {/* <PieGraphic
-                percentage={(efectividad * 100)}
-                colour={'blue'}
-              /> */}
-              <p>{(efectividad * 100).toFixed(2)}%</p>
+              <CircularProgressbar
+                value={efectividad}
+                text={`${efectividad}%`}
+                circleRatio={0.75}
+                styles={buildStyles({
+                  rotation: 1 / 2 + 1 / 8,
+                  strokeLinecap: 'butt',
+                  trailColor: '#eee',
+                  pathColor: '#3171f1',
+                  textColor: 'black',
+                  pathTransitionDuration: 1,
+                  textSize: '1rem',
+                })}
+              />
             </div>
             <h5>Efectividad</h5>
           </div>

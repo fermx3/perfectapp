@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import classes from './modal.module.scss';
 import ModalBackground from './modal-background';
 
-export default function Modal({ children }) {
+export default function Modal({ children, transparent }) {
   const scrollY = window.scrollY;
 
   useEffect(() => {
@@ -24,7 +24,12 @@ export default function Modal({ children }) {
 
   return (
     <ModalBackground>
-      <div className={classes.modal}>{children}</div>
+      <div
+        className={classes.modal}
+        style={transparent && { background: 'transparent' }}
+      >
+        {children}
+      </div>
     </ModalBackground>
   );
 }

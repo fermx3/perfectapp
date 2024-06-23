@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import ErrorMessage from '../ui/error-message';
 
@@ -12,6 +13,7 @@ import { signIn } from 'next-auth/react';
 
 import classes from './login-form.module.scss';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
+import Container from '../layout/container';
 import Loader from '../ui/loader';
 
 export default function LoginForm() {
@@ -70,6 +72,12 @@ export default function LoginForm() {
       default:
         router.replace('/login-error');
     }
+    return (
+      <Container md>
+        <Loader />
+        <h1>Cargando...</h1>
+      </Container>
+    );
   }
 
   return (

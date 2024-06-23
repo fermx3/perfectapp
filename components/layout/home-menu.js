@@ -18,7 +18,7 @@ export default function HomeMenu({ homeMenuType, onClick }) {
   const customHomeMenu = getHomeMenu(homeMenuType);
   const router = useRouter();
 
-  if (router.pathname === '/' || '/login') {
+  if (router.pathname === '/' || router.pathname === '/login') {
     return (
       <div className={customHomeMenu}>
         <Link href={'/'} onClick={onClick && onClick}>
