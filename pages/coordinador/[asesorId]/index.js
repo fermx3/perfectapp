@@ -1,3 +1,4 @@
+import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
 import Dashboard from '@/components/dashboard/dashboard';
 import Container from '@/components/layout/container';
@@ -17,7 +18,7 @@ export default function AsesorMonitoreoPage({
   cuotaTotal,
   promocionesDisponibles,
   visitasConOrdenes,
-  clientesQueCompraron = [],
+  clientesQueCompraron,
   userIdsFromAsesorZonas,
 }) {
   return (
@@ -28,6 +29,12 @@ export default function AsesorMonitoreoPage({
         userId={session.user.userId}
         zonasAsignadas={userInfo.zonaAsignada}
       />
+      <Button
+        href={`/asesor/${session.user.userId}`}
+        buttonType={BUTTON_TYPE_CLASSES.secondary}
+      >
+        {'<'} Regresar
+      </Button>
       <Dashboard
         cuota={cuotaTotal}
         promocionesDisponibles={promocionesDisponibles}

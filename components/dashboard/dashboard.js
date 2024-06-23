@@ -34,7 +34,7 @@ export default function Dashboard({
     : 0;
 
   const efectividad = clientesTotales
-    ? clientesTotales.length / clientesQueCompraron.length
+    ? clientesQueCompraron.length / clientesTotales.length
     : undefined;
 
   // const avanceTotal = avance[0].ordenesDeCompra.map((i) => <p>{i.cajas}</p>);
@@ -97,7 +97,7 @@ export default function Dashboard({
             <div className={classes.cuadro}>
               <p>{clientesTotales.length}</p>
             </div>
-            <h5>clientesTotales</h5>
+            <h5>Clientes totales</h5>
           </div>
         )}
         {clientesQueCompraron && (
@@ -108,10 +108,10 @@ export default function Dashboard({
             <h5>Clientes que compraron</h5>
           </div>
         )}
-        {efectividad && (
+        {efectividad !== undefined && (
           <div className={classes.estadisticaContainer}>
             <div className={classes.cuadro}>
-              <p>{efectividad !== Infinity ? efectividad / 100 : 0}%</p>
+              <p>{(efectividad * 100).toFixed(2)}%</p>
             </div>
             <h5>Efectividad</h5>
           </div>
