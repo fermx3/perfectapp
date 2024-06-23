@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Button, { BUTTON_TYPE_CLASSES } from './button';
 
 import classes from './button-group.module.scss';
@@ -11,18 +12,21 @@ export default function ButtonGroup({ title, options }) {
         </div>
       )}
       <div className={classes.buttonGroup}>
-        {options.map((option) => (
+        {options.map((option, index) => (
           <Button
+            key={index}
             href={option.link}
-            key={option.name}
             disabled={option.disabled}
             buttonType={
               option.disabled
                 ? BUTTON_TYPE_CLASSES.disabled
-                : BUTTON_TYPE_CLASSES.base
+                : BUTTON_TYPE_CLASSES[option.buttonType]
             }
+            target={option.newPage ? '_blank' : '_self'}
           >
-            {option.name}
+            {option.name && option.name}
+            {option.image && <Image src={option.image} fill alt='' />}
+            {option.tooltip && <span>{option.tooltip}</span>}
           </Button>
         ))}
       </div>

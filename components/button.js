@@ -6,6 +6,7 @@ export const BUTTON_TYPE_CLASSES = {
   base: 'base',
   secondary: 'secondary',
   link: 'link',
+  icon: 'icon',
   disabled: 'disabled',
 };
 
@@ -14,6 +15,7 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) =>
     [BUTTON_TYPE_CLASSES.base]: classes.button,
     [BUTTON_TYPE_CLASSES.secondary]: classes.secondaryButton,
     [BUTTON_TYPE_CLASSES.link]: classes.link,
+    [BUTTON_TYPE_CLASSES.icon]: classes.icon,
     [BUTTON_TYPE_CLASSES.disabled]: classes.disabledButton,
   }[buttonType]);
 

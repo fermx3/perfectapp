@@ -1,56 +1,35 @@
-import { getSession } from 'next-auth/react';
-import { getPromociones, getUserInfo } from '@/lib/prismaDB';
-
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
-import LinksGroup from '@/components/ui/links-group';
-import Container from '@/components/layout/container';
 import Dashboard from '@/components/dashboard/dashboard';
+import Container from '@/components/layout/container';
 import {
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
   getVisitasConOrdenesPorCliente,
 } from '@/lib/db';
+import { getPromociones, getUserInfo } from '@/lib/prismaDB';
 import moment from 'moment';
+import { getSession } from 'next-auth/react';
 
-export default function AsesorPage({
-  userInfo,
+export default function AsesorMonitoreoPage({
   session,
+  userInfo,
   cuotaTotal,
-  visitasConOrdenes,
   promocionesDisponibles,
+  visitasConOrdenes,
 }) {
   return (
     <Container>
       <LayoutDashboard
         nombre={userInfo.nombre}
+        role='ASESOR'
         userId={session.user.userId}
-        role={session.user.role}
-        asesores={userInfo.asesores}
+        zonasAsignadas={userInfo.zonaAsignada}
       />
       <Dashboard
-        session={session}
         cuota={cuotaTotal}
-        avance={visitasConOrdenes}
         promocionesDisponibles={promocionesDisponibles}
-      />
-      <LinksGroup
-        links={[
-          {
-            titulo: 'Cliente en Base',
-            link: '/asesor/cliente-en-base',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
-          },
-          {
-            titulo: 'Cliente Nuevo',
-            link: '#',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
-          },
-          {
-            titulo: 'Actividades y Promociones',
-            link: '#',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
-          },
-        ]}
+        avance={visitasConOrdenes}
+        session={session}
       />
     </Container>
   );
@@ -58,10 +37,8 @@ export default function AsesorPage({
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  const { slug } = context.query;
-
-  const userInfo = await getUserInfo(slug);
-
+  const { asesorId } = context.query;
+  const userInfo = await getUserInfo(asesorId);
   const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada);
   const { promocionesDelMes } = await getPromociones('upfield');
 
@@ -84,7 +61,7 @@ export async function getServerSideProps(context) {
   if (
     !session ||
     session.user.role !== 'ASESOR' ||
-    slug !== session.user.userId
+    userInfo.coordinador !== session.user.userId
   ) {
     return {
       redirect: {
@@ -99,8 +76,8 @@ export async function getServerSideProps(context) {
       session,
       userInfo,
       cuotaTotal,
-      visitasConOrdenes,
       promocionesDisponibles,
+      visitasConOrdenes,
     },
   };
 }

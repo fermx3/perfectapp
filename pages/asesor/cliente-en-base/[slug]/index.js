@@ -24,6 +24,7 @@ import {
 } from '@/store/visitaActual/visitaActual.selector';
 import Dashboard from '@/components/dashboard/dashboard';
 import { getVisitasConOrdenesPorCliente } from '@/lib/db';
+import Container from '@/components/layout/container';
 
 export default function VisitaPage({
   leal,
@@ -66,7 +67,7 @@ export default function VisitaPage({
   }
 
   return (
-    <>
+    <Container>
       <LayoutDashboard
         session={session}
         ubicacion={leal.ubicacion}
@@ -76,61 +77,60 @@ export default function VisitaPage({
         nivelDeCliente={leal.nivelDeCliente}
         cadena={leal.cadena}
         leales={leal.leales}
+      />
+      <Dashboard
+        cuota={leal.cuotaPallets}
+        promocionesDisponibles={promocionesDisponibles}
+        puntos={leal.datosLeal?.puntosLeal}
+        avance={visitasConOrdenes}
+        session={session}
+      />
+      <Button
+        onClick={onClickHandler}
+        buttonType={
+          visitaActual.inicioVisita &&
+          visitaActual.numeroDeCliente === router.query.slug
+            ? BUTTON_TYPE_CLASSES.disabled
+            : BUTTON_TYPE_CLASSES.base
+        }
+        disabled={
+          visitaActual.inicioVisita &&
+          visitaActual.numeroDeCliente === router.query.slug
+        }
       >
-        <Dashboard
-          cuota={leal.cuotaPallets}
-          promocionesDisponibles={promocionesDisponibles}
-          puntos={leal.datosLeal?.puntosLeal}
-          avance={visitasConOrdenes}
-          session={session}
-        />
-        <Button
-          onClick={onClickHandler}
-          buttonType={
-            visitaActual.inicioVisita &&
-            visitaActual.numeroDeCliente === router.query.slug
-              ? BUTTON_TYPE_CLASSES.disabled
-              : BUTTON_TYPE_CLASSES.base
-          }
-          disabled={
-            visitaActual.inicioVisita &&
-            visitaActual.numeroDeCliente === router.query.slug
-          }
-        >
-          Comenzar visita
-        </Button>
-        {visitaActual.inicioVisita &&
-          visitaActual.numeroDeCliente === router.query.slug &&
-          currentStage === 0 && (
-            <ClienteEnBase1 competidores={competidores} gramajes={gramajes} />
-          )}
-        {visitaActual.inicioVisita &&
-          visitaActual.numeroDeCliente === router.query.slug &&
-          currentStage === 1 && (
-            <ClienteEnBase2
-              prevHandler={prevHandler}
-              opcionesDeNoCompra={opcionesDeNoCompra}
-              distribuidores={distribuidores}
-              promociones={promocionesDisponibles}
-              skus={skus}
-            />
-          )}
-        {visitaActual.inicioVisita &&
-          visitaActual.numeroDeCliente === router.query.slug &&
-          currentStage === 2 && (
-            <ClienteEnBase3
-              prevHandler={prevHandler}
-              skus={skus}
-              materialesDeComunicacion={materialesDeComunicacion}
-            />
-          )}
-        {visitaActual.inicioVisita &&
-          visitaActual.numeroDeCliente === router.query.slug &&
-          currentStage === 3 && (
-            <ClienteEnBaseResumen prevHandler={prevHandler} />
-          )}
-      </LayoutDashboard>
-    </>
+        Comenzar visita
+      </Button>
+      {visitaActual.inicioVisita &&
+        visitaActual.numeroDeCliente === router.query.slug &&
+        currentStage === 0 && (
+          <ClienteEnBase1 competidores={competidores} gramajes={gramajes} />
+        )}
+      {visitaActual.inicioVisita &&
+        visitaActual.numeroDeCliente === router.query.slug &&
+        currentStage === 1 && (
+          <ClienteEnBase2
+            prevHandler={prevHandler}
+            opcionesDeNoCompra={opcionesDeNoCompra}
+            distribuidores={distribuidores}
+            promociones={promocionesDisponibles}
+            skus={skus}
+          />
+        )}
+      {visitaActual.inicioVisita &&
+        visitaActual.numeroDeCliente === router.query.slug &&
+        currentStage === 2 && (
+          <ClienteEnBase3
+            prevHandler={prevHandler}
+            skus={skus}
+            materialesDeComunicacion={materialesDeComunicacion}
+          />
+        )}
+      {visitaActual.inicioVisita &&
+        visitaActual.numeroDeCliente === router.query.slug &&
+        currentStage === 3 && (
+          <ClienteEnBaseResumen prevHandler={prevHandler} />
+        )}
+    </Container>
   );
 }
 
@@ -170,10 +170,9 @@ export async function getServerSideProps(context) {
 
   const yearMonth = moment().format('YYYY-MM');
 
-  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(
-    yearMonth,
-    slug
-  );
+  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(yearMonth, [
+    slug,
+  ]);
 
   return {
     props: {

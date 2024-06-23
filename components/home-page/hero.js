@@ -18,6 +18,7 @@ export default function HomeHero() {
             <Button
               href='mailto:hola@ruta-perfectapp.com'
               buttonType={BUTTON_TYPE_CLASSES.secondary}
+              target='_blank'
             >
               Solicita una demostración
             </Button>

@@ -6,11 +6,18 @@
   a {
     margin: 0 !important;
   }
+  span {
+    display: none;
+  }
 }
 
 @media screen and (max-width: $mobile-size) {
   .buttonGroup {
     flex-wrap: wrap;
     flex-direction: column;
+
+    span {
+      display: block;
+    }
   }
 }

@@ -1,11 +1,7 @@
 @import '@/styles/variables.scss';
 
 .heroContainer {
-  background: linear-gradient(
-    0deg,
-    $tertiary-color-trans 0%,
-    $white-color 100%
-  );
+  background: $blue-gradient;
 
   .hero {
     display: grid;

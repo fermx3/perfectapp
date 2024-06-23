@@ -1,17 +1,42 @@
 @import '@/styles/variables';
 
+.mainContainer {
+  background: $blue-gradient;
+  min-height: 100vh;
+}
+
 .main {
   a {
     margin-top: 2rem;
+  }
+
+  .hero {
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 3rem;
+      line-height: 3rem;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
   }
 }
 
 .header {
   width: 100%;
   padding-bottom: 3rem;
+  display: flex;
+  align-items: center;
 
-  .nivel {
-    color: $gray-color;
+  .nivelBadge {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    margin-right: 0.5rem;
+
+    img {
+      object-fit: contain;
+    }
   }
 }
 

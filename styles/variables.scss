@@ -2,10 +2,17 @@ $primary-color: #ff531a;
 $secondary-color: #182057;
 $tertiary-color: #3171f1;
 $tertiary-color-trans: rgba(49, 113, 241, 0.2);
+$grayed-blue-color: #c6cefb;
 $black-color: #1b1c1e;
 $white-color: white;
 $gray-color: gray;
 $disabled-color: lightgrey;
+
+$blue-gradient: linear-gradient(
+  0deg,
+  $tertiary-color-trans 0%,
+  $white-color 100%
+);
 
 $blue-shadow: rgba(49, 113, 241, 0.2);
 $white-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;

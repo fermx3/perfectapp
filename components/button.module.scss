@@ -2,8 +2,9 @@
 .button {
   background-color: $primary-color;
   display: inline-block;
+  position: relative;
   padding: 0.6em 1.2em;
-  margin: 0.1em auto;
+  // margin: 0.1em auto;
   border: 0.16em solid rgba(255, 255, 255, 0);
   border-radius: $border-radius-1;
   box-sizing: border-box;
@@ -18,13 +19,6 @@
 }
 .button:hover {
   border-color: $white-color;
-}
-@media all and (max-width: 575px) {
-  .button {
-    display: block;
-    margin: 0.2em auto;
-    width: 100%;
-  }
 }
 
 .secondaryButton {
@@ -45,4 +39,40 @@
 
 .link {
   cursor: pointer;
+}
+
+.icon {
+  @extend .button;
+  background-color: $grayed-blue-color;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  // border: solid $tertiary-color 2px;
+}
+
+@media all and (max-width: 575px) {
+  .button {
+    display: block;
+    margin: 0.2em auto;
+    width: 100%;
+  }
+
+  .icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      object-fit: contain;
+      object-position: left;
+    }
+  }
+
+  .disabledButton {
+    img {
+      object-fit: contain;
+      object-position: left;
+    }
+  }
 }

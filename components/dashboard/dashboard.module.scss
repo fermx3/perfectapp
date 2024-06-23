@@ -10,33 +10,35 @@
 
 .dashboardLeal {
   @extend .dashboard;
-  gap: 0.5rem;
+  margin: 4rem 0;
 
-  div {
-    border-radius: $border-radius-2;
-    margin: 0 10px;
-    padding: 1.2rem 2rem;
-    min-height: 150px;
-    position: relative;
-    box-shadow: $white-shadow;
-    border: solid $primary-color 2px;
-
-    &:nth-child(3n + 1) {
-      border-color: $primary-color;
-    }
-    &:nth-child(3n + 2) {
-      border-color: $secondary-color;
-    }
-    &:nth-child(3n + 3) {
-      border-color: $tertiary-color;
-    }
-
+  .estadisticaContainer {
     h5 {
-      margin-bottom: 0.8rem;
+      margin-top: 0.8rem;
+      font-size: 1rem;
     }
 
-    ul {
-      margin-top: 0.5rem;
+    .cuadro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: $white-color;
+      border-radius: $border-radius-2;
+      padding: 1.2rem 3rem;
+      min-height: 150px;
+      position: relative;
+      box-shadow: $white-shadow;
+
+      ul {
+        margin-top: 0.5rem;
+
+        li {
+          &::marker {
+            color: $tertiary-color;
+          }
+        }
+      }
     }
   }
 }

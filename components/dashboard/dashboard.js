@@ -11,63 +11,153 @@ export default function Dashboard({
     ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
     : 0;
 
-  const avanceTotal =
-    avance.lenght !== 0
-      ? avance[0]?.ordenesDeCompra?.reduce((a, b) => a + b.cajas, 0)
-      : 0;
+  const avanceTotal = avance ? avance.reduce((a, b) => a + b.cajas, 0) : 0;
+
+  const total1kg = avance
+    ? avance
+        .filter((item) => item.producto === 'Iberia 1Kg')
+        .reduce((a, b) => a + b.cajas, 0)
+    : 0;
+
+  const total90g = avance
+    ? avance
+        .filter((item) => item.producto === 'Iberia 90g')
+        .reduce((a, b) => a + b.cajas, 0)
+    : 0;
+
+  const total225g = avance
+    ? avance
+        .filter((item) => item.producto === 'Iberia 225g')
+        .reduce((a, b) => a + b.cajas, 0)
+    : 0;
 
   // const avanceTotal = avance[0].ordenesDeCompra.map((i) => <p>{i.cajas}</p>);
-
-  console.log('avance: ', avance);
   // const skus = cuota ? Object.keys(cuota).length : 0;
-
-  console.log(session);
-
   return (
-    <div
-      className={
-        session.user.role === 'LEAL' ? classes.dashboardLeal : classes.dashboard
-      }
-    >
-      <div>
-        <h5>Cuota del mes:</h5>
-        <p>{cuotaTotal} pallets</p>
-        <ul>
-          {Object.keys(cuota).map((key, i) => (
-            <li key={i}>
-              {key}: {cuota[key]}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {/* <div>
-        <h5>SKUs:</h5>
-        <p>{skus}</p>
-      </div> */}
-      {/* <div>
-        <h5>Puntos de venta:</h5>
-        <p>Sin Info</p>
-      </div> */}
-      <div>
-        <h5>Avance de compra:</h5>
-        <p>{avanceTotal ? avanceTotal : 0} cajas</p>
-      </div>
-      <div>
-        <h5>Puntos Leales:</h5>
-        <p>{puntos ? puntos : 0}</p>
-      </div>
-      <div>
-        <h5>Promociones del mes:</h5>
-        {promocionesDisponibles ? (
-          <ul>
-            {promocionesDisponibles.map((promo) => (
-              <li key={promo}>{promo}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay promociones.</p>
+    <>
+      {/* {session.user.role === 'LEAL' ? ( */}
+      <div className={classes.dashboardLeal}>
+        <div className={classes.estadisticaContainer}>
+          <div className={classes.cuadro}>
+            <p>{cuotaTotal} pallets</p>
+            <ul>
+              {Object.keys(cuota).map((key, i) => {
+                let keyTitle = '';
+                switch (key) {
+                  case 'iberia90g':
+                    keyTitle = 'Iberia 90g';
+                    break;
+                  case 'iberia225g':
+                    keyTitle = 'Iberia 225g';
+                    break;
+                  case 'iberia1Kg':
+                    keyTitle = 'Iberia 1Kg';
+                    break;
+                  default:
+                    keyTitle = key;
+                    break;
+                }
+                return (
+                  <li key={i}>
+                    {keyTitle}: {cuota[key]}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <h5>Cuota del mes</h5>
+        </div>
+        <div className={classes.estadisticaContainer}>
+          <div className={classes.cuadro}>
+            <p>{avanceTotal ? avanceTotal : 0} cajas</p>
+            <ul>
+              <li>Iberia 1Kg: {total1kg}</li>
+              <li>Iberia 225g: {total225g}</li>
+              <li>Iberia 90g: {total90g}</li>
+            </ul>
+          </div>
+          <h5>Avance de compra</h5>
+        </div>
+        {puntos !== undefined && session.user.role !== 'LEAL' && (
+          <div className={classes.estadisticaContainer}>
+            <div className={classes.cuadro}>
+              <p>{puntos}</p>
+            </div>
+            <h5>Puntos Leales</h5>
+          </div>
         )}
+        <div className={classes.estadisticaContainer}>
+          <div className={classes.cuadro}>
+            {promocionesDisponibles.length !== 0 ? (
+              <ul>
+                {promocionesDisponibles.map((promo) => (
+                  <li key={promo}>{promo}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No hay promociones.</p>
+            )}
+          </div>
+          <h5>Promociones del mes</h5>
+        </div>
       </div>
-    </div>
+      {/* ) : (
+        <div className={classes.dashboard}>
+          <div>
+            <h5>Cuota del mes:</h5>
+            <p>{cuotaTotal} pallets</p>
+            <ul>
+              {Object.keys(cuota).map((key, i) => {
+                let keyTitle = '';
+                switch (key) {
+                  case 'iberia90g':
+                    keyTitle = 'Iberia 90g';
+                    break;
+                  case 'iberia225g':
+                    keyTitle = 'Iberia 225g';
+                    break;
+                  case 'iberia1Kg':
+                    keyTitle = 'Iberia 1Kg';
+                    break;
+                  default:
+                    keyTitle = key;
+                    break;
+                }
+                return (
+                  <li key={i}>
+                    {keyTitle}: {cuota[key]}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div>
+            <h5>Avance de compra:</h5>
+            <p>{avanceTotal ? avanceTotal : 0} cajas</p>
+            <ul>
+              <li>Iberia 1Kg: {total1kg}</li>
+              <li>Iberia 225g: {total225g}</li>
+              <li>Iberia 90g: {total90g}</li>
+            </ul>
+          </div>
+          <div>
+            <h5>Puntos Leales:</h5>
+            <p>{puntos ? puntos : 0}</p>
+          </div>
+          <div>
+            <h5>Promociones del mes:</h5>
+            {promocionesDisponibles ? (
+              <ul>
+                {promocionesDisponibles.map((promo) => (
+                  <li key={promo}>{promo}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No hay promociones.</p>
+            )}
+          </div>
+        </div>
+      )} */}
+    </>
   );
 }
