@@ -1,6 +1,7 @@
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
 import Dashboard from '@/components/dashboard/dashboard';
+import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 import Container from '@/components/layout/container';
 import {
   getCuotaTotals,
@@ -22,28 +23,30 @@ export default function AsesorMonitoreoPage({
   userIdsFromAsesorZonas,
 }) {
   return (
-    <Container>
-      <LayoutDashboard
-        nombre={userInfo.nombre}
-        role='ASESOR'
-        userId={session.user.userId}
-        zonasAsignadas={userInfo.zonaAsignada}
-      />
-      <Button
-        href={`/asesor/${session.user.userId}`}
-        buttonType={BUTTON_TYPE_CLASSES.secondary}
-      >
-        {'<'} Regresar
-      </Button>
-      <Dashboard
-        cuota={cuotaTotal}
-        promocionesDisponibles={promocionesDisponibles}
-        avance={visitasConOrdenes}
-        session={session}
-        clientesQueCompraron={clientesQueCompraron}
-        clientesTotales={userIdsFromAsesorZonas}
-      />
-    </Container>
+    <BackgroundGradientContainer>
+      <Container>
+        <LayoutDashboard
+          nombre={userInfo.nombre}
+          role='ASESOR'
+          userId={session.user.userId}
+          zonasAsignadas={userInfo.zonaAsignada}
+        />
+        <Button
+          href={`/asesor/${session.user.userId}`}
+          buttonType={BUTTON_TYPE_CLASSES.secondary}
+        >
+          {'<'} Regresar
+        </Button>
+        <Dashboard
+          cuota={cuotaTotal}
+          promocionesDisponibles={promocionesDisponibles}
+          avance={visitasConOrdenes}
+          session={session}
+          clientesQueCompraron={clientesQueCompraron}
+          clientesTotales={userIdsFromAsesorZonas}
+        />
+      </Container>
+    </BackgroundGradientContainer>
   );
 }
 

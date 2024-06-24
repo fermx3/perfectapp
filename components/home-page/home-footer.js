@@ -3,7 +3,7 @@ import classes from './home-footer.module.scss';
 import EmailForm from './email-form';
 import Link from 'next/link';
 
-export default function HomeFooter() {
+export default function HomeFooter({ socialMedia }) {
   return (
     <div className={classes.footer}>
       <div className={classes.breaker}>
@@ -35,15 +35,13 @@ export default function HomeFooter() {
         <div className={classes.col}>
           <h5>SÍGUENOS</h5>
           <ul>
-            <li>
-              <Link href='#'>INSTAGRAM</Link>
-            </li>
-            <li>
-              <Link href='#'>LINKEDIN</Link>
-            </li>
-            <li>
-              <Link href='#'>FACEBOOK</Link>
-            </li>
+            {socialMedia.map((link, index) => (
+              <li key={index}>
+                <Link href={link.url} target='_blank'>
+                  {link.title.toUpperCase()}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

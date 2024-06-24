@@ -95,6 +95,7 @@ type Productos {
 type Promociones {
   implementada Boolean
   promo        String
+  sku          String
 }
 
 type OrdenDeCompra {
@@ -104,11 +105,13 @@ type OrdenDeCompra {
   sku       String?
   promocion Boolean?
   puntos    Int?
+  promo     String
 }
 
 type Inventario {
   cajas    Int
   producto String
+  sku      String
 }
 
 type PlanDeComunicacion {

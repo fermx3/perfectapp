@@ -12,14 +12,15 @@
   position: relative;
   flex-basis: min-content;
 
-  div {
-    width: 100%;
-  }
+  // div {
+  //   width: 100%;
+  // }
 
   .input {
     display: flex;
     align-items: center;
     gap: 5px;
+    width: 100%;
   }
 
   &:focus {
@@ -116,7 +117,8 @@
 .fullWidth {
   @extend .formControl;
 
-  min-width: 100%;
+  width: 100%;
+  flex: 1;
 
   input,
   select,
@@ -127,13 +129,13 @@
 
 @media screen and (max-width: $mobile-size) {
   .formControl {
-    flex-basis: unset;
-    min-width: 100%;
+    // flex-basis: 1;
+    width: 100%;
 
     input,
     select,
     textarea {
-      min-width: 100%;
+      width: 100%;
     }
   }
 }

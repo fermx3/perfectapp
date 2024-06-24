@@ -1,0 +1,9 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+
+  h2 {
+    flex-grow: 1;
+    width: 100%;
+  }
+}

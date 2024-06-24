@@ -6,7 +6,7 @@ import Button from '../button';
 import classes from './ayuda.module.scss';
 import HomeFooter from './home-footer';
 
-export default function AyudaSection() {
+export default function AyudaSection({ socialMedia }) {
   return (
     <HomeSection sectionType={SECTION_TYPE_CLASSES.gradient} id='ayuda'>
       <div className={classes.grid}>
@@ -32,7 +32,7 @@ export default function AyudaSection() {
           <Image src='/images/home/img-3.svg' width={700} height={600} alt='' />
         </div>
       </div>
-      <HomeFooter />
+      <HomeFooter socialMedia={socialMedia} />
     </HomeSection>
   );
 }

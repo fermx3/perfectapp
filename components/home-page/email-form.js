@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 import { emailSchema } from '@/lib/schemas/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Loader from '../ui/loader';
 
 import classes from './email-form.module.scss';
-import Loader from '../ui/loader';
-import { useState } from 'react';
 
 export default function EmailForm() {
   const [successMessage, setSuccessMessage] = useState('');

@@ -88,6 +88,20 @@ export default function Dashboard({
           </div>
           <h5>Avance de compra</h5>
         </div>
+        <div className={classes.estadisticaContainer}>
+          <div className={classes.cuadro}>
+            {promocionesDisponibles.length !== 0 ? (
+              <ul>
+                {promocionesDisponibles.map((promo, index) => (
+                  <li key={index}>{promo.desc}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No hay promociones.</p>
+            )}
+          </div>
+          <h5>Promociones del mes</h5>
+        </div>
         {puntos !== undefined && session.user.role !== 'LEAL' && (
           <div className={classes.estadisticaContainer}>
             <div className={classes.cuadro}>
@@ -133,20 +147,6 @@ export default function Dashboard({
             <h5>Efectividad</h5>
           </div>
         )}
-        <div className={classes.estadisticaContainer}>
-          <div className={classes.cuadro}>
-            {promocionesDisponibles.length !== 0 ? (
-              <ul>
-                {promocionesDisponibles.map((promo, index) => (
-                  <li key={index}>{promo.desc}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>No hay promociones.</p>
-            )}
-          </div>
-          <h5>Promociones del mes</h5>
-        </div>
       </div>
       {/* ) : (
         <div className={classes.dashboard}>

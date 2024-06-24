@@ -5,7 +5,7 @@ import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import classes from './hero.module.scss';
 import Link from 'next/link';
 
-export default function HomeHero() {
+export default function HomeHero({ socialMedia }) {
   return (
     <header className={classes.heroContainer}>
       <div className={classes.hero}>
@@ -26,30 +26,17 @@ export default function HomeHero() {
             <p>Conecta tus datos, equipos y clientes en una sola plataforma.</p>
           </div>
           <div className={classes.socialMedia}>
-            <Link href='#'>
-              <Image
-                src='/images/home/icons/linkedin.svg'
-                height={20}
-                width={20}
-                alt='linkedin icon'
-              />
-            </Link>
-            <Link href='#'>
-              <Image
-                src='/images/home/icons/facebook.svg'
-                height={20}
-                width={20}
-                alt='facebook icon'
-              />
-            </Link>
-            <Link href='#'>
-              <Image
-                src='/images/home/icons/instagram.svg'
-                height={20}
-                width={20}
-                alt='instagram icon'
-              />
-            </Link>
+            {socialMedia.map((link, index) => (
+              <Link href={link.url} target='_blank' key={index}>
+                <div className={classes.socialMediaLink}>
+                  <Image
+                    src={`/images/home/icons/${link.image}`}
+                    fill
+                    alt={`${link.title} icon`}
+                  />
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
         <div className={classes.heroImg}>

@@ -10,7 +10,6 @@ export default function PageLoader() {
 
   useEffect(() => {
     const handleStart = (url) => {
-      console.log(url);
       if (
         url === '/' ||
         url === '/#nosotros' ||

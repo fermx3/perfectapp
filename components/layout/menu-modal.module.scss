@@ -1,17 +1,20 @@
 @import '@/styles/variables';
 
 .dropdown {
-  background-color: $tertiary-color;
+  color: $black-color;
   border-radius: 0 0 $border-radius-1 $border-radius-1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 2rem;
   position: fixed;
-  top: 79px;
+  top: 75px;
   left: 0;
   width: 100%;
   height: stretch;
+  background-color: $white-color;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(7.3px);
   z-index: 9;
   nav {
     display: flex;
@@ -27,7 +30,7 @@
       margin-top: 1rem;
       text-decoration: none;
       list-style: none;
-      color: $white-color;
+      color: $black-color;
       min-width: 100%;
     }
   }

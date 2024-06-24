@@ -12,6 +12,7 @@ import {
   getVisitasConOrdenesPorCliente,
 } from '@/lib/db';
 import moment from 'moment';
+import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 
 export default function AsesorPage({
   userInfo,
@@ -23,41 +24,43 @@ export default function AsesorPage({
   userIdsFromAsesorZonas,
 }) {
   return (
-    <Container>
-      <LayoutDashboard
-        nombre={userInfo.nombre}
-        userId={session.user.userId}
-        role={session.user.role}
-        asesores={userInfo.asesores}
-      />
-      <Dashboard
-        session={session}
-        cuota={cuotaTotal}
-        avance={visitasConOrdenes}
-        promocionesDisponibles={promocionesDisponibles}
-        clientesQueCompraron={clientesQueCompraron}
-        clientesTotales={userIdsFromAsesorZonas}
-      />
-      <LinksGroup
-        links={[
-          {
-            titulo: 'Cliente en Base',
-            link: '/asesor/cliente-en-base',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
-          },
-          {
-            titulo: 'Cliente Nuevo',
-            link: '#',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
-          },
-          {
-            titulo: 'Actividades y Promociones',
-            link: '#',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
-          },
-        ]}
-      />
-    </Container>
+    <BackgroundGradientContainer>
+      <Container>
+        <LayoutDashboard
+          nombre={userInfo.nombre}
+          userId={session.user.userId}
+          role={session.user.role}
+          asesores={userInfo.asesores}
+        />
+        <Dashboard
+          session={session}
+          cuota={cuotaTotal}
+          avance={visitasConOrdenes}
+          promocionesDisponibles={promocionesDisponibles}
+          clientesQueCompraron={clientesQueCompraron}
+          clientesTotales={userIdsFromAsesorZonas}
+        />
+        <LinksGroup
+          links={[
+            {
+              titulo: 'Cliente en Base',
+              link: '/asesor/cliente-en-base',
+              desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+            },
+            {
+              titulo: 'Cliente Nuevo',
+              link: '#',
+              desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+            },
+            {
+              titulo: 'Actividades y Promociones',
+              link: '#',
+              desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+            },
+          ]}
+        />
+      </Container>
+    </BackgroundGradientContainer>
   );
 }
 
@@ -88,7 +91,7 @@ export async function getServerSideProps(context) {
 
   const asesores = userInfo.asesores
     ? userInfo.asesores
-    : [session.user.userId];
+    : [session?.user.userId];
 
   const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
     yearMonth,

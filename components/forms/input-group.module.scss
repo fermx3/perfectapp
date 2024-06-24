@@ -4,7 +4,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  flex-basis: min-content;
+  // flex-basis: min-content;
+  width: 100%;
 
   h4,
   h5 {
@@ -15,5 +16,7 @@
 @media screen and (max-width: $mobile-size) {
   .inputGroup {
     gap: 0rem;
+    flex-direction: column;
+    flex-basis: auto;
   }
 }

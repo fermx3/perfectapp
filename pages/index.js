@@ -14,6 +14,24 @@ import {
   setTerminosYCondiciones,
 } from '@/store/footer/footer.reducer';
 
+const socialMedia = [
+  {
+    title: 'linkedin',
+    url: 'https://www.linkedin.com/company/perfectapp/',
+    image: 'linkedin.svg',
+  },
+  {
+    title: 'facebook',
+    url: 'https://www.facebook.com/perfectapp.mx/',
+    image: 'facebook.svg',
+  },
+  {
+    title: 'instagram',
+    url: 'https://www.instagram.com/perfectapp.mx/',
+    image: 'instagram.svg',
+  },
+];
+
 export default function Home({ avisoDePrivacidad, terminosYCondiciones }) {
   const dispatch = useDispatch();
 
@@ -31,10 +49,10 @@ export default function Home({ avisoDePrivacidad, terminosYCondiciones }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className={classes.main}>
-        <HomeHero />
+        <HomeHero socialMedia={socialMedia} />
         <NosotrosSection />
         <SolucionSection />
-        <AyudaSection />
+        <AyudaSection socialMedia={socialMedia} />
       </main>
     </>
   );

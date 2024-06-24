@@ -11,6 +11,7 @@ import Container from '@/components/layout/container';
 
 import classes from './index.module.scss';
 import Image from 'next/image';
+import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 
 export default function PanelDeLeal({
   leal,
@@ -37,7 +38,7 @@ export default function PanelDeLeal({
   }
 
   return (
-    <div className={classes.mainContainer}>
+    <BackgroundGradientContainer>
       <Container>
         <header className={classes.header}>
           <div className={classes.nivelBadge}>
@@ -84,7 +85,7 @@ export default function PanelDeLeal({
               },
               {
                 image: '/images/icons/links/whatsapp.svg',
-                link: '#',
+                link: 'https://wa.me/525569293104?text=Soy%20Leal%20y%20necesito%20asistencia',
                 buttonType: BUTTON_TYPE_CLASSES.icon,
                 tooltip: 'WhatsApp',
                 // disabled: true,
@@ -102,13 +103,13 @@ export default function PanelDeLeal({
                 link: '#',
                 buttonType: BUTTON_TYPE_CLASSES.icon,
                 tooltip: 'Encuesta',
-                // disabled: true,
+                disabled: true,
               },
             ]}
           />
         </main>
       </Container>
-    </div>
+    </BackgroundGradientContainer>
   );
 }
 
