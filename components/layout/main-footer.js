@@ -61,6 +61,7 @@ export default function MainFooter({ className }) {
           <ModalPage
             titulo='Aviso de privacidad'
             contenido={avisoDePrivacidad}
+            clickHandler={() => dispatch(toggleAvisoDePrivacidad())}
           />
         </Modal>
       )}
@@ -69,6 +70,7 @@ export default function MainFooter({ className }) {
           <ModalPage
             titulo='Términos y condiciones'
             contenido={terminosYCondiciones}
+            clickHandler={() => dispatch(toggleTerminosYCondiciones())}
           />
         </Modal>
       )}
