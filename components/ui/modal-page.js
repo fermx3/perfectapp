@@ -8,7 +8,7 @@ import {
   toggleTerminosYCondiciones,
 } from '@/store/footer/footer.reducer';
 
-export default function ModalPage({ titulo, contenido }) {
+export default function ModalPage({ titulo, contenido, clickHandler }) {
   const dispatch = useDispatch();
 
   return (
@@ -19,11 +19,7 @@ export default function ModalPage({ titulo, contenido }) {
         height={50}
         alt='close icon'
         className={classes.closeModal}
-        onClick={() =>
-          titulo === 'Aviso de privacidad'
-            ? dispatch(toggleAvisoDePrivacidad())
-            : dispatch(toggleTerminosYCondiciones())
-        }
+        onClick={clickHandler}
       />
       <div className={classes.container}>
         <div className={classes.header}>
