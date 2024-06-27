@@ -16,7 +16,7 @@ import classes from './index.module.scss';
 import Image from 'next/image';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 
-function tycProgramaFidelizacionHTML() { return (<>
+function TycProgramaFidelizacionHTML() { return (<>
   <ol>
     <li className="ql-align-justify">
       <span style={{ backgroundColor: "transparent" }}>
@@ -555,7 +555,7 @@ export default function PanelDeLeal({
       <Modal>
       <ModalPage
         titulo='Términos y Condiciones - Programa de Fidelización de Upfield'
-        contenidoHTML={tycProgramaFidelizacionHTML}
+        contenidoHTML={<TycProgramaFidelizacionHTML/>}
         clickHandler={() => setIsModalOpen(false)}
       />
     </Modal>
