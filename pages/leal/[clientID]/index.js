@@ -9,8 +9,8 @@ import Dashboard from '@/components/dashboard/dashboard';
 import ButtonGroup from '@/components/button-group';
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import Container from '@/components/layout/container';
-import Modal from '../ui/modal';
-import ModalPage from '../ui/modal-page';
+import Modal from '@/components/ui/modal';
+import ModalPage from '@/components/ui/modal-page';
 
 import classes from './index.module.scss';
 import Image from 'next/image';
