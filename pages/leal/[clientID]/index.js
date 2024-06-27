@@ -16,127 +16,15 @@ import classes from './index.module.scss';
 import Image from 'next/image';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 
-const tycProgramaFidelizacion = `1.  Empresa organizadora del Programa 
-    
-Upfield México, S. de R.L de C.V. (en adelante “Upfield” y/o el “Organizador”) con domicilio ubicado en Boulevard Palmas Hills Lote I y II, Piso 20, Huixquilucan de Degollado, Estado de México, C.P. 52763, pone a disposición los presentes Términos y Condiciones que regirán el Programa de Fidelización de Upfield (en adelante el “Programa”) para clientes (en adelante el “Cliente” y/o los “Clientes”) en los mercados de abasto.  para recompensar la lealtad como clientes y reconocer y premiar el compromiso continuo con productos Upfield.
-
-Para participar en el Programa el Cliente deberá dar lectura integra a los siguientes Términos y Condiciones, cumplir totalmente con las bases, requisitos y condiciones establecidos por el Organizador, así como también someterse a las reglas de participación aquí establecidas, lo cual implica el conocimiento y aceptación incondicional y expreso de los mismos. 
-
-1.  Vigencia del Programa
-    
-El Programa estará vigente a partir del 1 de mayo de 2024 y hasta el 30 de septiembre de 2024. 
-
-1.  Ámbito territorial del Programa: Valle de México y Puebla
-    
-2.  Productos participantes del Programa 
-    
-
-*   Iberia 90g, 225g, 500g y 170g 
-    
-*   Iberia 1Kg. 
-    
-*   Primavera 360g. y 110g. 
-    
-
-1.  Detalles del Programa 
-    
-    1.  ¿A quién va dirigido? 
-        
-    2.  A clientes previamente seleccionados por Upfield dentro de cada mercado de abasto, evaluando: potencial de compra, posible alianza estratégica, inventario de productos participantes en su negocio y valor de compra.
-        
-    3.  Inscripción al Programa 
-        
-
-El promotor que visite al cliente seleccionado   podrá asistirlo en los pasos para la inscripción. O bien, el cliente podrá inscribirse al Programa en cualquier momento a través del siguiente enlace  [www.ruta-perfectapp.com](http://www.ruta-perfectapp.com) 
-
-1.  Mecánica del Programa 
-    
-    1.  Clasificación de Clientes 
-        
-
-A  partir del 01 de mayo de 2024,  (fecha de inicio del Programa) se le comunicará al cliente el grupo de cliente al que pertenece de conformidad con la siguiente tabla, la cual definelos beneficios a los que el Cliente tendrá  acceso: 
-
-1.  Acumulación de puntos 
-    
-
-Los clientes acumularán puntos en la  compra de productos participantes a partir de 01 de mayo del 2024  y hasta 30 de septiembre del 2024 de conformidad con la siguiente tabla de puntos: 
-
-• A partir de la compra mínima de 50 cajas (requisito mínimo para canjear puntos), Upfield podrá asignar al Cliente los puntos que correspondan  sobre el total de las cajas compradas durante el mes. 
-
-• La validación del número de cajas compradas será a través del ingreso del pedido (s) en la herramienta ruta perfectapp o con evidencia física de lo que se compró con algún Cliente. La evidencia física podrá ser comprobante físico de compra , factura, o recibo de compra y  tendrá  que ser mostrada  al promotor para su validación. 
-
-• Upfield podrá realizar ajustes a la tabla de puntos con el objetivo de que el Cliente pueda  acumular más puntos por la compra de productos participantes. El Cliente podrá consultar la tabla de puntos en [www.ruta-perfectapp.com](http://www.ruta-perfectapp.com) y a través de los promotores en punto de venta. 
-
-• Si los clientes no realizan compras durante dos meses consecutivos y sus compras mínimas no son mayores a 50 cajas por mes, los puntos acumulados serán cancelados. 
-
-• Los puntos acumulados no pueden ser transferidos, cedidos o vendidos, y solo pertenecen al cliente registrado en el programa de fidelización.  
-
-• Asimismo, los puntos no pueden ser canjeados por dinero ni por productos fuera de la lista de productos participantes establecida • Solo los clientes del Grupo 1, Grupo 2 y Grupo 3 participan. 
-
-5.3.3. Multiplicador de puntos 
-
-• Cada cliente tendrá una cuota de compra mensual determinada por Upfield y será comunicada al Cliente durante los primeros 10 (diez) días de cada mes. 
-
-• Si el cliente logra cubrir en un 100%  el objetivo de compra mensual establecido, los puntos asignados por sus compras se multiplicarán por dos (2) veces su valor de conformidad con la tabla de puntos señalada en el punto 5.3.2. ,
-
-5.3.4 Canje de puntos 
-
-• A partir del 01 de julio de 2024 y hasta el 30 de septiembre de 2024 los  clientes podrán canjear los  puntos acumulados por los premios definidos por Upfield. 
-
-Los Clientes podrán consultar la lista de premios disponibles en: [www.ruta-perfectapp.com](http://www.ruta-perfectapp.com) y a través del promotor. La lista de premios podrá ser actualizada periódicamente por Upfield. 
-
-5.3.5. Entrega de premios 
-
-Los premios serán entregados conforme a los acuerdos establecidos entre el promotor y el cliente, dejando por escrito del correo hola@estudiosonambulo.com el acuerdo establecido, el acuerdo será: premio seleccionado, fecha de entrega, lugar de entrega y responsable que recibirá el premio.
-
-6\. Beneficios adicionales: 
-
-Los beneficios adicionales estarán sujetos a términos y condiciones determinados por Upfield cada mes y serán comunicados al Cliente durante los primero 10 días de cada mes 
-
-7\. Promocionales mensuales 
-
-Los clientes que cubran el 100% del objetivo de compra mensual tendrán acceso a promocionales enfocados en incentivar la venta de productos Iberia en sus puntos de venta. 
-
-Los promocionales serán definidos y comunicados por Upfield al Cliente de manera mensual y también podrán ser consultados  en [www.ruta-perfectapp.com](http://www.ruta-perfectapp.com) y a través del promotor.  
-
- El objetivo de compra mensual será comunicado en los primeros 10 días del mes y podrás consultarlo con tu usuario en [www.ruta-perfectapp.com](http://www.ruta-perfectapp.com) y con el promotor.
-
-Cualquier modificación a la mecánica de promocionales será comunicada previamente por Upfield al Cliente. 
-
- 8. Restricciones  
-
-Los puntos acumulados no podrán ser trasladados, cedidos o vendidos y pertenecen exclusivamente al cliente registrado en el programa de fidelización 
-
-Si el Cliente no  cubre el  80% del total de las cuotas acumuladas de los meses de mayo, junio, julio y agosto  no podrá  canjear  los puntos acumulados.
-
-9\. Propiedad Intelectual 
-
-Los elementos (fotos, diseños, logos, marcas, entre otros) de Primavera e Iberia, no pueden ser reproducidos, usados, adaptados o comercializados sin la aprobación escrita de Upfield (con respecto a su propiedad intelectual), sin aprobación expresa y por escrito de representantes autorizados de Iberia.
-
-Los presentes Términos y Condiciones no ceden derecho alguno de propiedad intelectual de Primavera e Iberia.
-
-10\. Políticas comerciales excluidas  
-
-Las políticas comerciales definidas en precios, comunicación, empaques y productos no forman parte de la actividad de fidelización. 
-
- Cualquier cambio a las políticas comerciales o comercialización será independiente del programa de fidelización. Agradecemos tu participación en nuestro programa de fidelización y esperamos que disfrutes de los beneficios y recompensas que ofrecemos como muestra de nuestro agradecimiento por tu continua preferencia hacia nuestros productos Upfield. 
-
-Si tienes dudas sobre estos términos y condiciones, no dudes en contactar el promotor que estará atendiendo tu negocio, visitar www.ruta-perfectapp.com 
-
-¡Gracias por ser parte de la familia Upfield!`;
-
 function TycProgramaFidelizacionHTML() { return (<>
   <ol>
-    <li style={{ listStyleType: "decimal", fontSize: "12pt" }}>
+    <li>
       <p style={{ textAlign: "justify" }}>
-        <span style={{ fontSize: "12pt" }}>
           Empresa organizadora del Programa&nbsp;
-        </span>
       </p>
     </li>
   </ol>
   <p style={{ textAlign: "justify" }}>
-    <span style={{ fontSize: "12pt" }}>
       Upfield México, S. de R.L de C.V. (en adelante “Upfield” y/o el
       “Organizador”) con domicilio ubicado en Boulevard Palmas Hills Lote I y
       II, Piso 20, Huixquilucan de Degollado, Estado de México, C.P. 52763, pone
@@ -145,21 +33,18 @@ function TycProgramaFidelizacionHTML() { return (<>
       adelante el “Cliente” y/o los “Clientes”) en los mercados de abasto.
       &nbsp;para recompensar la lealtad como clientes y reconocer y premiar el
       compromiso continuo con productos Upfield.
-    </span>
   </p>
   <p style={{ textAlign: "justify" }}>
-    <span style={{ fontSize: "12pt" }}>
       Para participar en el Programa el Cliente deberá dar lectura integra a los
       siguientes Términos y Condiciones, cumplir totalmente con las bases,
       requisitos y condiciones establecidos por el Organizador, así como también
       someterse a las reglas de participación aquí establecidas, lo cual implica
       el conocimiento y aceptación incondicional y expreso de los mismos.&nbsp;
-    </span>
   </p>
   <ol start={2}>
-    <li style={{ listStyleType: "decimal", fontSize: "12pt" }}>
+    <li>
       <p style={{ textAlign: "justify" }}>
-        <span style={{ fontSize: "12pt" }}>Vigencia del Programa</span>
+       Vigencia del Programa
       </p>
     </li>
   </ol>
