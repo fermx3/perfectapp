@@ -8,7 +8,7 @@ import {
   toggleTerminosYCondiciones,
 } from '@/store/footer/footer.reducer';
 
-export default function ModalPage({ titulo, contenido, clickHandler }) {
+export default function ModalPage({ titulo, contenido, clickHandler, contenidoHTML }) {
   const dispatch = useDispatch();
 
   return (
@@ -26,7 +26,8 @@ export default function ModalPage({ titulo, contenido, clickHandler }) {
           <h2>{titulo}</h2>
         </div>
         <div className={classes.body}>
-          <Markdown>{contenido}</Markdown>
+          {contenido && <Markdown>{contenido}</Markdown>}
+          {contenidoHTML && contenidoHTML}
         </div>
       </div>
     </>
