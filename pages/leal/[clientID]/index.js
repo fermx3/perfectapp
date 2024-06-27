@@ -558,7 +558,7 @@ export default function PanelDeLeal({
       />
     </Modal>
           )}
-   <>
+</>
   );
 }
 
