@@ -671,7 +671,7 @@ export default function PanelDeLeal({
       <Modal>
       <ModalPage
         titulo='Términos y Condiciones - Programa de Fidelización de Upfield'
-        contenidoHTML={<TycProgramaFidelizacion/>}
+        contenidoHTML={<TycProgramaFidelizacionHTML/>}
         clickHandler={() => setIsModalOpen(false)}
       />
     </Modal>
