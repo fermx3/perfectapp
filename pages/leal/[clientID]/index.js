@@ -18,14 +18,12 @@ import BackgroundGradientContainer from '@/components/layout/background-gradient
 
 const tycProgramaFidelizacion = `1.  Empresa organizadora del Programa 
     
-
 Upfield México, S. de R.L de C.V. (en adelante “Upfield” y/o el “Organizador”) con domicilio ubicado en Boulevard Palmas Hills Lote I y II, Piso 20, Huixquilucan de Degollado, Estado de México, C.P. 52763, pone a disposición los presentes Términos y Condiciones que regirán el Programa de Fidelización de Upfield (en adelante el “Programa”) para clientes (en adelante el “Cliente” y/o los “Clientes”) en los mercados de abasto.  para recompensar la lealtad como clientes y reconocer y premiar el compromiso continuo con productos Upfield.
 
 Para participar en el Programa el Cliente deberá dar lectura integra a los siguientes Términos y Condiciones, cumplir totalmente con las bases, requisitos y condiciones establecidos por el Organizador, así como también someterse a las reglas de participación aquí establecidas, lo cual implica el conocimiento y aceptación incondicional y expreso de los mismos. 
 
 1.  Vigencia del Programa
     
-
 El Programa estará vigente a partir del 1 de mayo de 2024 y hasta el 30 de septiembre de 2024. 
 
 1.  Ámbito territorial del Programa: Valle de México y Puebla
@@ -673,7 +671,7 @@ export default function PanelDeLeal({
       <Modal>
       <ModalPage
         titulo='Términos y Condiciones - Programa de Fidelización de Upfield'
-        contenido={tycProgramaFidelizacion}
+        contenidoHTML={<TycProgramaFidelizacion/>}
         clickHandler={() => setIsModalOpen(false)}
       />
     </Modal>
