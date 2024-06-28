@@ -33,8 +33,10 @@
   }
 
   &:focus {
-    border-color: $white-color;
+    // border-color: $white-color;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+    border-color: $primary-color;
+    outline: 0;
   }
 
   label {
@@ -43,7 +45,7 @@
   }
 
   input {
-    line-height: 1.5em;
+    line-height: 1.8em;
     padding: 0.5em 1em;
     border-radius: $border-radius-1;
     border: solid $gray-color 1px;
