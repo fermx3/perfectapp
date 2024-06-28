@@ -49,7 +49,7 @@ export default function AsesorPage({
             },
             {
               titulo: 'Cliente Nuevo',
-              link: '#',
+              link: '/asesor/cliente-nuevo',
               desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
             },
             {

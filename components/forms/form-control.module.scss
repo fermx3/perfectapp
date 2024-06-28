@@ -7,10 +7,19 @@
   gap: 0.2rem;
   padding: 0 0.3rem;
   padding-bottom: 0.5rem;
-  max-width: 600px;
+  // max-width: 600px;
   margin: 0 1px;
   position: relative;
-  flex-basis: min-content;
+  // flex-basis: min-content;
+
+  width: 100%;
+  flex: 1;
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
 
   // div {
   //   width: 100%;
@@ -37,7 +46,7 @@
     line-height: 1.5em;
     padding: 0.5em 1em;
     border-radius: $border-radius-1;
-    border: solid $secondary-color;
+    border: solid $gray-color 1px;
 
     &::placeholder {
       color: $black-color;
@@ -55,6 +64,7 @@
     font: inherit;
     line-height: 1.5em;
     padding: 0.5em 3.5em 0.5em 1em;
+    border-radius: 3rem;
 
     /* reset */
 

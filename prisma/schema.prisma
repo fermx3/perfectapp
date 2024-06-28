@@ -176,3 +176,13 @@ model config {
   avisoDePrivacidad        String
   terminosYCondiciones     String
 }
+
+model prospectos {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  nombre         String
+  canal          String
+  central        String
+  ubicacion      String
+  nivelDeCliente String
+  promos         String
+}

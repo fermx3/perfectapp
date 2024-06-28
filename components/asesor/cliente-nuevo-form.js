@@ -1,0 +1,213 @@
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import {
+  canales,
+  centrales,
+  clienteNuevoSchema,
+  crearLealSchema,
+} from '@/lib/schemas/schemas';
+
+import FormControl from '../forms/form-control';
+import Button, { BUTTON_TYPE_CLASSES } from '../button';
+import Loader from '../ui/loader';
+import InputGroup from '../forms/input-group';
+import Modal from '../ui/modal';
+
+import {
+  nivelesDeLeales,
+  tiposDeCadena,
+  tiposDeLeales,
+  frecuencias,
+} from '@/lib/schemas/schemas';
+import InfoMessage from '../ui/info-message';
+import ErrorMessage from '../ui/error-message';
+import { useRouter } from 'next/router';
+
+export default function ClienteNuevoForm({ asesores, session }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitted },
+    reset,
+    setError,
+  } = useForm({
+    defaultValues: {
+      nombre: '',
+      canal: '',
+      central: '',
+      ubicacion: '',
+      nivelDeCliente: '',
+      promos: '',
+    },
+    resolver: zodResolver(clienteNuevoSchema),
+  });
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const router = useRouter();
+
+  const handleEndVisita = function () {
+    router.replace('/login');
+  };
+
+  async function crearCliente(data) {
+    const response = await fetch('/api/asesor/cliente-nuevo', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.error.message || 'Something went wrong!');
+    }
+
+    if (responseData.errors) {
+      const errors = responseData.errors;
+
+      if (errors.nombre) {
+        setError('nombre', {
+          type: 'server',
+          message: errors.nombre,
+        });
+      } else if (errors.nivelDeCliente) {
+        setError('nivelDeCliente', {
+          type: 'server',
+          message: errors.nivelDeCliente,
+        });
+      } else if (errors.central) {
+        setError('central', {
+          type: 'server',
+          message: errors.central,
+        });
+      } else if (errors.ubicacion) {
+        setError('ubicacion', {
+          type: 'server',
+          message: errors.ubicacion,
+        });
+      } else if (errors.canal) {
+        setError('canal', {
+          type: 'server',
+          message: errors.canal,
+        });
+      } else if (errors.promos) {
+        setError('promos', {
+          type: 'server',
+          message: errors.promos,
+        });
+      }
+    }
+
+    return responseData;
+  }
+
+  const onSubmit = async (data) => {
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    // submit to server
+    try {
+      const result = await crearCliente(data);
+      //Successfuly create user
+      setSuccessMessage(result.message);
+      if (result.message) {
+        reset();
+      }
+    } catch (error) {
+      setErrorMessage(
+        // error.message ||
+        'Algo salio mal, intenta de nuevo o contacta al administrador.'
+      );
+      //Fail on create user
+    }
+  };
+  console.log(errors);
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputGroup>
+          <FormControl label={'Nombre'} error={errors.nombre?.message}>
+            <input type='text' {...register('nombre')} />
+          </FormControl>
+          <FormControl label='Canal:' error={errors.canal?.message}>
+            <select {...register('canal')} placeholder='Canal'>
+              {canales.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </FormControl>
+        </InputGroup>
+        <InputGroup>
+          <FormControl label='CEDAS:' error={errors.central?.message}>
+            <select {...register('central')} placeholder='CEDAS'>
+              {centrales.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </FormControl>
+          <FormControl label='Ubicación' error={errors.ubicacion?.message}>
+            <input
+              type='text'
+              {...register('ubicacion')}
+              placeholder='Nave y local'
+            />
+          </FormControl>
+        </InputGroup>
+        <FormControl
+          label='Nivel de cliente:'
+          error={errors.nivelDeCliente?.message}
+        >
+          <select
+            {...register('nivelDeCliente')}
+            placeholder='Nivel de cliente'
+          >
+            {nivelesDeLeales.map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </FormControl>
+        <FormControl
+          label={'Promociones y actividades por tipo de cliente'}
+          error={errors.promos?.message}
+        >
+          <textarea {...register('promos')} rows={4} />
+        </FormControl>
+        <FormControl>
+          {isSubmitting && <Loader />}
+          <Button
+            disable={isSubmitting}
+            buttonType={
+              isSubmitting
+                ? BUTTON_TYPE_CLASSES.disabled
+                : BUTTON_TYPE_CLASSES.base
+            }
+          >
+            ENVIAR
+          </Button>
+        </FormControl>
+      </form>
+      {(successMessage || errorMessage) && (
+        <Modal>
+          <p style={{ marginBottom: '1rem' }}>
+            {successMessage || errorMessage}
+          </p>
+          <Button type='button' onClick={handleEndVisita}>
+            Ok
+          </Button>
+        </Modal>
+      )}
+    </>
+  );
+}
