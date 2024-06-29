@@ -23,6 +23,7 @@ export default function ButtonGroup({ title, options }) {
                 : BUTTON_TYPE_CLASSES[option.buttonType]
             }
             target={option.newPage ? '_blank' : '_self'}
+            onClick={option.onClick}
           >
             {option.name && option.name}
             {option.image && <Image src={option.image} fill alt='' />}

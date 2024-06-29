@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
 import HomeMenu, { HOMEMENU_TYPE_CLASSES } from './home-menu';
-import Button from '../button';
+import Button, { BUTTON_TYPE_CLASSES } from '../button';
 
 import classes from './menu-modal.module.scss';
 import { useDispatch } from 'react-redux';
@@ -53,7 +53,12 @@ export default function MenuModal({ session, logoutHandler }) {
                 </li>
               )}
               <li className={classes.cerrarSesion}>
-                <Button onClick={logoutHandler}>Cerrar sesión</Button>
+                <Button
+                  onClick={logoutHandler}
+                  buttonType={BUTTON_TYPE_CLASSES.link}
+                >
+                  Cerrar sesión
+                </Button>
               </li>
             </>
           )}

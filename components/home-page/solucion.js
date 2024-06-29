@@ -55,9 +55,7 @@ export default function SolucionSection() {
                 <p>{card.desc}</p>
               </div>
               <div className={classes.button}>
-                <Button href='mailto:hola@ruta-perfectapp.com' target='_blank'>
-                  Más información
-                </Button>
+                <Button href='/contacto'>Más información</Button>
               </div>
             </div>
           ))}

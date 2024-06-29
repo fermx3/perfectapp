@@ -297,7 +297,7 @@ export default function CrearLealForm({ asesores, session }) {
         <FormControl>
           {isSubmitting && <Loader />}
           <Button
-            disable={isSubmitting}
+            disabled={isSubmitting}
             buttonType={
               isSubmitting
                 ? BUTTON_TYPE_CLASSES.disabled

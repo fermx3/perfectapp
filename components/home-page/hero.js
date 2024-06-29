@@ -15,11 +15,7 @@ export default function HomeHero({ socialMedia }) {
             <h2>Centraliza tu información en un solo lugar.</h2>
           </div>
           <div className={classes.cta}>
-            <Button
-              href='mailto:hola@ruta-perfectapp.com'
-              buttonType={BUTTON_TYPE_CLASSES.secondary}
-              target='_blank'
-            >
+            <Button href='/contacto' buttonType={BUTTON_TYPE_CLASSES.secondary}>
               Solicita una demostración
             </Button>
             <p>Una app tan potente como sencilla.</p>

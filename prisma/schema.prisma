@@ -178,11 +178,12 @@ model config {
 }
 
 model prospectos {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
   nombre         String
   canal          String
   central        String
   ubicacion      String
+  grupo          String?
   nivelDeCliente String
-  promos         String
+  comentarios    String?
 }

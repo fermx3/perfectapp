@@ -23,9 +23,7 @@ export default function AyudaSection({ socialMedia }) {
             para ayudarte a conseguir tus objetivos.
           </div>
           <div className={classes.button}>
-            <Button href='mailto:hola@ruta-perfectapp.com' target='_blank'>
-              Solicita una demostración
-            </Button>
+            <Button href='/contacto'>Solicita una demostración</Button>
           </div>
         </div>
         <div className={classes.image}>

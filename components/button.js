@@ -22,7 +22,7 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) =>
 export default function Button({ href, children, buttonType, ...props }) {
   const customButton = getButton(buttonType);
 
-  if (customButton === classes.link) {
+  if (customButton === classes.link && !href) {
     return (
       <a {...props} className={customButton}>
         {children}

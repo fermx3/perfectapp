@@ -66,12 +66,7 @@ export default function MainHeader({ className }) {
           <HomeMenu />
           {session.status === 'authenticated' ? (
             <div>
-              <Button
-                buttonType={BUTTON_TYPE_CLASSES.link}
-                onClick={logoutHandler}
-              >
-                Cerrar sesión
-              </Button>
+              <Button onClick={logoutHandler}>Cerrar sesión</Button>
             </div>
           ) : (
             <>

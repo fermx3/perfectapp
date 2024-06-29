@@ -1,13 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-  canales,
-  centrales,
-  clienteNuevoSchema,
-  crearLealSchema,
-} from '@/lib/schemas/schemas';
+import { canales, centrales, clienteNuevoSchema } from '@/lib/schemas/schemas';
+import { nivelesDeLeales } from '@/lib/schemas/schemas';
 
 import FormControl from '../forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
@@ -15,15 +12,7 @@ import Loader from '../ui/loader';
 import InputGroup from '../forms/input-group';
 import Modal from '../ui/modal';
 
-import {
-  nivelesDeLeales,
-  tiposDeCadena,
-  tiposDeLeales,
-  frecuencias,
-} from '@/lib/schemas/schemas';
-import InfoMessage from '../ui/info-message';
-import ErrorMessage from '../ui/error-message';
-import { useRouter } from 'next/router';
+import classes from './cliente-nuevo-form.module.scss';
 
 export default function ClienteNuevoForm({ asesores, session }) {
   const {
@@ -39,7 +28,7 @@ export default function ClienteNuevoForm({ asesores, session }) {
       central: '',
       ubicacion: '',
       nivelDeCliente: '',
-      promos: '',
+      comentarios: '',
     },
     resolver: zodResolver(clienteNuevoSchema),
   });
@@ -49,7 +38,7 @@ export default function ClienteNuevoForm({ asesores, session }) {
 
   const router = useRouter();
 
-  const handleEndVisita = function () {
+  const handleClick = function () {
     router.replace('/login');
   };
 
@@ -96,10 +85,10 @@ export default function ClienteNuevoForm({ asesores, session }) {
           type: 'server',
           message: errors.canal,
         });
-      } else if (errors.promos) {
-        setError('promos', {
+      } else if (errors.comentarios) {
+        setError('comentarios', {
           type: 'server',
-          message: errors.promos,
+          message: errors.comentarios,
         });
       }
     }
@@ -130,7 +119,7 @@ export default function ClienteNuevoForm({ asesores, session }) {
   console.log(errors);
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <InputGroup>
           <FormControl label={'Nombre'} error={errors.nombre?.message}>
             <input type='text' {...register('nombre')} />
@@ -163,31 +152,38 @@ export default function ClienteNuevoForm({ asesores, session }) {
             />
           </FormControl>
         </InputGroup>
-        <FormControl
-          label='Nivel de cliente:'
-          error={errors.nivelDeCliente?.message}
-        >
-          <select
-            {...register('nivelDeCliente')}
-            placeholder='Nivel de cliente'
+        <InputGroup>
+          <FormControl label='*Grupo:' error={errors.grupo?.message}>
+            <input
+              type='text'
+              {...register('grupo')}
+              placeholder='Grupo al que pertenece'
+            />
+          </FormControl>
+          <FormControl
+            label='Nivel de cliente:'
+            error={errors.nivelDeCliente?.message}
           >
-            {nivelesDeLeales.map((option) => (
-              <option value={option} key={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+            <select
+              {...register('nivelDeCliente')}
+              placeholder='Nivel de cliente'
+            >
+              {nivelesDeLeales.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </FormControl>
+        </InputGroup>
+        <FormControl label='*Comentarios:' error={errors.comentarios?.message}>
+          <textarea {...register('comentarios')} rows={4} />
         </FormControl>
-        <FormControl
-          label={'Promociones y actividades por tipo de cliente'}
-          error={errors.promos?.message}
-        >
-          <textarea {...register('promos')} rows={4} />
-        </FormControl>
+        <p className={classes.opcionales}>*Campos opcionales</p>
         <FormControl>
           {isSubmitting && <Loader />}
           <Button
-            disable={isSubmitting}
+            disabled={isSubmitting}
             buttonType={
               isSubmitting
                 ? BUTTON_TYPE_CLASSES.disabled
@@ -203,7 +199,7 @@ export default function ClienteNuevoForm({ asesores, session }) {
           <p style={{ marginBottom: '1rem' }}>
             {successMessage || errorMessage}
           </p>
-          <Button type='button' onClick={handleEndVisita}>
+          <Button type='button' onClick={handleClick}>
             Ok
           </Button>
         </Modal>
