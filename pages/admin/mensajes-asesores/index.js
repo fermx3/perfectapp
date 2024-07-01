@@ -11,6 +11,7 @@ import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Loader } from '@/components/ui/loader';
 
 export default function MensajesAsesoresPage({ mensajesAsesores }) {
   const {
@@ -27,7 +28,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
       },
       infoDeComunicacion: {
         titulo: mensajesAsesores.infoDeComunicacion?.titulo || '',
-        contenido: mensajesAsesores.infoDeCategoria?.contenido || '',
+        contenido: mensajesAsesores.infoDeComunicacion?.contenido || '',
       },
       infoDeFidelizacion: {
         titulo: mensajesAsesores.infoDeFidelizacion?.titulo || '',
@@ -168,6 +169,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
               <Button>Actualizar mensajes</Button>
             </FormControl>
           </InputGroup>
+{isSubmiting && <Loader />}
         </form>
       </Container>
     </BackgroundGradientContainer>
