@@ -169,7 +169,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
               <Button>Actualizar mensajes</Button>
             </FormControl>
           </InputGroup>
-{isSubmiting && <Loader />}
+{isSubmitting && <Loader />}
         </form>
       </Container>
     </BackgroundGradientContainer>
