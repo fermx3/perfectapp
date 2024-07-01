@@ -11,20 +11,25 @@ const links = [
     desc: 'Cambia los mensjes que ven los Asesores.',
   },
   {
-    titulo: 'Crear Asesor',
+    titulo: 'Cambiar valor de puntos por cliente',
     link: '#',
-    desc: 'Haz click aquí para crear un Asesor.',
+    desc: 'Cambia el valor de los puntos por cliente.',
   },
   {
-    titulo: 'Crear Cliente',
+    titulo: 'Cambiar promociones del mes',
     link: '#',
-    desc: 'Haz click aquí para crear un Cliente.',
+    desc: 'Modifica las promocones del mes por tipo de cliente.',
+  },
+  {
+    titulo: 'Validar prospectos',
+    link: '#',
+    desc: 'Validar prospectos que han sido agregados por asesores.',
   },
 ];
 
 export default function AdminPage() {
   return (
-    <Container md>
+    <Container>
       <header>
         <h1>Página de Administración</h1>
         <h3>Bienvenido</h3>
