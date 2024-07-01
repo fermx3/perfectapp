@@ -166,10 +166,10 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
           </FormGroup>
           <InputGroup>
             <FormControl>
+              {isSubmitting && <Loader />}
               <Button>Actualizar mensajes</Button>
             </FormControl>
           </InputGroup>
-{isSubmitting && <Loader />}
         </form>
       </Container>
     </BackgroundGradientContainer>
