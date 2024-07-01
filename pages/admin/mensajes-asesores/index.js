@@ -167,7 +167,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
           <InputGroup>
             <FormControl>
               {isSubmitting && <Loader />}
-              <Button>Actualizar mensajes</Button>
+              <Button disabled={isSubmitting}>Actualizar mensajes</Button>
             </FormControl>
           </InputGroup>
         </form>
