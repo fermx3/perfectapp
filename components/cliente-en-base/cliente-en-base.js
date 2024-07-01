@@ -86,8 +86,8 @@ export default function ClienteEnBase1({
       </FormSection>
       {infoDeCategoria && (
         <InfoMessage
-          titulo='Informacion de Categoria'
-          contenido='Aquí va el contenido de la noticia importante.'
+          titulo={infoDeCategoria.titulo}
+          contenido={infoDeCategoria.contenido}
         />
       )}
       <FormControl

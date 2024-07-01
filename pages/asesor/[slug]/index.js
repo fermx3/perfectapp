@@ -45,17 +45,17 @@ export default function AsesorPage({
             {
               titulo: 'Cliente en Base',
               link: '/asesor/cliente-en-base',
-              desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+              desc: 'Registra la visita de un cliente de nuestra base de datos.',
             },
             {
               titulo: 'Cliente Nuevo',
               link: '/asesor/cliente-nuevo',
-              desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+              desc: 'Suma a un prospecto nuevo a nuestra base de datos.',
             },
             {
               titulo: 'Actividades y Promociones',
               link: '#',
-              desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras.',
+              desc: 'Conoce las promociones disponibles y tabla de premios',
             },
           ]}
         />

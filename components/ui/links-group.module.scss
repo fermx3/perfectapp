@@ -43,6 +43,7 @@
   @extend .link;
   background-color: $gray-color !important;
   opacity: 0.2;
+  pointer-events: none;
 }
 
 @media screen and (min-width: $mobile-size) {

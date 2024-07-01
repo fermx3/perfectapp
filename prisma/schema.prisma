@@ -187,3 +187,9 @@ model prospectos {
   nivelDeCliente String
   comentarios    String?
 }
+
+model mensajesAsesores {
+  id        String @id @map("_id")
+  titulo    String
+  contenido String
+}

@@ -76,8 +76,8 @@ export default function ClienteEnBase2({
     <form onSubmit={handleSubmit(onSubmit)}>
       {infoFidelizacion && (
         <InfoMessage
-          titulo='Noticia importante de fidelizacion'
-          contenido='Aquí va el contenido de la noticia importante.'
+          titulo={infoFidelizacion.titulo}
+          contenido={infoFidelizacion.contenido}
         />
       )}
       <FormSection titulo='Promoción del mes'>

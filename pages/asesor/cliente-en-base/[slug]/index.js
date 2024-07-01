@@ -23,8 +23,18 @@ import {
   selectVisitaActual,
 } from '@/store/visitaActual/visitaActual.selector';
 import Dashboard from '@/components/dashboard/dashboard';
-import { getVisitasConOrdenesPorCliente } from '@/lib/db';
+import { getMensajesAsesores, getVisitasConOrdenesPorCliente } from '@/lib/db';
 import Container from '@/components/layout/container';
+
+// const mensajesAsesores = {
+//   infoDeCategoria: {
+//     titulo: 'Información de la categoría',
+//     contenido:
+//       'Para comenzar, necesitamos información sobre los competidores y los gramajes de la categoría.',
+//   },
+//   infoFidelizacion: null,
+//   infoComunicacion: { titulo: 'Información de comunicación', contenido: '' },
+// };
 
 export default function VisitaPage({
   leal,
@@ -37,6 +47,7 @@ export default function VisitaPage({
   skus,
   materialesDeComunicacion,
   visitasConOrdenes,
+  mensajesAsesores,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
@@ -103,7 +114,11 @@ export default function VisitaPage({
       {visitaActual.inicioVisita &&
         visitaActual.numeroDeCliente === router.query.slug &&
         currentStage === 0 && (
-          <ClienteEnBase1 competidores={competidores} gramajes={gramajes} />
+          <ClienteEnBase1
+            competidores={competidores}
+            gramajes={gramajes}
+            infoDeCategoria={mensajesAsesores.infoDeCategoria}
+          />
         )}
       {visitaActual.inicioVisita &&
         visitaActual.numeroDeCliente === router.query.slug &&
@@ -117,6 +132,7 @@ export default function VisitaPage({
             valorDePuntos={leal.valorDePuntos}
             cuotaPallets={leal.cuotaPallets}
             promocionesDisponibles={promocionesDisponibles}
+            infoFidelizacion={mensajesAsesores.infoFidelizacion}
           />
         )}
       {visitaActual.inicioVisita &&
@@ -126,6 +142,7 @@ export default function VisitaPage({
             prevHandler={prevHandler}
             skus={skus}
             materialesDeComunicacion={materialesDeComunicacion}
+            infoComunicacion={mensajesAsesores.infoComunicacion}
           />
         )}
       {visitaActual.inicioVisita &&
@@ -177,6 +194,8 @@ export async function getServerSideProps(context) {
     slug,
   ]);
 
+  const mensajesAsesores = await getMensajesAsesores();
+
   return {
     props: {
       session,
@@ -189,6 +208,7 @@ export async function getServerSideProps(context) {
       skus,
       materialesDeComunicacion,
       visitasConOrdenes,
+      mensajesAsesores,
     },
   };
 }

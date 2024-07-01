@@ -4,7 +4,10 @@
   margin: 1rem 0;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background-color: $black-color;
+  background-color: $secondary-color;
   color: $white-color;
   max-width: 600px;
+  h4 {
+    margin-bottom: 0.5rem;
+  }
 }

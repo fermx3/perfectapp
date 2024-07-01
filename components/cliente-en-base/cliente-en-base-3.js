@@ -87,8 +87,8 @@ export default function ClienteEnBase3({
     <form onSubmit={handleSubmit(onSubmit)}>
       {infoComunicacion && (
         <InfoMessage
-          titulo='Noticia importante de comunicación'
-          contenido='Aquí va el contenido de la noticia importante.'
+          titulo={infoComunicacion.titulo}
+          contenido={infoComunicacion.contenido}
         />
       )}
       <FormSection titulo='Plan de comunicación del mes'>

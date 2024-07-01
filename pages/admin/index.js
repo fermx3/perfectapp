@@ -6,9 +6,9 @@ import LinksGroup from '@/components/ui/links-group';
 
 const links = [
   {
-    titulo: 'Crear Leal',
-    link: '/admin/crear-leal',
-    desc: 'Haz click aquí para crear un cliente LEAL.',
+    titulo: 'Mensajes de Asesores',
+    link: '/admin/mensajes-asesores',
+    desc: 'Cambia los mensjes que ven los Asesores.',
   },
   {
     titulo: 'Crear Asesor',
