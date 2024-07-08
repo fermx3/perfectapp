@@ -17,7 +17,7 @@ const links = [
   },
   {
     titulo: 'Cambiar promociones del mes',
-    link: '#',
+    link: '/admin/promociones-del-mes',
     desc: 'Modifica las promocones del mes por tipo de cliente.',
   },
   {
