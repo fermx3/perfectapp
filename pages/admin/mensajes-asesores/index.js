@@ -1,4 +1,4 @@
-import Button from '@/components/button';
+import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import FormControl from '@/components/forms/form-control';
 import FormGroup from '@/components/forms/form-group';
 import InputGroup from '@/components/forms/input-group';
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Loader from '@/components/ui/loader';
+import Image from 'next/image';
 
 export default function MensajesAsesoresPage({ mensajesAsesores }) {
   const {
@@ -19,6 +20,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitted },
     reset,
+    resetField,
     setError,
   } = useForm({
     defaultValues: {
@@ -136,6 +138,22 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
               <FormControl label='Contenido'>
                 <input type='text' {...register('infoDeCategoria.contenido')} />
               </FormControl>
+              <Button
+                type='button'
+                buttonType={BUTTON_TYPE_CLASSES.secondary}
+                onClick={() => {
+                  resetField('infoDeCategoria', {
+                    defaultValue: { titulo: '', contenido: '' },
+                  });
+                }}
+              >
+                <Image
+                  src='/images/icons/delete.png'
+                  width={20}
+                  height={20}
+                  alt=''
+                />
+              </Button>
             </InputGroup>
           </FormGroup>
           <FormGroup titulo='Info de Fidelizacion'>
@@ -149,6 +167,22 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
                   {...register('infoDeFidelizacion.contenido')}
                 />
               </FormControl>
+              <Button
+                type='button'
+                buttonType={BUTTON_TYPE_CLASSES.secondary}
+                onClick={() => {
+                  resetField('infoDeFidelizacion', {
+                    defaultValue: { titulo: '', contenido: '' },
+                  });
+                }}
+              >
+                <Image
+                  src='/images/icons/delete.png'
+                  width={20}
+                  height={20}
+                  alt=''
+                />
+              </Button>
             </InputGroup>
           </FormGroup>
           <FormGroup titulo='Info de Comunicacion'>
@@ -162,6 +196,22 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
                   {...register('infoDeComunicacion.contenido')}
                 />
               </FormControl>
+              <Button
+                type='button'
+                buttonType={BUTTON_TYPE_CLASSES.secondary}
+                onClick={() => {
+                  resetField('infoDeComunicacion', {
+                    defaultValue: { titulo: '', contenido: '' },
+                  });
+                }}
+              >
+                <Image
+                  src='/images/icons/delete.png'
+                  width={20}
+                  height={20}
+                  alt=''
+                />
+              </Button>
             </InputGroup>
           </FormGroup>
           <InputGroup>
