@@ -26,6 +26,7 @@ type UserInfo {
   canal          String?
   coordinador    String?
   asesores       String[]
+  grupo          String?
   zona           Zonas?
   zonaAsignada   Zonas[]
 }
