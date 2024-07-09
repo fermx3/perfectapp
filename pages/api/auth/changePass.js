@@ -56,7 +56,8 @@ async function handler(req, res) {
 
   const result = await changePassword(userId, hashedPassword);
 
-  if (!user.datosLeal?.nombreDelEncargado) {
+  if (user.datosLeal.firstLoginDate === null) {
+    console.log('first login');
     await firstLogin(userId);
   }
 

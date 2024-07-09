@@ -103,7 +103,7 @@ export default function CambiarPassPage() {
 
   const handleClick = function () {
     reset();
-    router.replace('/');
+    router.replace('/login');
   };
 
   return (
