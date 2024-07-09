@@ -63,7 +63,7 @@ model users {
   id              String           @id @default(cuid()) @map("_id")
   password        String
   role            Role
-  userId          String           @unique
+  userId          String?
   userInfo        UserInfo
   cuotaPallets    CuotaPallets?
   valorDePuntos   ValorDePuntos?
