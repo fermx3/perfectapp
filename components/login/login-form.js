@@ -140,11 +140,9 @@ export default function LoginForm() {
         {isSubmitting && <Loader />}
         {isError && <ErrorMessage error={isError} />}
       </form>
-      {/* <div className={classes.formFooter}>
-        <Link href='/cliente/cliente-nuevo'>
-          ¿No tienes cuenta? Registrate aquí
-        </Link>
-      </div> */}
+      <div className={classes.formFooter}>
+        <Link href='/password-olvidada'>¿Olvidaste tu contraseña?</Link>
+      </div>
     </div>
   );
 }
