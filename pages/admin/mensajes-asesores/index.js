@@ -51,7 +51,6 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
   };
 
   async function actualizarMensajes(data) {
-    console.log(data);
     const response = await fetch('/api/admin/mensajes-asesores', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -215,10 +214,19 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
               </Button>
             </InputGroup>
           </FormGroup>
+          {isSubmitting && <Loader />}
           <InputGroup>
             <FormControl>
-              {isSubmitting && <Loader />}
-              <Button disabled={isSubmitting}>Actualizar mensajes</Button>
+              <Button
+                disabled={isSubmitting}
+                buttonType={
+                  isSubmitting
+                    ? BUTTON_TYPE_CLASSES.disabled
+                    : BUTTON_TYPE_CLASSES.base
+                }
+              >
+                Actualizar mensajes
+              </Button>
             </FormControl>
           </InputGroup>
         </form>

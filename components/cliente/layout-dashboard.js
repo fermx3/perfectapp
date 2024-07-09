@@ -61,19 +61,6 @@ export default function LayoutDashboard({
         {grupo && <p>{`Grupo: ${grupo}`}</p>}
         {leales && <p>{`Leales: ${leales}`}</p>}
       </div>
-      {/* <nav className={classes.nav}>
-          <ul>
-            <li>
-              <Link href={`/${role}/${userId}`}>Home</Link>
-            </li>
-            <li>
-              <Link href={`/${role}/${userId}/promociones`}>Promociones</Link>
-            </li>
-            <li>
-              <Link href={`/${role}/${userId}/perfil`}>Perfil</Link>
-            </li>
-          </ul>
-        </nav> */}
     </header>
   );
 }

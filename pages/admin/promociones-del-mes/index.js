@@ -221,10 +221,19 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
               Agregar promocion
             </Button>
           </InputGroup>
+          {isSubmitting && <Loader />}
           <InputGroup>
             <FormControl>
-              {isSubmitting && <Loader />}
-              <Button disabled={isSubmitting}>ACTUALIZAR PROMOCIONES</Button>
+              <Button
+                disabled={isSubmitting}
+                buttonType={
+                  isSubmitting
+                    ? BUTTON_TYPE_CLASSES.disabled
+                    : BUTTON_TYPE_CLASSES.base
+                }
+              >
+                ACTUALIZAR PROMOCIONES
+              </Button>
             </FormControl>
           </InputGroup>
         </form>
