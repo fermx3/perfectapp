@@ -60,7 +60,7 @@ type DatosLeal {
 }
 
 model users {
-  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  id              String           @id @default(cuid()) @map("_id")
   password        String
   role            Role
   userId          String           @unique

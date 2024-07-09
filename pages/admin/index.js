@@ -25,6 +25,11 @@ const links = [
     link: '#',
     desc: 'Validar prospectos que han sido agregados por asesores.',
   },
+  {
+    titulo: 'Validar ventas',
+    link: '#',
+    desc: 'Validar ventas que han sido agregadas por asesores.',
+  },
 ];
 
 export default function AdminPage() {

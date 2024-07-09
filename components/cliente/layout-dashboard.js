@@ -9,6 +9,7 @@ export default function LayoutDashboard({
   nombre,
   nivelDeCliente,
   leales,
+  grupo,
   cadena,
   role,
   userId,
@@ -57,6 +58,7 @@ export default function LayoutDashboard({
         )}
         {nivelDeCliente && <p>Prioridad {nivelDeCliente}</p>}
         {cadena && <p>{`Cadena: ${cadena}`}</p>}
+        {grupo && <p>{`Grupo: ${grupo}`}</p>}
         {leales && <p>{`Leales: ${leales}`}</p>}
       </div>
       {/* <nav className={classes.nav}>

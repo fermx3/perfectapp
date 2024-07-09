@@ -55,6 +55,8 @@ export default function VisitaPage({
 
   const router = useRouter();
 
+  console.log(leal);
+
   function prevHandler() {
     dispatch(prevStage());
   }
@@ -84,6 +86,7 @@ export default function VisitaPage({
         ubicacion={leal.ubicacion}
         userId={router.query.slug}
         role='LEAL'
+        grupo={leal.grupo}
         nombre={leal.nombre}
         nivelDeCliente={leal.nivelDeCliente}
         cadena={leal.cadena}
