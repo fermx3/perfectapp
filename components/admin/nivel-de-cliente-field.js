@@ -29,7 +29,7 @@ export default function NivelDeClienteField({
             <input
               type='hidden'
               {...register(`promociones.${nestIndex}.nivelDeCliente.${k}.name`)}
-              value={nivel.name.toLowerCase()}
+              value={nivel.name?.toLowerCase()}
             />
             <Controller
               name={`promociones.${nestIndex}.nivelDeCliente.${k}.selected`}

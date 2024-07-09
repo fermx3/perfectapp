@@ -112,7 +112,7 @@ async function handler(req, res) {
     //   { upsert: true }
     // );
 
-    res.status(201).json({ message: 'Cliente enviado!' });
+    res.status(201).json({ message: 'Mensajes modificados' });
   }
 
   main()

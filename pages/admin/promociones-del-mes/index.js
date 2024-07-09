@@ -63,7 +63,7 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
   const router = useRouter();
 
   const handleClick = function () {
-    router.replace('/login');
+    router.reload();
   };
 
   async function actualizarPromos(data) {
@@ -76,7 +76,7 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
       },
     });
 
-    // const responseData = await response.json();
+    const responseData = await response.json();
 
     if (!response.ok) {
       throw new Error(responseData.error.message || 'Something went wrong!');
@@ -118,7 +118,7 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
     //   }
     // }
 
-    return response;
+    return responseData;
   }
 
   const onSubmit = async (data) => {
@@ -128,7 +128,6 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
     // submit to server
     try {
       const result = await actualizarPromos(data);
-      router.reload();
       //Successfuly create user
       setSuccessMessage(result.message);
       if (result.message) {

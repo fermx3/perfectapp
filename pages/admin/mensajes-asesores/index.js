@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Loader from '@/components/ui/loader';
 import Image from 'next/image';
+import Modal from '@/components/ui/modal';
 
 export default function MensajesAsesoresPage({ mensajesAsesores }) {
   const {
@@ -46,7 +47,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
   const router = useRouter();
 
   const handleClick = function () {
-    router.replace('/login');
+    router.reload();
   };
 
   async function actualizarMensajes(data) {
@@ -59,7 +60,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
       },
     });
 
-    // const responseData = await response.json();
+    const responseData = await response.json();
 
     // if (!response.ok) {
     //   throw new Error(responseData.error.message || 'Something went wrong!');
@@ -222,6 +223,16 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
           </InputGroup>
         </form>
       </Container>
+      {(successMessage || errorMessage) && (
+        <Modal>
+          <p style={{ marginBottom: '1rem' }}>
+            {successMessage || errorMessage}
+          </p>
+          <Button type='button' onClick={handleClick}>
+            Ok
+          </Button>
+        </Modal>
+      )}
     </BackgroundGradientContainer>
   );
 }

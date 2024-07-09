@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import { actualizarMensajesSchema } from '@/lib/schemas/schemas';
 
 import { MongoClient } from 'mongodb';
 
