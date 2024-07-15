@@ -59,6 +59,17 @@ type DatosLeal {
   firstLoginDate     String?
 }
 
+type Orden {
+  iberia90g  Int
+  iberia225g Int
+  iberia1Kg  Int
+}
+
+type Ventas {
+  fecha String
+  orden Orden
+}
+
 model users {
   id              String           @id @default(cuid()) @map("_id")
   password        String
@@ -69,6 +80,7 @@ model users {
   valorDePuntos   ValorDePuntos?
   planPromocional PlanPromocional?
   datosLeal       DatosLeal?
+  ventas          Ventas[]
 }
 
 enum Role {
@@ -193,4 +205,14 @@ model mensajesAsesores {
   id        String @id @map("_id")
   titulo    String
   contenido String
+}
+
+model ordenes {
+  id            String          @id @map("_id")
+  asesor        String
+  cliente       String
+  fecha         String
+  distribuidor  String
+  orden         OrdenDeCompra[]
+  ordenValidada Boolean
 }

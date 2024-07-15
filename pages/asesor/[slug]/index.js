@@ -6,6 +6,7 @@ import LinksGroup from '@/components/ui/links-group';
 import Container from '@/components/layout/container';
 import Dashboard from '@/components/dashboard/dashboard';
 import {
+  getAvanceDeCuota,
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
   getUserIdsFromGivenZonasThatPurchased,
@@ -22,6 +23,7 @@ export default function AsesorPage({
   promocionesDisponibles,
   clientesQueCompraron,
   userIdsFromAsesorZonas,
+  avance,
 }) {
   return (
     <BackgroundGradientContainer>
@@ -35,7 +37,7 @@ export default function AsesorPage({
         <Dashboard
           session={session}
           cuota={cuotaTotal}
-          avance={visitasConOrdenes}
+          avance={avance}
           promocionesDisponibles={promocionesDisponibles}
           clientesQueCompraron={clientesQueCompraron}
           clientesTotales={userIdsFromAsesorZonas}
@@ -89,6 +91,8 @@ export async function getServerSideProps(context) {
     userIdsFromAsesorZonas
   );
 
+  const avance = await getAvanceDeCuota(slug, yearMonth);
+
   const asesores = userInfo.asesores
     ? userInfo.asesores
     : [session?.user.userId];
@@ -120,6 +124,7 @@ export async function getServerSideProps(context) {
       promocionesDisponibles,
       clientesQueCompraron,
       userIdsFromAsesorZonas,
+      avance,
     },
   };
 }

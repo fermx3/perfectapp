@@ -16,25 +16,34 @@ export default function Dashboard({
     ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
     : 0;
 
-  const avanceTotal = avance ? avance.reduce((a, b) => a + b.cajas, 0) : 0;
+  function sum(obj) {
+    return Object.keys(obj).reduce(
+      (sum, key) => sum + parseFloat(obj[key] || 0),
+      0
+    );
+  }
 
-  const total1kg = avance
-    ? avance
-        .filter((item) => item.producto === 'Iberia 1Kg')
-        .reduce((a, b) => a + b.cajas, 0)
-    : 0;
+  const avanceTotal = sum(avance);
 
-  const total90g = avance
-    ? avance
-        .filter((item) => item.producto === 'Iberia 90g')
-        .reduce((a, b) => a + b.cajas, 0)
-    : 0;
+  // const avanceTotal = avance ? avance.reduce((a, b) => a + b.cajas, 0) : 0;
 
-  const total225g = avance
-    ? avance
-        .filter((item) => item.producto === 'Iberia 225g')
-        .reduce((a, b) => a + b.cajas, 0)
-    : 0;
+  // const total1kg = avance
+  //   ? avance
+  //       .filter((item) => item.producto === 'Iberia 1Kg')
+  //       .reduce((a, b) => a + b.cajas, 0)
+  //   : 0;
+
+  // const total90g = avance
+  //   ? avance
+  //       .filter((item) => item.producto === 'Iberia 90g')
+  //       .reduce((a, b) => a + b.cajas, 0)
+  //   : 0;
+
+  // const total225g = avance
+  //   ? avance
+  //       .filter((item) => item.producto === 'Iberia 225g')
+  //       .reduce((a, b) => a + b.cajas, 0)
+  //   : 0;
 
   const efectividad = clientesTotales
     ? ((clientesQueCompraron.length / clientesTotales.length) * 100).toFixed(2)
@@ -81,9 +90,9 @@ export default function Dashboard({
           <div className={classes.cuadro}>
             <p>{avanceTotal ? avanceTotal : 0} cajas</p>
             <ul>
-              <li>Iberia 1Kg: {total1kg}</li>
-              <li>Iberia 225g: {total225g}</li>
-              <li>Iberia 90g: {total90g}</li>
+              <li>Iberia 1Kg: {avance.iberia1Kg ? avance.iberia1Kg : 0}</li>
+              <li>Iberia 225g: {avance.iberia225g ? avance.iberia225g : 0}</li>
+              <li>Iberia 90g: {avance.iberia90g ? avance.iberia90g : 0}</li>
             </ul>
           </div>
           <h5>Avance de compra</h5>

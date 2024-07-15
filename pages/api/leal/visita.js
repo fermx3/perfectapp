@@ -176,6 +176,20 @@ async function handler(req, res) {
     //Create record on DB
     const result = await prisma.visitas.create({ data: data });
 
+    if (data.hayOrdenDeCompra) {
+      const result2 = await prisma.ordenes.create({
+        data: {
+          id: data.finVisita + data.numeroDeCliente + Math.random() * 1000,
+          asesor: data.asesor,
+          cliente: data.numeroDeCliente,
+          fecha: data.finVisita,
+          distribuidor: data.distribuidor,
+          orden: data.ordenDeCompra,
+          ordenValidada: false,
+        },
+      });
+    }
+
     //Return success message if everything correct
     res.status(201).json({ message: 'Informacion enviada. Visita completa.' });
   }

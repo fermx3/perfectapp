@@ -27,7 +27,7 @@ const links = [
   },
   {
     titulo: 'Validar ventas',
-    link: '#',
+    link: '/admin/ordenes-pendientes',
     desc: 'Validar ventas que han sido agregadas por asesores.',
   },
 ];

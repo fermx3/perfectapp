@@ -23,7 +23,11 @@ import {
   selectVisitaActual,
 } from '@/store/visitaActual/visitaActual.selector';
 import Dashboard from '@/components/dashboard/dashboard';
-import { getMensajesAsesores, getVisitasConOrdenesPorCliente } from '@/lib/db';
+import {
+  getAvanceDeCuota,
+  getMensajesAsesores,
+  getVisitasConOrdenesPorCliente,
+} from '@/lib/db';
 import Container from '@/components/layout/container';
 
 // const mensajesAsesores = {
@@ -48,6 +52,7 @@ export default function VisitaPage({
   materialesDeComunicacion,
   visitasConOrdenes,
   mensajesAsesores,
+  avance,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
@@ -96,7 +101,7 @@ export default function VisitaPage({
         cuota={leal.cuotaPallets}
         promocionesDisponibles={promocionesDisponibles}
         puntos={leal.datosLeal?.puntosLeal}
-        avance={visitasConOrdenes}
+        avance={avance}
         session={session}
       />
       <Button
@@ -197,6 +202,8 @@ export async function getServerSideProps(context) {
     slug,
   ]);
 
+  const avance = await getAvanceDeCuota(slug, yearMonth);
+
   const mensajesAsesores = await getMensajesAsesores();
 
   return {
@@ -212,6 +219,7 @@ export async function getServerSideProps(context) {
       materialesDeComunicacion,
       visitasConOrdenes,
       mensajesAsesores,
+      avance,
     },
   };
 }
