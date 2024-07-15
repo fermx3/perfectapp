@@ -18,7 +18,7 @@ import InputGroup from '@/components/forms/input-group';
 import SelectInput from '@/components/forms/select-input';
 import { centrales, filtrarBaseSchema } from '@/lib/schemas/schemas';
 
-export default function BaseDeDatos({ usuario, linkVisitas }) {
+export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
   const { role, userId, userInfo } = usuario;
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -40,6 +40,7 @@ export default function BaseDeDatos({ usuario, linkVisitas }) {
       fechaFin: '',
       cliente: '',
       central: '',
+      userID: userID,
     },
     resolver: zodResolver(filtrarBaseSchema),
   });
@@ -234,6 +235,7 @@ export default function BaseDeDatos({ usuario, linkVisitas }) {
                 />
               </FormControl>
             </InputGroup>
+            <input type='hidden' value={userID} {...register('userID')} />
             {isSubmitting && <Loader />}
             <Button
               disabled={isSubmitting}
@@ -284,6 +286,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, usuario, linkVisitas },
+    props: { session, usuario, linkVisitas, userID },
   };
 }

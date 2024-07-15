@@ -13,6 +13,7 @@ async function handler(req, res) {
   <p>Fecha final: ${data.fechaFin}</p>
   <p>Cliente: ${data.cliente}</p>
   <p>Central: ${data.central}</p>
+  <p>Usuario que solicita: ${data.userID}</p>
   `;
 
   async function main() {
