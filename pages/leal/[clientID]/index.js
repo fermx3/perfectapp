@@ -4,7 +4,7 @@ import { getLeal, getSettings } from '@/lib/prismaDB';
 import moment from 'moment';
 import Image from 'next/image';
 
-import { getVisitasConOrdenesPorCliente } from '@/lib/db';
+import { getAvanceDeCuota, getVisitasConOrdenesPorCliente } from '@/lib/db';
 
 import Dashboard from '@/components/dashboard/dashboard';
 import ButtonGroup from '@/components/button-group';
@@ -21,7 +21,7 @@ export default function PanelDeLeal({
   leal,
   promocionesDisponibles,
   session,
-  visitasConOrdenes,
+  avance,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const puntosLeal = leal?.datosLeal ? leal.datosLeal.puntosLeal : 0;
@@ -79,7 +79,7 @@ export default function PanelDeLeal({
               puntos={leal.datosLeal?.puntosLeal}
               promocionesDisponibles={promocionesDisponibles}
               session={session}
-              avance={visitasConOrdenes}
+              avance={avance}
             />
             <ButtonGroup
               options={[
@@ -163,6 +163,8 @@ export async function getServerSideProps(context) {
     clientID,
   ]);
 
+  const avance = await getAvanceDeCuota(clientID, yearMonth);
+
   if (!leal.datosLeal?.firstLoginDate) {
     return {
       redirect: {
@@ -173,6 +175,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, leal, promocionesDisponibles, visitasConOrdenes },
+    props: { session, leal, promocionesDisponibles, avance },
   };
 }

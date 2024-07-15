@@ -25,6 +25,9 @@ export default function Dashboard({
 
   const avanceTotal = sum(avance);
 
+  console.log('avance', avance);
+  console.log('avanceTotal', avanceTotal);
+
   // const avanceTotal = avance ? avance.reduce((a, b) => a + b.cajas, 0) : 0;
 
   // const total1kg = avance

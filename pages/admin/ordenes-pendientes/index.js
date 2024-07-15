@@ -110,7 +110,9 @@ export default function OrdenesPendientesPage({ ordenes }) {
                         <div key={index}>
                           <input
                             type='hidden'
-                            {...register(`orden.${item.sku}`)}
+                            {...register(`orden.${item.sku}`, {
+                              valueAsNumber: true,
+                            })}
                             value={item.cajas}
                           />
                         </div>
