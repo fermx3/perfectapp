@@ -6,11 +6,10 @@ import LinksGroup from '@/components/ui/links-group';
 import Container from '@/components/layout/container';
 import Dashboard from '@/components/dashboard/dashboard';
 import {
-  getAvanceDeCuota,
+  getAvanceDeCuotaByZona,
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
   getUserIdsFromGivenZonasThatPurchased,
-  getVisitasConOrdenesPorCliente,
 } from '@/lib/db';
 import moment from 'moment';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
@@ -19,7 +18,6 @@ export default function AsesorPage({
   userInfo,
   session,
   cuotaTotal,
-  visitasConOrdenes,
   promocionesDisponibles,
   clientesQueCompraron,
   userIdsFromAsesorZonas,
@@ -84,14 +82,11 @@ export async function getServerSideProps(context) {
     userInfo.zonaAsignada
   );
 
+  console.log('zonaAsignada', userInfo.zonaAsignada);
+
   const yearMonth = moment().format('YYYY-MM');
 
-  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(
-    yearMonth,
-    userIdsFromAsesorZonas
-  );
-
-  const avance = await getAvanceDeCuota(slug, yearMonth);
+  const avance = await getAvanceDeCuotaByZona(userInfo.zonaAsignada, yearMonth);
 
   const asesores = userInfo.asesores
     ? userInfo.asesores
@@ -99,8 +94,10 @@ export async function getServerSideProps(context) {
 
   const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
     yearMonth,
-    asesores
+    userInfo.zonaAsignada
   );
+
+  console.log('clientesQueCompraron', clientesQueCompraron);
 
   if (
     !session ||
@@ -120,7 +117,6 @@ export async function getServerSideProps(context) {
       session,
       userInfo,
       cuotaTotal,
-      visitasConOrdenes,
       promocionesDisponibles,
       clientesQueCompraron,
       userIdsFromAsesorZonas,

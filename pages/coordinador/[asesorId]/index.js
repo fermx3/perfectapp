@@ -4,10 +4,10 @@ import Dashboard from '@/components/dashboard/dashboard';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 import Container from '@/components/layout/container';
 import {
+  getAvanceDeCuotaByZona,
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
   getUserIdsFromGivenZonasThatPurchased,
-  getVisitasConOrdenesPorCliente,
 } from '@/lib/db';
 import { getPromociones, getUserInfo } from '@/lib/prismaDB';
 import moment from 'moment';
@@ -18,9 +18,9 @@ export default function AsesorMonitoreoPage({
   userInfo,
   cuotaTotal,
   promocionesDisponibles,
-  visitasConOrdenes,
   clientesQueCompraron,
   userIdsFromAsesorZonas,
+  avance,
 }) {
   return (
     <BackgroundGradientContainer>
@@ -40,7 +40,7 @@ export default function AsesorMonitoreoPage({
         <Dashboard
           cuota={cuotaTotal}
           promocionesDisponibles={promocionesDisponibles}
-          avance={visitasConOrdenes}
+          avance={avance}
           session={session}
           clientesQueCompraron={clientesQueCompraron}
           clientesTotales={userIdsFromAsesorZonas}
@@ -68,14 +68,11 @@ export async function getServerSideProps(context) {
 
   const yearMonth = moment().format('YYYY-MM');
 
-  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(
-    yearMonth,
-    userIdsFromAsesorZonas
-  );
+  const avance = await getAvanceDeCuotaByZona(userInfo.zonaAsignada, yearMonth);
 
   const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
     yearMonth,
-    [asesorId]
+    userInfo.zonaAsignada
   );
 
   if (
@@ -97,9 +94,9 @@ export async function getServerSideProps(context) {
       userInfo,
       cuotaTotal,
       promocionesDisponibles,
-      visitasConOrdenes,
       clientesQueCompraron,
       userIdsFromAsesorZonas,
+      avance,
     },
   };
 }
