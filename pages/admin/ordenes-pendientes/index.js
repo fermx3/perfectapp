@@ -7,9 +7,14 @@ import moment from 'moment';
 import { useForm } from 'react-hook-form';
 
 import classes from './index.module.scss';
+import Loader from '@/components/ui/loader';
 
 export default function OrdenesPendientesPage({ ordenes }) {
-  const { register, handleSubmit, control } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -117,7 +122,13 @@ export default function OrdenesPendientesPage({ ordenes }) {
                           />
                         </div>
                       ))}
-                      <Button type='submit'>Validar</Button>
+                      {isSubmitting ? (
+                        <Loader />
+                      ) : (
+                        <Button type='submit' disabled={isSubmitting}>
+                          Validar
+                        </Button>
+                      )}
                     </form>
                   </td>
                 </tr>

@@ -112,14 +112,14 @@ export default function BaseDeDatos({ usuario, linkVisitas }) {
   }
 
   const onSubmit = async (data) => {
-    // setSuccessMessage('');
-    // setErrorMessage('');
+    setSuccessMessage('');
+    setErrorMessage('');
 
     console.log(data);
     // submit to server
     try {
       const result = await sendFiltros(data);
-      //Successfuly create user
+      //Successfuly send Filtros
       setSuccessMessage(result.message);
       if (result.message) {
         reset();
@@ -234,7 +234,17 @@ export default function BaseDeDatos({ usuario, linkVisitas }) {
                 />
               </FormControl>
             </InputGroup>
-            <Button>Solicitar base de datos</Button>
+            {isSubmitting && <Loader />}
+            <Button
+              disabled={isSubmitting}
+              buttonType={
+                isSubmitting
+                  ? BUTTON_TYPE_CLASSES.disabled
+                  : BUTTON_TYPE_CLASSES.base
+              }
+            >
+              Solicitar base de datos
+            </Button>
           </form>
         </div>
       </Container>

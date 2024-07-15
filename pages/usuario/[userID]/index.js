@@ -39,7 +39,7 @@ export default function UsuarioPage({ usuario }) {
         />
         <div className={classes.grafica}>
           <Link
-            href='https://asset.cloudinary.com/dp8i43san/60d3ca45091849f960278a565d85f9cd'
+            href='https://asset.cloudinary.com/dp8i43san/f77d8429e17bf500072fb8d580f0b017'
             target='_blank'
           >
             <CldImage fill src='grafica.jpg' alt='' />
