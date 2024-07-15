@@ -25,8 +25,33 @@ export default function Dashboard({
 
   const avanceTotal = sum(avance);
 
+  const cajasXPallet = {
+    iberia90g: 405,
+    iberia225g: 400,
+    iberia1Kg: 112,
+  };
+
   console.log('avance', avance);
-  console.log('avanceTotal', avanceTotal);
+
+  const avanceTotalPallets = {
+    iberia90g: avance.iberia90g / cajasXPallet.iberia90g || 0,
+    iberia225g: avance.iberia225g / cajasXPallet.iberia225g || 0,
+    iberia1Kg: avance.iberia1Kg / cajasXPallet.iberia1Kg || 0,
+  };
+
+  const avanceTotalPalletsTotal = Object.values(avanceTotalPallets).reduce(
+    (a, b) => a + b,
+    0
+  );
+
+  const avanceTotalPorcentaje = (
+    (avanceTotalPalletsTotal / cuotaTotal) *
+    100
+  ).toFixed(2);
+
+  console.log('avanceTotalPallets', avanceTotalPallets);
+  console.log('avanceTotalPalletsTotal', avanceTotalPalletsTotal);
+  console.log('avanceTotalPorcentaje', avanceTotalPorcentaje);
 
   // const avanceTotal = avance ? avance.reduce((a, b) => a + b.cajas, 0) : 0;
 
@@ -97,6 +122,7 @@ export default function Dashboard({
               <li>Iberia 225g: {avance.iberia225g ? avance.iberia225g : 0}</li>
               <li>Iberia 90g: {avance.iberia90g ? avance.iberia90g : 0}</li>
             </ul>
+            <p>{avanceTotalPorcentaje} %</p>
           </div>
           <h5>Avance de compra</h5>
         </div>

@@ -172,8 +172,9 @@ type PromocionesDelMes {
 }
 
 type Skus {
-  sku      String
-  producto String
+  sku          String
+  producto     String
+  cajasXpallet Int?
 }
 
 model config {
