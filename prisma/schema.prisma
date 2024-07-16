@@ -60,14 +60,14 @@ type DatosLeal {
 }
 
 type Orden {
-  iberia90g  Int
-  iberia225g Int
-  iberia1Kg  Int
+  iberia90g  Int?
+  iberia225g Int?
+  iberia1Kg  Int?
 }
 
 type Ventas {
-  fecha String
-  orden Orden
+  fecha String?
+  orden Orden?
 }
 
 model users {
@@ -92,90 +92,90 @@ enum Role {
 }
 
 type Competidores {
-  nombre    String
+  nombre    String?
   productos Productos[]
 }
 
 type Productos {
-  gramos               String
-  precio               Int
-  hasPromo             Boolean
+  gramos               String?
+  precio               Int?
+  hasPromo             Boolean?
   pop                  Boolean?
   precioConPromo       Int?
   precioConPromoReason String?
 }
 
 type Promociones {
-  implementada Boolean
-  promo        String
+  implementada Boolean?
+  promo        String?
   sku          String?
 }
 
 type OrdenDeCompra {
-  cajas        Int
+  cajas        Int?
   objetivo     Int?
-  producto     String
+  producto     String?
   sku          String?
   promocion    Boolean?
   puntos       Int?
-  promo        String
+  promo        String?
   cajasXpallet Int?
 }
 
 type Inventario {
-  cajas        Int
-  producto     String
+  cajas        Int?
+  producto     String?
   sku          String?
   cajasXpallet Int?
 }
 
 type PlanDeComunicacion {
-  alcance    Boolean
-  materiales String
+  alcance    Boolean?
+  materiales String?
 }
 
 type Materiales {
-  material String
-  pop      Boolean
+  material String?
+  pop      Boolean?
 }
 
 type Exhibiciones {
-  periodoNegociado String
-  pop              Boolean
-  producto         String
+  periodoNegociado String?
+  pop              Boolean?
+  producto         String?
 }
 
 model visitas {
   id                  String               @id @default(auto()) @map("_id") @db.ObjectId
-  asesor              String
-  inicioVisita        String
-  finVisita           String
-  numeroDeCliente     String
+  asesor              String?
+  inicioVisita        String?
+  finVisita           String?
+  numeroDeCliente     String?
   competidores        Competidores[]
-  comentarios1        String
+  comentarios1        String?
   promociones         Promociones[]
-  cuentaConInventario Boolean
+  cuentaConInventario Boolean?
   inventario          Inventario[]
-  hayOrdenDeCompra    Boolean
+  hayOrdenDeCompra    Boolean?
   porqueNoCompra      String?
   distribuidor        String?
-  comentarios2        String
+  comentarios2        String?
   ordenDeCompra       OrdenDeCompra[]
   planDeComunicacion  PlanDeComunicacion[]
   materiales          Materiales[]
   exhibiciones        Exhibiciones[]
-  comentarios3        String
+  comentarios3        String?
 }
 
 type PromocionesDelMes {
-  promo          String
+  promo          String?
   nivelDeCliente String[]
   sku            String?
 }
 
 type Skus {
-  sku          String
-  producto     String
+  sku          String?
+  producto     String?
   cajasXpallet Int?
 }
 
@@ -189,33 +189,33 @@ model config {
   promocionesDelMes        PromocionesDelMes[]
   skus                     Skus[]
   materialesDeComunicacion String[]
-  avisoDePrivacidad        String
-  terminosYCondiciones     String
+  avisoDePrivacidad        String?
+  terminosYCondiciones     String?
 }
 
 model prospectos {
   id             String  @id @default(auto()) @map("_id") @db.ObjectId
-  nombre         String
-  canal          String
-  central        String
-  ubicacion      String
+  nombre         String?
+  canal          String?
+  central        String?
+  ubicacion      String?
   grupo          String?
-  nivelDeCliente String
+  nivelDeCliente String?
   comentarios    String?
 }
 
 model mensajesAsesores {
   id        String @id @map("_id")
-  titulo    String
-  contenido String
+  titulo    String?
+  contenido String?
 }
 
 model ordenes {
   id            String          @id @map("_id")
-  asesor        String
-  cliente       String
-  fecha         String
-  distribuidor  String
+  asesor        String?
+  cliente       String?
+  fecha         String?
+  distribuidor  String?
   orden         OrdenDeCompra[]
-  ordenValidada Boolean
+  ordenValidada Boolean?
 }
