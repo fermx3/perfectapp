@@ -25,27 +25,36 @@ export default function Dashboard({
 
   const avanceTotal = sum(avance);
 
-  const avanceTotalPorcentaje = function () {
+  const getAvanceTotalPorcentaje = function () {
     const cajasXPallet = {
       iberia90g: 405,
       iberia225g: 400,
       iberia1Kg: 112,
     };
 
-    const avanceTotalPallets = {
+    const avancePallets = {
       iberia90g: avance.iberia90g / cajasXPallet.iberia90g || 0,
       iberia225g: avance.iberia225g / cajasXPallet.iberia225g || 0,
       iberia1Kg: avance.iberia1Kg / cajasXPallet.iberia1Kg || 0,
     };
 
-    const avanceTotalPalletsTotal = Object.values(avanceTotalPallets).reduce(
+    const avanceTotalPallets = Object.values(avancePallets).reduce(
       (a, b) => a + b,
       0
     );
 
     if (cuotaTotal === 0) return 0;
-    return ((avanceTotalPalletsTotal / cuotaTotal) * 100).toFixed(2);
+    return {
+      avanceTotalPorcentaje: ((avanceTotalPallets / cuotaTotal) * 100).toFixed(
+        2
+      ),
+      avancePallets,
+      avanceTotalPallets,
+    };
   };
+
+  const { avanceTotalPorcentaje, avanceTotalPallets, avancePallets } =
+    getAvanceTotalPorcentaje();
 
   // const avanceTotal = avance ? avance.reduce((a, b) => a + b.cajas, 0) : 0;
 
@@ -66,35 +75,6 @@ export default function Dashboard({
   //       .filter((item) => item.producto === 'Iberia 225g')
   //       .reduce((a, b) => a + b.cajas, 0)
   //   : 0;
-
-  // const bar = new ProgressBar.Line(container, {
-  //   strokeWidth: 4,
-  //   easing: 'easeInOut',
-  //   duration: 1400,
-  //   color: '#FFEA82',
-  //   trailColor: '#eee',
-  //   trailWidth: 1,
-  //   svgStyle: { width: '100%', height: '100%' },
-  //   text: {
-  //     style: {
-  //       // Text color.
-  //       // Default: same as stroke color (options.color)
-  //       color: '#999',
-  //       position: 'absolute',
-  //       right: '0',
-  //       top: '30px',
-  //       padding: 0,
-  //       margin: 0,
-  //       transform: null,
-  //     },
-  //     autoStyleContainer: false,
-  //   },
-  //   from: { color: '#FFEA82' },
-  //   to: { color: '#ED6A5A' },
-  //   step: (state, bar) => {
-  //     bar.setText(Math.round(bar.value() * 100) + ' %');
-  //   },
-  // });
 
   const efectividad = clientesTotales
     ? ((clientesQueCompraron.length / clientesTotales.length) * 100).toFixed(2)
@@ -140,14 +120,36 @@ export default function Dashboard({
         <div className={classes.estadisticaContainer}>
           <div className={classes.cuadro}>
             <p>{avanceTotal ? avanceTotal : 0} cajas</p>
+            {/* <p>
+              {avanceTotalPallets ? avanceTotalPallets.toFixed(2) : 0} pallets
+            </p> */}
             <ul>
               <li>Iberia 1Kg: {avance.iberia1Kg ? avance.iberia1Kg : 0}</li>
               <li>Iberia 225g: {avance.iberia225g ? avance.iberia225g : 0}</li>
               <li>Iberia 90g: {avance.iberia90g ? avance.iberia90g : 0}</li>
             </ul>
-            <p>{avanceTotalPorcentaje()} %</p>
+            {/* <p>{avanceTotalPorcentaje()} %</p> */}
           </div>
           <h5>Avance de compra</h5>
+        </div>
+        <div className={classes.estadisticaContainerSM}>
+          <div className={classes.cuadro}>
+            <CircularProgressbar
+              value={avanceTotalPorcentaje}
+              text={`${avanceTotalPorcentaje}%`}
+              circleRatio={0.75}
+              styles={buildStyles({
+                rotation: 1 / 2 + 1 / 8,
+                strokeLinecap: 'butt',
+                trailColor: '#eee',
+                pathColor: '#3171f1',
+                textColor: 'black',
+                pathTransitionDuration: 1,
+                textSize: '1rem',
+              })}
+            />
+          </div>
+          <h5>% de avance de compra</h5>
         </div>
         <div className={classes.estadisticaContainer}>
           <div className={classes.cuadro}>

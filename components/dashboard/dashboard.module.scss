@@ -59,6 +59,13 @@
   }
 }
 
+.progressBarDiv {
+  // position: absolute;
+  // bottom: 0;
+  width: 100%;
+  margin-top: 1rem;
+}
+
 @media screen and (max-width: $mobile-size) {
   .dashboardLeal {
     justify-content: center;
