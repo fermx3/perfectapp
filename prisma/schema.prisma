@@ -108,7 +108,7 @@ type Productos {
 type Promociones {
   implementada Boolean
   promo        String
-  sku          String
+  sku          String?
 }
 
 type OrdenDeCompra {
@@ -125,7 +125,7 @@ type OrdenDeCompra {
 type Inventario {
   cajas        Int
   producto     String
-  sku          String
+  sku          String?
   cajasXpallet Int?
 }
 
@@ -170,7 +170,7 @@ model visitas {
 type PromocionesDelMes {
   promo          String
   nivelDeCliente String[]
-  sku            String
+  sku            String?
 }
 
 type Skus {
