@@ -132,6 +132,7 @@ export default function OrdenesPendientesPage({ ordenes }) {
                         >
                           Validar
                         </Button>
+                        // useFieldArray with hidden inputs to handle multiple form inputs
                       )}
                     </form>
                   </td>

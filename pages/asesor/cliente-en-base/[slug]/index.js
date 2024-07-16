@@ -196,8 +196,6 @@ export async function getServerSideProps(context) {
 
   const yearMonth = moment().format('YYYY-MM');
 
-  console.log('skus', skus);
-
   const visitasConOrdenes = await getVisitasConOrdenesPorCliente(yearMonth, [
     slug,
   ]);
