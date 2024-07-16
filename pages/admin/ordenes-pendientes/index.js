@@ -1,4 +1,4 @@
-import Button from '@/components/button';
+import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 import Container from '@/components/layout/container';
 import { getOrdenesSinValidar } from '@/lib/db';
@@ -125,7 +125,11 @@ export default function OrdenesPendientesPage({ ordenes }) {
                       {isSubmitting ? (
                         <Loader />
                       ) : (
-                        <Button type='submit' disabled={isSubmitting}>
+                        <Button
+                          type='submit'
+                          disabled={isSubmitting}
+                          buttonType={BUTTON_TYPE_CLASSES.disabled}
+                        >
                           Validar
                         </Button>
                       )}
