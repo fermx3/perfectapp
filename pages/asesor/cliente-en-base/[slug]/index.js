@@ -60,8 +60,6 @@ export default function VisitaPage({
 
   const router = useRouter();
 
-  console.log(leal);
-
   function prevHandler() {
     dispatch(prevStage());
   }
@@ -197,6 +195,8 @@ export async function getServerSideProps(context) {
   // const distribuidores = await getDistribuidores('upfield');
 
   const yearMonth = moment().format('YYYY-MM');
+
+  console.log('skus', skus);
 
   const visitasConOrdenes = await getVisitasConOrdenesPorCliente(yearMonth, [
     slug,

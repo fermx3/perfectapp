@@ -112,21 +112,19 @@ type Promociones {
 }
 
 type OrdenDeCompra {
-  cajas        Int
-  objetivo     Int?
-  producto     String
-  sku          String?
-  promocion    Boolean?
-  puntos       Int?
-  promo        String
-  cajasXpallet Int?
+  cajas     Int
+  objetivo  Int?
+  producto  String
+  sku       String?
+  promocion Boolean?
+  puntos    Int?
+  promo     String
 }
 
 type Inventario {
-  cajas        Int
-  producto     String
-  sku          String
-  cajasXpallet Int?
+  cajas    Int
+  producto String
+  sku      String
 }
 
 type PlanDeComunicacion {
@@ -174,9 +172,8 @@ type PromocionesDelMes {
 }
 
 type Skus {
-  sku          String
-  producto     String
-  cajasXpallet Int?
+  sku      String
+  producto String
 }
 
 model config {
