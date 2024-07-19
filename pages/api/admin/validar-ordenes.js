@@ -29,23 +29,23 @@ async function handler(req, res) {
   const body = req.body;
 
   async function main() {
-    console.log(body);
-    const userDataToUpdate = {
-      $inc: { 'datosLeal.puntosLeal': body.puntosGenerados },
-      ventas: { fecha: body.fecha, orden: body.orden },
-    };
+    console.log(body.ordenesParaValidar);
 
-    const result = await users.updateOne(
-      { _id: body.cliente },
-      {
-        $inc: { 'datosLeal.puntosLeal': body.puntosGenerados },
-        $push: { ventas: { fecha: date, orden: body.orden } },
-      },
-      { upsert: true }
+    const result = await users.bulkWrite(
+      body.ordenesParaValidar.map((orden) => ({
+        updateOne: {
+          filter: { _id: orden.cliente },
+          update: {
+            $inc: { 'datosLeal.puntosLeal': orden.puntosGenerados },
+            $push: { ventas: { fecha: date, orden: orden.orden } },
+          },
+          upsert: true,
+        },
+      }))
     );
 
-    const result2 = await ordenes.updateOne(
-      { _id: body._id },
+    const result2 = await ordenes.updateMany(
+      { _id: { $in: body.ordenesParaValidar.map((orden) => orden._id) } },
       { $set: { ordenValidada: true } }
     );
   }

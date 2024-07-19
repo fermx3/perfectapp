@@ -4,7 +4,7 @@ import Container from '@/components/layout/container';
 import { getOrdenesSinValidar } from '@/lib/db';
 import { getSession } from 'next-auth/react';
 import moment from 'moment';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 
 import classes from './index.module.scss';
 import Loader from '@/components/ui/loader';
@@ -14,10 +14,11 @@ export default function OrdenesPendientesPage({ ordenes }) {
     register,
     handleSubmit,
     formState: { isSubmitting },
+    control,
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log(data.ordenesParaValidar);
     const response = await fetch('/api/admin/validar-ordenes', {
       method: 'PATCH',
       headers: {
@@ -27,7 +28,7 @@ export default function OrdenesPendientesPage({ ordenes }) {
     });
 
     if (response.ok) {
-      alert('Orden validada');
+      alert('Ordenes validadas');
       window.location.reload();
     }
 
@@ -36,6 +37,34 @@ export default function OrdenesPendientesPage({ ordenes }) {
     }
 
     return response;
+  };
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'ordenesParaValidar',
+  });
+
+  const handleCheck = (e) => {
+    if (e.target.checked) {
+      const orden = ordenes.filter((orden) => orden._id === e.target.value);
+      const puntosGenerados = orden[0].orden.reduce((acc, item) => {
+        return acc + item.cajas * item.puntos;
+      }, 0);
+      const ordenObj = orden[0].orden.reduce((acc, item) => {
+        return { ...acc, [item.sku]: item.cajas };
+      }, {});
+      append({
+        _id: orden[0]._id,
+        cliente: orden[0].cliente,
+        puntosGenerados,
+        orden: ordenObj,
+      });
+    } else {
+      const ordenToRemoveIndex = fields.findIndex(
+        (field) => field._id === e.target.value
+      );
+      remove(ordenToRemoveIndex);
+    }
   };
 
   return (
@@ -92,55 +121,36 @@ export default function OrdenesPendientesPage({ ordenes }) {
                     ))}
                   </td>
                   <td>{puntosGenerados}</td>
-                  <td>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                      <input
-                        type='hidden'
-                        {...register('cliente')}
-                        value={orden.cliente}
-                      />
-                      <input
-                        type='hidden'
-                        {...register('_id')}
-                        value={orden._id}
-                      />
-                      <input
-                        type='hidden'
-                        {...register('puntosGenerados', {
-                          valueAsNumber: true,
-                        })}
-                        value={puntosGenerados}
-                      />
-                      {orden.orden.map((item, index) => (
-                        <div key={index}>
-                          <input
-                            type='hidden'
-                            {...register(`orden.${item.sku}`, {
-                              valueAsNumber: true,
-                            })}
-                            value={item.cajas}
-                          />
-                        </div>
-                      ))}
-                      {isSubmitting ? (
-                        <Loader />
-                      ) : (
-                        <Button
-                          type='submit'
-                          disabled={isSubmitting}
-                          buttonType={BUTTON_TYPE_CLASSES.disabled}
-                        >
-                          Validar
-                        </Button>
-                        // useFieldArray with hidden inputs to handle multiple form inputs
-                      )}
-                    </form>
+                  <td className={classes.checkboxes}>
+                    <input
+                      type='checkbox'
+                      value={orden._id}
+                      onClick={handleCheck}
+                    />
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+          {fields.map((field, index) => {})}
+          {isSubmitting ? (
+            <Loader />
+          ) : (
+            <Button
+              type='submit'
+              disabled={isSubmitting}
+              buttonType={
+                fields.length > 0
+                  ? BUTTON_TYPE_CLASSES.primary
+                  : BUTTON_TYPE_CLASSES.disabled
+              }
+            >
+              Validar
+            </Button>
+          )}
+        </form>
       </Container>
     </BackgroundGradientContainer>
   );

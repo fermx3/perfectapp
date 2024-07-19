@@ -1,3 +1,5 @@
+@import '@/styles/variables.scss';
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -23,6 +25,52 @@
       td {
         padding: 10px;
       }
+      .checkboxes {
+        input[type='checkbox'] {
+          appearance: none;
+          background-color: #fff;
+          margin: 0;
+          display: grid;
+          place-content: center;
+          font: inherit;
+          color: currentColor;
+          width: 1.15em;
+          height: 1.15em;
+          border: 0.15em solid currentColor;
+          border-radius: 0.15em;
+          transform: translateY(-0.075em);
+          margin: auto;
+        }
+
+        input[type='checkbox']::before {
+          content: '';
+          width: 0.65em;
+          height: 0.65em;
+          transform: scale(0);
+          transition: 120ms transform ease-in-out;
+          box-shadow: $blue-shadow;
+          background-color: $primary-color;
+          transform-origin: bottom left;
+          clip-path: polygon(
+            14% 44%,
+            0 65%,
+            50% 100%,
+            100% 16%,
+            80% 0%,
+            43% 62%
+          );
+        }
+
+        input[type='checkbox']:checked::before {
+          transform: scale(1);
+        }
+      }
     }
   }
+}
+
+.form {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
