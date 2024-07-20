@@ -29,7 +29,7 @@ async function handler(req, res) {
   const body = req.body;
 
   async function main() {
-    console.log(body.ordenesParaValidar);
+    // console.log(body.ordenesParaValidar);
 
     const result = await users.bulkWrite(
       body.ordenesParaValidar.map((orden) => ({
