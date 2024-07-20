@@ -23,38 +23,36 @@ export default function Dashboard({
     );
   }
 
+  const cajasXPallet = {
+    iberia90g: 405,
+    iberia225g: 400,
+    iberia1Kg: 112,
+  };
+
   const avanceTotal = sum(avance);
 
-  const getAvanceTotalPorcentaje = function () {
-    const cajasXPallet = {
-      iberia90g: 405,
-      iberia225g: 400,
-      iberia1Kg: 112,
-    };
-
-    const avancePallets = {
-      iberia90g: avance.iberia90g / cajasXPallet.iberia90g || 0,
-      iberia225g: avance.iberia225g / cajasXPallet.iberia225g || 0,
-      iberia1Kg: avance.iberia1Kg / cajasXPallet.iberia1Kg || 0,
-    };
-
-    const avanceTotalPallets = Object.values(avancePallets).reduce(
-      (a, b) => a + b,
-      0
-    );
-
-    if (cuotaTotal === 0) return 0;
+  const palletsToCajas = (pallets) => {
     return {
-      avanceTotalPorcentaje: ((avanceTotalPallets / cuotaTotal) * 100).toFixed(
-        2
-      ),
-      avancePallets,
-      avanceTotalPallets,
+      iberia90g: pallets.iberia90g * cajasXPallet.iberia90g || 0,
+      iberia225g: pallets.iberia225g * cajasXPallet.iberia225g || 0,
+      iberia1Kg: pallets.iberia1Kg * cajasXPallet.iberia1Kg || 0,
     };
   };
 
-  const { avanceTotalPorcentaje, avanceTotalPallets, avancePallets } =
-    getAvanceTotalPorcentaje();
+  const cajasToPallets = (cajas) => {
+    return {
+      iberia90g: (cajas.iberia90g / cajasXPallet.iberia90g).toFixed(2) || 0,
+      iberia225g: (cajas.iberia225g / cajasXPallet.iberia225g).toFixed(2) || 0,
+      iberia1Kg: (cajas.iberia1Kg / cajasXPallet.iberia1Kg).toFixed(2) || 0,
+    };
+  };
+
+  const getAvanceTotalPorcentaje = function () {
+    if (cuotaTotal === 0) return 0;
+    return ((avanceTotal / cuotaTotal) * 100).toFixed(2);
+  };
+
+  const avanceTotalPorcentaje = getAvanceTotalPorcentaje();
 
   // const avanceTotal = avance ? avance.reduce((a, b) => a + b.cajas, 0) : 0;
 
@@ -89,7 +87,7 @@ export default function Dashboard({
       <div className={classes.dashboardLeal}>
         <div className={classes.estadisticaContainer}>
           <div className={classes.cuadro}>
-            <p>{cuotaTotal} pallets</p>
+            <p>{cuotaTotal} cajas</p>
             <ul>
               {Object.keys(cuota).map((key, i) => {
                 let keyTitle = '';
