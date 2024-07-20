@@ -58,6 +58,7 @@ export default function OrdenesPendientesPage({ ordenes }) {
         cliente: orden[0].cliente,
         puntosGenerados,
         orden: ordenObj,
+        fecha: orden[0].fecha,
       });
     } else {
       const ordenToRemoveIndex = fields.findIndex(

@@ -37,7 +37,13 @@ async function handler(req, res) {
           filter: { _id: orden.cliente },
           update: {
             $inc: { 'datosLeal.puntosLeal': orden.puntosGenerados },
-            $push: { ventas: { fecha: date, orden: orden.orden } },
+            $push: {
+              ventas: {
+                fecha: orden.fecha,
+                fechaDeValidacion: date,
+                orden: orden.orden,
+              },
+            },
           },
           upsert: true,
         },

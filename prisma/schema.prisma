@@ -66,8 +66,9 @@ type Orden {
 }
 
 type Ventas {
-  fecha String?
-  orden Orden?
+  fecha             String?
+  fechaDeValidacion String?
+  orden             Orden?
 }
 
 model users {
@@ -205,7 +206,7 @@ model prospectos {
 }
 
 model mensajesAsesores {
-  id        String @id @map("_id")
+  id        String  @id @map("_id")
   titulo    String?
   contenido String?
 }
