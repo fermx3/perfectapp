@@ -55,7 +55,8 @@
   }
 
   button {
-    margin: 2rem auto;
+    margin: auto;
+    margin-bottom: 1rem;
   }
 
   select {
@@ -105,6 +106,7 @@
 
 .login {
   @extend .formControl;
+  margin-top: 0;
 
   img {
     filter: invert(100%);

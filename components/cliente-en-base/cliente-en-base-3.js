@@ -18,6 +18,7 @@ import {
 import ImplementacionMaterialesField from './implementacion-materiales-field';
 import ImplementacionExhibicionField from './implementacion-exhibicion-field';
 import InputGroup from '../forms/input-group';
+import ButtonGroup from '../button-group';
 
 export default function ClienteEnBase3({
   prevHandler,
@@ -157,10 +158,17 @@ export default function ClienteEnBase3({
           <FormError>{errors.comentarios3.message}</FormError>
         )}
       </FormControl>
-      <Button type='button' onClick={prevHandler}>
-        Anterior
-      </Button>
-      <Button type='submit'>Guardar y revisar</Button>
+      <ButtonGroup
+        options={[
+          {
+            name: 'Anterior',
+            onClick: prevHandler,
+            type: 'button',
+            buttonType: 'secondary',
+          },
+          { name: 'Guardar y revisar', type: 'submit' },
+        ]}
+      />
     </form>
   );
 }

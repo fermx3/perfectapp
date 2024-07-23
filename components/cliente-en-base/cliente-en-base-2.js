@@ -16,6 +16,7 @@ import {
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 import InputGroup from '../forms/input-group';
 import InventarioField from './inventario-field';
+import ButtonGroup from '../button-group';
 
 export default function ClienteEnBase2({
   prevHandler,
@@ -204,10 +205,17 @@ export default function ClienteEnBase2({
           rows={4}
         />
       </FormControl>
-      <Button type='button' onClick={prevHandler}>
-        Anterior
-      </Button>
-      <Button type='submit'>Siguiente</Button>
+      <ButtonGroup
+        options={[
+          {
+            name: 'Anterior',
+            onClick: prevHandler,
+            type: 'button',
+            buttonType: 'secondary',
+          },
+          { name: 'Siguiente', type: 'submit' },
+        ]}
+      />
     </form>
   );
 }
