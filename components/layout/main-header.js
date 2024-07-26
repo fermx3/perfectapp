@@ -35,6 +35,11 @@ export default function MainHeader({ className }) {
     }
   }
 
+  const optionsVariants = {
+    open: { opacity: 1, y: 0, scale: 1 },
+    closed: { opacity: 0, y: -15, scale: 0.95 },
+  };
+
   return (
     <div className={classes.container}>
       <div className={`${classes.header} ${className}`}>
@@ -52,12 +57,28 @@ export default function MainHeader({ className }) {
         <nav className={classes.nav}>
           <HomeMenu />
           {session.status === 'authenticated' ? (
-            <div
+            <motion.div
               className={classes.optionsIcon}
               onClick={() => dispatch(toggleSettings())}
+              whileHover={{ scale: 1.1, width: 100 }}
+              title='Opciones'
             >
-              <Image src='/images/icons/settings.svg' width={30} height={30} />
-            </div>
+              <motion.div
+                whileTap={{ rotate: 180, opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <Image
+                  src={
+                    isSettingsOpen
+                      ? '/images/icons/close-circle.svg'
+                      : '/images/icons/settings.svg'
+                  }
+                  width={30}
+                  height={30}
+                />
+              </motion.div>
+              {isSettingsOpen ? <p>Cerrar</p> : <p>Opciones</p>}
+            </motion.div>
           ) : (
             <>
               {router.pathname !== '/login' && (
@@ -69,47 +90,56 @@ export default function MainHeader({ className }) {
               )}
             </>
           )}
-          {isSettingsOpen && (
-            <div className={classes.optionsMenu}>
-              {session.status === 'authenticated' && (
-                <>
-                  <div>
-                    <Button
-                      href={
-                        role === 'ADMIN'
-                          ? `/${role.toLowerCase()}`
-                          : `/${role.toLowerCase()}/${userId}`
-                      }
-                      buttonType={BUTTON_TYPE_CLASSES.link}
-                      onClick={() => dispatch(toggleSettings())}
-                    >
-                      Mi perfil
-                    </Button>
-                  </div>
-                  {role === 'LEAL' && (
+          <AnimatePresence>
+            {isSettingsOpen && (
+              <motion.div
+                className={classes.optionsMenu}
+                variants={optionsVariants}
+                initial='closed'
+                animate='open'
+                exit='closed'
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
+                {session.status === 'authenticated' && (
+                  <>
                     <div>
                       <Button
-                        href={'/cambiar-password'}
+                        href={
+                          role === 'ADMIN'
+                            ? `/${role.toLowerCase()}`
+                            : `/${role.toLowerCase()}/${userId}`
+                        }
                         buttonType={BUTTON_TYPE_CLASSES.link}
                         onClick={() => dispatch(toggleSettings())}
                       >
-                        Cambiar contraseña
+                        Mi perfil
                       </Button>
                     </div>
-                  )}
-                </>
-              )}
+                    {role === 'LEAL' && (
+                      <div>
+                        <Button
+                          href={'/cambiar-password'}
+                          buttonType={BUTTON_TYPE_CLASSES.link}
+                          onClick={() => dispatch(toggleSettings())}
+                        >
+                          Cambiar contraseña
+                        </Button>
+                      </div>
+                    )}
+                  </>
+                )}
 
-              <div>
-                <Button
-                  onClick={logoutHandler}
-                  buttonType={BUTTON_TYPE_CLASSES.link}
-                >
-                  Cerrar sesión
-                </Button>
-              </div>
-            </div>
-          )}
+                <div>
+                  <Button
+                    onClick={logoutHandler}
+                    buttonType={BUTTON_TYPE_CLASSES.link}
+                  >
+                    Cerrar sesión
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
         <div className={classes.mobileNav}>
           {session.status !== 'authenticated' &&
