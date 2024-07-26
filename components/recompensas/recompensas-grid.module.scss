@@ -1,0 +1,12 @@
+@import '@/styles/variables.scss';
+
+.section {
+  margin-top: 2rem;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+  }
+}

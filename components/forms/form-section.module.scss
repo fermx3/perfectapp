@@ -1,6 +1,8 @@
+@import '@/styles/variables.scss';
+
 .formSection {
   padding: 1rem 0;
-  border-bottom: solid gray;
+  border-bottom: solid $grayed-blue-color 1px;
   width: 100%;
   max-width: 1200px;
 }

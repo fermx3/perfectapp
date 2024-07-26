@@ -54,7 +54,7 @@ export default function AsesorPage({
             },
             {
               titulo: 'Actividades y Promociones',
-              link: '#',
+              link: '/asesor/actividades-y-promociones',
               desc: 'Conoce las promociones disponibles y tabla de premios',
             },
           ]}
@@ -82,8 +82,6 @@ export async function getServerSideProps(context) {
     userInfo.zonaAsignada
   );
 
-  console.log('zonaAsignada', userInfo.zonaAsignada);
-
   const yearMonth = moment().format('YYYY-MM');
 
   const avance = await getAvanceDeCuotaByZona(userInfo.zonaAsignada, yearMonth);
@@ -96,8 +94,6 @@ export async function getServerSideProps(context) {
     yearMonth,
     userInfo.zonaAsignada
   );
-
-  console.log('clientesQueCompraron', clientesQueCompraron);
 
   if (
     !session ||
