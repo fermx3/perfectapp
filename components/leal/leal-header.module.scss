@@ -1,17 +1,74 @@
+@import '@/styles/variables.scss';
+
 .header {
   width: 100%;
   padding-bottom: 3rem;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   .nivelBadge {
     position: relative;
-    height: 60px;
-    width: 60px;
+    height: 80px;
+    width: 80px;
     margin-right: 0.5rem;
 
     img {
       object-fit: contain;
+    }
+  }
+
+  .nivelTexto {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem;
+    padding-left: 4rem;
+    margin-left: -4rem;
+    border-radius: 0 $border-radius-1 $border-radius-1 0;
+    box-shadow: $white-shadow;
+
+    h3 {
+      border-right: solid 2px $black-color;
+      padding-right: 0.5rem;
+    }
+
+    p {
+      padding-left: 0.5rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 1.17em;
+    }
+  }
+}
+
+@media (max-width: $mobile-size) {
+  .header {
+    flex-direction: column;
+
+    .nivelBadge {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+
+    .nivelTexto {
+      padding-left: 1rem;
+      margin-left: 0;
+      border-radius: $border-radius-1;
+      justify-content: center;
+
+      h3 {
+        border-right: none;
+        border-bottom: solid 2px $black-color;
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+      }
+
+      p {
+        padding-left: 0;
+        padding-top: 0.5rem;
+        text-align: center;
+      }
     }
   }
 }

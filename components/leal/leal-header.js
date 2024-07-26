@@ -29,9 +29,9 @@ export default function LealHeader({ leal }) {
           alt={`nivel ${leal.nivelDeCliente.toLowerCase()} icon`}
         />
       </div>
-      <div>
-        <h3>Nivel {leal.nivelDeCliente.toLowerCase()}</h3>
-        <p>Puntos leales: {puntosLeal}</p>
+      <div className={classes.nivelTexto}>
+        <h3>NIVEL {leal.nivelDeCliente.toUpperCase()}</h3>
+        <p>PUNTOS LEALES: {puntosLeal}</p>
       </div>
     </header>
   );

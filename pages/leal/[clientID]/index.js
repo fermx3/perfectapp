@@ -32,10 +32,10 @@ export default function PanelDeLeal({
     <>
       <BackgroundGradientContainer>
         <Container>
+          <h2 className={classes.nombre}>¡Hola {leal.nombre}!</h2>
           <LealHeader leal={leal} />
           <main className={classes.main}>
             <div className={classes.hero}>
-              <h2>Hola {leal.nombre}</h2>
               <h1>Bienvenido a la experiencia de Los Leales</h1>
               <p>Pronto descubrirás cómo puedes ganar por tu lealtad.</p>
               <p>Acércate a tu asesor.</p>
