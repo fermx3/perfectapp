@@ -9,6 +9,10 @@
   box-shadow: $white-shadow;
   overflow: hidden;
 
+  .header {
+    margin-top: 0.5rem;
+  }
+
   .imageContainer {
     position: relative;
     width: 100%;
@@ -29,11 +33,11 @@
   .puntos {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 0.5rem;
     background-color: $tertiary-color;
     color: $white-color;
     padding: 0.5rem 1rem;
-    // border-radius: 0 0 0.5rem 0.5rem;
     border: 1px solid $tertiary-color;
 
     p {

@@ -1,0 +1,17 @@
+.header {
+  width: 100%;
+  padding-bottom: 3rem;
+  display: flex;
+  align-items: center;
+
+  .nivelBadge {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    margin-right: 0.5rem;
+
+    img {
+      object-fit: contain;
+    }
+  }
+}

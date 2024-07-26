@@ -4,7 +4,7 @@ import RecompensasGrid from '@/components/recompensas/recompensas-grid';
 import { getRecompensasLeal } from '@/lib/db';
 import { getSession } from 'next-auth/react';
 
-export default function ActividadesYPromocionesPage({ recompensasLeal }) {
+export default function ActividadesYPromocionesPage({ recompensasLeal, role }) {
   return (
     <BackgroundGradientContainer>
       <Container>
@@ -14,7 +14,7 @@ export default function ActividadesYPromocionesPage({ recompensasLeal }) {
           nuestros Leales!
         </p>
         <div>
-          <RecompensasGrid recompensas={recompensasLeal} />
+          <RecompensasGrid recompensas={recompensasLeal} role={role} />
         </div>
       </Container>
     </BackgroundGradientContainer>
@@ -27,6 +27,7 @@ export async function getServerSideProps(context) {
   //   const yearMonth = moment().format('YYYY-MM');
 
   const recompensasLeal = await getRecompensasLeal();
+  const role = session?.user.role;
 
   if (!session || session.user.role !== 'ASESOR') {
     return {
@@ -38,6 +39,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { recompensasLeal },
+    props: { recompensasLeal, role },
   };
 }

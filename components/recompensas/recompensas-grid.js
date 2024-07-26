@@ -8,9 +8,30 @@ import { nivelesDeLeales } from '@/lib/schemas/schemas';
 import SelectInput from '../forms/select-input';
 import FormSection from '../forms/form-section';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
-import { set } from 'mongoose';
 
-export default function RecompensasGrid({ recompensas }) {
+export default function RecompensasGrid({ recompensas, role, featured }) {
+  if (featured) {
+    const recompensasDestacadas = recompensas.slice(0, 3);
+    return (
+      <div className={classes.section}>
+        <h2>Recompensas Destacadas</h2>
+        <div className={classes.grid}>
+          {recompensasDestacadas.length !== 0 ? (
+            recompensasDestacadas.map((recompensa) => (
+              <Recompensa
+                key={recompensa.id}
+                recompensa={recompensa}
+                role={role}
+              />
+            ))
+          ) : (
+            <p>No se encontraron recompensas</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   const [recompensasFiltradas, setRecompensasFiltradas] = useState(recompensas);
 
   const getMaximumPuntos = () => {
@@ -78,7 +99,11 @@ export default function RecompensasGrid({ recompensas }) {
       <div className={classes.grid}>
         {recompensasFiltradas.length !== 0 ? (
           recompensasFiltradas.map((recompensa) => (
-            <Recompensa key={recompensa.id} recompensa={recompensa} />
+            <Recompensa
+              key={recompensa.id}
+              recompensa={recompensa}
+              role={role}
+            />
           ))
         ) : (
           <p>No se encontraron recompensas</p>
@@ -134,18 +159,20 @@ export default function RecompensasGrid({ recompensas }) {
             </FormControl>
           </InputGroup>
         </FormSection>
-        <FormSection titulo='Filtrar por nivel:'>
-          <InputGroup>
-            <FormControl label='Buscar por nivel:'>
-              <SelectInput
-                options={nivelesDeLeales}
-                value={nivelSeleccionado}
-                defaultValue={'Selecciona un nivel'}
-                onChange={(e) => handleSearchByNivel(e)}
-              />
-            </FormControl>
-          </InputGroup>
-        </FormSection>
+        {role === 'ASESOR' && (
+          <FormSection titulo='Filtrar por nivel:'>
+            <InputGroup>
+              <FormControl label='Buscar por nivel:'>
+                <SelectInput
+                  options={nivelesDeLeales}
+                  value={nivelSeleccionado}
+                  defaultValue={'Selecciona un nivel'}
+                  onChange={(e) => handleSearchByNivel(e)}
+                />
+              </FormControl>
+            </InputGroup>
+          </FormSection>
+        )}
         <InputGroup>
           <FormControl>
             <Button

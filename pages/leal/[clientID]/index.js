@@ -4,7 +4,7 @@ import { getLeal, getSettings } from '@/lib/prismaDB';
 import moment from 'moment';
 import Image from 'next/image';
 
-import { getAvanceDeCuota, getVisitasConOrdenesPorCliente } from '@/lib/db';
+import { getAvanceDeCuota, getRecompensasByNivel } from '@/lib/db';
 
 import Dashboard from '@/components/dashboard/dashboard';
 import ButtonGroup from '@/components/button-group';
@@ -16,49 +16,23 @@ import TycProgramaFidelizacion from '@/components/documentos/tyc-leales';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 
 import classes from './index.module.scss';
+import RecompensasGrid from '@/components/recompensas/recompensas-grid';
+import LealHeader from '@/components/leal/leal-header';
 
 export default function PanelDeLeal({
   leal,
   promocionesDisponibles,
   session,
   avance,
+  recompensasLeal,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const puntosLeal = leal?.datosLeal ? leal.datosLeal.puntosLeal : 0;
-  let badgeUrl = '';
-
-  switch (leal.nivelDeCliente) {
-    case 'Platinum':
-      badgeUrl = '/images/icons/badges/platinum.svg';
-      break;
-    case 'Oro':
-      badgeUrl = '/images/icons/badges/oro.svg';
-      break;
-    case 'Plata':
-      badgeUrl = '/images/icons/badges/plata.svg';
-      break;
-    default:
-      badgeUrl = '/images/icons/badges/default.svg';
-      break;
-  }
 
   return (
     <>
       <BackgroundGradientContainer>
         <Container>
-          <header className={classes.header}>
-            <div className={classes.nivelBadge}>
-              <Image
-                src={badgeUrl}
-                fill
-                alt={`nivel ${leal.nivelDeCliente.toLowerCase()} icon`}
-              />
-            </div>
-            <div>
-              <h3>Nivel {leal.nivelDeCliente.toLowerCase()}</h3>
-              <p>Puntos leales: {puntosLeal}</p>
-            </div>
-          </header>
+          <LealHeader leal={leal} />
           <main className={classes.main}>
             <div className={classes.hero}>
               <h2>Hola {leal.nombre}</h2>
@@ -81,6 +55,19 @@ export default function PanelDeLeal({
               session={session}
               avance={avance}
             />
+            <div className={classes.recompensasSection}>
+              <RecompensasGrid
+                recompensas={recompensasLeal}
+                role={session.user.role}
+                featured
+              />
+              <Button
+                href={`/leal/${session.user.userId}/recompensas`}
+                buttonType={BUTTON_TYPE_CLASSES.secondary}
+              >
+                Ver todas las recompensas
+              </Button>
+            </div>
             <ButtonGroup
               options={[
                 { name: 'Cambiar contraseña', link: '/cambiar-password' },
@@ -159,11 +146,9 @@ export async function getServerSideProps(context) {
 
   const yearMonth = moment().format('YYYY-MM');
 
-  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(yearMonth, [
-    clientID,
-  ]);
-
   const avance = await getAvanceDeCuota(clientID, yearMonth);
+
+  const recompensasLeal = await getRecompensasByNivel(nivelDeCliente);
 
   if (!leal.datosLeal?.firstLoginDate) {
     return {
@@ -175,6 +160,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, leal, promocionesDisponibles, avance },
+    props: { session, leal, promocionesDisponibles, avance, recompensasLeal },
   };
 }
