@@ -6,7 +6,7 @@ import Button, { BUTTON_TYPE_CLASSES } from '../button';
 
 import classes from './menu-modal.module.scss';
 import { useDispatch } from 'react-redux';
-import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
+import { toggleMenu } from '@/store/menu/menu.reducer';
 
 export default function MenuModal({ session, logoutHandler }) {
   const userId = session.data?.user?.userId;
@@ -55,7 +55,7 @@ export default function MenuModal({ session, logoutHandler }) {
               <li className={classes.cerrarSesion}>
                 <Button
                   onClick={logoutHandler}
-                  buttonType={BUTTON_TYPE_CLASSES.link}
+                  buttonType={BUTTON_TYPE_CLASSES.base}
                 >
                   Cerrar sesión
                 </Button>

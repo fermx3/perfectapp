@@ -3,12 +3,15 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useSession, signOut } from 'next-auth/react';
-import { selectIsMenuOpen } from '@/store/mobileMenu/mobileMenu.selector';
+import {
+  selectIsMenuOpen,
+  selectIsSettingsOpen,
+} from '@/store/menu/menu.selector';
 import { useSelector, useDispatch } from 'react-redux';
 
 import classes from './main-header.module.scss';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
-import { toggleMenu } from '@/store/mobileMenu/mobileMenu.reducer';
+import { toggleMenu, toggleSettings } from '@/store/menu/menu.reducer';
 import { useRouter } from 'next/router';
 import HomeMenu from './home-menu';
 import MenuModal from './menu-modal';
@@ -16,6 +19,7 @@ import MenuModal from './menu-modal';
 export default function MainHeader({ className }) {
   const session = useSession();
   const isMenuOpen = useSelector(selectIsMenuOpen);
+  const isSettingsOpen = useSelector(selectIsSettingsOpen);
   const dispatch = useDispatch();
   const userId = session.data?.user?.userId;
   const role = session.data?.user?.role;
@@ -25,6 +29,9 @@ export default function MainHeader({ className }) {
     signOut();
     if (isMenuOpen) {
       dispatch(toggleMenu());
+    }
+    if (isSettingsOpen) {
+      dispatch(toggleSettings());
     }
   }
 
@@ -43,39 +50,65 @@ export default function MainHeader({ className }) {
           </Link>
         </div>
         <nav className={classes.nav}>
-          {session.status === 'authenticated' && (
-            <>
-              <div>
-                <Button
-                  href={
-                    role === 'ADMIN'
-                      ? `/${role.toLowerCase()}`
-                      : `/${role.toLowerCase()}/${userId}`
-                  }
-                >
-                  Mi perfil
-                </Button>
-              </div>
-              {role === 'LEAL' && (
-                <div>
-                  <Link href={'/cambiar-password'}>Cambiar contraseña</Link>
-                </div>
-              )}
-            </>
-          )}
           <HomeMenu />
           {session.status === 'authenticated' ? (
-            <div>
-              <Button onClick={logoutHandler}>Cerrar sesión</Button>
+            <div
+              className={classes.optionsIcon}
+              onClick={() => dispatch(toggleSettings())}
+            >
+              <Image src='/images/icons/settings.svg' width={30} height={30} />
             </div>
           ) : (
             <>
               {router.pathname !== '/login' && (
                 <div>
-                  <Button href='/login'>Ingresa a tu cuenta</Button>
+                  <Button href='/login' buttonType={BUTTON_TYPE_CLASSES.link}>
+                    Ingresa a tu cuenta
+                  </Button>
                 </div>
               )}
             </>
+          )}
+          {isSettingsOpen && (
+            <div className={classes.optionsMenu}>
+              {session.status === 'authenticated' && (
+                <>
+                  <div>
+                    <Button
+                      href={
+                        role === 'ADMIN'
+                          ? `/${role.toLowerCase()}`
+                          : `/${role.toLowerCase()}/${userId}`
+                      }
+                      buttonType={BUTTON_TYPE_CLASSES.link}
+                      onClick={() => dispatch(toggleSettings())}
+                    >
+                      Mi perfil
+                    </Button>
+                  </div>
+                  {role === 'LEAL' && (
+                    <div>
+                      <Button
+                        href={'/cambiar-password'}
+                        buttonType={BUTTON_TYPE_CLASSES.link}
+                        onClick={() => dispatch(toggleSettings())}
+                      >
+                        Cambiar contraseña
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+
+              <div>
+                <Button
+                  onClick={logoutHandler}
+                  buttonType={BUTTON_TYPE_CLASSES.link}
+                >
+                  Cerrar sesión
+                </Button>
+              </div>
+            </div>
           )}
         </nav>
         <div className={classes.mobileNav}>
