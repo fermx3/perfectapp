@@ -37,6 +37,7 @@ export default function PanelDeLeal({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(!leal.aceptoTyC);
   const [successMessage, setSuccessMessage] = useState('');
+  const [aceptoTyC, setAceptoTyC] = useState(leal.aceptoTyC);
 
   const {
     register,
@@ -62,9 +63,8 @@ export default function PanelDeLeal({
       console.log('Error al aceptar los términos y condiciones');
     } else {
       setSuccessMessage('Términos y condiciones aceptados');
+      setAceptoTyC(true);
     }
-
-    console.log(result);
   };
 
   const handleCerrarTyC = () => {
@@ -168,7 +168,7 @@ export default function PanelDeLeal({
             }
             clickHandler={handleCerrarTyC}
           />
-          {!successMessage && !leal.aceptoTyC && (
+          {!successMessage && !aceptoTyC && (
             <form
               className={classes.form}
               onSubmit={handleSubmit(handleAcepto)}

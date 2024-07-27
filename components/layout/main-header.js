@@ -73,6 +73,7 @@ export default function MainHeader({ className }) {
                       ? '/images/icons/close-circle.svg'
                       : '/images/icons/settings.svg'
                   }
+                  alt='settings icon'
                   width={30}
                   height={30}
                 />
