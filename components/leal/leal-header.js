@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import classes from './leal-header.module.scss';
 
+import { motion } from 'framer-motion';
+
 export default function LealHeader({ leal }) {
   const puntosLeal = leal?.datosLeal ? leal.datosLeal.puntosLeal : 0;
   let badgeUrl = '';
@@ -20,8 +22,25 @@ export default function LealHeader({ leal }) {
       break;
   }
 
+  const variants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: { opacity: 1, scale: 1 },
+  };
+
   return (
-    <header className={classes.header}>
+    <motion.header
+      className={classes.header}
+      variants={variants}
+      initial='hidden'
+      animate='visible'
+      transition={{
+        duration: 0.2,
+        delay: 0.3,
+        ease: 'easeInOut',
+        type: 'spring',
+        mass: 0.5,
+      }}
+    >
       <div className={classes.nivelBadge}>
         <Image
           src={badgeUrl}
@@ -33,6 +52,6 @@ export default function LealHeader({ leal }) {
         <h3>NIVEL {leal.nivelDeCliente.toUpperCase()}</h3>
         <p>PUNTOS LEALES: {puntosLeal}</p>
       </div>
-    </header>
+    </motion.header>
   );
 }

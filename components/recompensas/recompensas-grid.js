@@ -19,7 +19,7 @@ export default function RecompensasGrid({ recompensas, role, featured }) {
           {recompensasDestacadas.length !== 0 ? (
             recompensasDestacadas.map((recompensa) => (
               <Recompensa
-                key={recompensa.id}
+                key={recompensa._id}
                 recompensa={recompensa}
                 role={role}
               />
@@ -100,7 +100,7 @@ export default function RecompensasGrid({ recompensas, role, featured }) {
         {recompensasFiltradas.length !== 0 ? (
           recompensasFiltradas.map((recompensa) => (
             <Recompensa
-              key={recompensa.id}
+              key={recompensa._id}
               recompensa={recompensa}
               role={role}
             />

@@ -19,7 +19,7 @@ const Carousel = (props) => {
           {slides.map((slide, index) => (
             <div className='embla__slide' key={index}>
               <div className={classes.imageContainer}>
-                <Image src={slide.src} alt={slide.alt} fill />
+                <Image src={slide.src} alt={slide.alt} fill priority />
               </div>
             </div>
           ))}
