@@ -3,7 +3,7 @@
 .imageContainer {
   position: relative;
   margin: auto;
-  height: 40vh;
+  height: 300px;
   width: 70vw;
 
   img {
@@ -15,7 +15,7 @@
 
 @media (max-width: $mobile-size) {
   .imageContainer {
-    height: 30vh;
+    height: 10vh;
     width: 80vw;
   }
 }

@@ -39,6 +39,8 @@ export default function PanelDeLeal({
   const [successMessage, setSuccessMessage] = useState('');
   const [aceptoTyC, setAceptoTyC] = useState(leal.aceptoTyC);
 
+  const hasDatosCompletos = leal.datosLeal?.nombreDelEncargado ? true : false;
+
   const {
     register,
     handleSubmit,
@@ -85,15 +87,22 @@ export default function PanelDeLeal({
               <h1>Bienvenido a la experiencia de Los Leales</h1>
               <p>Pronto descubrirás cómo puedes ganar por tu lealtad.</p>
               <p>Acércate a tu asesor.</p>
-              <Carousel slides={bannersLeales} options={OPTIONS} />
-              {!leal.datosLeal?.nombreDelEncargado && (
+              <Carousel
+                slides={bannersLeales}
+                options={OPTIONS}
+                requisitos={{
+                  datosCompletos: hasDatosCompletos,
+                  fecha: moment().format('YYYY-MM-DD') > '2024-08-03',
+                }}
+              />
+              {/* {!hasDatosCompletos && (
                 <Button
                   href='/leal/actualizar-datos'
                   buttonType={BUTTON_TYPE_CLASSES.secondary}
                 >
                   Actualiza tus datos y gana 3,000 puntos
                 </Button>
-              )}
+              )} */}
             </div>
             <Dashboard
               cuota={leal.cuotaPallets}

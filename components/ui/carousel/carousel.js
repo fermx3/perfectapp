@@ -4,9 +4,11 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
 
 import classes from './carousel.module.scss';
+import Link from 'next/link';
+import { compare } from 'bcryptjs';
 
 const Carousel = (props) => {
-  const { slides, options } = props;
+  const { slides, options, requisitos } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -16,13 +18,52 @@ const Carousel = (props) => {
     <section className='embla'>
       <div className='embla__viewport' ref={emblaRef}>
         <div className='embla__container'>
-          {slides.map((slide, index) => (
-            <div className='embla__slide' key={index}>
-              <div className={classes.imageContainer}>
-                <Image src={slide.src} alt={slide.alt} fill priority />
-              </div>
-            </div>
-          ))}
+          {slides.map((slide, index) => {
+            const compareIfTheKeyExistAndIsTrue = (obj, source) => {
+              for (let key in source) {
+                if (obj[key] === source[key]) return false;
+              }
+              return true;
+            };
+
+            if (slide.requisitosToShow) {
+              console.log(
+                slide.alt,
+                compareIfTheKeyExistAndIsTrue(
+                  slide.requisitosToShow,
+                  requisitos
+                )
+              );
+
+              if (
+                !compareIfTheKeyExistAndIsTrue(
+                  slide.requisitosToShow,
+                  requisitos
+                )
+              )
+                return;
+            }
+
+            return (
+              <>
+                {slide.url ? (
+                  <div className='embla__slide' key={index}>
+                    <Link href={slide.url}>
+                      <div className={classes.imageContainer}>
+                        <Image src={slide.src} alt={slide.alt} fill priority />
+                      </div>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className='embla__slide' key={index}>
+                    <div className={classes.imageContainer}>
+                      <Image src={slide.src} alt={slide.alt} fill priority />
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          })}
         </div>
       </div>
 
