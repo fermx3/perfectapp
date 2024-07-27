@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { getSession } from 'next-auth/react';
 import { getLeal, getSettings } from '@/lib/prismaDB';
 import moment from 'moment';
-import Image from 'next/image';
 
 import {
   getAvanceDeCuota,
@@ -23,6 +22,10 @@ import classes from './index.module.scss';
 import RecompensasGrid from '@/components/recompensas/recompensas-grid';
 import LealHeader from '@/components/leal/leal-header';
 import Carousel from '@/components/ui/carousel/carousel';
+import InputGroup from '@/components/forms/input-group';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { aceptarTyCSchema } from '@/lib/schemas/schemas';
 
 export default function PanelDeLeal({
   leal,
@@ -32,7 +35,42 @@ export default function PanelDeLeal({
   recompensasLeal,
   bannersLeales,
 }) {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(!leal.aceptoTyC);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      aceptoTyC: false,
+    },
+    resolver: zodResolver(aceptarTyCSchema),
+  });
+
+  const handleAcepto = async (data) => {
+    const result = await fetch('/api/leal/aceptarTyCs', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!result.ok) {
+      console.log('Error al aceptar los términos y condiciones');
+    } else {
+      setSuccessMessage('Términos y condiciones aceptados');
+    }
+
+    console.log(result);
+  };
+
+  const handleCerrarTyC = () => {
+    setIsModalOpen(false);
+    setSuccessMessage('');
+  };
 
   const OPTIONS = { loop: true };
 
@@ -90,7 +128,6 @@ export default function PanelDeLeal({
                   link: 'https://wa.me/525569293104?text=Soy%20Leal%20y%20necesito%20asistencia',
                   buttonType: BUTTON_TYPE_CLASSES.icon,
                   tooltip: 'WhatsApp',
-                  // disabled: true,
                 },
                 {
                   image: '/images/icons/links/mail.svg',
@@ -98,14 +135,17 @@ export default function PanelDeLeal({
                   newPage: true,
                   buttonType: BUTTON_TYPE_CLASSES.icon,
                   tooltip: 'e-mail',
-                  // disabled: true,
                 },
                 {
                   image: '/images/icons/links/encuesta.svg',
                   link: '#',
-                  buttonType: BUTTON_TYPE_CLASSES.icon,
+                  buttonType: BUTTON_TYPE_CLASSES.iconDisabled,
                   tooltip: 'Encuesta',
-                  disabled: true,
+                },
+                {
+                  name: 'Términos y Condiciones Leales',
+                  onClick: () => setIsModalOpen(true),
+                  buttonType: BUTTON_TYPE_CLASSES.link,
                 },
               ]}
             />
@@ -116,9 +156,40 @@ export default function PanelDeLeal({
         <Modal>
           <ModalPage
             titulo='Términos y Condiciones - Programa de Fidelización de Upfield'
-            contenidoHTML={<TycProgramaFidelizacion />}
-            clickHandler={() => setIsModalOpen(false)}
+            contenidoHTML={
+              successMessage ? (
+                <div>
+                  <p>{successMessage}</p>
+                  <Button onClick={handleCerrarTyC}>Cerrar</Button>
+                </div>
+              ) : (
+                <TycProgramaFidelizacion />
+              )
+            }
+            clickHandler={handleCerrarTyC}
           />
+          {!successMessage && !leal.aceptoTyC && (
+            <form
+              className={classes.form}
+              onSubmit={handleSubmit(handleAcepto)}
+            >
+              <InputGroup>
+                <label htmlFor='aceptoTyC'>
+                  He leído y acepto los términos y condiciones del programa de
+                  fidelización
+                </label>
+                <input
+                  type='checkbox'
+                  id='aceptoTyC'
+                  {...register('aceptoTyC')}
+                />
+                {errors.aceptoTyC?.message && (
+                  <p>{errors.aceptoTyC?.message}</p>
+                )}
+              </InputGroup>
+              <Button buttonType={BUTTON_TYPE_CLASSES.secondary}>Acepto</Button>
+            </form>
+          )}
         </Modal>
       )}
     </>

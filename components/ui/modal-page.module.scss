@@ -14,13 +14,22 @@
   }
 
   .body {
-    max-height: 80vh;
+    max-height: 60vh;
     width: 80vw;
     overflow-y: scroll;
     white-space: pre-line;
 
-    p{
+    p {
       margin-bottom: 1rem;
+    }
+  }
+}
+
+@media all and (max-width: 575px) {
+  .container {
+    .body {
+      max-height: 40vh;
+      width: 70vw;
     }
   }
 }

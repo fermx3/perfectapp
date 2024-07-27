@@ -50,6 +50,13 @@
   // border: solid $tertiary-color 2px;
 }
 
+.iconDisabled {
+  @extend .icon;
+  background-color: $disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 @media all and (max-width: 575px) {
   .button {
     display: block;

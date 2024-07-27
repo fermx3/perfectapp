@@ -82,6 +82,7 @@ model users {
   planPromocional PlanPromocional?
   datosLeal       DatosLeal?
   ventas          Ventas[]
+  aceptoTyC       Boolean?
 }
 
 enum Role {

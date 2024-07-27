@@ -10,8 +10,8 @@
   box-shadow: $white-shadow;
   border-radius: $border-radius-2;
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr;
 
   // p {
   //   margin-bottom: 1rem;
