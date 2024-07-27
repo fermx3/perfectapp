@@ -1,0 +1,21 @@
+@import '@/styles/variables.scss';
+
+.imageContainer {
+  position: relative;
+  margin: auto;
+  height: 40vh;
+  width: 70vw;
+
+  img {
+    border-radius: 1rem;
+    box-shadow: $tailwind-shadow;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: $mobile-size) {
+  .imageContainer {
+    height: 30vh;
+    width: 80vw;
+  }
+}

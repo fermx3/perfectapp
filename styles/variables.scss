@@ -16,9 +16,17 @@ $blue-gradient: linear-gradient(
 
 $blue-shadow: rgba(49, 113, 241, 0.2);
 $white-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+$tailwind-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+  rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+$inner-shadow: rgba(50, 50, 93, 0.25) 0px 3px 6px -1.2px inset,
+  rgba(0, 0, 0, 0.3) 0px 1.8px 3.6px -1.8px inset;
 
 $border-radius-1: 3rem;
 $border-radius-2: 2rem;
+
+$slide-height: 19rem;
+$slide-spacing: 1rem;
+$slide-size: 100%;
 
 $mobile-size: 700px;
 // $mobile-size: 480px;

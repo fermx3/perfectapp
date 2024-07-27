@@ -4,7 +4,11 @@ import { getLeal, getSettings } from '@/lib/prismaDB';
 import moment from 'moment';
 import Image from 'next/image';
 
-import { getAvanceDeCuota, getRecompensasByNivel } from '@/lib/db';
+import {
+  getAvanceDeCuota,
+  getBannersLeales,
+  getRecompensasByNivel,
+} from '@/lib/db';
 
 import Dashboard from '@/components/dashboard/dashboard';
 import ButtonGroup from '@/components/button-group';
@@ -18,6 +22,7 @@ import BackgroundGradientContainer from '@/components/layout/background-gradient
 import classes from './index.module.scss';
 import RecompensasGrid from '@/components/recompensas/recompensas-grid';
 import LealHeader from '@/components/leal/leal-header';
+import Carousel from '@/components/ui/carousel/carousel';
 
 export default function PanelDeLeal({
   leal,
@@ -25,8 +30,11 @@ export default function PanelDeLeal({
   session,
   avance,
   recompensasLeal,
+  bannersLeales,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const OPTIONS = { loop: true };
 
   return (
     <>
@@ -39,6 +47,7 @@ export default function PanelDeLeal({
               <h1>Bienvenido a la experiencia de Los Leales</h1>
               <p>Pronto descubrirás cómo puedes ganar por tu lealtad.</p>
               <p>Acércate a tu asesor.</p>
+              <Carousel slides={bannersLeales} options={OPTIONS} />
               {!leal.datosLeal?.nombreDelEncargado && (
                 <Button
                   href='/leal/actualizar-datos'
@@ -150,6 +159,8 @@ export async function getServerSideProps(context) {
 
   const recompensasLeal = await getRecompensasByNivel(nivelDeCliente);
 
+  const bannersLeales = await getBannersLeales();
+
   if (!leal.datosLeal?.firstLoginDate) {
     return {
       redirect: {
@@ -160,6 +171,13 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, leal, promocionesDisponibles, avance, recompensasLeal },
+    props: {
+      session,
+      leal,
+      promocionesDisponibles,
+      avance,
+      recompensasLeal,
+      bannersLeales,
+    },
   };
 }
