@@ -3,11 +3,13 @@ import Image from 'next/image';
 import classes from './recompensa.module.scss';
 
 export default function Recompensa({ recompensa, role }) {
+  const puntos = new Intl.NumberFormat().format(recompensa.valorPuntos);
+
   return (
     <div className={classes.recompensaContainer}>
       <div className={classes.puntos}>
         <p>Valor en puntos:</p>
-        <p>{recompensa.valorPuntos}</p>
+        <p>{puntos}</p>
       </div>
       <div className={classes.imageContainer}>
         <Image src={recompensa.image} alt={recompensa.nombre} fill />
