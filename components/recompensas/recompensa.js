@@ -12,7 +12,15 @@ export default function Recompensa({ recompensa, role }) {
         <p>{puntos}</p>
       </div>
       <div className={classes.imageContainer}>
-        <Image src={recompensa.image} alt={recompensa.nombre} fill />
+        {recompensa.image ? (
+          <Image
+            src={`/images/recompensasLeal/${recompensa.image}`}
+            alt={recompensa.nombre}
+            fill
+          />
+        ) : (
+          <h3>{recompensa.nombre}</h3>
+        )}
       </div>
       <div className={classes.recompensaContent}>
         <div className={classes.header}>
