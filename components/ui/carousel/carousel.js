@@ -5,7 +5,6 @@ import Image from 'next/image';
 
 import classes from './carousel.module.scss';
 import Link from 'next/link';
-import { compare } from 'bcryptjs';
 
 const Carousel = (props) => {
   const { slides, options, requisitos } = props;
@@ -27,13 +26,15 @@ const Carousel = (props) => {
             };
 
             if (slide.requisitosToShow) {
-              console.log(
+              {
+                /* console.log(
                 slide.alt,
                 compareIfTheKeyExistAndIsTrue(
                   slide.requisitosToShow,
                   requisitos
                 )
-              );
+              ); */
+              }
 
               if (
                 !compareIfTheKeyExistAndIsTrue(
