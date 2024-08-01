@@ -117,15 +117,26 @@ export default function MainHeader({ className }) {
                       </Button>
                     </div>
                     {role === 'LEAL' && (
-                      <div>
-                        <Button
-                          href={'/cambiar-password'}
-                          buttonType={BUTTON_TYPE_CLASSES.link}
-                          onClick={() => dispatch(toggleSettings())}
-                        >
-                          Cambiar contraseña
-                        </Button>
-                      </div>
+                      <>
+                        <div>
+                          <Button
+                            href={'/cambiar-password'}
+                            buttonType={BUTTON_TYPE_CLASSES.link}
+                            onClick={() => dispatch(toggleSettings())}
+                          >
+                            Cambiar contraseña
+                          </Button>
+                        </div>
+                        <div>
+                          <Button
+                            href={'/leal/actualizar-datos'}
+                            buttonType={BUTTON_TYPE_CLASSES.link}
+                            onClick={() => dispatch(toggleSettings())}
+                          >
+                            Actualiza tus datos
+                          </Button>
+                        </div>
+                      </>
                     )}
                   </>
                 )}

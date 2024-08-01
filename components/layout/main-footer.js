@@ -18,6 +18,7 @@ import {
   toggleAvisoDePrivacidad,
   toggleTerminosYCondiciones,
 } from '@/store/footer/footer.reducer';
+import { useRouter } from 'next/router';
 
 export default function MainFooter({ className }) {
   const avisoDePrivacidadOpen = useSelector(selectAvisoDePrivacidadOpen);
@@ -25,36 +26,45 @@ export default function MainFooter({ className }) {
   const avisoDePrivacidad = useSelector(selectAvisoDePrivacidad);
   const terminosYCondiciones = useSelector(selectTerminosYCondiciones);
 
+  const router = useRouter();
+
   const dispatch = useDispatch();
 
   return (
     <>
       <footer className={`${classes.mainFooter} ${className}`}>
-        <Container md>
+        {/* <div className={classes.regresar}>
+          {router.pathname === '/' && (
+            <Button buttonType={BUTTON_TYPE_CLASSES.link} href='/'>
+              Regresar
+            </Button>
+          )}
+        </div> */}
+        <div>
+          <p>
+            © {moment().format('YYYY')} SNMBL ESTUDIO CREATIVO™ DERECHOS
+            RESERVADOS
+          </p>
+        </div>
+        <div className={classes.links}>
           <div>
-            <p>COPYRIGHT © {moment().format('YYYY')} PERFECTAPP.</p>
-            <p>TODOS LOS DERECHOS RESERVADOS.</p>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.link}
+              onClick={() => dispatch(toggleAvisoDePrivacidad())}
+            >
+              AVISO DE PRIVACIDAD
+            </Button>
           </div>
-          <div className={classes.links}>
-            <div>
-              <Button
-                buttonType={BUTTON_TYPE_CLASSES.link}
-                onClick={() => dispatch(toggleAvisoDePrivacidad())}
-              >
-                AVISO DE PRIVACIDAD
-              </Button>
-            </div>
-            <div className={classes.line} />
-            <div>
-              <Button
-                buttonType={BUTTON_TYPE_CLASSES.link}
-                onClick={() => dispatch(toggleTerminosYCondiciones())}
-              >
-                CONDICIONES DE USO
-              </Button>
-            </div>
+          <div className={classes.line} />
+          <div>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.link}
+              onClick={() => dispatch(toggleTerminosYCondiciones())}
+            >
+              CONDICIONES DE USO
+            </Button>
           </div>
-        </Container>
+        </div>
       </footer>
       {avisoDePrivacidadOpen && (
         <Modal>

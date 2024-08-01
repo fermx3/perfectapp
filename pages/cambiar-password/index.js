@@ -14,6 +14,7 @@ import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import ErrorMessage from '@/components/ui/error-message';
 import Modal from '@/components/ui/modal';
 import Loader from '@/components/ui/loader';
+import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 
 export default function CambiarPassPage() {
   const {
@@ -107,30 +108,39 @@ export default function CambiarPassPage() {
   };
 
   return (
-    <>
+    <BackgroundGradientContainer>
       <Container md>
         <h1>Cambia tu contraseña</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
+          <FormControl
+            label='Contraseña actual:'
+            inputType={INPUT_TYPE_CLASSES.fullWidth}
+          >
             <input
               type='password'
-              placeholder='Contraseña anterior'
+              placeholder='Escribe tu contraseña actual'
               {...register('oldPassword')}
             />
             {errors.oldPassword && <p>{errors.oldPassword.message}</p>}
           </FormControl>
-          <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
+          <FormControl
+            label='Nueva contraseña:'
+            inputType={INPUT_TYPE_CLASSES.fullWidth}
+          >
             <input
               type='password'
-              placeholder='Contraseña nueva'
+              placeholder='Escribe tu nueva contraseña'
               {...register('newPassword')}
             />
             {errors.newPassword && <p>{errors.newPassword.message}</p>}
           </FormControl>
-          <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
+          <FormControl
+            label='Confirma tu contraseña nueva:'
+            inputType={INPUT_TYPE_CLASSES.fullWidth}
+          >
             <input
               type='password'
-              placeholder='Confirma tu contraseña nueva'
+              placeholder='Confirma tu nueva contraseña'
               {...register('confirmNewPassword')}
             />
             {errors.confirmNewPassword && (
@@ -161,7 +171,7 @@ export default function CambiarPassPage() {
           </Button>
         </Modal>
       )}
-    </>
+    </BackgroundGradientContainer>
   );
 }
 

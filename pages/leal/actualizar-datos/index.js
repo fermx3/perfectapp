@@ -14,6 +14,7 @@ import Loader from '@/components/ui/loader';
 import { getDatosLeal } from '@/lib/prismaDB';
 import { actualizarDatosLealSchema } from '@/lib/schemas/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 
 export default function ActualizarDatosPage({ datosLeal }) {
   const {
@@ -106,7 +107,7 @@ export default function ActualizarDatosPage({ datosLeal }) {
   };
 
   return (
-    <>
+    <BackgroundGradientContainer>
       <Container md>
         <h1>Actualiza tus datos</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -158,7 +159,7 @@ export default function ActualizarDatosPage({ datosLeal }) {
           </Button>
         </Modal>
       )}
-    </>
+    </BackgroundGradientContainer>
   );
 }
 

@@ -38,19 +38,32 @@ export default function MenuModal({ session, logoutHandler }) {
                 <Button
                   href={`/leal/${userId}`}
                   onClick={() => dispatch(toggleMenu())}
+                  buttonType={BUTTON_TYPE_CLASSES.secondary}
                 >
                   Mi perfil
                 </Button>
               </li>
               {role === 'LEAL' && (
-                <li>
-                  <Button
-                    href={'/cambiar-password'}
-                    onClick={() => dispatch(toggleMenu())}
-                  >
-                    Cambiar contraseña
-                  </Button>
-                </li>
+                <>
+                  <li>
+                    <Button
+                      href={'/leal/actualizar-datos'}
+                      onClick={() => dispatch(toggleMenu())}
+                      buttonType={BUTTON_TYPE_CLASSES.secondary}
+                    >
+                      Actualiza tus datos
+                    </Button>
+                  </li>
+                  <li>
+                    <Button
+                      href={'/cambiar-password'}
+                      onClick={() => dispatch(toggleMenu())}
+                      buttonType={BUTTON_TYPE_CLASSES.secondary}
+                    >
+                      Cambiar contraseña
+                    </Button>
+                  </li>
+                </>
               )}
               <li className={classes.cerrarSesion}>
                 <Button
