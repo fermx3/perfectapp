@@ -12,6 +12,7 @@ enum Zonas {
   iztapalapa
   merced
   test
+  lalatest
 }
 
 type UserInfo {
