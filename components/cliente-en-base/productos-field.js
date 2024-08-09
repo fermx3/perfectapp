@@ -5,6 +5,15 @@ import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import Button from '../button';
 import ReactSwitch from 'react-switch';
 import InputGroup from '../forms/input-group';
+import SelectInput from '../forms/select-input';
+
+const razonesDePromo = [
+  'Mayor gramaje',
+  'Cruce categoria',
+  'Regalo en compra',
+  'Puntos',
+  'Participa',
+];
 
 export default function ProductosField({
   nestIndex,
@@ -35,23 +44,21 @@ export default function ProductosField({
                   ?.message
               }
             >
-              <select
-                {...register(
-                  `competidores.${nestIndex}.productos.${k}.gramos`,
-                  {
-                    required: 'Por favor completa este campo',
-                  }
+              <Controller
+                name={`competidores.${nestIndex}.productos.${k}.gramos`}
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <SelectInput
+                    defaultValue='Selecciona un gramaje'
+                    options={gramajes}
+                    value={value}
+                    onChange={onChange}
+                  />
                 )}
-              >
-                <option value={null} selected disabled hidden>
-                  Nombre del competidor
-                </option>
-                {gramajes.map((option) => (
-                  <option value={option} key={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+              />
             </FormControl>
             <FormControl
               prefix='$'
@@ -96,7 +103,7 @@ export default function ProductosField({
                   label='Precio Con Promo'
                   error={
                     errors.competidores?.[nestIndex]?.productos?.[k]
-                      ?.precioConPromo.message
+                      ?.precioConPromo?.message
                   }
                 >
                   <input
@@ -116,23 +123,21 @@ export default function ProductosField({
                   />
                 </FormControl>
                 <FormControl label='Razón de promo'>
-                  <select
-                    {...register(
-                      `competidores.${nestIndex}.productos.${k}.precioConPromoReason`
+                  <Controller
+                    name={`competidores.${nestIndex}.productos.${k}.precioConPromoReason`}
+                    control={control}
+                    rules={{
+                      required: true,
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                      <SelectInput
+                        defaultValue='Selecciona una razón'
+                        options={razonesDePromo}
+                        value={value}
+                        onChange={onChange}
+                      />
                     )}
-                  >
-                    {[
-                      'Mayor gramaje',
-                      'Cruce categoria',
-                      'Regalo en compra',
-                      'Puntos',
-                      'Participa',
-                    ].map((option) => (
-                      <option value={option} key={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </FormControl>
                 <FormControl>
                   <label>PoP</label>

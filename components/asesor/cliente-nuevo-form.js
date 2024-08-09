@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,6 +13,7 @@ import InputGroup from '../forms/input-group';
 import Modal from '../ui/modal';
 
 import classes from './cliente-nuevo-form.module.scss';
+import SelectInput from '../forms/select-input';
 
 export default function ClienteNuevoForm({ asesores, session }) {
   const {
@@ -21,6 +22,7 @@ export default function ClienteNuevoForm({ asesores, session }) {
     formState: { errors, isSubmitting, isSubmitted },
     reset,
     setError,
+    control,
   } = useForm({
     defaultValues: {
       nombre: '',
@@ -125,24 +127,40 @@ export default function ClienteNuevoForm({ asesores, session }) {
             <input type='text' {...register('nombre')} />
           </FormControl>
           <FormControl label='Canal:' error={errors.canal?.message}>
-            <select {...register('canal')} placeholder='Canal'>
-              {canales.map((option) => (
-                <option value={option} key={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            <Controller
+              name={'canal'}
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, value } }) => (
+                <SelectInput
+                  defaultValue={'Selecciona un canal'}
+                  options={canales}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
           </FormControl>
         </InputGroup>
         <InputGroup>
           <FormControl label='CEDAS:' error={errors.central?.message}>
-            <select {...register('central')} placeholder='CEDAS'>
-              {centrales.map((option) => (
-                <option value={option} key={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            <Controller
+              name={'central'}
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, value } }) => (
+                <SelectInput
+                  defaultValue={'Selecciona un CEDAS'}
+                  options={centrales}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
           </FormControl>
           <FormControl label='Ubicación' error={errors.ubicacion?.message}>
             <input
@@ -164,16 +182,21 @@ export default function ClienteNuevoForm({ asesores, session }) {
             label='Nivel de cliente:'
             error={errors.nivelDeCliente?.message}
           >
-            <select
-              {...register('nivelDeCliente')}
-              placeholder='Nivel de cliente'
-            >
-              {nivelesDeLeales.map((option) => (
-                <option value={option} key={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            <Controller
+              name={'nivelDeCliente'}
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, value } }) => (
+                <SelectInput
+                  defaultValue={'Selecciona un nivel de cliente'}
+                  options={nivelesDeLeales}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
           </FormControl>
         </InputGroup>
         <FormControl label='*Comentarios:' error={errors.comentarios?.message}>

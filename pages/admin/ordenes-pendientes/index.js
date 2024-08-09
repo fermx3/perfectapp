@@ -1,7 +1,7 @@
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 import Container from '@/components/layout/container';
-import { getOrdenesSinValidar } from '@/lib/db';
+import { getOrdenesSinValidar, getUserNamesByRole } from '@/lib/db';
 import { getSession } from 'next-auth/react';
 import moment from 'moment';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -9,7 +9,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import classes from './index.module.scss';
 import Loader from '@/components/ui/loader';
 
-export default function OrdenesPendientesPage({ ordenes }) {
+export default function OrdenesPendientesPage({ ordenes, userNames }) {
   const {
     register,
     handleSubmit,
@@ -95,10 +95,17 @@ export default function OrdenesPendientesPage({ ordenes }) {
                 cajas.push({ sku: item.sku, cajas: item.cajas });
               });
 
+              const nombreCliente = userNames.find(
+                (user) => user.userId === orden.cliente
+              ).nombre;
+
               return (
                 <tr key={index}>
                   <td>{orden.asesor}</td>
-                  <td>{orden.cliente}</td>
+                  <td className={classes.clienteCol}>
+                    {orden.cliente} <br />
+                    {nombreCliente}
+                  </td>
                   <td>{moment(orden.fecha).format('YYYY-MM-DD')}</td>
                   <td>{orden.distribuidor}</td>
                   <td>
@@ -161,6 +168,7 @@ export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
 
   const ordenes = await getOrdenesSinValidar();
+  const userNames = await getUserNamesByRole('LEAL');
 
   if (!session || session.user.role !== 'ADMIN') {
     return {
@@ -172,6 +180,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, ordenes },
+    props: { session, ordenes, userNames },
   };
 }
