@@ -66,7 +66,13 @@ export default function CompetidoresField({
             append({
               nombre: '',
               productos: [
-                { gramos: '', precio: '', hasPromo: false, pop: false },
+                {
+                  gramos: '',
+                  precio: '',
+                  hasPromo: false,
+                  precioConPromoReason: 'Puntos',
+                  pop: false,
+                },
               ],
             });
           }}

@@ -168,7 +168,13 @@ export default function ProductosField({
         <Button
           type='button'
           onClick={() =>
-            append({ gramos: '', precio: '', hasPromo: false, pop: false })
+            append({
+              gramos: '',
+              precio: '',
+              hasPromo: false,
+              precioConPromoReason: '',
+              pop: false,
+            })
           }
         >
           Agregar Producto

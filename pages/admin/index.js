@@ -45,7 +45,9 @@ export default function AdminPage() {
         <h3>Bienvenido</h3>
       </header>
       <main>
-        <LinksGroup links={links} />
+        <LinksGroup
+          links={links.sort((a, b) => a.link.localeCompare(b.link))}
+        />
       </main>
     </Container>
   );

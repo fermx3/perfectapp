@@ -25,7 +25,15 @@ export default function ClienteEnBase1({
     competidores: visitaActual.competidores || [
       {
         nombre: 'Iberia',
-        productos: [{ gramos: '', precio: '', hasPromo: false, pop: false }],
+        productos: [
+          {
+            gramos: '',
+            precio: '',
+            hasPromo: false,
+            precioConPromoReason: '',
+            pop: false,
+          },
+        ],
       },
     ],
     comentarios1: visitaActual.comentarios1 || '',
