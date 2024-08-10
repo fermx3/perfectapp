@@ -30,6 +30,11 @@ const links = [
     link: '/admin/ordenes-pendientes',
     desc: 'Validar ventas que han sido agregadas por asesores.',
   },
+  {
+    titulo: 'Leales que rebasaron cuota',
+    link: '/admin/leales-que-rebasaron-cuota',
+    desc: 'Muestra los leales que rebasaron cuota y permite duplicar los puntos del mes.',
+  },
 ];
 
 export default function AdminPage() {
