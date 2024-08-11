@@ -47,7 +47,11 @@ export default function LealesQueRebasaronCuotaDisplay({
   };
 
   if (lealesQueRebasaronCuota.length === 0) {
-    return <p>Ningun leal ha rebasado la cuota este mes</p>;
+    return (
+      <p className={classes.noLealFoundText}>
+        Ningun leal ha rebasado la cuota este mes
+      </p>
+    );
   }
 
   return (
