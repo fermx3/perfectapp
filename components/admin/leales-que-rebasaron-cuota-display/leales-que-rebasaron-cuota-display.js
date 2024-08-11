@@ -51,7 +51,7 @@ export default function LealesQueRebasaronCuotaDisplay({
   }
 
   return (
-    <div>
+    <div className={classes.moduleContainer}>
       <ul className={classes.grid}>
         {lealesQueRebasaronCuota.map((leal) => {
           const yaDuplicoPuntos = leal.mesesCuotaRebasada?.includes(month);

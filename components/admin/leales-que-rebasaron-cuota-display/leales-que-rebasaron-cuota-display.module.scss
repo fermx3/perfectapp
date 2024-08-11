@@ -1,25 +1,29 @@
 @import '@/styles/variables.scss';
 
-.grid {
-  display: grid;
-  grid-template-columns: $grid-responsive;
-  gap: 1rem;
-  margin-bottom: 1rem;
+.moduleContainer {
+  margin-bottom: 2rem;
 
-  .leal {
-    box-shadow: $white-shadow;
-    background-color: $white-color;
-    border-radius: $border-radius-2;
-    padding: 2rem;
-    list-style: none;
-    border: 1px solid $grayed-blue-color;
-  }
+  .grid {
+    display: grid;
+    grid-template-columns: $grid-responsive;
+    gap: 1rem;
+    margin-bottom: 1rem;
 
-  .rebasado {
-    @extend .leal;
-    color: $gray-color;
-    font-weight: bold;
-    border: 3px solid $grayed-blue-color;
+    .leal {
+      box-shadow: $white-shadow;
+      background-color: $white-color;
+      border-radius: $border-radius-2;
+      padding: 2rem;
+      list-style: none;
+      border: 1px solid $grayed-blue-color;
+    }
+
+    .rebasado {
+      @extend .leal;
+      color: $gray-color;
+      font-weight: bold;
+      border: 3px solid $grayed-blue-color;
+    }
   }
 }
 

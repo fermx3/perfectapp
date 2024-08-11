@@ -45,6 +45,25 @@
   pointer-events: none;
 }
 
+.notificacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $warning-color;
+  color: $white-color;
+  border: 1px solid $white-color;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: $border-radius-2;
+  box-shadow: $white-shadow;
+  font-size: 0.8rem;
+  position: absolute;
+  width: 35px;
+  aspect-ratio: 1;
+  top: -10px;
+  right: -10px;
+}
+
 @media screen and (min-width: $mobile-size) {
   .linksGroup {
     display: flex;
