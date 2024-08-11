@@ -22,7 +22,7 @@ export default function LealesQueRebasaronCuotaPage({
   return (
     <BackgroundGradientContainer>
       <Container>
-        <h1>Leales que rebasaron cuota en el mes corriente</h1>
+        <h1>Leales que han rebasado la cuota en el mes corriente</h1>
         <LealesQueRebasaronCuotaDisplay
           lealesQueRebasaronCuota={lealesQueRebasaronCuota}
           month={month}
@@ -40,6 +40,7 @@ export default function LealesQueRebasaronCuotaPage({
               <FormControl>
                 <input
                   type='month'
+                  max={currentMonth}
                   value={monthEntered}
                   onChange={(e) => setMonthEntered(e.target.value)}
                 />

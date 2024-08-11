@@ -17,7 +17,8 @@ export default function LealesQueRebasaronCuotaByMonthPage({
     <BackgroundGradientContainer>
       <Container>
         <h1>
-          Leales que rebasaron cuota en {moment(month).format('MMMM [de] YYYY')}
+          Leales que rebasaron la cuota en{' '}
+          {moment(month).format('MMMM [de] YYYY')}
         </h1>
         <LealesQueRebasaronCuotaDisplay
           lealesQueRebasaronCuota={lealesQueRebasaronCuota}

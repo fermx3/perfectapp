@@ -9,9 +9,12 @@ export default function LinksGroup({ links }) {
   return (
     <div className={classes.linksGroup}>
       {links.map((link, index) => (
-        <div
+        <motion.div
           className={link.link === '#' ? classes.disabledLink : classes.link}
           key={index}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ duration: 0.3 }}
         >
           <Link href={link.link}>
             <Image
@@ -43,7 +46,7 @@ export default function LinksGroup({ links }) {
               </motion.p>
             )}
           </Link>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

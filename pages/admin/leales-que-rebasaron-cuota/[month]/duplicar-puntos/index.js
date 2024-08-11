@@ -30,8 +30,8 @@ export default function DuplicarPuntosPage({ lealesQueRebasaronCuota, month }) {
         <h1>Duplicar puntos leal en el mes {formattedMonth}</h1>
         <p>
           Estas a punto de duplicar los puntos de los Leales que cumplieron su
-          cuota en el mes {formattedMonth}, asegurate de que esta acción es
-          correcta, recuerda que esta acción no se puede deshacer.
+          cuota en {formattedMonth}, asegurate de que esta acción es correcta.
+          Recuerda que esta acción no se puede deshacer.
         </p>
         <InfoMessage
           titulo='Aviso'
