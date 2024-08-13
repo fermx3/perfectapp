@@ -101,6 +101,7 @@ export default function VisitaPage({
         puntos={leal.datosLeal?.puntosLeal}
         avance={avance}
         session={session}
+        valorDePuntos={leal.valorDePuntos}
       />
       <Button
         onClick={onClickHandler}

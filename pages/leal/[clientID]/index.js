@@ -110,6 +110,7 @@ export default function PanelDeLeal({
               promocionesDisponibles={promocionesDisponibles}
               session={session}
               avance={avance}
+              valorDePuntos={leal.valorDePuntos}
             />
             <div className={classes.recompensasSection}>
               <RecompensasGrid

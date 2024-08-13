@@ -11,6 +11,7 @@ export default function Dashboard({
   session,
   clientesQueCompraron,
   clientesTotales,
+  valorDePuntos,
 }) {
   const cuotaTotal = cuota
     ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
@@ -22,6 +23,13 @@ export default function Dashboard({
       0
     );
   }
+
+  const skuTitles = {
+    iberia90g: 'Iberia 90g',
+    iberia225g: 'Iberia 225g',
+    iberia1Kg: 'Iberia 1Kg',
+    iberia500g: 'Iberia 500g',
+  };
 
   const cajasXPallet = {
     iberia90g: 405,
@@ -90,24 +98,9 @@ export default function Dashboard({
             <p>{cuotaTotal} cajas</p>
             <ul>
               {Object.keys(cuota).map((key, i) => {
-                let keyTitle = '';
-                switch (key) {
-                  case 'iberia90g':
-                    keyTitle = 'Iberia 90g';
-                    break;
-                  case 'iberia225g':
-                    keyTitle = 'Iberia 225g';
-                    break;
-                  case 'iberia1Kg':
-                    keyTitle = 'Iberia 1Kg';
-                    break;
-                  default:
-                    keyTitle = key;
-                    break;
-                }
                 return (
                   <li key={i}>
-                    {keyTitle}: {cuota[key]}
+                    {skuTitles[key]}: {cuota[key]}
                   </li>
                 );
               })}
@@ -118,9 +111,6 @@ export default function Dashboard({
         <div className={classes.estadisticaContainer}>
           <div className={classes.cuadro}>
             <p>{avanceTotal ? avanceTotal : 0} cajas</p>
-            {/* <p>
-              {avanceTotalPallets ? avanceTotalPallets.toFixed(2) : 0} pallets
-            </p> */}
             <ul>
               <li>Iberia 1Kg: {avance.iberia1Kg ? avance.iberia1Kg : 0}</li>
               <li>Iberia 225g: {avance.iberia225g ? avance.iberia225g : 0}</li>
@@ -149,20 +139,41 @@ export default function Dashboard({
           </div>
           <h5>% de avance de compra</h5>
         </div>
-        <div className={classes.estadisticaContainer}>
-          <div className={classes.cuadro}>
-            {promocionesDisponibles.length !== 0 ? (
+        {valorDePuntos ? (
+          <div className={classes.estadisticaContainer}>
+            <div className={classes.cuadro}>
               <ul>
-                {promocionesDisponibles.map((promo, index) => (
-                  <li key={index}>{promo.desc}</li>
-                ))}
+                {Object.keys(valorDePuntos).map((key, i) => {
+                  return (
+                    <li key={i}>
+                      {skuTitles[key]}:{' '}
+                      {valorDePuntos[key] == 1
+                        ? `${valorDePuntos[key]} punto`
+                        : `${valorDePuntos[key]} puntos`}{' '}
+                      x caja
+                    </li>
+                  );
+                })}
               </ul>
-            ) : (
-              <p>No hay promociones.</p>
-            )}
+            </div>
+            <h5>Valor de puntos</h5>
           </div>
-          <h5>Promociones del mes</h5>
-        </div>
+        ) : (
+          <div className={classes.estadisticaContainer}>
+            <div className={classes.cuadro}>
+              {promocionesDisponibles.length !== 0 ? (
+                <ul>
+                  {promocionesDisponibles.map((promo, index) => (
+                    <li key={index}>{promo.desc}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No hay promociones.</p>
+              )}
+            </div>
+            <h5>Promociones del mes</h5>
+          </div>
+        )}
         {puntos !== undefined && session.user.role !== 'LEAL' && (
           <div className={classes.estadisticaContainer}>
             <div className={classes.cuadro}>
@@ -209,63 +220,6 @@ export default function Dashboard({
           </div>
         )}
       </div>
-      {/* ) : (
-        <div className={classes.dashboard}>
-          <div>
-            <h5>Cuota del mes:</h5>
-            <p>{cuotaTotal} pallets</p>
-            <ul>
-              {Object.keys(cuota).map((key, i) => {
-                let keyTitle = '';
-                switch (key) {
-                  case 'iberia90g':
-                    keyTitle = 'Iberia 90g';
-                    break;
-                  case 'iberia225g':
-                    keyTitle = 'Iberia 225g';
-                    break;
-                  case 'iberia1Kg':
-                    keyTitle = 'Iberia 1Kg';
-                    break;
-                  default:
-                    keyTitle = key;
-                    break;
-                }
-                return (
-                  <li key={i}>
-                    {keyTitle}: {cuota[key]}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <div>
-            <h5>Avance de compra:</h5>
-            <p>{avanceTotal ? avanceTotal : 0} cajas</p>
-            <ul>
-              <li>Iberia 1Kg: {total1kg}</li>
-              <li>Iberia 225g: {total225g}</li>
-              <li>Iberia 90g: {total90g}</li>
-            </ul>
-          </div>
-          <div>
-            <h5>Puntos Leales:</h5>
-            <p>{puntos ? puntos : 0}</p>
-          </div>
-          <div>
-            <h5>Promociones del mes:</h5>
-            {promocionesDisponibles ? (
-              <ul>
-                {promocionesDisponibles.map((promo) => (
-                  <li key={promo}>{promo}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>No hay promociones.</p>
-            )}
-          </div>
-        </div>
-      )} */}
     </>
   );
 }
