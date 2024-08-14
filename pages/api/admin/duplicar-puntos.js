@@ -37,7 +37,7 @@ async function handler(req, res) {
         updateOne: {
           filter: { _id: leal._id },
           update: {
-            $inc: { 'datosLeal.puntosLeal': leal.puntosGenerados * 2 },
+            $inc: { 'datosLeal.puntosLeal': leal.puntosGenerados },
             $addToSet: {
               mesesCuotaRebasada: leal.mes,
             },
