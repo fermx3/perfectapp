@@ -60,7 +60,7 @@ async function handler(req, res) {
     });
 
     const result = await collection.updateOne(
-      { empresa: 'upfield' },
+      { empresa: session.user.empresa },
       { $set: { promocionesDelMes: dataToInsert } },
       { upsert: true }
     );

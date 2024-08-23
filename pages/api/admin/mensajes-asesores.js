@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import { PrismaClient } from '@prisma/client';
 import { actualizarMensajesSchema } from '@/lib/schemas/schemas';
 
 import { MongoClient } from 'mongodb';
@@ -46,7 +45,6 @@ async function handler(req, res) {
   }
 
   async function main() {
-    console.log(body.data);
     const dataToInsert = [];
 
     if (

@@ -1,5 +1,5 @@
 import { getSession } from 'next-auth/react';
-import { getPromociones, getUserInfo } from '@/lib/prismaDB';
+import { getUserInfo } from '@/lib/db';
 
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
 import LinksGroup from '@/components/ui/links-group';
@@ -10,6 +10,7 @@ import {
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
   getUserIdsFromGivenZonasThatPurchased,
+  getPromociones,
 } from '@/lib/db';
 import moment from 'moment';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
@@ -67,11 +68,12 @@ export default function AsesorPage({
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   const { slug } = context.query;
+  const empresa = session.user.empresa;
 
   const userInfo = await getUserInfo(slug);
 
   const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada);
-  const { promocionesDelMes } = await getPromociones('upfield');
+  const { promocionesDelMes } = await getPromociones(empresa);
 
   const promocionesDisponibles = promocionesDelMes.map((promocion) => {
     const nivelDeClienteString = promocion.nivelDeCliente.join(', ');

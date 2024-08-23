@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getSession } from 'next-auth/react';
-import { getLeal, getSettings } from '@/lib/prismaDB';
+import { getSettings } from '@/lib/db';
+import { getLeal } from '@/lib/db';
 import moment from 'moment';
 
 import {
@@ -233,6 +234,8 @@ export async function getServerSideProps(context) {
       return promociones;
     })
     .map((promocion) => ({ desc: promocion.promo }));
+
+  console.log(leal);
 
   const yearMonth = moment().format('YYYY-MM');
 

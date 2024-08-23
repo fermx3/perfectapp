@@ -7,7 +7,7 @@ import FormControl, {
   INPUT_TYPE_CLASSES,
 } from '@/components/forms/form-control';
 
-import { getUserInfo } from '@/lib/prismaDB';
+import { getUserInfo } from '@/lib/db';
 import { getLealesAsignados } from '@/lib/db';
 import { getSession } from 'next-auth/react';
 

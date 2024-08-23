@@ -11,7 +11,7 @@ import Modal from '@/components/ui/modal';
 import ErrorMessage from '@/components/ui/error-message';
 import Loader from '@/components/ui/loader';
 
-import { getDatosLeal } from '@/lib/prismaDB';
+import { getDatosLeal } from '@/lib/db';
 import { actualizarDatosLealSchema } from '@/lib/schemas/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';

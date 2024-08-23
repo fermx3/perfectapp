@@ -4,7 +4,7 @@ import Container from '@/components/layout/container';
 import LealHeader from '@/components/leal/leal-header';
 import RecompensasGrid from '@/components/recompensas/recompensas-grid';
 import { getRecompensasByNivel } from '@/lib/db';
-import { getLeal } from '@/lib/prismaDB';
+import { getLeal } from '@/lib/db';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';

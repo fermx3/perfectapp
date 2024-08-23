@@ -1,12 +1,9 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
-import { PrismaClient } from '@prisma/client';
 import { actualizarDatosLealSchema } from '@/lib/schemas/schemas';
-import {
-  actualizarDatosLeal,
-  firstLealDataUpdate,
-  getDatosLeal,
-} from '@/lib/prismaDB';
+import { firstLealDataUpdate } from '@/lib/db';
+
+import { actualizarDatosLeal, getDatosLeal } from '@/lib/db';
 
 async function handler(req, res) {
   if (req.method !== 'PATCH') {
@@ -19,8 +16,6 @@ async function handler(req, res) {
     res.status(401).json({ message: 'Not authenticated!' });
     return;
   }
-
-  const prisma = new PrismaClient();
 
   const response = actualizarDatosLealSchema.safeParse(req.body);
 
@@ -41,7 +36,6 @@ async function handler(req, res) {
     await firstLealDataUpdate(userId);
   }
 
-  await prisma.$disconnect();
   res.status(200).json({ message: 'Datos actualizados' });
 }
 

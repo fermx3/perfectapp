@@ -2,8 +2,13 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from './[...nextauth]';
 
 import { hashPassword } from '@/lib/auth';
-import { PrismaClient } from '@prisma/client';
 import { crearLealSchema } from '@/lib/schemas/schemas';
+
+import { MongoClient } from 'mongodb';
+
+const uri = process.env.DATABASE_URL;
+
+const client = new MongoClient(uri);
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -17,7 +22,9 @@ async function handler(req, res) {
     return;
   }
 
-  const prisma = new PrismaClient();
+  await client.connect();
+  const database = client.db('perfectapp');
+  const collection = database.collection('users');
 
   // const response = crearLealSchema.safeParse(req.body);
 
@@ -58,9 +65,7 @@ async function handler(req, res) {
 
   async function main() {
     //Check if the userId already exists
-    const existingUser = await prisma.users.findUnique({
-      where: { userId: userId },
-    });
+    const existingUser = await collection.findOne({ userId: userId });
 
     if (existingUser) {
       res
@@ -70,18 +75,16 @@ async function handler(req, res) {
             userId: 'El numero de usuario ya existe. Intenta otra vez.',
           },
         });
-      prisma.$disconnect();
+      await client.close();
       return;
     }
     //
     const hashedPassword = await hashPassword(password);
-    const result = await prisma.users.create({
-      data: {
-        userId: userId,
-        password: hashedPassword,
-        role: role,
-        userInfo: userInfo,
-      },
+    const result = await collection.insertOne({
+      userId: userId,
+      password: hashedPassword,
+      role: role,
+      userInfo: userInfo,
     });
 
     res.status(201).json({ message: 'Usuario creado!' });
@@ -89,11 +92,11 @@ async function handler(req, res) {
 
   main()
     .then(async () => {
-      await prisma.$disconnect();
+      await client.close();
     })
     .catch(async (e) => {
       console.error(e);
-      await prisma.$disconnect();
+      await client.close();
     });
 }
 

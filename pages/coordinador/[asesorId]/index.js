@@ -8,8 +8,9 @@ import {
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
   getUserIdsFromGivenZonasThatPurchased,
+  getUserInfo,
+  getPromociones,
 } from '@/lib/db';
-import { getPromociones, getUserInfo } from '@/lib/prismaDB';
 import moment from 'moment';
 import { getSession } from 'next-auth/react';
 

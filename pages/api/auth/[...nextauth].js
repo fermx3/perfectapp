@@ -11,7 +11,9 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       profile(profile) {
-        return { role: profile.role ?? 'user' };
+        return {
+          role: profile.role ?? 'user',
+        };
       },
       async authorize(credentials) {
         const client = await connectToDatabase();
@@ -37,7 +39,7 @@ export const authOptions = {
         }
 
         client.close();
-        return { userId: user.userId, role: user.role };
+        return { userId: user.userId, role: user.role, empresa: user.empresa };
       },
     }),
   ],
@@ -46,12 +48,14 @@ export const authOptions = {
       if (user) {
         token.role = user.role;
         token.userId = user.userId;
+        token.empresa = user.empresa;
       }
       return token;
     },
     session({ session, token }) {
       session.user.role = token.role;
       session.user.userId = token.userId;
+      session.user.empresa = token.empresa;
       return session;
     },
   },

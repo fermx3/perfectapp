@@ -1,12 +1,20 @@
-import { PrismaClient } from '@prisma/client';
 import nodemailer from 'nodemailer';
+
+import { MongoClient } from 'mongodb';
+
+const uri = process.env.DATABASE_URL;
+
+const client = new MongoClient(uri);
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
     return;
   }
 
-  const prisma = new PrismaClient();
+  await client.connect();
+  const database = client.db('perfectapp');
+  const visitas = database.collection('visitas');
+  const ordenes = database.collection('ordenes');
 
   const data = await req.body;
 
@@ -174,33 +182,35 @@ async function handler(req, res) {
     }
 
     //Create record on DB
-    const result = await prisma.visitas.create({ data: data });
+    const result = await visitas.insertOne({
+      ...data,
+    });
 
     if (data.hayOrdenDeCompra) {
-      const result2 = await prisma.ordenes.create({
-        data: {
-          id: data.finVisita + data.numeroDeCliente + Math.random() * 1000,
-          asesor: data.asesor,
-          cliente: data.numeroDeCliente,
-          fecha: data.finVisita,
-          distribuidor: data.distribuidor,
-          orden: data.ordenDeCompra,
-          ordenValidada: false,
-        },
+      const result2 = await ordenes.insertOne({
+        _id: data.finVisita + data.numeroDeCliente + Math.random() * 1000,
+        asesor: data.asesor,
+        cliente: data.numeroDeCliente,
+        fecha: data.finVisita,
+        distribuidor: data.distribuidor,
+        orden: data.ordenDeCompra,
+        ordenValidada: false,
       });
-    }
 
-    //Return success message if everything correct
-    res.status(201).json({ message: 'Informacion enviada. Visita completa.' });
+      //Return success message if everything correct
+      res
+        .status(201)
+        .json({ message: 'Informacion enviada. Visita completa.' });
+    }
   }
 
   main()
     .then(async () => {
-      await prisma.$disconnect();
+      await client.close();
     })
     .catch(async (e) => {
       console.error(e);
-      await prisma.$disconnect();
+      await client.close();
     });
 }
 

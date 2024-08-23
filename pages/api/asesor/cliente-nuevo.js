@@ -1,7 +1,12 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import { PrismaClient } from '@prisma/client';
 import { clienteNuevoSchema } from '@/lib/schemas/schemas';
+
+import { MongoClient } from 'mongodb';
+
+const uri = process.env.DATABASE_URL;
+
+const client = new MongoClient(uri);
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -15,7 +20,9 @@ async function handler(req, res) {
     return;
   }
 
-  const prisma = new PrismaClient();
+  await client.connect();
+  const database = client.db('perfectapp');
+  const collection = database.collection('prospectos');
 
   // const response = crearLealSchema.safeParse(req.body);
 
@@ -53,8 +60,9 @@ async function handler(req, res) {
   // }
 
   async function main() {
-    const result = await prisma.prospectos.create({
-      data: response.data,
+    const result = await collection.insertOne({
+      ...response.data,
+      asesor: session.user.userId,
     });
 
     res.status(201).json({ message: 'Cliente enviado!' });
@@ -62,11 +70,11 @@ async function handler(req, res) {
 
   main()
     .then(async () => {
-      await prisma.$disconnect();
+      await client.close();
     })
     .catch(async (e) => {
       console.error(e);
-      await prisma.$disconnect();
+      await client.close();
     });
 }
 

@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getLeal, getSettings } from '@/lib/prismaDB';
+import { getLeal, getSettings } from '@/lib/db';
 
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';

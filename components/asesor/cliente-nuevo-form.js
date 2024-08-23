@@ -118,7 +118,7 @@ export default function ClienteNuevoForm({ asesores, session }) {
       //Fail on create user
     }
   };
-  console.log(errors);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>

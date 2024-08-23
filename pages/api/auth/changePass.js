@@ -1,10 +1,8 @@
 import { hashPassword, verifyPassword } from '@/lib/auth';
-import { PrismaClient } from '@prisma/client';
 import { cambiarPasswordSchema } from '@/lib/schemas/schemas';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './[...nextauth]';
-import { changePassword, firstLogin, getUser } from '@/lib/prismaDB';
-import { redirect } from 'next/dist/server/api-utils';
+import { changePassword, firstLogin, getUser } from '@/lib/db';
 
 async function handler(req, res) {
   if (req.method !== 'PATCH') {
@@ -17,8 +15,6 @@ async function handler(req, res) {
     res.status(401).json({ message: 'Not authenticated!' });
     return;
   }
-
-  const prisma = new PrismaClient();
 
   const response = cambiarPasswordSchema.safeParse(req.body);
   let zodErrors = {};
@@ -36,7 +32,6 @@ async function handler(req, res) {
 
   if (!user) {
     res.status(404).json({ message: 'No se encuentra al usuario' });
-    await prisma.$disconnect();
     return;
   }
 
@@ -48,7 +43,6 @@ async function handler(req, res) {
     res
       .status(403)
       .json({ field: 'oldPassword', message: 'La contraseña es incorrecta' });
-    await prisma.$disconnect();
     return;
   }
 
@@ -56,12 +50,11 @@ async function handler(req, res) {
 
   const result = await changePassword(userId, hashedPassword);
 
-  if (user.datosLeal.firstLoginDate === null) {
+  if (!user.datosLeal?.firstLoginDate) {
     console.log('first login');
     await firstLogin(userId);
   }
 
-  await prisma.$disconnect();
   res.status(200).json({ message: 'Contraseña cambiada' });
 }
 

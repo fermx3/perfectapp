@@ -4,7 +4,7 @@ import Container from '@/components/layout/container';
 import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
-import { getAsesores } from '@/lib/prismaDB';
+import { getAsesores } from '@/lib/db';
 
 export default function CrearLealPage({ asesores, session }) {
   return (

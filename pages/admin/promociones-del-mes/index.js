@@ -4,13 +4,12 @@ import FormGroup from '@/components/forms/form-group';
 import InputGroup from '@/components/forms/input-group';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 import Container from '@/components/layout/container';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import Loader from '@/components/ui/loader';
-import { getPromociones, getSettings } from '@/lib/prismaDB';
+import { getPromociones, getSettings } from '@/lib/db';
 import SelectInput from '@/components/forms/select-input';
 import { nivelesDeLeales } from '@/lib/schemas/schemas';
 import NivelDeClienteField from '@/components/admin/nivel-de-cliente-field';
@@ -254,9 +253,10 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
+  const empresa = session.user.empresa;
 
-  const { promocionesDelMes } = await getPromociones('upfield');
-  const { skus } = await getSettings('upfield');
+  const { promocionesDelMes } = await getPromociones(empresa);
+  const { skus } = await getSettings(empresa);
 
   if (!session || session.user.role !== 'ADMIN') {
     return {
