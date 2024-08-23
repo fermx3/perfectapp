@@ -68,17 +68,10 @@ export default function AsesorPage({
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   const { slug } = context.query;
-  const empresa = session.user.empresa;
 
   const userInfo = await getUserInfo(slug);
 
   const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada);
-  const { promocionesDelMes } = await getPromociones(empresa);
-
-  const promocionesDisponibles = promocionesDelMes.map((promocion) => {
-    const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
-    return { desc: `${promocion.promo} [ ${nivelDeClienteString} ]` };
-  });
 
   const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
     userInfo.zonaAsignada
@@ -109,6 +102,14 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+  const { promocionesDelMes } = await getPromociones(empresa);
+
+  const promocionesDisponibles = promocionesDelMes.map((promocion) => {
+    const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
+    return { desc: `${promocion.promo} [ ${nivelDeClienteString} ]` };
+  });
 
   return {
     props: {

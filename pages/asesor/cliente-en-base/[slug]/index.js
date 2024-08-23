@@ -174,6 +174,7 @@ export async function getServerSideProps(context) {
     };
   }
 
+  const empresa = session?.user?.empresa;
   const leal = await getLeal(slug);
   const {
     promocionesDelMes,
@@ -183,8 +184,8 @@ export async function getServerSideProps(context) {
     opcionesDeNoCompra,
     skus,
     materialesDeComunicacion,
-  } = await getSettings('upfield');
-  // const promociones = await getPromociones('upfield');
+  } = await getSettings(empresa);
+  // const promociones = await getPromociones(empresa);
   const nivelDeCliente = leal.nivelDeCliente.toLowerCase();
   const promocionesDisponibles = promocionesDelMes
     .filter((promocion) => {
@@ -192,8 +193,8 @@ export async function getServerSideProps(context) {
       return promociones;
     })
     .map((promocion) => ({ desc: promocion.promo, sku: promocion.sku }));
-  // const opcionesDeNoCompra = await getOpcionesDeNoCompra('upfield');
-  // const distribuidores = await getDistribuidores('upfield');
+  // const opcionesDeNoCompra = await getOpcionesDeNoCompra(empresa);
+  // const distribuidores = await getDistribuidores(empresa);
 
   const yearMonth = moment().format('YYYY-MM');
 

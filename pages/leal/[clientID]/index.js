@@ -224,7 +224,8 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const { promocionesDelMes } = await getSettings('upfield');
+  const empresa = session?.user?.empresa;
+  const { promocionesDelMes } = await getSettings(empresa);
 
   const leal = await getLeal(clientID);
   const nivelDeCliente = leal.nivelDeCliente.toLowerCase();
@@ -234,8 +235,6 @@ export async function getServerSideProps(context) {
       return promociones;
     })
     .map((promocion) => ({ desc: promocion.promo }));
-
-  console.log(leal);
 
   const yearMonth = moment().format('YYYY-MM');
 

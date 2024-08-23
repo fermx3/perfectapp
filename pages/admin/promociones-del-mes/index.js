@@ -253,10 +253,6 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  const empresa = session.user.empresa;
-
-  const { promocionesDelMes } = await getPromociones(empresa);
-  const { skus } = await getSettings(empresa);
 
   if (!session || session.user.role !== 'ADMIN') {
     return {
@@ -266,6 +262,11 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+
+  const { promocionesDelMes } = await getPromociones(empresa);
+  const { skus } = await getSettings(empresa);
 
   return {
     props: { session, promocionesDelMes, skus },

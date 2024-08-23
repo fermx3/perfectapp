@@ -56,12 +56,6 @@ export async function getServerSideProps(context) {
   const { asesorId } = context.query;
   const userInfo = await getUserInfo(asesorId);
   const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada);
-  const { promocionesDelMes } = await getPromociones('upfield');
-
-  const promocionesDisponibles = promocionesDelMes.map((promocion) => {
-    const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
-    return { desc: `${promocion.promo} [ ${nivelDeClienteString} ]` };
-  });
 
   const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
     userInfo.zonaAsignada
@@ -88,6 +82,14 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+  const { promocionesDelMes } = await getPromociones(empresa);
+
+  const promocionesDisponibles = promocionesDelMes.map((promocion) => {
+    const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
+    return { desc: `${promocion.promo} [ ${nivelDeClienteString} ]` };
+  });
 
   return {
     props: {
