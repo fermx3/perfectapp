@@ -63,6 +63,7 @@ async function handler(req, res) {
     const result = await collection.insertOne({
       ...response.data,
       asesor: session.user.userId,
+      empresa: session.user.empresa,
     });
 
     res.status(201).json({ message: 'Cliente enviado!' });

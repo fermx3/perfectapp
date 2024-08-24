@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 
 import { MongoClient } from 'mongodb';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
 const uri = process.env.DATABASE_URL;
 
@@ -8,6 +10,13 @@ const client = new MongoClient(uri);
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
+    return;
+  }
+
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    res.status(401).json({ message: 'Not authenticated!' });
     return;
   }
 
@@ -24,6 +33,7 @@ async function handler(req, res) {
         <div>
           <p>Asesor: ${data.asesor}</p>
           <p>Cliente: ${data.numeroDeCliente}</p>
+          <p>Empresa: ${session.user.empresa}</p>
         </div>
         <div>
           <h3>Competidores</h3>
@@ -184,6 +194,7 @@ async function handler(req, res) {
     //Create record on DB
     const result = await visitas.insertOne({
       ...data,
+      empresa: session.user.empresa,
     });
 
     if (data.hayOrdenDeCompra) {
@@ -195,6 +206,7 @@ async function handler(req, res) {
         distribuidor: data.distribuidor,
         orden: data.ordenDeCompra,
         ordenValidada: false,
+        empresa: session.user.empresa,
       });
 
       //Return success message if everything correct
