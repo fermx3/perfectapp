@@ -115,7 +115,7 @@ export default function PanelDeLeal({
               valorDePuntos={leal.valorDePuntos}
               skus={skus}
             />
-            <div className={classes.recompensasSection}>
+            <div className={classes.recompensasSection} id='recompensas'>
               <RecompensasGrid
                 recompensas={recompensasLeal}
                 role={session.user.role}
