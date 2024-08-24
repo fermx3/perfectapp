@@ -10,7 +10,7 @@ import {
   getCuotaTotals,
   getUserIdsFromAGivenZonas,
   getUserIdsFromGivenZonasThatPurchased,
-  getPromociones,
+  getSettings,
 } from '@/lib/db';
 import moment from 'moment';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
@@ -23,7 +23,10 @@ export default function AsesorPage({
   clientesQueCompraron,
   userIdsFromAsesorZonas,
   avance,
+  skus,
 }) {
+  console.log('cuotaTotal', cuotaTotal);
+
   return (
     <BackgroundGradientContainer>
       <Container>
@@ -37,6 +40,7 @@ export default function AsesorPage({
           session={session}
           cuota={cuotaTotal}
           avance={avance}
+          skus={skus}
           promocionesDisponibles={promocionesDisponibles}
           clientesQueCompraron={clientesQueCompraron}
           clientesTotales={userIdsFromAsesorZonas}
@@ -70,20 +74,20 @@ export async function getServerSideProps(context) {
   const { slug } = context.query;
 
   const userInfo = await getUserInfo(slug);
+  const yearMonth = moment().format('YYYY-MM');
 
   const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada);
+  console.log('cuotaTotal', cuotaTotal);
 
   const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
     userInfo.zonaAsignada
   );
 
-  const yearMonth = moment().format('YYYY-MM');
-
   const avance = await getAvanceDeCuotaByZona(userInfo.zonaAsignada, yearMonth);
 
-  const asesores = userInfo.asesores
-    ? userInfo.asesores
-    : [session?.user.userId];
+  // const asesores = userInfo.asesores
+  //   ? userInfo.asesores
+  //   : [session?.user.userId];
 
   const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
     yearMonth,
@@ -104,7 +108,9 @@ export async function getServerSideProps(context) {
   }
 
   const empresa = session?.user?.empresa;
-  const { promocionesDelMes } = await getPromociones(empresa);
+  const { skus, promocionesDelMes } = await getSettings(empresa);
+
+  console.log(skus);
 
   const promocionesDisponibles = promocionesDelMes.map((promocion) => {
     const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
@@ -120,6 +126,7 @@ export async function getServerSideProps(context) {
       clientesQueCompraron,
       userIdsFromAsesorZonas,
       avance,
+      skus,
     },
   };
 }

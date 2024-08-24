@@ -35,6 +35,7 @@ export default function PanelDeLeal({
   avance,
   recompensasLeal,
   bannersLeales,
+  skus,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(!leal.aceptoTyC);
   const [successMessage, setSuccessMessage] = useState('');
@@ -112,6 +113,7 @@ export default function PanelDeLeal({
               session={session}
               avance={avance}
               valorDePuntos={leal.valorDePuntos}
+              skus={skus}
             />
             <div className={classes.recompensasSection}>
               <RecompensasGrid
@@ -225,7 +227,7 @@ export async function getServerSideProps(context) {
   }
 
   const empresa = session?.user?.empresa;
-  const { promocionesDelMes } = await getSettings(empresa);
+  const { promocionesDelMes, skus } = await getSettings(empresa);
 
   const leal = await getLeal(clientID);
   const nivelDeCliente = leal.nivelDeCliente.toLowerCase();
@@ -261,6 +263,7 @@ export async function getServerSideProps(context) {
       avance,
       recompensasLeal,
       bannersLeales,
+      skus,
     },
   };
 }

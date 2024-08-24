@@ -12,48 +12,17 @@ export default function Dashboard({
   clientesQueCompraron,
   clientesTotales,
   valorDePuntos,
+  skus,
 }) {
   const cuotaTotal = cuota
     ? Object.values(cuota).reduce((a, b) => Number(a) + Number(b), 0)
     : 0;
 
-  function sum(obj) {
-    return Object.keys(obj).reduce(
-      (sum, key) => sum + parseFloat(obj[key] || 0),
-      0
-    );
+  function sum(arr) {
+    return arr.reduce((a, b) => a + b.cajas, 0);
   }
 
-  const skuTitles = {
-    iberia90g: 'Iberia 90g',
-    iberia225g: 'Iberia 225g',
-    iberia1Kg: 'Iberia 1Kg',
-    iberia500g: 'Iberia 500g',
-  };
-
-  const cajasXPallet = {
-    iberia90g: 405,
-    iberia225g: 400,
-    iberia1Kg: 112,
-  };
-
   const avanceTotal = sum(avance);
-
-  const palletsToCajas = (pallets) => {
-    return {
-      iberia90g: pallets.iberia90g * cajasXPallet.iberia90g || 0,
-      iberia225g: pallets.iberia225g * cajasXPallet.iberia225g || 0,
-      iberia1Kg: pallets.iberia1Kg * cajasXPallet.iberia1Kg || 0,
-    };
-  };
-
-  const cajasToPallets = (cajas) => {
-    return {
-      iberia90g: (cajas.iberia90g / cajasXPallet.iberia90g).toFixed(2) || 0,
-      iberia225g: (cajas.iberia225g / cajasXPallet.iberia225g).toFixed(2) || 0,
-      iberia1Kg: (cajas.iberia1Kg / cajasXPallet.iberia1Kg).toFixed(2) || 0,
-    };
-  };
 
   const getAvanceTotalPorcentaje = function () {
     if (cuotaTotal === 0) return 0;
@@ -89,6 +58,7 @@ export default function Dashboard({
   const percentage = 66;
   // const avanceTotal = avance[0].ordenesDeCompra.map((i) => <p>{i.cajas}</p>);
   // const skus = cuota ? Object.keys(cuota).length : 0;
+
   return (
     <>
       {/* {session.user.role === 'LEAL' ? ( */}
@@ -100,7 +70,7 @@ export default function Dashboard({
               {Object.keys(cuota).map((key, i) => {
                 return (
                   <li key={i}>
-                    {skuTitles[key]}: {cuota[key]}
+                    {skus.find((sku) => sku.sku === key).producto}: {cuota[key]}
                   </li>
                 );
               })}
@@ -112,9 +82,14 @@ export default function Dashboard({
           <div className={classes.cuadro}>
             <p>{avanceTotal ? avanceTotal : 0} cajas</p>
             <ul>
-              <li>Iberia 1Kg: {avance.iberia1Kg ? avance.iberia1Kg : 0}</li>
-              <li>Iberia 225g: {avance.iberia225g ? avance.iberia225g : 0}</li>
-              <li>Iberia 90g: {avance.iberia90g ? avance.iberia90g : 0}</li>
+              {avance.map((id, i) => {
+                return (
+                  <li key={i}>
+                    {skus.find((sku) => sku.sku === id._id).producto}:{' '}
+                    {id.cajas}
+                  </li>
+                );
+              })}
             </ul>
             {/* <p>{avanceTotalPorcentaje()} %</p> */}
           </div>
@@ -146,7 +121,7 @@ export default function Dashboard({
                 {Object.keys(valorDePuntos).map((key, i) => {
                   return (
                     <li key={i}>
-                      {skuTitles[key]}:{' '}
+                      {skus.find((sku) => sku.sku === key).producto}:{' '}
                       {valorDePuntos[key] == 1
                         ? `${valorDePuntos[key]} punto`
                         : `${valorDePuntos[key]} puntos`}{' '}

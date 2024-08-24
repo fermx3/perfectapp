@@ -1,6 +1,4 @@
 import moment from 'moment';
-
-import Container from './container';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import Modal from '../ui/modal';
 import ModalPage from '../ui/modal-page';
@@ -25,8 +23,6 @@ export default function MainFooter({ className }) {
   const terminosYCondicionesOpen = useSelector(selectTerminosYCondicionesOpen);
   const avisoDePrivacidad = useSelector(selectAvisoDePrivacidad);
   const terminosYCondiciones = useSelector(selectTerminosYCondiciones);
-
-  const router = useRouter();
 
   const dispatch = useDispatch();
 

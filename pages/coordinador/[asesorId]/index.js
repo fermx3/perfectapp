@@ -10,6 +10,7 @@ import {
   getUserIdsFromGivenZonasThatPurchased,
   getUserInfo,
   getPromociones,
+  getSettings,
 } from '@/lib/db';
 import moment from 'moment';
 import { getSession } from 'next-auth/react';
@@ -22,6 +23,7 @@ export default function AsesorMonitoreoPage({
   clientesQueCompraron,
   userIdsFromAsesorZonas,
   avance,
+  skus,
 }) {
   return (
     <BackgroundGradientContainer>
@@ -45,6 +47,7 @@ export default function AsesorMonitoreoPage({
           session={session}
           clientesQueCompraron={clientesQueCompraron}
           clientesTotales={userIdsFromAsesorZonas}
+          skus={skus}
         />
       </Container>
     </BackgroundGradientContainer>
@@ -85,6 +88,7 @@ export async function getServerSideProps(context) {
 
   const empresa = session?.user?.empresa;
   const { promocionesDelMes } = await getPromociones(empresa);
+  const { skus } = await getSettings(empresa);
 
   const promocionesDisponibles = promocionesDelMes.map((promocion) => {
     const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
@@ -100,6 +104,7 @@ export async function getServerSideProps(context) {
       clientesQueCompraron,
       userIdsFromAsesorZonas,
       avance,
+      skus,
     },
   };
 }
