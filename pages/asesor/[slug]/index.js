@@ -25,8 +25,6 @@ export default function AsesorPage({
   avance,
   skus,
 }) {
-  console.log('cuotaTotal', cuotaTotal);
-
   return (
     <BackgroundGradientContainer>
       <Container>
@@ -76,23 +74,11 @@ export async function getServerSideProps(context) {
   const userInfo = await getUserInfo(slug);
   const yearMonth = moment().format('YYYY-MM');
 
-  const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada);
-  console.log('cuotaTotal', cuotaTotal);
-
-  const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
-    userInfo.zonaAsignada
-  );
-
   const avance = await getAvanceDeCuotaByZona(userInfo.zonaAsignada, yearMonth);
 
   // const asesores = userInfo.asesores
   //   ? userInfo.asesores
   //   : [session?.user.userId];
-
-  const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
-    yearMonth,
-    userInfo.zonaAsignada
-  );
 
   if (
     !session ||
@@ -109,8 +95,16 @@ export async function getServerSideProps(context) {
 
   const empresa = session?.user?.empresa;
   const { skus, promocionesDelMes } = await getSettings(empresa);
-
-  console.log(skus);
+  const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada, empresa);
+  const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
+    userInfo.zonaAsignada,
+    empresa
+  );
+  const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
+    yearMonth,
+    userInfo.zonaAsignada,
+    empresa
+  );
 
   const promocionesDisponibles = promocionesDelMes.map((promocion) => {
     const nivelDeClienteString = promocion.nivelDeCliente.join(', ');

@@ -65,12 +65,6 @@ export async function getServerSideProps(context) {
 
   const lastMonth = moment().subtract(1, 'months').format('YYYY-MM');
 
-  const lealesQueRebasaronCuotaNumber = (
-    await getLealesQueRebasaronCuota(lastMonth)
-  ).length;
-
-  const ordenesSinValidarNumber = (await getOrdenesSinValidar()).length;
-
   if (!session || session.user.role !== 'ADMIN') {
     return {
       redirect: {
@@ -79,6 +73,13 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+
+  const ordenesSinValidarNumber = (await getOrdenesSinValidar(empresa)).length;
+  const lealesQueRebasaronCuotaNumber = (
+    await getLealesQueRebasaronCuota(lastMonth, empresa)
+  ).length;
 
   return {
     props: { session, lealesQueRebasaronCuotaNumber, ordenesSinValidarNumber },

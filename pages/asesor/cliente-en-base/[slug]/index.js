@@ -23,11 +23,7 @@ import {
   selectVisitaActual,
 } from '@/store/visitaActual/visitaActual.selector';
 import Dashboard from '@/components/dashboard/dashboard';
-import {
-  getAvanceDeCuota,
-  getMensajesAsesores,
-  getVisitasConOrdenesPorCliente,
-} from '@/lib/db';
+import { getAvanceDeCuota, getMensajesAsesores } from '@/lib/db';
 import Container from '@/components/layout/container';
 
 // const mensajesAsesores = {
@@ -50,7 +46,6 @@ export default function VisitaPage({
   gramajes,
   skus,
   materialesDeComunicacion,
-  visitasConOrdenes,
   mensajesAsesores,
   avance,
 }) {
@@ -199,10 +194,6 @@ export async function getServerSideProps(context) {
 
   const yearMonth = moment().format('YYYY-MM');
 
-  const visitasConOrdenes = await getVisitasConOrdenesPorCliente(yearMonth, [
-    slug,
-  ]);
-
   const avance = await getAvanceDeCuota(slug, yearMonth);
 
   const mensajesAsesores = await getMensajesAsesores(empresa);
@@ -218,7 +209,6 @@ export async function getServerSideProps(context) {
       gramajes,
       skus,
       materialesDeComunicacion,
-      visitasConOrdenes,
       mensajesAsesores,
       avance,
     },

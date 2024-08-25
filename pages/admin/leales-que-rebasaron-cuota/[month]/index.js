@@ -41,8 +41,6 @@ export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   const month = context.params.month;
 
-  const lealesQueRebasaronCuota = await getLealesQueRebasaronCuota(month);
-
   if (!session || session.user.role !== 'ADMIN') {
     return {
       redirect: {
@@ -51,6 +49,12 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+  const lealesQueRebasaronCuota = await getLealesQueRebasaronCuota(
+    month,
+    empresa
+  );
 
   return {
     props: { session, lealesQueRebasaronCuota, month },

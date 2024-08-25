@@ -59,10 +59,6 @@ export async function getServerSideProps(context) {
 
   const currentMonth = moment().format('YYYY-MM');
 
-  const lealesQueRebasaronCuota = await getLealesQueRebasaronCuota(
-    currentMonth
-  );
-
   if (!session || session.user.role !== 'ADMIN') {
     return {
       redirect: {
@@ -71,6 +67,13 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+
+  const lealesQueRebasaronCuota = await getLealesQueRebasaronCuota(
+    currentMonth,
+    empresa
+  );
 
   return {
     props: { session, lealesQueRebasaronCuota, currentMonth },

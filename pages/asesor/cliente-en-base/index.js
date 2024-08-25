@@ -126,10 +126,15 @@ export async function getServerSideProps(context) {
     };
   }
 
+  const empresa = session?.user?.empresa;
+
   const userId = session.user.userId;
 
   const userInfo = await getUserInfo(userId);
-  const lealesAsignados = await getLealesAsignados(userInfo.zonaAsignada);
+  const lealesAsignados = await getLealesAsignados(
+    userInfo.zonaAsignada,
+    empresa
+  );
 
   return {
     props: { session, userInfo, lealesAsignados },

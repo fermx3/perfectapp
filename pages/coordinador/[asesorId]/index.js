@@ -58,20 +58,10 @@ export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   const { asesorId } = context.query;
   const userInfo = await getUserInfo(asesorId);
-  const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada);
-
-  const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
-    userInfo.zonaAsignada
-  );
 
   const yearMonth = moment().format('YYYY-MM');
 
   const avance = await getAvanceDeCuotaByZona(userInfo.zonaAsignada, yearMonth);
-
-  const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
-    yearMonth,
-    userInfo.zonaAsignada
-  );
 
   if (
     !session ||
@@ -89,6 +79,16 @@ export async function getServerSideProps(context) {
   const empresa = session?.user?.empresa;
   const { promocionesDelMes } = await getPromociones(empresa);
   const { skus } = await getSettings(empresa);
+  const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada, empresa);
+  const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
+    userInfo.zonaAsignada,
+    empresa
+  );
+  const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
+    yearMonth,
+    userInfo.zonaAsignada,
+    empresa
+  );
 
   const promocionesDisponibles = promocionesDelMes.map((promocion) => {
     const nivelDeClienteString = promocion.nivelDeCliente.join(', ');

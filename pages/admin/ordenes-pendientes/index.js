@@ -167,7 +167,6 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
 
-  const ordenes = await getOrdenesSinValidar();
   const userNames = await getUserNamesByRole('LEAL');
 
   if (!session || session.user.role !== 'ADMIN') {
@@ -178,6 +177,9 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+  const ordenes = await getOrdenesSinValidar(empresa);
 
   return {
     props: { session, ordenes, userNames },
