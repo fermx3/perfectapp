@@ -26,7 +26,6 @@ export async function getServerSideProps(context) {
 
   //   const yearMonth = moment().format('YYYY-MM');
 
-  const recompensasLeal = await getRecompensasLeal();
   const role = session?.user.role;
 
   if (!session || session.user.role !== 'ASESOR') {
@@ -37,6 +36,9 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+  const recompensasLeal = await getRecompensasLeal(empresa);
 
   return {
     props: { recompensasLeal, role },

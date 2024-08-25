@@ -20,6 +20,8 @@ async function handler(req, res) {
     return;
   }
 
+  const empresa = session?.user?.empresa;
+
   await client.connect();
   const database = client.db('perfectapp');
   const mensajesAsesores = database.collection('mensajesAsesores');
@@ -45,21 +47,42 @@ async function handler(req, res) {
   }
 
   async function main() {
-    const dataToInsert = [];
+    const dataToInsert = {
+      infoDeCategoria: {
+        titulo: body.data.infoDeCategoria.titulo,
+        contenido: body.data.infoDeCategoria.contenido,
+        tipo: 'infoDeCategoria',
+        empresa,
+      },
+      infoDeComunicacion: {
+        titulo: body.data.infoDeComunicacion.titulo,
+        contenido: body.data.infoDeComunicacion.contenido,
+        tipo: 'infoDeComunicacion',
+        empresa,
+      },
+      infoDeFidelizacion: {
+        titulo: body.data.infoDeFidelizacion.titulo,
+        contenido: body.data.infoDeFidelizacion.contenido,
+        tipo: 'infoDeFidelizacion',
+        empresa,
+      },
+    };
 
     if (
       body.data.infoDeCategoria.titulo === '' &&
       body.data.infoDeCategoria.contenido === ''
     ) {
-      await mensajesAsesores.deleteOne({ _id: 'infoDeCategoria' });
+      await mensajesAsesores.deleteOne({ _id: `infoDeCategoria_${empresa}` });
     } else {
-      dataToInsert.push({
-        _id: 'infoDeCategoria',
-        ...body.data.infoDeCategoria,
-      });
+      // dataToInsert.push({
+      //   _id: `infoDeCategoria_${empresa}`,
+      //   tipo: 'infoDeCategoria',
+      //   empresa,
+      //   ...body.data.infoDeCategoria,
+      // });
       await mensajesAsesores.updateOne(
-        { _id: 'infoDeCategoria' },
-        { $set: body.data.infoDeCategoria },
+        { _id: `infoDeCategoria_${empresa}` },
+        { $set: dataToInsert.infoDeCategoria },
         { upsert: true }
       );
     }
@@ -68,15 +91,19 @@ async function handler(req, res) {
       body.data.infoDeComunicacion.titulo === '' &&
       body.data.infoDeComunicacion.contenido === ''
     ) {
-      await mensajesAsesores.deleteOne({ _id: 'infoDeComunicacion' });
-    } else {
-      dataToInsert.push({
-        _id: 'infoDeComunicacion',
-        ...body.data.infoDeComunicacion,
+      await mensajesAsesores.deleteOne({
+        _id: `infoDeComunicacion_${empresa}`,
       });
+    } else {
+      // dataToInsert.push({
+      //   _id: `infoDeComunicacion_${empresa}`,
+      //   tipo: 'infoDeComunicacion',
+      //   empresa,
+      //   ...body.data.infoDeComunicacion,
+      // });
       await mensajesAsesores.updateOne(
-        { _id: 'infoDeComunicacion' },
-        { $set: body.data.infoDeComunicacion },
+        { _id: `infoDeComunicacion_${empresa}` },
+        { $set: dataToInsert.infoDeComunicacion },
         { upsert: true }
       );
     }
@@ -85,15 +112,19 @@ async function handler(req, res) {
       body.data.infoDeFidelizacion.titulo === '' &&
       body.data.infoDeFidelizacion.contenido === ''
     ) {
-      await mensajesAsesores.deleteOne({ _id: 'infoDeFidelizacion' });
-    } else {
-      dataToInsert.push({
-        _id: 'infoDeFidelizacion',
-        ...body.data.infoDeFidelizacion,
+      await mensajesAsesores.deleteOne({
+        _id: `infoDeFidelizacion_${empresa}`,
       });
+    } else {
+      // dataToInsert.push({
+      //   _id: `infoDeFidelizacion_${empresa}`,
+      //   tipo: 'infoDeFidelizacion',
+      //   empresa,
+      //   ...body.data.infoDeFidelizacion,
+      // });
       await mensajesAsesores.updateOne(
-        { _id: 'infoDeFidelizacion' },
-        { $set: body.data.infoDeFidelizacion },
+        { _id: `infoDeFidelizacion_${empresa}` },
+        { $set: dataToInsert.infoDeFidelizacion },
         { upsert: true }
       );
     }

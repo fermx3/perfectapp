@@ -205,7 +205,7 @@ export async function getServerSideProps(context) {
 
   const avance = await getAvanceDeCuota(slug, yearMonth);
 
-  const mensajesAsesores = await getMensajesAsesores();
+  const mensajesAsesores = await getMensajesAsesores(empresa);
 
   return {
     props: {

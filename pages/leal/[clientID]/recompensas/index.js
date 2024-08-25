@@ -50,8 +50,9 @@ export async function getServerSideProps(context) {
 
   const leal = await getLeal(clientID);
   const nivelDeCliente = leal.nivelDeCliente.toLowerCase();
+  const empresa = session?.user?.empresa;
 
-  const recompensasLeal = await getRecompensasByNivel(nivelDeCliente);
+  const recompensasLeal = await getRecompensasByNivel(nivelDeCliente, empresa);
 
   if (!leal.datosLeal?.firstLoginDate) {
     return {

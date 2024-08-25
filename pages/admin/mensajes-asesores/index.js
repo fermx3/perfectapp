@@ -1,19 +1,23 @@
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+import Image from 'next/image';
+
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import FormControl from '@/components/forms/form-control';
 import FormGroup from '@/components/forms/form-group';
 import InputGroup from '@/components/forms/input-group';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 import Container from '@/components/layout/container';
+import Loader from '@/components/ui/loader';
+import Modal from '@/components/ui/modal';
+
 import { getMensajesAsesores } from '@/lib/db';
+
 import { actualizarMensajesSchema } from '@/lib/schemas/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { getSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import Loader from '@/components/ui/loader';
-import Image from 'next/image';
-import Modal from '@/components/ui/modal';
 
 export default function MensajesAsesoresPage({ mensajesAsesores }) {
   const {
@@ -248,8 +252,6 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
 
-  const mensajesAsesores = await getMensajesAsesores();
-
   if (!session || session.user.role !== 'ADMIN') {
     return {
       redirect: {
@@ -258,6 +260,9 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  const empresa = session?.user?.empresa;
+  const mensajesAsesores = await getMensajesAsesores(empresa);
 
   return {
     props: { session, mensajesAsesores },

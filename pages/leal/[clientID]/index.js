@@ -242,9 +242,9 @@ export async function getServerSideProps(context) {
 
   const avance = await getAvanceDeCuota(clientID, yearMonth);
 
-  const recompensasLeal = await getRecompensasByNivel(nivelDeCliente);
+  const recompensasLeal = await getRecompensasByNivel(nivelDeCliente, empresa);
 
-  const bannersLeales = await getBannersLeales();
+  const bannersLeales = await getBannersLeales(empresa);
 
   if (!leal.datosLeal?.firstLoginDate) {
     return {
