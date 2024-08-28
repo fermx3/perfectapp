@@ -227,7 +227,7 @@ export async function getServerSideProps(context) {
   }
 
   const empresa = session?.user?.empresa;
-  const { promocionesDelMes, skus } = await getSettings(empresa);
+  const { promocionesDelMes = [], skus } = await getSettings(empresa);
 
   const leal = await getLeal(clientID);
   const nivelDeCliente = leal.nivelDeCliente.toLowerCase();
