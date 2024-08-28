@@ -51,17 +51,17 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
 
     const finVisita = moment().format();
     //Upload to DB with finVisita
-    try {
+   /* try {*/
       const result = await uploadVisita(visitaActual, finVisita);
       console.log(result);
       setSuccessMessage(result.message);
-    } catch (error) {
+   /* } catch (error) {
       setErrorMessage(
         'Algo salio mal, intenta de nuevo o contacta al administrador.'
       );
       console.log(errorMessage);
       return;
-    }
+    }*/
 
     //Send to mail
 
