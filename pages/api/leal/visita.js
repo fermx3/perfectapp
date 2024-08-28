@@ -162,7 +162,7 @@ async function handler(req, res) {
       },
     });
 
-   /* try {
+    try {
       const mail = await transporter.sendMail({
         from: 'perfectapp',
         to: email1,
@@ -170,13 +170,15 @@ async function handler(req, res) {
         subject: 'Registro de Visita',
         html: htmlFormat,
       });
+
+      console.log(mail);
     } catch (error) {
       console.log(error);
       res.status(500).json({
         message:
           'No se pudo enviar el correo. Vuelve a intentar o contacta a un administrador.',
       });
-    }*/
+    }
 
     //Create record on DB
     const result = await visitas.insertOne({
