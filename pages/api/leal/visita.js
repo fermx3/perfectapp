@@ -148,6 +148,7 @@ async function handler(req, res) {
     const SMTPuser = process.env.SMTP_USERNAME;
     const SMTPpass = process.env.SMTP_PASSWORD;
     const email1 = process.env.EMAIL1;
+    const email2 = process.env.EMAIL2;
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -166,6 +167,7 @@ async function handler(req, res) {
       const mail = await transporter.sendMail({
         from: 'perfectapp',
         to: email1,
+        cc: email2,
         replyTo: SMTPuser,
         subject: 'Registro de Visita',
         html: htmlFormat,
