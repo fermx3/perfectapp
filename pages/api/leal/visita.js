@@ -27,6 +27,8 @@ async function handler(req, res) {
 
   const data = await req.body;
 
+  console.log(data);
+
   const htmlFormat = `
   <div>
         <h2>Resumen</h2>
