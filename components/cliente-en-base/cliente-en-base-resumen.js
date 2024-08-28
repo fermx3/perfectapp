@@ -53,7 +53,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
     //Upload to DB with finVisita
    /* try {*/
       const result = await uploadVisita(visitaActual, finVisita);
-      console.log(result);
+     /* console.log(result);*/
       setSuccessMessage(result.message);
    /* } catch (error) {
       setErrorMessage(
