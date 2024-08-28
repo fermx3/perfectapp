@@ -62,20 +62,7 @@ async function handler(req, res) {
           )}
           <p>Comentarios: ${data.comentarios1}</p>
         </div>
-        <div>
-          <h3>Promociones</h3>
-          <div>
-            <h4>Promociones del mes</h4>
-            ${data.promociones && (data.promociones.map(
-              (promocion) =>
-                `<div>
-                <h5>${promocion.promo}</h5>
-                <p>
-                  ${promocion.implementada ? 'Implementada' : 'NO implementada'}
-                </p>
-              </div>`
-            ))}
-          </div>
+       
           <div>
             <h4>Cuneta</h4>
             <p>
