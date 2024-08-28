@@ -27,8 +27,6 @@ async function handler(req, res) {
 
   const data = await req.body;
 
-  console.log(data);
-
   const htmlFormat = `
   <div>
         <h2>Resumen</h2>
@@ -199,6 +197,8 @@ async function handler(req, res) {
       empresa: session.user.empresa,
     });
 
+   console.log(result);
+    
     if (data.hayOrdenDeCompra) {
       const result2 = await ordenes.insertOne({
         _id: data.finVisita + data.numeroDeCliente + Math.random() * 1000,
