@@ -54,7 +54,8 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
    /* try {*/
       const result = await uploadVisita(visitaActual, finVisita);
      /* console.log(result);*/
-      setSuccessMessage(result.message);
+      /*setSuccessMessage(result.message);*/
+    setSuccessMessage('Enviado.')
    /* } catch (error) {
       setErrorMessage(
         'Algo salio mal, intenta de nuevo o contacta al administrador.'
