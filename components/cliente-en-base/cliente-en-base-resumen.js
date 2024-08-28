@@ -34,6 +34,9 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
 
     const responseData = await response.json();
 
+    console.log(response);
+    console.log(responseData);
+
     if (!response.ok) {
       throw new Error(responseData.error.message || 'Something went wrong');
     }
