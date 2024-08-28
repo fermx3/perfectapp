@@ -173,7 +173,7 @@ export async function getServerSideProps(context) {
   const empresa = session?.user?.empresa;
   const leal = await getLeal(slug);
   const {
-    promocionesDelMes,
+    promocionesDelMes = [],
     distribuidores,
     competidores,
     gramajes,
