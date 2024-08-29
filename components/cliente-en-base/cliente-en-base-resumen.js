@@ -34,9 +34,6 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
 
     const responseData = await response.json();
 
-    console.log(response);
-    console.log(responseData);
-
     if (!response.ok) {
       throw new Error(responseData.error.message || 'Something went wrong');
     }
@@ -53,9 +50,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
     //Upload to DB with finVisita
     try {
       const result = await uploadVisita(visitaActual, finVisita);
-      console.log(result);
       setSuccessMessage(result.message);
-    setSuccessMessage('Enviado.')
     } catch (error) {
       setErrorMessage(
         'Algo salio mal, intenta de nuevo o contacta al administrador.'
@@ -79,7 +74,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
     dispatch(resetStage());
     dispatch(setVisitaActual({}));
     setSuccessMessage('');
-    router.replace('/');
+    router.replace('/login');
   };
 
   return (
@@ -118,14 +113,20 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           <h3>Promociones</h3>
           <div>
             <h4>Promociones del mes</h4>
-            {visitaActual.promociones.map((promocion) => (
-              <div key={promocion.promo}>
-                <h5>{promocion.promo}</h5>
-                <p>
-                  {promocion.implementada ? 'Implementada' : 'NO implementada'}
-                </p>
-              </div>
-            ))}
+            {visitaActual.promociones.length > 0 ? (
+              visitaActual.promociones.map((promocion, index) => (
+                <div key={index}>
+                  <h5>{promocion.promo}</h5>
+                  <p>
+                    {promocion.implementada
+                      ? 'Implementada'
+                      : 'NO implementada'}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No hay promociones</p>
+            )}
           </div>
           <div>
             <h4>Cuneta</h4>
@@ -168,8 +169,8 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           <h3>Comunicación</h3>
           <div>
             <h4>Plan de comunicación del mes</h4>
-            {visitaActual.planDeComunicacion.map((material) => (
-              <div key={material.materiales}>
+            {visitaActual.planDeComunicacion.map((material, index) => (
+              <div key={index}>
                 <h5>{material.materiales}</h5>
                 <p>Alcance: {material.alcance ? 'Si' : 'No'}</p>
               </div>
@@ -177,8 +178,8 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           </div>
           <div>
             <h4>Implementación Materiales</h4>
-            {visitaActual.materiales.map((material) => (
-              <div key={material.material}>
+            {visitaActual.materiales.map((material, index) => (
+              <div key={index}>
                 <h5>{material.material}</h5>
                 <p>PoP: {material.pop ? 'Si' : 'No'}</p>
               </div>
@@ -186,8 +187,8 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           </div>
           <div>
             <h4>Implementación de Exhibición</h4>
-            {visitaActual.exhibiciones.map((exhibicion) => (
-              <div key={exhibicion.producto}>
+            {visitaActual.exhibiciones.map((exhibicion, index) => (
+              <div key={index}>
                 <h5>{exhibicion.producto}</h5>
                 <p>Periodo negociado: {exhibicion.periodoNegociado}</p>
                 <p>PoP: {exhibicion.pop ? 'Si' : 'No'}</p>

@@ -62,7 +62,24 @@ async function handler(req, res) {
           )}
           <p>Comentarios: ${data.comentarios1}</p>
         </div>
-       
+        <div>
+          <h3>Promociones</h3>
+          <div>
+            <h4>Promociones del mes</h4>
+            ${
+              data.promociones.length > 0
+                ? data.promociones.map(
+                    (promocion) =>
+                      `<div>
+                <h5>${promocion.promo}</h5>
+                <p>
+                  ${promocion.implementada ? 'Implementada' : 'NO implementada'}
+                </p>
+              </div>`
+                  )
+                : `<p>No hay promociones</p>`
+            }
+          </div>
           <div>
             <h4>Cuneta</h4>
             <p>
@@ -172,8 +189,6 @@ async function handler(req, res) {
         subject: 'Registro de Visita',
         html: htmlFormat,
       });
-
-      console.log(mail);
     } catch (error) {
       console.log(error);
       res.status(500).json({
@@ -188,8 +203,6 @@ async function handler(req, res) {
       empresa: session.user.empresa,
     });
 
-   console.log(result);
-    
     if (data.hayOrdenDeCompra) {
       const result2 = await ordenes.insertOne({
         _id: data.finVisita + data.numeroDeCliente + Math.random() * 1000,
@@ -201,12 +214,10 @@ async function handler(req, res) {
         ordenValidada: false,
         empresa: session.user.empresa,
       });
-
-      //Return success message if everything correct
-      res
-        .status(201)
-        .json({ message: 'Informacion enviada. Visita completa.' });
     }
+
+    //Return success message if everything correct
+    res.status(201).json({ message: 'Informacion enviada. Visita completa.' });
   }
 
   main()

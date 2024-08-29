@@ -1,14 +1,15 @@
+import Link from 'next/link';
+import { getSession } from 'next-auth/react';
+
 import ButtonGroup from '@/components/button-group';
 import Container from '@/components/layout/container';
+import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
+import { BUTTON_TYPE_CLASSES } from '@/components/button';
 
 import { getUsuario } from '@/lib/db';
-import { getSession } from 'next-auth/react';
 import { CldImage } from 'next-cloudinary';
 
 import classes from './index.module.scss';
-import Link from 'next/link';
-import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
-import { BUTTON_TYPE_CLASSES } from '@/components/button';
 
 export default function UsuarioPage({ usuario }) {
   const { userInfo, userId, role } = usuario;
