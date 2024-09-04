@@ -1,0 +1,26 @@
+@import '@/styles/variables.scss';
+
+.prospectos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+
+  .prospecto {
+    background-color: $white-color;
+    border-radius: $border-radius-2;
+    box-shadow: $white-shadow;
+    padding: 2rem;
+    list-style: none;
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin-top: 1rem;
+    }
+  }
+}

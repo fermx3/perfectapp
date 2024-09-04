@@ -64,6 +64,7 @@ async function handler(req, res) {
       ...response.data,
       asesor: session.user.userId,
       empresa: session.user.empresa,
+      fechaDeRegistro: new Date(),
     });
 
     res.status(201).json({ message: 'Cliente enviado!' });

@@ -64,7 +64,8 @@ export default function LealesQueRebasaronCuotaDisplay({
               key={leal._id}
               className={yaDuplicoPuntos ? classes.rebasado : classes.leal}
             >
-              <h3>{leal._id}</h3>
+              <h3>{leal.nombre}</h3>
+              <p>Número de usuario: {leal._id}</p>
               <p>Puntos generados: {leal.puntosGenerados}</p>
               {yaDuplicoPuntos && (
                 <p className={classes.yaDuplicoMessage}>
