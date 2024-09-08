@@ -12,11 +12,19 @@
   padding: 2rem;
   display: grid;
   grid-template-rows: 1fr;
-  max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
 
   // p {
   //   margin-bottom: 1rem;
   //   text-align: center;
   // }
+}
+
+@media (max-width: $mobile-size) {
+  .modal {
+    width: 90dvw;
+    height: 90dvh;
+    padding: 1rem;
+  }
 }
