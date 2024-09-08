@@ -1,11 +1,41 @@
+@import '@/styles/variables.scss';
+
 .leales {
-  list-style: none;
-  padding-left: 1rem;
-  border: 1px solid gray;
-  margin: -0.5rem 0.5rem 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: $white-color;
+  border-radius: 1rem;
+  box-shadow: $blue-shadow;
+  padding: 1rem;
+  margin-bottom: 3rem;
+  z-index: 9999;
 
   li {
-    margin-bottom: 0.2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: $white-color;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+    .nombre {
+      font-weight: 600;
+      width: fit-content;
+      text-align: center;
+    }
+
+    .id {
+      font-size: 0.8rem;
+      background: $grayed-blue-color;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      width: fit-content;
+    }
   }
 }
 

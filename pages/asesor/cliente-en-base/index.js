@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Link from 'next/link';
 import Container from '@/components/layout/container';
@@ -13,16 +14,37 @@ import { getSession } from 'next-auth/react';
 
 import classes from './index.module.scss';
 import { frecuencias } from '@/lib/schemas/schemas';
+import SelectInput from '@/components/forms/select-input';
 
 export default function ClienteEnBasePage({ lealesAsignados, userInfo }) {
   const [value, setValue] = useState('');
-  const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState();
+  const [frecuenciaIsSelected, setFrecuenciaIsSelected] = useState('');
 
   const filteredLeales = lealesAsignados.filter((leal) => {
     return leal.frecuencia.some((i) => i === frecuenciaIsSelected);
   });
 
   const router = useRouter();
+
+  const ulVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 1,
+        when: 'beforeChildren',
+        duration: 0.2,
+      },
+    },
+    exit: { opacity: 0, transition: { duration: 0.2 } },
+  };
+
+  const liVariants = {
+    hidden: { opacity: 0, x: 10 },
+    visible: { opacity: 1, x: 0 },
+    hover: { scale: 1.1 },
+    click: { scale: 0.9 },
+  };
 
   const listaChangeHandler = function (e) {
     const selectedUser = clientes.find(
@@ -65,49 +87,83 @@ export default function ClienteEnBasePage({ lealesAsignados, userInfo }) {
           />
         </FormControl>
         {value !== '' && (
-          <ul className={classes.leales}>
+          <motion.ul
+            className={classes.leales}
+            variants={ulVariants}
+            initial='hidden'
+            animate='visible'
+          >
             {lealesAsignados
               .filter((leal) => {
                 const searchTerm = value.toLowerCase();
                 const nombre = leal.nombre.toLowerCase();
-                return searchTerm && nombre.includes(searchTerm);
+                const central = leal.central.toLowerCase();
+                const userId = leal.userId.toLowerCase();
+                return (
+                  searchTerm &&
+                  (nombre.includes(searchTerm) ||
+                    central.includes(searchTerm) ||
+                    userId.includes(searchTerm))
+                );
               })
-              .map((leal) => (
-                <li key={leal.userId}>
-                  <Link href={`/asesor/cliente-en-base/${leal.userId}`}>
-                    {leal.nombre} ({leal.central})
-                  </Link>
-                </li>
+              .map((leal, index) => (
+                <Link
+                  key={index}
+                  href={`/asesor/cliente-en-base/${leal.userId}`}
+                >
+                  <motion.li
+                    variants={liVariants}
+                    whileHover='hover'
+                    whileTap='click'
+                  >
+                    <div className={classes.nombre}>
+                      {leal.nombre} ({leal.central})
+                    </div>
+                    <div className={classes.id}>{leal.userId}</div>
+                  </motion.li>
+                </Link>
               ))}
-          </ul>
+          </motion.ul>
         )}
         <h4>o</h4>
-        <FormControl inputType={INPUT_TYPE_CLASSES.fullWidth}>
-          <label>Día de visita</label>
-          <select onChange={(e) => setFrecuenciaIsSelected(e.target.value)}>
-            <option value={0} selected disabled hidden>
-              Elije una opción
-            </option>
-            {frecuencias.map((dia) => (
-              <option key={dia}>{dia}</option>
-            ))}
-          </select>
+        <FormControl label='Día de visita'>
+          <SelectInput
+            defaultValue={'Elige una opción'}
+            options={frecuencias}
+            value={frecuenciaIsSelected}
+            onChange={(e) => setFrecuenciaIsSelected(e.target.value)}
+          />
         </FormControl>
 
         {frecuenciaIsSelected && (
-          <ul className={classes.leales}>
+          <motion.ul
+            className={classes.leales}
+            variants={ulVariants}
+            initial='hidden'
+            animate='visible'
+          >
             {filteredLeales.length !== 0 ? (
-              filteredLeales.map((leal) => (
-                <li key={leal.nombre}>
-                  <Link href={`/asesor/cliente-en-base/${leal.userId}`}>
-                    {leal.nombre} ({leal.central})
-                  </Link>
-                </li>
+              filteredLeales.map((leal, index) => (
+                <Link
+                  key={index}
+                  href={`/asesor/cliente-en-base/${leal.userId}`}
+                >
+                  <motion.li
+                    variants={liVariants}
+                    whileHover='hover'
+                    whileTap='click'
+                  >
+                    <div className={classes.nombre}>
+                      {leal.nombre} ({leal.central})
+                    </div>
+                    <div className={classes.id}>{leal.userId}</div>
+                  </motion.li>
+                </Link>
               ))
             ) : (
               <li>No hay clientes para este día</li>
             )}
-          </ul>
+          </motion.ul>
         )}
       </main>
     </Container>
