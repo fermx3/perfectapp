@@ -18,7 +18,6 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data.ordenesParaValidar);
     const response = await fetch('/api/admin/validar-ordenes', {
       method: 'PATCH',
       headers: {
@@ -97,10 +96,21 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
 
               const nombreCliente = userNames.find(
                 (user) => user.userId === orden.cliente
-              ).nombre;
+              )?.nombre;
+
+              const nivelDeCliente = userNames.find(
+                (user) => user.userId === orden.cliente
+              )?.nivelDeCliente;
 
               return (
-                <tr key={index}>
+                <tr
+                  key={index}
+                  className={
+                    nivelDeCliente === 'Platinum'
+                      ? classes.platinum
+                      : classes.row
+                  }
+                >
                   <td>{orden.asesor}</td>
                   <td className={classes.clienteCol}>
                     {orden.cliente} <br />
@@ -136,6 +146,9 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
                       onClick={handleCheck}
                     />
                   </td>
+                  {nivelDeCliente === 'Platinum' && (
+                    <div className={classes.cuentaClave}>Cuenta clave</div>
+                  )}
                 </tr>
               );
             })}

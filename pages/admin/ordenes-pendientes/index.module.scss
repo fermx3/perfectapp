@@ -19,7 +19,7 @@
   }
 
   tbody {
-    tr {
+    .row {
       border-bottom: 1px solid #e0e0e0;
 
       td {
@@ -64,6 +64,27 @@
         input[type='checkbox']:checked::before {
           transform: scale(1);
         }
+      }
+    }
+
+    .platinum {
+      @extend .row;
+      background-color: #f9f6ef;
+      border: 1px solid $primary-color;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 1rem;
+      position: relative;
+
+      .cuentaClave {
+        font-weight: 600;
+        position: absolute;
+        left: 0.5rem;
+        bottom: 0.5rem;
+        background: $secondary-color;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        color: $white-color;
+        opacity: 0.5;
       }
     }
   }
