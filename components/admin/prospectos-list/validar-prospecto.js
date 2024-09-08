@@ -20,6 +20,7 @@ import {
 import ReactSwitch from 'react-switch';
 import Loader from '@/components/ui/loader';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function ValidarProspecto({
   prospecto,
@@ -286,7 +287,7 @@ export default function ValidarProspecto({
             </InputGroup>
             <input type='hidden' {...register('id')} />
             {isSubmitting && <Loader />}
-            <InputGroup>
+            <InputGroup className={classes.buttons}>
               <FormControl>
                 <Button
                   type='button'
@@ -315,6 +316,14 @@ export default function ValidarProspecto({
             </InputGroup>
           </form>
         </div>
+        <Image
+          className={classes.closeIcon}
+          src='/images/icons/close-circle.svg'
+          alt='Cerrar'
+          onClick={handleClose}
+          width={34}
+          height={34}
+        />
       </Modal>
     </ModalBackground>
   );

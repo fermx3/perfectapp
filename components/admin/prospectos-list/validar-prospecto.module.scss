@@ -1,4 +1,35 @@
+@import '@/styles/variables.scss';
+
 .container {
   min-height: 50vh;
   min-width: 50vw;
+  position: relative;
+
+  h2 {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid $grayed-blue-color;
+  }
+
+  button {
+    &:first-child {
+      margin-top: 3rem;
+    }
+  }
+}
+
+.closeIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .container {
+    h2 {
+      text-align: center;
+      margin-top: 1rem;
+    }
+  }
 }
