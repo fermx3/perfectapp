@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getLeal, getSettings } from '@/lib/db';
+import { getLeal, getSettings, getValorDePuntos } from '@/lib/db';
 
 import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import LayoutDashboard from '@/components/cliente/layout-dashboard';
@@ -48,6 +48,7 @@ export default function VisitaPage({
   materialesDeComunicacion,
   mensajesAsesores,
   avance,
+  valorDePuntos,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
@@ -96,7 +97,7 @@ export default function VisitaPage({
         puntos={leal.datosLeal?.puntosLeal}
         avance={avance}
         session={session}
-        valorDePuntos={leal.valorDePuntos}
+        valorDePuntos={valorDePuntos}
         skus={skus}
       />
       <Button
@@ -132,7 +133,7 @@ export default function VisitaPage({
             distribuidores={distribuidores}
             promociones={promocionesDisponibles}
             skus={skus}
-            valorDePuntos={leal.valorDePuntos}
+            valorDePuntos={valorDePuntos}
             cuotaPallets={leal.cuotaPallets}
             promocionesDisponibles={promocionesDisponibles}
             infoFidelizacion={mensajesAsesores.infoFidelizacion}
@@ -198,6 +199,8 @@ export async function getServerSideProps(context) {
 
   const mensajesAsesores = await getMensajesAsesores(empresa);
 
+  const valorDePuntos = await getValorDePuntos(empresa, nivelDeCliente);
+
   return {
     props: {
       session,
@@ -211,6 +214,7 @@ export async function getServerSideProps(context) {
       materialesDeComunicacion,
       mensajesAsesores,
       avance,
+      valorDePuntos,
     },
   };
 }

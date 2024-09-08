@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getSession } from 'next-auth/react';
-import { getSettings } from '@/lib/db';
+import { getSettings, getValorDePuntos } from '@/lib/db';
 import { getLeal } from '@/lib/db';
 import moment from 'moment';
 
@@ -36,6 +36,7 @@ export default function PanelDeLeal({
   recompensasLeal,
   bannersLeales,
   skus,
+  valorDePuntos,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(!leal.aceptoTyC);
   const [successMessage, setSuccessMessage] = useState('');
@@ -112,7 +113,7 @@ export default function PanelDeLeal({
               promocionesDisponibles={promocionesDisponibles}
               session={session}
               avance={avance}
-              valorDePuntos={leal.valorDePuntos}
+              valorDePuntos={valorDePuntos}
               skus={skus}
             />
             <div className={classes.recompensasSection} id='recompensas'>
@@ -246,6 +247,8 @@ export async function getServerSideProps(context) {
 
   const bannersLeales = await getBannersLeales(empresa);
 
+  const valorDePuntos = await getValorDePuntos(empresa, nivelDeCliente);
+
   if (!leal.datosLeal?.firstLoginDate) {
     return {
       redirect: {
@@ -264,6 +267,7 @@ export async function getServerSideProps(context) {
       recompensasLeal,
       bannersLeales,
       skus,
+      valorDePuntos,
     },
   };
 }

@@ -28,7 +28,7 @@ export default function AdminPage({
     },
     {
       titulo: 'Validar prospectos',
-      link: '#',
+      link: '/admin/validar-prospectos',
       desc: 'Validar prospectos que han sido agregados por asesores.',
     },
     {
