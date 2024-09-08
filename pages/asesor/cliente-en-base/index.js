@@ -81,7 +81,7 @@ export default function ClienteEnBasePage({ lealesAsignados, userInfo }) {
           </datalist> */}
           <input
             type='search'
-            placeholder='Busqueda por nombre'
+            placeholder='Busqueda por nombre, central o ID'
             onChange={(event) => setValue(event.target.value)}
             value={value}
           />
