@@ -67,13 +67,18 @@ export default function Dashboard({
           <div className={classes.cuadro}>
             <p>{cuotaTotal} cajas</p>
             <ul>
-              {Object.keys(cuota).map((key, i) => {
-                return (
-                  <li key={i}>
-                    {skus.find((sku) => sku.sku === key).producto}: {cuota[key]}
-                  </li>
-                );
-              })}
+              {Object.keys(cuota)
+                .sort()
+                .map((key, i) => {
+                  return (
+                    cuota[key] !== 0 && (
+                      <li key={i}>
+                        {skus.find((sku) => sku.sku === key).producto}:{' '}
+                        {cuota[key]}
+                      </li>
+                    )
+                  );
+                })}
             </ul>
           </div>
           <h5>Cuota del mes</h5>
