@@ -26,7 +26,15 @@ export default function Modal({ children, transparent }) {
     <ModalBackground>
       <div
         className={classes.modal}
-        style={transparent && { background: 'transparent', boxShadow: 'unset' }}
+        style={
+          transparent && {
+            background: 'transparent',
+            boxShadow: 'unset',
+            padding: '0',
+            width: 'unset',
+            height: 'unset',
+          }
+        }
       >
         {children}
       </div>
