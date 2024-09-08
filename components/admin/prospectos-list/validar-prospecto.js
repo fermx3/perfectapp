@@ -316,15 +316,15 @@ export default function ValidarProspecto({
             </InputGroup>
           </form>
         </div>
-        <Image
-          className={classes.closeIcon}
-          src='/images/icons/close-circle.svg'
-          alt='Cerrar'
-          onClick={handleClose}
-          width={34}
-          height={34}
-        />
       </Modal>
+      <Image
+        className={classes.closeIcon}
+        src='/images/icons/close-circle.svg'
+        alt='Cerrar'
+        onClick={handleClose}
+        width={34}
+        height={34}
+      />
     </ModalBackground>
   );
 }
