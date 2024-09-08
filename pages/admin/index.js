@@ -3,12 +3,17 @@ import Link from 'next/link';
 import { getSession } from 'next-auth/react';
 import Container from '@/components/layout/container';
 import LinksGroup from '@/components/ui/links-group';
-import { getLealesQueRebasaronCuota, getOrdenesSinValidar } from '@/lib/db';
+import {
+  getLealesQueRebasaronCuota,
+  getOrdenesSinValidar,
+  getProspectos,
+} from '@/lib/db';
 import moment from 'moment';
 
 export default function AdminPage({
   lealesQueRebasaronCuotaNumber,
   ordenesSinValidarNumber,
+  prospectosSinValidarNumber,
 }) {
   const links = [
     {
@@ -30,6 +35,7 @@ export default function AdminPage({
       titulo: 'Validar prospectos',
       link: '/admin/validar-prospectos',
       desc: 'Validar prospectos que han sido agregados por asesores.',
+      notificaciones: prospectosSinValidarNumber,
     },
     {
       titulo: 'Validar ventas',
@@ -81,7 +87,14 @@ export async function getServerSideProps(context) {
     await getLealesQueRebasaronCuota(lastMonth, empresa)
   ).length;
 
+  const prospectosSinValidarNumber = (await getProspectos(empresa)).length;
+
   return {
-    props: { session, lealesQueRebasaronCuotaNumber, ordenesSinValidarNumber },
+    props: {
+      session,
+      lealesQueRebasaronCuotaNumber,
+      ordenesSinValidarNumber,
+      prospectosSinValidarNumber,
+    },
   };
 }

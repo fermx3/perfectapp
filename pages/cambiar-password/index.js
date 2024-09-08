@@ -151,6 +151,18 @@ export default function CambiarPassPage() {
           {isSubmitting && <Loader />}
           <FormControl>
             <Button
+              type='button'
+              disabled={isSubmitting}
+              buttonType={
+                isSubmitting
+                  ? BUTTON_TYPE_CLASSES.disabled
+                  : BUTTON_TYPE_CLASSES.secondary
+              }
+              href={'/login'}
+            >
+              VOLVER
+            </Button>
+            <Button
               disabled={isSubmitting}
               buttonType={
                 isSubmitting

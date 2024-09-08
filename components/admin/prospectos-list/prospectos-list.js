@@ -23,13 +23,15 @@ export default function ProspectosList({ prospectos, zonas, skus }) {
       <ul className={classes.prospectos}>
         {prospectos.map((prospecto, index) => (
           <li key={index} className={classes.prospecto}>
-            <h3>{prospecto.nombre}</h3>
-            <p>Canal: {prospecto.canal}</p>
-            <p>Central: {prospecto.central}</p>
-            <p>Ubicación: {prospecto.ubicacion}</p>
-            <p>Grupo: {prospecto.grupo}</p>
-            <p>Nivel de cliente: {prospecto.nivelDeCliente}</p>
-            <p>Comentarios: {prospecto.comentarios}</p>
+            <div>
+              <h3>{prospecto.nombre}</h3>
+              <p>Canal: {prospecto.canal}</p>
+              <p>Central: {prospecto.central}</p>
+              <p>Ubicación: {prospecto.ubicacion}</p>
+              <p>Grupo: {prospecto.grupo}</p>
+              <p>Nivel de cliente: {prospecto.nivelDeCliente}</p>
+              <p>Comentarios: {prospecto.comentarios}</p>
+            </div>
             <Button
               type='button'
               buttonType={BUTTON_TYPE_CLASSES.secondary}

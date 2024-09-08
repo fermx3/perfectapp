@@ -139,6 +139,19 @@ export default function ActualizarDatosPage({ datosLeal }) {
           {isSubmitting && <Loader />}
           <FormControl>
             <Button
+              type='button'
+              disabled={isSubmitting}
+              buttonType={
+                isSubmitting
+                  ? BUTTON_TYPE_CLASSES.disabled
+                  : BUTTON_TYPE_CLASSES.secondary
+              }
+              href={`/leal/${datosLeal.userId}`}
+            >
+              VOLVER
+            </Button>
+            <Button
+              type='submit'
               disabled={isSubmitting || !isDirty}
               buttonType={
                 isSubmitting || !isDirty
