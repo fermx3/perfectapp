@@ -92,7 +92,7 @@ export default function VisitaPage({
         leales={leal.leales}
       />
       <Dashboard
-        cuota={leal.cuotaPallets}
+        cuota={leal.cuotaDelMes}
         promocionesDisponibles={promocionesDisponibles}
         puntos={leal.datosLeal?.puntosLeal}
         avance={avance}
@@ -134,7 +134,7 @@ export default function VisitaPage({
             promociones={promocionesDisponibles}
             skus={skus}
             valorDePuntos={valorDePuntos}
-            cuotaPallets={leal.cuotaPallets}
+            cuotaDelMes={leal.cuotaDelMes}
             promocionesDisponibles={promocionesDisponibles}
             infoFidelizacion={mensajesAsesores.infoFidelizacion}
           />

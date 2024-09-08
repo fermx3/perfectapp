@@ -2,20 +2,18 @@ import BackgroundGradientContainer from '@/components/layout/background-gradient
 import Container from '@/components/layout/container';
 import ProspectosList from '@/components/admin/prospectos-list/prospectos-list';
 import { getSession } from 'next-auth/react';
-import { getProspectos } from '@/lib/db';
+import { getProspectos, getSettings } from '@/lib/db';
 
-export default function ValidarProspectosPage({ prospectos }) {
+export default function ValidarProspectosPage({ prospectos, zonas, skus }) {
   return (
     <BackgroundGradientContainer>
       <Container>
         <header>
           <h1>Validar Prospectos</h1>
-          <h3>
-            Valida los prospectos que han sido agregados por los asesores.
-          </h3>
+          <p>Valida los prospectos que han sido agregados por los asesores.</p>
         </header>
         <main>
-          <ProspectosList prospectos={prospectos} />
+          <ProspectosList prospectos={prospectos} zonas={zonas} skus={skus} />
         </main>
       </Container>
     </BackgroundGradientContainer>
@@ -36,8 +34,9 @@ export async function getServerSideProps(context) {
 
   const empresa = session?.user?.empresa;
   const prospectos = await getProspectos(empresa);
+  const { zonas, skus } = await getSettings(empresa);
 
   return {
-    props: { session, prospectos },
+    props: { session, prospectos, zonas, skus },
   };
 }

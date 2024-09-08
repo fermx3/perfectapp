@@ -25,7 +25,7 @@ export default function ClienteEnBase2({
   infoFidelizacion,
   skus,
   valorDePuntos,
-  cuotaPallets,
+  cuotaDelMes,
   promocionesDisponibles,
 }) {
   const dispatch = useDispatch();
@@ -187,7 +187,7 @@ export default function ClienteEnBase2({
               }}
               rawSkus={skus}
               valorDePuntos={valorDePuntos}
-              cuotaPallets={cuotaPallets}
+              cuotaDelMes={cuotaDelMes}
               promocionesDisponibles={promocionesDisponibles}
             />
           </>

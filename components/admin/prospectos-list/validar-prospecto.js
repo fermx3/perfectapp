@@ -16,7 +16,12 @@ import {
 } from '@/lib/schemas/schemas';
 import ReactSwitch from 'react-switch';
 
-export default function ValidarProspecto({ prospecto, handleClose }) {
+export default function ValidarProspecto({
+  prospecto,
+  handleClose,
+  zonas,
+  skus,
+}) {
   const frecuenciasObj = frecuencias.reduce((acc, frecuencia) => {
     // frecuencia = frecuencia.toLowerCase();
     acc[frecuencia] = false;
@@ -31,6 +36,11 @@ export default function ValidarProspecto({ prospecto, handleClose }) {
     grupo: prospecto.grupo,
     nivelDeCliente: prospecto.nivelDeCliente,
     frecuencia: frecuenciasObj,
+    zona: '',
+    cuota: skus.reduce((acc, sku) => {
+      acc[sku.sku] = 0;
+      return acc;
+    }, {}),
   };
 
   //   console.log(defaultValues);
@@ -132,6 +142,27 @@ export default function ValidarProspecto({ prospecto, handleClose }) {
                 />
               </FormControl>
             </InputGroup>
+            <InputGroup>
+              <FormControl label='Asignar a zona:'>
+                <Controller
+                  name={'zona'}
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <SelectInput
+                      defaultValue={
+                        'Selecciona una zona para asignar al prospecto'
+                      }
+                      options={zonas}
+                      value={value}
+                      onChange={onChange}
+                    />
+                  )}
+                />
+              </FormControl>
+            </InputGroup>
             <h3>Dias de visita:</h3>
             <InputGroup>
               {frecuencias.map((frecuencia) => (
@@ -147,6 +178,17 @@ export default function ValidarProspecto({ prospecto, handleClose }) {
                         offColor='#d3d3d3'
                       />
                     )}
+                  />
+                </FormControl>
+              ))}
+            </InputGroup>
+            <h3>Cuota del mes (en cajas):</h3>
+            <InputGroup>
+              {skus.map((sku) => (
+                <FormControl key={sku.sku} label={sku.producto}>
+                  <input
+                    type='number'
+                    {...register(`cuota.${sku.sku}`, { valueAsNumber: true })}
                   />
                 </FormControl>
               ))}

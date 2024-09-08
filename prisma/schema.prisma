@@ -78,7 +78,7 @@ model users {
   role            Role
   userId          String           @unique
   userInfo        UserInfo
-  cuotaPallets    CuotaPallets?
+  cuotaDelMes     CuotaPallets?
   valorDePuntos   ValorDePuntos?
   planPromocional PlanPromocional?
   datosLeal       DatosLeal?

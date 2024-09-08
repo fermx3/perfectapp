@@ -108,7 +108,7 @@ export default function PanelDeLeal({
               )} */}
             </div>
             <Dashboard
-              cuota={leal.cuotaPallets}
+              cuota={leal.cuotaDelMes}
               puntos={leal.datosLeal?.puntosLeal}
               promocionesDisponibles={promocionesDisponibles}
               session={session}

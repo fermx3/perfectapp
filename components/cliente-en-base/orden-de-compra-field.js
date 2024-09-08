@@ -14,7 +14,7 @@ export default function OrdenDeCompraField({
   setValue,
   rawSkus,
   valorDePuntos,
-  cuotaPallets,
+  cuotaDelMes,
   promocionesDisponibles,
 }) {
   const { fields, append, remove } = useFieldArray({
@@ -29,7 +29,7 @@ export default function OrdenDeCompraField({
     let promo = 'No hay promo';
 
     puntos = Number(valorDePuntos[v.sku]);
-    objetivo = Number(cuotaPallets[v.sku]);
+    objetivo = Number(cuotaDelMes[v.sku]);
 
     promocionesDisponibles.map(
       (promocion) => v.sku === promocion.sku && (promo = promocion.desc)

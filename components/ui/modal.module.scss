@@ -12,6 +12,8 @@
   padding: 2rem;
   display: grid;
   grid-template-rows: 1fr;
+  max-height: 90vh;
+  overflow-y: auto;
 
   // p {
   //   margin-bottom: 1rem;

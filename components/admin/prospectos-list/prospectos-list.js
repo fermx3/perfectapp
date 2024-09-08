@@ -3,7 +3,7 @@ import classes from './prospectos-list.module.scss';
 import { useState } from 'react';
 import ValidarProspecto from './validar-prospecto';
 
-export default function ProspectosList({ prospectos }) {
+export default function ProspectosList({ prospectos, zonas, skus }) {
   const [prospecto, setProspecto] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,7 +41,12 @@ export default function ProspectosList({ prospectos }) {
         ))}
       </ul>
       {isModalOpen && (
-        <ValidarProspecto prospecto={prospecto} handleClose={closeModal} />
+        <ValidarProspecto
+          prospecto={prospecto}
+          handleClose={closeModal}
+          zonas={zonas}
+          skus={skus}
+        />
       )}
     </div>
   );
