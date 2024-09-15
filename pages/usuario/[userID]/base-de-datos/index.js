@@ -18,14 +18,14 @@ import InputGroup from '@/components/forms/input-group';
 import SelectInput from '@/components/forms/select-input';
 import { centrales, filtrarBaseSchema } from '@/lib/schemas/schemas';
 
+const bases = ['ventas', 'inventario', 'precios'];
+
 export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
   const { role, userId, userInfo } = usuario;
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
-
-  const clientes = ['Cliente 1', 'Cliente 2', 'Cliente 3', 'Cliente 4'];
 
   const {
     register,
@@ -38,30 +38,32 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
     defaultValues: {
       fechaInicio: '',
       fechaFin: '',
-      cliente: '',
-      central: '',
-      userID: userID,
+      base: '',
     },
     resolver: zodResolver(filtrarBaseSchema),
   });
 
-  const handleFullDownload = async function () {
-    router.push(linkVisitas);
-    // setIsLoading(true);
-    // const response = await fetch('/api/usuario/all-visitas', {
-    //   method: 'GET',
-    // });
+  // const handleFullDownload = async function () {
+  //   // router.push(linkVisitas);
+  //   setIsLoading(true);
+  //   const response = await fetch('/api/usuario/export', {
+  //     method: 'GET',
+  //   });
 
-    // const responseData = await response.json();
+  //   const responseData = await response.json();
 
-    // if (!response.ok) {
-    //   throw new Error(responseData.error.message || 'Something went wrong');
-    // }
+  //   if (!response.ok) {
+  //     throw new Error(
+  //       // responseData.error.message ||
+  //       'Something went wrong'
+  //     );
+  //   }
 
-    // setIsLoading(false);
-    // router.push('/tmp/visitas.csv');
-    // return responseData;
-  };
+  //   setIsLoading(false);
+
+  //   router.push(responseData.url);
+  //   return responseData;
+  // };
 
   const handleClick = function () {
     setSuccessMessage('');
@@ -69,7 +71,23 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
   };
 
   async function sendFiltros(data) {
-    const response = await fetch('/api/usuario/filtrar-base', {
+    let fetchURI = '';
+    switch (data.base) {
+      case 'ventas':
+        fetchURI = '/api/usuario/export-ventas';
+        break;
+      case 'inventario':
+        fetchURI = '/api/usuario/export-inventario';
+        break;
+      case 'precios':
+        fetchURI = '/api/usuario/export-precios';
+        break;
+      default:
+        fetchURI = '/api/usuario/export-ventas';
+        break;
+    }
+
+    const response = await fetch(fetchURI, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -96,18 +114,10 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
           type: 'server',
           message: errors.fechaFin,
         });
-      } else if (errors.cliente) {
-        setError('cliente', {
-          type: 'server',
-          message: errors.cliente,
-        });
-      } else if (errors.central) {
-        setError('central', {
-          type: 'server',
-          message: errors.central,
-        });
       }
     }
+
+    router.push(responseData.url);
 
     return responseData;
   }
@@ -160,23 +170,6 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
         />
         <div className={classes.section}>
           <h2>Descargar base de datos</h2>
-          <div>
-            <Button
-              onClick={handleFullDownload}
-              disabled={isLoading}
-              buttonType={
-                isLoading
-                  ? BUTTON_TYPE_CLASSES.disabled
-                  : BUTTON_TYPE_CLASSES.base
-              }
-            >
-              Descargar base de datos completa
-            </Button>
-            {isLoading && <Loader />}
-          </div>
-        </div>
-        <div className={classes.section}>
-          <h2>Solicitar base de datos</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputGroup>
               <FormControl
@@ -187,21 +180,27 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
                   type='date'
                   id='fechaInicio'
                   {...register('fechaInicio')}
+                  max={new Date().toISOString().split('T')[0]}
                 />
               </FormControl>
               <FormControl
                 label='Fecha de fin'
                 error={errors.fechaFin?.message}
               >
-                <input type='date' id='fechaFin' {...register('fechaFin')} />
+                <input
+                  type='date'
+                  id='fechaFin'
+                  {...register('fechaFin')}
+                  max={new Date().toISOString().split('T')[0]}
+                />
               </FormControl>
             </InputGroup>
-            <InputGroup>
+            {/* <InputGroup>
               <FormControl
                 label='Filtrar por cliente'
                 error={errors.cliente?.message}
               >
-                {/* Convertir a barra de busqueda */}
+                
                 <Controller
                   name={'cliente'}
                   control={control}
@@ -215,19 +214,19 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
                   )}
                 />
               </FormControl>
-            </InputGroup>
+            </InputGroup> */}
             <InputGroup>
               <FormControl
-                label='Filtrar por central de abastos'
-                error={errors.central?.message}
+                label='Selecciona la base de datos que necesitas'
+                error={errors.base?.message}
               >
                 <Controller
-                  name={'central'}
+                  name={'base'}
                   control={control}
                   render={({ field: { onChange, value } }) => (
                     <SelectInput
-                      defaultValue='Selecciona una central de abastos'
-                      options={centrales}
+                      defaultValue='Selecciona la base de datos que necesitas'
+                      options={bases}
                       value={value}
                       onChange={onChange}
                     />
@@ -235,7 +234,6 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
                 />
               </FormControl>
             </InputGroup>
-            <input type='hidden' value={userID} {...register('userID')} />
             {isSubmitting && <Loader />}
             <Button
               disabled={isSubmitting}
@@ -245,7 +243,7 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
                   : BUTTON_TYPE_CLASSES.base
               }
             >
-              Solicitar base de datos
+              Descargar base de datos
             </Button>
           </form>
         </div>
