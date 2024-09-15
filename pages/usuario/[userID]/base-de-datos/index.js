@@ -125,16 +125,14 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
   const onSubmit = async (data) => {
     setSuccessMessage('');
     setErrorMessage('');
-
-    console.log(data);
     // submit to server
     try {
       const result = await sendFiltros(data);
       //Successfuly send Filtros
       setSuccessMessage(result.message);
-      if (result.message) {
-        reset();
-      }
+      // if (result.message) {
+      //   reset();
+      // }
     } catch (error) {
       setErrorMessage(
         // error.message ||
@@ -195,26 +193,6 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
                 />
               </FormControl>
             </InputGroup>
-            {/* <InputGroup>
-              <FormControl
-                label='Filtrar por cliente'
-                error={errors.cliente?.message}
-              >
-                
-                <Controller
-                  name={'cliente'}
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      defaultValue='Selecciona un cliente'
-                      options={clientes}
-                      value={value}
-                      onChange={onChange}
-                    />
-                  )}
-                />
-              </FormControl>
-            </InputGroup> */}
             <InputGroup>
               <FormControl
                 label='Selecciona la base de datos que necesitas'
