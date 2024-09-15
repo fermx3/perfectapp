@@ -151,9 +151,13 @@ async function handler(req, res) {
       const json2csvParser = new Json2csvParser({ header: true });
       const csvData = json2csvParser.parse(ventas);
 
-      const blob = await put('temp/ventas/ventas.csv', csvData, {
-        access: 'public',
-      });
+      const blob = await put(
+        `temp/ventas/ventas_${data.fechaInicio}-${data.fechaFin}.csv`,
+        csvData,
+        {
+          access: 'public',
+        }
+      );
 
       res.status(200).json({ message: 'Ventas exportadas', url: blob.url });
     } finally {
