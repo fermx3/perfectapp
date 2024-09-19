@@ -40,7 +40,12 @@
         height: 30px;
       }
     }
-
+  }
+  .optionsMenuContainer {
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    margin-top: -4rem;
     .optionsMenu {
       display: flex;
       flex-direction: column;
@@ -49,10 +54,11 @@
       top: 70px;
       right: 10px;
       background-color: $white-color;
-      border-radius: 0 1rem 1rem;
+      border-radius: 0.5rem;
       box-shadow: $white-shadow;
       padding: 1rem;
       border: 1px solid $grayed-blue-color;
+      z-index: 10;
     }
   }
 
