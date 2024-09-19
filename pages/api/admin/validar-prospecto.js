@@ -86,7 +86,9 @@ async function handler(req, res) {
       return;
     }
     //
-    const hashedPassword = await hashPassword('SoyLeal2024');
+    const hashedPassword = await hashPassword(
+      process.env.DEFAULT_PASSWORD_LEALES
+    );
     const result = await users.insertOne({
       _id: userId,
       password: hashedPassword,

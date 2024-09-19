@@ -21,6 +21,7 @@ import ReactSwitch from 'react-switch';
 import Loader from '@/components/ui/loader';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import FormError from '@/components/ui/form-error';
 
 export default function ValidarProspecto({
   prospecto,
@@ -131,9 +132,12 @@ export default function ValidarProspecto({
   const onSubmit = async (data) => {
     try {
       const result = await validarProspecto(data);
+
       alert(result.message);
       if (result.errors) {
-        throw new Error('Algo salio mal, intenta de nuevo.');
+        throw new Error(
+          result.errors.message || 'Algo salio mal, intenta de nuevo.'
+        );
       }
       handleClose();
       router.reload();
@@ -257,6 +261,9 @@ export default function ValidarProspecto({
             </InputGroup>
             <h3>Dias de visita:</h3>
             <InputGroup>
+              {errors.frecuencia && (
+                <FormError>{errors.frecuencia?.root.message}</FormError>
+              )}
               {frecuencias.map((frecuencia) => (
                 <FormControl key={frecuencia} label={frecuencia}>
                   <Controller
