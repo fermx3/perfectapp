@@ -90,8 +90,8 @@ export default function Dashboard({
               {avance.map((id, i) => {
                 return (
                   <li key={i}>
-                    {skus.find((sku) => sku.sku === id._id).producto}:{' '}
-                    {id.cajas}
+                    {skus.find((sku) => sku.sku === id._id).producto || 'error'}
+                    : {id.cajas}
                   </li>
                 );
               })}
