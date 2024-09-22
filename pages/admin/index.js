@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { getSession } from 'next-auth/react';
 import Container from '@/components/layout/container';
 import LinksGroup from '@/components/ui/links-group';
@@ -14,6 +12,7 @@ export default function AdminPage({
   lealesQueRebasaronCuotaNumber,
   ordenesSinValidarNumber,
   prospectosSinValidarNumber,
+  session,
 }) {
   const links = [
     {
@@ -48,6 +47,11 @@ export default function AdminPage({
       link: '/admin/leales-que-rebasaron-cuota',
       desc: 'Muestra los leales que rebasaron cuota y permite duplicar los puntos del mes.',
       notificaciones: lealesQueRebasaronCuotaNumber || null,
+    },
+    {
+      titulo: 'Descargar bases de datos',
+      link: `usuario/${session?.user?.userId}/base-de-datos`,
+      desc: 'Descarga las bases de datos generadas por la aplicación.',
     },
   ];
 

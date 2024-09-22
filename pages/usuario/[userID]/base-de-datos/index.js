@@ -16,11 +16,11 @@ import classes from './index.module.scss';
 import FormControl from '@/components/forms/form-control';
 import InputGroup from '@/components/forms/input-group';
 import SelectInput from '@/components/forms/select-input';
-import { centrales, filtrarBaseSchema } from '@/lib/schemas/schemas';
+import { filtrarBaseSchema } from '@/lib/schemas/schemas';
 
 const bases = ['ventas', 'inventario', 'precios'];
 
-export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
+export default function BaseDeDatos({ usuario }) {
   const { role, userId, userInfo } = usuario;
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -145,29 +145,41 @@ export default function BaseDeDatos({ usuario, linkVisitas, userID }) {
   return (
     <BackgroundGradientContainer>
       <Container>
-        <h1>Bienvenido {userInfo.nombre}</h1>
-        <ButtonGroup
-          options={[
-            {
-              name: 'Resumen',
-              link: `/${role.toLowerCase()}/${userId}`,
-              buttonType: BUTTON_TYPE_CLASSES.secondary,
-            },
-            {
-              name: 'Base de datos',
-              link: `/${role.toLowerCase()}/${userId}/base-de-datos`,
-              buttonType: BUTTON_TYPE_CLASSES.secondary,
-            },
-            {
-              name: 'Ver PowerBI',
-              link: '#',
-              disabled: true,
-              buttonType: BUTTON_TYPE_CLASSES.secondary,
-            },
-          ]}
-        />
+        {usuario.role === 'USUARIO' ? (
+          <>
+            <h1>Bienvenido {userInfo.nombre}</h1>
+            <ButtonGroup
+              options={[
+                {
+                  name: 'Resumen',
+                  link: `/${role.toLowerCase()}/${userId}`,
+                  buttonType: BUTTON_TYPE_CLASSES.secondary,
+                },
+                {
+                  name: 'Base de datos',
+                  link: `/${role.toLowerCase()}/${userId}/base-de-datos`,
+                  buttonType: BUTTON_TYPE_CLASSES.secondary,
+                },
+                {
+                  name: 'Ver PowerBI',
+                  link: '#',
+                  disabled: true,
+                  buttonType: BUTTON_TYPE_CLASSES.secondary,
+                },
+              ]}
+            />
+          </>
+        ) : (
+          <>
+            <h1>Descargar base de datos</h1>
+            <p>
+              Descarga las bases de datos generadas por la aplicación.
+              Selecciona la base de datos que necesitas y el rango de fechas.
+            </p>
+          </>
+        )}
         <div className={classes.section}>
-          <h2>Descargar base de datos</h2>
+          {usuario.role === 'USUARIO' && <h2>Descargar base de datos</h2>}
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputGroup>
               <FormControl
@@ -248,11 +260,7 @@ export async function getServerSideProps(context) {
 
   const linkVisitas = process.env.LINK_BASE_VISITAS;
 
-  if (
-    !session ||
-    session.user.role !== 'USUARIO' ||
-    userID !== session.user.userId
-  ) {
+  if (!session || !['USUARIO', 'ADMIN'].includes(session.user.role)) {
     return {
       redirect: {
         destination: '/login',

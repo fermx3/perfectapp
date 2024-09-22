@@ -57,11 +57,7 @@ export async function getServerSideProps(context) {
 
   const usuario = await getUsuario(userID);
 
-  if (
-    !session ||
-    session.user.role !== 'USUARIO' ||
-    userID !== session.user.userId
-  ) {
+  if (!session || session.user.role !== 'USUARIO') {
     return {
       redirect: {
         destination: '/login',

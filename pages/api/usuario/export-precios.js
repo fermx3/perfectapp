@@ -16,7 +16,7 @@ async function handler(req, res) {
 
   const session = await getServerSession(req, res, authOptions);
 
-  if (!session || session.user.role !== 'USUARIO') {
+  if (!session || !['USUARIO', 'ADMIN'].includes(session.user.role)) {
     res.status(401).json({ error: { message: 'Not authenticated!' } });
     return;
   }
