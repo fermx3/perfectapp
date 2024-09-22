@@ -23,7 +23,7 @@ export default function AdminPage({
     },
     {
       titulo: 'Cambiar valor de puntos por cliente',
-      link: '#',
+      link: '/admin/cambiar-valor-puntos',
       desc: 'Cambia el valor de los puntos por cliente.',
     },
     {
