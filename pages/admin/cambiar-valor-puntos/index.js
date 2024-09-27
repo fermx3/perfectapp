@@ -162,7 +162,7 @@ export default function CambiarValorPuntosPage({ valorDePuntos }) {
                       : BUTTON_TYPE_CLASSES.base
                   }
                 >
-                  Actualizar mensajes
+                  Actualiza valor de puntos
                 </Button>
               </FormControl>
             </InputGroup>
