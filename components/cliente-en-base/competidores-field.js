@@ -15,6 +15,8 @@ export default function CompetidoresField({
   watch,
   competidores,
   gramajes,
+  numberOfSkus,
+  skusFormatted,
 }) {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -24,13 +26,35 @@ export default function CompetidoresField({
   return (
     <>
       {fields.map((competidor, index) => (
-        <FormGroup titulo={`Competidor ${index + 1}`} key={competidor.id}>
+        <FormGroup
+          titulo={
+            index >= numberOfSkus
+              ? `Competidor ${index - numberOfSkus + 1}`
+              : competidor.nombre
+          }
+          key={competidor.id}
+        >
+          {index < numberOfSkus && (
+            <p
+              style={{
+                color: '#3171f1',
+                fontSize: '0.8rem',
+                marginBottom: '1rem',
+              }}
+            >
+              En el caso de que el leal no maneje el producto llenar con 0
+              (cero) en el campo precio.
+            </p>
+          )}
           <FormControl error={errors.competidores?.[index]?.nombre?.message}>
             <Controller
               name={`competidores.${index}.nombre`}
               control={control}
               rules={{
-                required: true,
+                required: {
+                  value: true,
+                  message: 'Por favor selecciona un competidor',
+                },
               }}
               render={({ field: { onChange, value } }) => (
                 <SelectInput
@@ -38,6 +62,7 @@ export default function CompetidoresField({
                   options={competidores}
                   value={value}
                   onChange={onChange}
+                  locked={index < numberOfSkus}
                 />
               )}
             />
@@ -46,8 +71,10 @@ export default function CompetidoresField({
             nestIndex={index}
             {...{ control, register, getValues, watch, errors }}
             gramajes={gramajes}
+            numberOfSkus={numberOfSkus}
+            skusFormatted={skusFormatted}
           />
-          {index > 0 && (
+          {index > numberOfSkus - 1 && (
             <Button
               type='button'
               onClick={() => {
@@ -70,7 +97,7 @@ export default function CompetidoresField({
                   gramos: '',
                   precio: '',
                   hasPromo: false,
-                  precioConPromoReason: 'Puntos',
+                  precioConPromoReason: '',
                   pop: false,
                 },
               ],

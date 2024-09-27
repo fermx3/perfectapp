@@ -17,27 +17,65 @@ export default function ClienteEnBase1({
   competidores,
   gramajes,
   infoDeCategoria,
+  skus,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
 
-  const defaultValues = {
-    competidores: visitaActual.competidores || [
-      {
-        nombre: 'Iberia',
+  // Format skus for easier access
+  const skusFormatted = skus.reduce((acc, sku) => {
+    const [nombre, gramos] = sku.producto.split(' ');
+    const existingSku = acc.find((item) => item.nombre === nombre);
+
+    if (existingSku) {
+      existingSku.productos.push({
+        gramos: gramos,
+        precio: '',
+        hasPromo: false,
+        precioConPromoReason: '',
+        pop: false,
+      });
+    } else {
+      acc.push({
+        nombre,
         productos: [
           {
-            gramos: '',
+            gramos: gramos,
             precio: '',
             hasPromo: false,
             precioConPromoReason: '',
             pop: false,
           },
         ],
-      },
-    ],
+      });
+    }
+
+    return acc;
+  }, []);
+
+  const numberOfSkus = skusFormatted.length;
+
+  // Set default values for form fields based on visitaActual
+  const defaultValues = {
+    competidores: visitaActual.competidores || skusFormatted,
     comentarios1: visitaActual.comentarios1 || '',
   };
+
+  // // Add empty competidor if there are none in defaultValues
+  // if (defaultValues.competidores.length === 0) {
+  //   defaultValues.competidores[numberOfSkus] = {
+  //     nombre: '',
+  //     productos: [
+  //       {
+  //         gramos: '',
+  //         precio: '',
+  //         hasPromo: false,
+  //         precioConPromoReason: '',
+  //         pop: false,
+  //       },
+  //     ],
+  //   };
+  // }
 
   const {
     register,
@@ -90,6 +128,8 @@ export default function ClienteEnBase1({
           }}
           competidores={competidores}
           gramajes={gramajes}
+          numberOfSkus={numberOfSkus}
+          skusFormatted={skusFormatted}
         />
       </FormSection>
       {infoDeCategoria && (

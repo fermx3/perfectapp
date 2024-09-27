@@ -23,11 +23,20 @@ export default function ProductosField({
   watch,
   errors,
   gramajes,
+  skusFormatted,
+  numberOfSkus,
 }) {
   const { fields, remove, append } = useFieldArray({
     control,
     name: `competidores.${nestIndex}.productos`,
   });
+
+  const numberOfGrams =
+    nestIndex < numberOfSkus
+      ? skusFormatted.find(
+          (sku) => sku.nombre === getValues(`competidores.${nestIndex}.nombre`)
+        )?.productos?.length
+      : 0;
 
   const competidor = watch(`competidores.${nestIndex}`);
 
@@ -48,7 +57,10 @@ export default function ProductosField({
                 name={`competidores.${nestIndex}.productos.${k}.gramos`}
                 control={control}
                 rules={{
-                  required: true,
+                  required: {
+                    value: true,
+                    message: 'Por favor selecciona un gramaje',
+                  },
                 }}
                 render={({ field: { onChange, value } }) => (
                   <SelectInput
@@ -75,11 +87,13 @@ export default function ProductosField({
                   `competidores.${nestIndex}.productos.${k}.precio`,
                   {
                     required: 'Por favor llena este campo',
+                    valueAsNumber: true,
+                  },
+                  {
                     min: {
                       value: 1,
                       message: 'El valor debe ser igual o mayor a 1',
                     },
-                    valueAsNumber: true,
                   }
                 )}
               />
@@ -151,7 +165,7 @@ export default function ProductosField({
                 </FormControl>
               </>
             )}
-            {k > 0 && (
+            {k > numberOfGrams - 1 && (
               <Button type='button' onClick={() => remove(k)}>
                 <Image
                   src='/images/icons/delete.png'

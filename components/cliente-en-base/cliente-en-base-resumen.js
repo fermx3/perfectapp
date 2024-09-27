@@ -13,6 +13,7 @@ import {
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 import Modal from '../ui/modal';
+import ButtonGroup from '../button-group';
 
 export default function ClienteEnBaseResumen({ prevHandler }) {
   const dispatch = useDispatch();
@@ -197,18 +198,26 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           </div>
           <p>Comentarios: {visitaActual.comentarios3}</p>
         </div>
-        <Button type='button' onClick={prevHandler}>
-          Anterior
-        </Button>
-        <Button
-          type='button'
-          buttonType={
-            isSending ? BUTTON_TYPE_CLASSES.disabled : BUTTON_TYPE_CLASSES.base
-          }
-          onClick={submitHandler}
-        >
-          Guardar y enviar
-        </Button>
+        <ButtonGroup
+          options={[
+            {
+              name: 'Anterior',
+              onClick: prevHandler,
+              type: 'button',
+              buttonType: 'secondary',
+            },
+            {
+              name: 'Guardar y enviar',
+              buttonType: `${
+                isSending
+                  ? BUTTON_TYPE_CLASSES.disabled
+                  : BUTTON_TYPE_CLASSES.base
+              }`,
+              type: 'button',
+              onClick: submitHandler,
+            },
+          ]}
+        />
         {isSending && <Loader />}
       </Container>
       {(successMessage || errorMessage) && (

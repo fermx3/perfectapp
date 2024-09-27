@@ -122,6 +122,7 @@ export default function VisitaPage({
             competidores={competidores}
             gramajes={gramajes}
             infoDeCategoria={mensajesAsesores.infoDeCategoria}
+            skus={skus}
           />
         )}
       {visitaActual.inicioVisita &&

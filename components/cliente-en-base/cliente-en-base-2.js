@@ -17,6 +17,7 @@ import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 import InputGroup from '../forms/input-group';
 import InventarioField from './inventario-field';
 import ButtonGroup from '../button-group';
+import SelectInput from '../forms/select-input';
 
 export default function ClienteEnBase2({
   prevHandler,
@@ -139,22 +140,25 @@ export default function ClienteEnBase2({
           />
         </FormControl>
         {!hayOrden && (
-          <FormControl
-            label='¿Porqué no compra?'
-            error={errors.porqueNoCompra?.message}
-          >
-            <select
-              {...register('porqueNoCompra', {
-                required: 'Por favor escribe una razón por la que no compra.',
-              })}
-              placeholder='Selecciona una opción.'
-            >
-              {opcionesDeNoCompra.map((option) => (
-                <option value={option} key={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+          <FormControl error={errors.porqueNoCompra?.message}>
+            <Controller
+              name={`porqueNoCompra`}
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Por favor escribe una razón por la que no compra.',
+                },
+              }}
+              render={({ field: { onChange, value } }) => (
+                <SelectInput
+                  defaultValue='Selecciona una opción.'
+                  options={opcionesDeNoCompra}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
           </FormControl>
         )}
         {hayOrden && (

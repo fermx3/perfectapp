@@ -3,9 +3,23 @@ export default function SelectInput({
   options,
   value,
   onChange,
+  locked,
 }) {
   return (
-    <select onChange={onChange} value={value}>
+    <select
+      onChange={onChange}
+      value={value}
+      style={
+        locked
+          ? {
+              pointerEvents: 'none',
+              opacity: '0',
+              position: 'absolute',
+              zIndex: '-999',
+            }
+          : null
+      }
+    >
       <option value='' disabled>
         {defaultValue}
       </option>
