@@ -56,6 +56,7 @@ async function handler(req, res) {
             return acc;
           }, []),
         sku: promo.sku,
+        grupo: promo.grupo,
       };
     });
 

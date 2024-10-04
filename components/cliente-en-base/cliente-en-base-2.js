@@ -33,7 +33,10 @@ export default function ClienteEnBase2({
   const visitaActual = useSelector(selectVisitaActual);
 
   const promocionesObj = promocionesDisponibles.reduce(
-    (a, i) => [...a, { promo: i.desc, sku: i.sku, implementada: false }],
+    (a, i) => [
+      ...a,
+      { promo: i.desc, sku: i.sku, grupo: i.grupo, implementada: false },
+    ],
     []
   );
 
@@ -94,6 +97,13 @@ export default function ClienteEnBase2({
                   sku: {promocion.sku}
                 </span>
               </p>
+              {promocion.grupo && (
+                <p>
+                  <span {...register(`promociones.${index}.grupo`)}>
+                    grupo: {promocion.grupo}
+                  </span>
+                </p>
+              )}
               <FormControl label='¿Implementada?'>
                 <Controller
                   name={`promociones.${index}.implementada`}

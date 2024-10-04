@@ -9,14 +9,18 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import Loader from '@/components/ui/loader';
-import { getPromociones, getSettings } from '@/lib/db';
+import { getAllGrupos, getPromociones, getSettings } from '@/lib/db';
 import SelectInput from '@/components/forms/select-input';
 import { nivelesDeLeales } from '@/lib/schemas/schemas';
 import NivelDeClienteField from '@/components/admin/nivel-de-cliente-field';
 import Image from 'next/image';
 import Modal from '@/components/ui/modal';
 
-export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
+export default function PromocionesDelMesPage({
+  promocionesDelMes,
+  skus,
+  grupos,
+}) {
   const promociones = promocionesDelMes.reduce((acc, promo) => {
     acc.push({
       promo: promo.promo,
@@ -25,6 +29,7 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
         name: nivel.toLocaleLowerCase(),
         selected: promo.nivelDeCliente.includes(nivel.toLowerCase()),
       })),
+      grupo: promo.grupo,
     });
     return acc;
   }, []);
@@ -169,7 +174,10 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
                     name={`promociones.${index}.sku`}
                     control={control}
                     rules={{
-                      required: true,
+                      required: {
+                        value: true,
+                        message: 'Por favor selecciona un SKU',
+                      },
                     }}
                     render={({ field: { onChange, value } }) => (
                       <SelectInput
@@ -185,6 +193,7 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
                   <NivelDeClienteField
                     nestIndex={index}
                     {...{ control, register, getValues, watch, errors }}
+                    grupos={grupos}
                   />
                 </FormControl>
                 <Button
@@ -214,6 +223,7 @@ export default function PromocionesDelMesPage({ promocionesDelMes, skus }) {
                     name: nivel.toLocaleLowerCase(),
                     selected: false,
                   })),
+                  grupo: '',
                 })
               }
             >
@@ -268,7 +278,11 @@ export async function getServerSideProps(context) {
   const { promocionesDelMes } = await getPromociones(empresa);
   const { skus } = await getSettings(empresa);
 
+  const grupos = await getAllGrupos(empresa);
+
+  console.log('promocionesDelMes', promocionesDelMes);
+
   return {
-    props: { session, promocionesDelMes, skus },
+    props: { session, promocionesDelMes, skus, grupos },
   };
 }

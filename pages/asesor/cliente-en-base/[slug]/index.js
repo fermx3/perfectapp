@@ -174,6 +174,7 @@ export async function getServerSideProps(context) {
 
   const empresa = session?.user?.empresa;
   const leal = await getLeal(slug);
+
   const {
     promocionesDelMes = [],
     distribuidores,
@@ -187,12 +188,22 @@ export async function getServerSideProps(context) {
   const nivelDeCliente = leal.nivelDeCliente.toLowerCase();
   const promocionesDisponibles = promocionesDelMes
     .filter((promocion) => {
-      const promociones = promocion.nivelDeCliente.includes(nivelDeCliente);
+      const promociones = promocion.nivelDeCliente.includes('platinum')
+        ? promocion.nivelDeCliente.includes(nivelDeCliente) &&
+          promocion.grupo === leal.grupo
+        : promocion.nivelDeCliente.includes(nivelDeCliente);
+
       return promociones;
     })
-    .map((promocion) => ({ desc: promocion.promo, sku: promocion.sku }));
+    .map((promocion) => ({
+      desc: promocion.promo,
+      sku: promocion.sku,
+      grupo: promocion.grupo,
+    }));
   // const opcionesDeNoCompra = await getOpcionesDeNoCompra(empresa);
   // const distribuidores = await getDistribuidores(empresa);
+
+  console.log('promocionesDisponibles', promocionesDisponibles);
 
   const yearMonth = moment().format('YYYY-MM');
 

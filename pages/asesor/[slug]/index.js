@@ -108,7 +108,10 @@ export async function getServerSideProps(context) {
 
   const promocionesDisponibles = promocionesDelMes.map((promocion) => {
     const nivelDeClienteString = promocion.nivelDeCliente.join(', ');
-    return { desc: `${promocion.promo} [ ${nivelDeClienteString} ]` };
+    const grupo = promocion.grupo !== '' ? ` - ${promocion.grupo}` : '';
+    return {
+      desc: `${promocion.promo} [ ${nivelDeClienteString} ] ${grupo}`,
+    };
   });
 
   return {
