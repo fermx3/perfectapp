@@ -143,7 +143,7 @@ export default function ClienteEnBase1({
               Añadir evidencia de precios
             </Button>
           </FormControl>
-          {visitaActual.evidenciaPrecios.length > 0 && (
+          {visitaActual.evidenciaPrecios?.length > 0 && (
             <UploadedImagesGrid
               imagenes={visitaActual.evidenciaPrecios}
               visitaActual={visitaActual}
