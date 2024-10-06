@@ -19,6 +19,7 @@ import FormGroup from '../forms/form-group';
 
 import classes from './cliente-en-base-resumen.module.scss';
 import FormControl from '../forms/form-control';
+import UploadedImagesGrid from '../blob/uploaded-images-grid';
 
 export default function ClienteEnBaseResumen({ prevHandler }) {
   const dispatch = useDispatch();
@@ -41,18 +42,6 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
       },
     });
 
-    //Prepare Blobs
-    // if (!visitaActual.evidenciaPrecios?.files) {
-    //   throw new Error('No file selected');
-    // }
-
-    // const file = visitaActual.evidenciaPrecios.files[0];
-
-    // const newBlob = (await response.json())
-
-    // setBlob(newBlob);
-    //End Blobs
-
     const responseData = await response.json();
 
     if (!response.ok) {
@@ -71,7 +60,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
     //Upload to DB with finVisita
     try {
       const result = await uploadVisita(visitaActual, finVisita);
-      // setSuccessMessage(result.message);
+      setSuccessMessage(result.message);
     } catch (error) {
       setErrorMessage(
         'Algo salio mal, intenta de nuevo o contacta al administrador.'
@@ -92,10 +81,10 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
       return;
     }
 
-    // dispatch(resetStage());
-    // dispatch(setVisitaActual({}));
-    // setSuccessMessage('');
-    // router.replace('/login');
+    dispatch(resetStage());
+    dispatch(setVisitaActual({}));
+    setSuccessMessage('');
+    router.replace('/login');
   };
 
   return (
@@ -128,12 +117,18 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               ))}
             </InputGroup>
           ))}
-          <p className={classes.paragraph}>
-            Evidencias adjuntadas:{' '}
-            {visitaActual.evidenciaPrecios
-              ? visitaActual.evidenciaPrecios.length
-              : 'No'}
-          </p>
+          <div>
+            <h4>Evidencia de precios</h4>
+            {visitaActual.evidenciaPrecios.length === 0 ? (
+              <p className={classes.paragraph}>No hay evidencia de precios</p>
+            ) : (
+              <UploadedImagesGrid
+                imagenes={visitaActual.evidenciaPrecios}
+                visitaActual={visitaActual}
+                field='evidenciaPrecios'
+              />
+            )}
+          </div>
           <p className={classes.paragraph}>
             Comentarios: {visitaActual.comentarios1}
           </p>
@@ -194,6 +189,18 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               </div>
             )}
           </div>
+          <div>
+            <h4>Evidencia de compra</h4>
+            {visitaActual.evidenciaCompra.length === 0 ? (
+              <p className={classes.paragraph}>No hay evidencia de compra</p>
+            ) : (
+              <UploadedImagesGrid
+                imagenes={visitaActual.evidenciaCompra}
+                visitaActual={visitaActual}
+                field='evidenciaCompra'
+              />
+            )}
+          </div>
           <p className={classes.paragraph}>
             Comentarios: {visitaActual.comentarios2}
           </p>
@@ -227,6 +234,20 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
                 <p>PoP: {exhibicion.pop ? 'Si' : 'No'}</p>
               </div>
             ))}
+          </div>
+          <div>
+            <h4>Evidencia de comunicación</h4>
+            {visitaActual.evidenciaComunicacion.length === 0 ? (
+              <p className={classes.paragraph}>
+                No hay evidencia de comunicación
+              </p>
+            ) : (
+              <UploadedImagesGrid
+                imagenes={visitaActual.evidenciaComunicacion}
+                visitaActual={visitaActual}
+                field='evidenciaComunicacion'
+              />
+            )}
           </div>
           <p className={classes.paragraph}>
             Comentarios: {visitaActual.comentarios3}

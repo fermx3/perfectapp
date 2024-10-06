@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ReactSwitch from 'react-switch';
 import InfoMessage from '../ui/info-message';
-import Button from '../button';
+import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import FormSection from '../forms/form-section';
 import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import FormGroup from '../forms/form-group';
@@ -18,6 +18,11 @@ import InputGroup from '../forms/input-group';
 import InventarioField from './inventario-field';
 import ButtonGroup from '../button-group';
 import SelectInput from '../forms/select-input';
+import { useState } from 'react';
+import Image from 'next/image';
+import UploadedImagesGrid from '../blob/uploaded-images-grid';
+import Modal from '../ui/modal';
+import UploadImage from '../blob/upload-image-form';
 
 export default function ClienteEnBase2({
   prevHandler,
@@ -28,9 +33,13 @@ export default function ClienteEnBase2({
   valorDePuntos,
   cuotaDelMes,
   promocionesDisponibles,
+  userId,
+  lealId,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const promocionesObj = promocionesDisponibles.reduce(
     (a, i) => [
@@ -78,119 +87,58 @@ export default function ClienteEnBase2({
   const hayInventario = watch('cuentaConInventario');
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {infoFidelizacion && (
-        <InfoMessage
-          titulo={infoFidelizacion.titulo}
-          contenido={infoFidelizacion.contenido}
-        />
-      )}
-      <FormSection titulo='Promoción del mes'>
-        <InputGroup>
-          {fields.map((promocion, index) => (
-            <FormGroup key={promocion.id}>
-              <h4 {...register(`promociones.${index}.promo`)}>
-                {promocion.promo}
-              </h4>
-              <p>
-                <span {...register(`promociones.${index}.sku`)}>
-                  sku: {promocion.sku}
-                </span>
-              </p>
-              {promocion.grupo && (
-                <p>
-                  <span {...register(`promociones.${index}.grupo`)}>
-                    grupo: {promocion.grupo}
-                  </span>
-                </p>
-              )}
-              <FormControl label='¿Implementada?'>
-                <Controller
-                  name={`promociones.${index}.implementada`}
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <ReactSwitch checked={value} onChange={onChange} />
-                  )}
-                />
-              </FormControl>
-            </FormGroup>
-          ))}
-        </InputGroup>
-      </FormSection>
-      <FormSection titulo='Cuneta'>
-        <FormControl label='¿Cuenta con inventario?'>
-          <Controller
-            name={`cuentaConInventario`}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <ReactSwitch checked={value} onChange={onChange} />
-            )}
-          />
-        </FormControl>
-        {hayInventario && (
-          <InventarioField
-            {...{
-              control,
-              register,
-              defaultValues,
-              errors,
-              getValues,
-              setValue,
-            }}
-            rawSkus={skus}
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {infoFidelizacion && (
+          <InfoMessage
+            titulo={infoFidelizacion.titulo}
+            contenido={infoFidelizacion.contenido}
           />
         )}
-        <FormControl label='¿Orden de compra?'>
-          <Controller
-            name={`hayOrdenDeCompra`}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <ReactSwitch checked={value} onChange={onChange} />
-            )}
-          />
-        </FormControl>
-        {!hayOrden && (
-          <FormControl error={errors.porqueNoCompra?.message}>
+        <FormSection titulo='Promoción del mes'>
+          <InputGroup>
+            {fields.map((promocion, index) => (
+              <FormGroup key={promocion.id}>
+                <h4 {...register(`promociones.${index}.promo`)}>
+                  {promocion.promo}
+                </h4>
+                <p>
+                  <span {...register(`promociones.${index}.sku`)}>
+                    sku: {promocion.sku}
+                  </span>
+                </p>
+                {promocion.grupo && (
+                  <p>
+                    <span {...register(`promociones.${index}.grupo`)}>
+                      grupo: {promocion.grupo}
+                    </span>
+                  </p>
+                )}
+                <FormControl label='¿Implementada?'>
+                  <Controller
+                    name={`promociones.${index}.implementada`}
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <ReactSwitch checked={value} onChange={onChange} />
+                    )}
+                  />
+                </FormControl>
+              </FormGroup>
+            ))}
+          </InputGroup>
+        </FormSection>
+        <FormSection titulo='Cuneta'>
+          <FormControl label='¿Cuenta con inventario?'>
             <Controller
-              name={`porqueNoCompra`}
+              name={`cuentaConInventario`}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Por favor escribe una razón por la que no compra.',
-                },
-              }}
               render={({ field: { onChange, value } }) => (
-                <SelectInput
-                  defaultValue='Selecciona una opción.'
-                  options={opcionesDeNoCompra}
-                  value={value}
-                  onChange={onChange}
-                />
+                <ReactSwitch checked={value} onChange={onChange} />
               )}
             />
           </FormControl>
-        )}
-        {hayOrden && (
-          <>
-            <FormControl
-              label='Distribuidor:'
-              error={errors.distribuidor?.message}
-            >
-              <select
-                {...register('distribuidor', {
-                  required: 'Por favor selecciona un distribuidor.',
-                })}
-                placeholder='Distribuidor'
-              >
-                {distribuidores.map((option) => (
-                  <option value={option} key={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </FormControl>
-            <OrdenDeCompraField
+          {hayInventario && (
+            <InventarioField
               {...{
                 control,
                 register,
@@ -200,36 +148,148 @@ export default function ClienteEnBase2({
                 setValue,
               }}
               rawSkus={skus}
-              valorDePuntos={valorDePuntos}
-              cuotaDelMes={cuotaDelMes}
-              promocionesDisponibles={promocionesDisponibles}
             />
-          </>
-        )}
-      </FormSection>
-      <FormControl
-        label='Comentarios:'
-        inputType={INPUT_TYPE_CLASSES.fullWidth}
-        error={errors.comentarios2?.message}
-      >
-        <textarea
-          {...register('comentarios2', {
-            required: 'Por favor ingresa un comentario.',
-          })}
-          rows={4}
+          )}
+          <FormControl label='¿Orden de compra?'>
+            <Controller
+              name={`hayOrdenDeCompra`}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <ReactSwitch checked={value} onChange={onChange} />
+              )}
+            />
+          </FormControl>
+          {!hayOrden && (
+            <FormControl error={errors.porqueNoCompra?.message}>
+              <Controller
+                name={`porqueNoCompra`}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message:
+                      'Por favor escribe una razón por la que no compra.',
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <SelectInput
+                    defaultValue='Selecciona una opción.'
+                    options={opcionesDeNoCompra}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
+            </FormControl>
+          )}
+          {hayOrden && (
+            <>
+              <FormControl
+                label='Distribuidor:'
+                error={errors.distribuidor?.message}
+              >
+                <select
+                  {...register('distribuidor', {
+                    required: 'Por favor selecciona un distribuidor.',
+                  })}
+                  placeholder='Distribuidor'
+                >
+                  {distribuidores.map((option) => (
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </FormControl>
+              <OrdenDeCompraField
+                {...{
+                  control,
+                  register,
+                  defaultValues,
+                  errors,
+                  getValues,
+                  setValue,
+                }}
+                rawSkus={skus}
+                valorDePuntos={valorDePuntos}
+                cuotaDelMes={cuotaDelMes}
+                promocionesDisponibles={promocionesDisponibles}
+              />
+            </>
+          )}
+          {visitaActual.evidenciaCompra?.length > 0 && (
+            <UploadedImagesGrid
+              imagenes={visitaActual.evidenciaCompra}
+              visitaActual={visitaActual}
+              field='evidenciaCompra'
+              canDelete
+            />
+          )}
+          <FormControl>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.secondary}
+              type='button'
+              onClick={() => setIsModalOpen(true)}
+            >
+              <Image
+                src='/images/icons/camera.svg'
+                alt='Añadir evidencia'
+                width={20}
+                height={20}
+              />
+              Añadir evidencia de compra
+            </Button>
+          </FormControl>
+        </FormSection>
+        <FormControl
+          label='Comentarios:'
+          inputType={INPUT_TYPE_CLASSES.fullWidth}
+          error={errors.comentarios2?.message}
+        >
+          <textarea
+            {...register('comentarios2', {
+              required: 'Por favor ingresa un comentario.',
+            })}
+            rows={4}
+          />
+        </FormControl>
+        <ButtonGroup
+          options={[
+            {
+              name: 'Anterior',
+              onClick: prevHandler,
+              type: 'button',
+              buttonType: 'secondary',
+            },
+            { name: 'Siguiente', type: 'submit' },
+          ]}
         />
-      </FormControl>
-      <ButtonGroup
-        options={[
-          {
-            name: 'Anterior',
-            onClick: prevHandler,
-            type: 'button',
-            buttonType: 'secondary',
-          },
-          { name: 'Siguiente', type: 'submit' },
-        ]}
-      />
-    </form>
+      </form>
+      {isModalOpen && (
+        <Modal>
+          <Image
+            src='/images/icons/close-circle.svg'
+            alt='Cerrar'
+            width={20}
+            height={20}
+            onClick={() => setIsModalOpen(false)}
+            style={{
+              cursor: 'pointer',
+              position: 'absolute',
+              top: '1rem',
+              right: '1rem',
+            }}
+          />
+          <UploadImage
+            section='visitas'
+            userId={userId}
+            lealId={lealId}
+            visitaActual={visitaActual}
+            field='evidenciaCompra'
+            setIsModalOpen={setIsModalOpen}
+          />
+        </Modal>
+      )}
+    </>
   );
 }

@@ -160,7 +160,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
               </Button>
             </InputGroup>
           </FormGroup>
-          <FormGroup titulo='Info de Fidelizacion'>
+          <FormGroup titulo='Info de Fidelización'>
             <InputGroup>
               <FormControl label='Titulo'>
                 <input type='text' {...register('infoDeFidelizacion.titulo')} />
@@ -189,7 +189,7 @@ export default function MensajesAsesoresPage({ mensajesAsesores }) {
               </Button>
             </InputGroup>
           </FormGroup>
-          <FormGroup titulo='Info de Comunicacion'>
+          <FormGroup titulo='Info de Comunicación'>
             <InputGroup>
               <FormControl label='Titulo'>
                 <input type='text' {...register('infoDeComunicacion.titulo')} />

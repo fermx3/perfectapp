@@ -17,7 +17,6 @@ import UploadImage from '../blob/upload-image-form';
 import Modal from '../ui/modal';
 import Image from 'next/image';
 
-import classes from './cliente-en-base.module.scss';
 import UploadedImagesGrid from '../blob/uploaded-images-grid';
 
 export default function ClienteEnBase1({
@@ -128,6 +127,14 @@ export default function ClienteEnBase1({
             numberOfSkus={numberOfSkus}
             skusFormatted={skusFormatted}
           />
+          {visitaActual.evidenciaPrecios?.length > 0 && (
+            <UploadedImagesGrid
+              imagenes={visitaActual.evidenciaPrecios}
+              visitaActual={visitaActual}
+              field='evidenciaPrecios'
+              canDelete
+            />
+          )}
           <FormControl>
             <Button
               buttonType={BUTTON_TYPE_CLASSES.secondary}
@@ -143,13 +150,6 @@ export default function ClienteEnBase1({
               Añadir evidencia de precios
             </Button>
           </FormControl>
-          {visitaActual.evidenciaPrecios?.length > 0 && (
-            <UploadedImagesGrid
-              imagenes={visitaActual.evidenciaPrecios}
-              visitaActual={visitaActual}
-              field='evidenciaPrecios'
-            />
-          )}
         </FormSection>
         {infoDeCategoria && (
           <InfoMessage
@@ -192,6 +192,7 @@ export default function ClienteEnBase1({
             lealId={lealId}
             visitaActual={visitaActual}
             field='evidenciaPrecios'
+            setIsModalOpen={setIsModalOpen}
           />
         </Modal>
       )}

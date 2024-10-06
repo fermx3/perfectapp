@@ -7,8 +7,14 @@ import { useDispatch } from 'react-redux';
 import { setVisitaActual } from '@/store/visitaActual/visitaActual.reducer';
 import { useState } from 'react';
 import Loader from '../ui/loader';
+import Link from 'next/link';
 
-export default function UploadedImagesGrid({ imagenes, visitaActual, field }) {
+export default function UploadedImagesGrid({
+  imagenes,
+  visitaActual,
+  field,
+  canDelete,
+}) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const dispatch = useDispatch();
@@ -44,21 +50,22 @@ export default function UploadedImagesGrid({ imagenes, visitaActual, field }) {
             className={isDeleting ? classes.deletingImage : classes.image}
           >
             <Image src={evidencia} alt={`Imagen subida ${index}`} fill />
-            {isDeleting ? (
-              <Loader />
-            ) : (
-              <Button
-                buttonType={
-                  isDeleting
-                    ? BUTTON_TYPE_CLASSES.disabled
-                    : BUTTON_TYPE_CLASSES.secondary
-                }
-                type='button'
-                onClick={() => handleDeleteImage(index)}
-              >
-                Borrar imagen
-              </Button>
-            )}
+            {canDelete &&
+              (isDeleting ? (
+                <Loader />
+              ) : (
+                <Button
+                  buttonType={
+                    isDeleting
+                      ? BUTTON_TYPE_CLASSES.disabled
+                      : BUTTON_TYPE_CLASSES.secondary
+                  }
+                  type='button'
+                  onClick={() => handleDeleteImage(index)}
+                >
+                  Borrar imagen
+                </Button>
+              ))}
           </div>
         ))}
       </div>

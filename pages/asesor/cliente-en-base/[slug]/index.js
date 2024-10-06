@@ -140,6 +140,8 @@ export default function VisitaPage({
             cuotaDelMes={leal.cuotaDelMes}
             promocionesDisponibles={promocionesDisponibles}
             infoFidelizacion={mensajesAsesores.infoFidelizacion}
+            userId={session.user.userId}
+            lealId={leal.userId}
           />
         )}
       {visitaActual.inicioVisita &&
@@ -150,6 +152,8 @@ export default function VisitaPage({
             skus={skus}
             materialesDeComunicacion={materialesDeComunicacion}
             infoComunicacion={mensajesAsesores.infoComunicacion}
+            userId={session.user.userId}
+            lealId={leal.userId}
           />
         )}
       {visitaActual.inicioVisita &&

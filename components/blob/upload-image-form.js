@@ -13,6 +13,7 @@ export default function UploadImage({
   lealId,
   visitaActual,
   field,
+  setIsModalOpen,
 }) {
   const inputFileRef = useRef(null);
   const [blob, setBlob] = useState(null);
@@ -29,8 +30,11 @@ export default function UploadImage({
           event.preventDefault();
           setIsSending(true);
 
+          const year = new Date().getFullYear();
+          const month = new Date().getMonth() + 1;
+
           const file = inputFileRef.current.files[0];
-          const fileName = `${section}/${userId}/${lealId}/${file.name}`;
+          const fileName = `${section}/${year}/${month}/${userId}/${lealId}/${field}/${file.name}`;
 
           const response = await fetch(
             `/api/images/upload?filename=${fileName}`,
@@ -97,6 +101,17 @@ export default function UploadImage({
                   height={20}
                 />
                 Subir otra imagen
+              </Button>
+            </div>
+            <div className={classes.button}>
+              <Button
+                buttonType={BUTTON_TYPE_CLASSES.secondary}
+                type='button'
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
+              >
+                Cerrar
               </Button>
             </div>
           </div>

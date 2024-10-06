@@ -61,9 +61,21 @@ async function handler(req, res) {
               )}
             </div>`
           )}
-          <p>Evidencias adjuntadas: ${
-            data.evidenciaPrecios ? data.evidenciaPrecios.length : 'No'
-          }</p>
+          <div>
+            <h4>Evidencia de precios</h4>
+            ${
+              data.evidenciaPrecios.length === 0
+                ? `<p>No hay evidencia de precios</p>`
+                : `<ul>
+                  ${data.evidenciaPrecios.map(
+                    (imagen) =>
+                      `<li>
+                        <a href="${imagen}" target="_blank">${imagen}</a>
+                      </li>`
+                  )}
+                </ul>`
+            }
+          </div>
           <p>Comentarios: ${data.comentarios1}</p>
         </div>
         <div>
@@ -124,6 +136,21 @@ async function handler(req, res) {
                 `
             }
           </div>
+          <div>
+            <h4>Evidencia de compra</h4>
+            ${
+              data.evidenciaCompra.length === 0
+                ? `<p>No hay evidencia de compra</p>`
+                : `<ul>
+                  ${data.evidenciaCompra.map(
+                    (imagen) =>
+                      `<li>
+                         <a href="${imagen}" target="_blank">${imagen}</a>
+                      </li>`
+                  )}
+                </ul>`
+            }
+          </div> 
           <p>Comentarios: ${data.comentarios2}</p>
         </div>
         <div>
@@ -158,6 +185,22 @@ async function handler(req, res) {
                 <p>PoP: ${exhibicion.pop ? 'Si' : 'No'}</p>
               </div>`
             )}
+          </div>
+
+          <div>
+            <h4>Evidencia de comunicación</h4>
+            ${
+              data.evidenciaComunicacion.length === 0
+                ? `<p>No hay evidencia de comunicación</p>`
+                : `<ul>
+                  ${data.evidenciaComunicacion.map(
+                    (imagen) =>
+                      `<li>
+                        <a href="${imagen}" target="_blank">${imagen}</a>
+                      </li>`
+                  )}
+                </ul>`
+            }
           </div>
           <p>Comentarios: ${data.comentarios3}</p>
         </div>
@@ -201,8 +244,6 @@ async function handler(req, res) {
       });
     }
 
-    console.log();
-
     //Create record on DB
     const result = await visitas.insertOne({
       ...data,
@@ -219,6 +260,7 @@ async function handler(req, res) {
         orden: data.ordenDeCompra,
         ordenValidada: false,
         empresa: session.user.empresa,
+        evidenciaCompra: data.evidenciaCompra,
       });
     }
 
