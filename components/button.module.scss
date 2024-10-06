@@ -1,7 +1,10 @@
 @import '@/styles/variables';
 .button {
   background-color: $primary-color;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
   position: relative;
   padding: 0.6em 1.2em;
   // margin: 0.1em auto;
@@ -64,7 +67,7 @@
 
 @media all and (max-width: 575px) {
   .button {
-    display: block;
+    // display: flex;
     margin: auto;
     width: 100%;
   }

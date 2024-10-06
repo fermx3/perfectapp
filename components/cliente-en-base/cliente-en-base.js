@@ -1,8 +1,9 @@
-import { useForm } from 'react-hook-form';
+import { Form, useForm } from 'react-hook-form';
 import FormControl, { INPUT_TYPE_CLASSES } from '../forms/form-control';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 
-import Button from '../button';
+import Button, { BUTTON_TYPE_CLASSES } from '../button';
 import InfoMessage from '../ui/info-message';
 import FormSection from '../forms/form-section';
 import CompetidoresField from './competidores-field';
@@ -12,12 +13,20 @@ import {
   nextStage,
 } from '@/store/visitaActual/visitaActual.reducer';
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
+import UploadImage from '../blob/upload-image-form';
+import Modal from '../ui/modal';
+import Image from 'next/image';
+
+import classes from './cliente-en-base.module.scss';
+import UploadedImagesGrid from '../blob/uploaded-images-grid';
 
 export default function ClienteEnBase1({
   competidores,
   gramajes,
   infoDeCategoria,
   skus,
+  userId,
+  lealId,
 }) {
   const dispatch = useDispatch();
   const visitaActual = useSelector(selectVisitaActual);
@@ -58,24 +67,11 @@ export default function ClienteEnBase1({
   // Set default values for form fields based on visitaActual
   const defaultValues = {
     competidores: visitaActual.competidores || skusFormatted,
+    evidenciaPrecios: visitaActual.evidenciaPrecios || null,
     comentarios1: visitaActual.comentarios1 || '',
   };
 
-  // // Add empty competidor if there are none in defaultValues
-  // if (defaultValues.competidores.length === 0) {
-  //   defaultValues.competidores[numberOfSkus] = {
-  //     nombre: '',
-  //     productos: [
-  //       {
-  //         gramos: '',
-  //         precio: '',
-  //         hasPromo: false,
-  //         precioConPromoReason: '',
-  //         pop: false,
-  //       },
-  //     ],
-  //   };
-  // }
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     register,
@@ -113,44 +109,92 @@ export default function ClienteEnBase1({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormSection titulo='Assessment Producto - Empaque - Precio'>
-        <CompetidoresField
-          {...{
-            control,
-            register,
-            defaultValues,
-            getValues,
-            setValue,
-            errors,
-            watch,
-            setError,
-          }}
-          competidores={competidores}
-          gramajes={gramajes}
-          numberOfSkus={numberOfSkus}
-          skusFormatted={skusFormatted}
-        />
-      </FormSection>
-      {infoDeCategoria && (
-        <InfoMessage
-          titulo={infoDeCategoria.titulo}
-          contenido={infoDeCategoria.contenido}
-        />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormSection titulo='Assessment Producto - Empaque - Precio'>
+          <CompetidoresField
+            {...{
+              control,
+              register,
+              defaultValues,
+              getValues,
+              setValue,
+              errors,
+              watch,
+              setError,
+            }}
+            competidores={competidores}
+            gramajes={gramajes}
+            numberOfSkus={numberOfSkus}
+            skusFormatted={skusFormatted}
+          />
+          <FormControl>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.secondary}
+              type='button'
+              onClick={() => setIsModalOpen(true)}
+            >
+              <Image
+                src='/images/icons/camera.svg'
+                alt='Añadir evidencia'
+                width={20}
+                height={20}
+              />
+              Añadir evidencia de precios
+            </Button>
+          </FormControl>
+          {visitaActual.evidenciaPrecios.length > 0 && (
+            <UploadedImagesGrid
+              imagenes={visitaActual.evidenciaPrecios}
+              visitaActual={visitaActual}
+              field='evidenciaPrecios'
+            />
+          )}
+        </FormSection>
+        {infoDeCategoria && (
+          <InfoMessage
+            titulo={infoDeCategoria.titulo}
+            contenido={infoDeCategoria.contenido}
+          />
+        )}
+        <FormControl
+          label='Comentarios:'
+          inputType={INPUT_TYPE_CLASSES.fullWidth}
+          error={errors.comentarios1?.message}
+        >
+          <textarea
+            {...register('comentarios1', {
+              required: 'Por favor ingresa un comentario.',
+            })}
+            rows={4}
+          />
+        </FormControl>
+        <Button>Siguiente</Button>
+      </form>
+      {isModalOpen && (
+        <Modal>
+          <Image
+            src='/images/icons/close-circle.svg'
+            alt='Cerrar'
+            width={20}
+            height={20}
+            onClick={() => setIsModalOpen(false)}
+            style={{
+              cursor: 'pointer',
+              position: 'absolute',
+              top: '1rem',
+              right: '1rem',
+            }}
+          />
+          <UploadImage
+            section='visitas'
+            userId={userId}
+            lealId={lealId}
+            visitaActual={visitaActual}
+            field='evidenciaPrecios'
+          />
+        </Modal>
       )}
-      <FormControl
-        label='Comentarios:'
-        inputType={INPUT_TYPE_CLASSES.fullWidth}
-        error={errors.comentarios1?.message}
-      >
-        <textarea
-          {...register('comentarios1', {
-            required: 'Por favor ingresa un comentario.',
-          })}
-          rows={4}
-        />
-      </FormControl>
-      <Button>Siguiente</Button>
-    </form>
+    </>
   );
 }

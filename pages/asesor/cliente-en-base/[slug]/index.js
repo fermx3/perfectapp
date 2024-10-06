@@ -56,6 +56,8 @@ export default function VisitaPage({
 
   const router = useRouter();
 
+  console.log(leal.userId);
+
   function prevHandler() {
     dispatch(prevStage());
   }
@@ -123,6 +125,8 @@ export default function VisitaPage({
             gramajes={gramajes}
             infoDeCategoria={mensajesAsesores.infoDeCategoria}
             skus={skus}
+            userId={session.user.userId}
+            lealId={leal.userId}
           />
         )}
       {visitaActual.inicioVisita &&

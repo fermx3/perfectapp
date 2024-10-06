@@ -14,6 +14,11 @@ import {
 import { selectVisitaActual } from '@/store/visitaActual/visitaActual.selector';
 import Modal from '../ui/modal';
 import ButtonGroup from '../button-group';
+import InputGroup from '../forms/input-group';
+import FormGroup from '../forms/form-group';
+
+import classes from './cliente-en-base-resumen.module.scss';
+import FormControl from '../forms/form-control';
 
 export default function ClienteEnBaseResumen({ prevHandler }) {
   const dispatch = useDispatch();
@@ -27,11 +32,26 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
   async function uploadVisita(data, finVisita) {
     const response = await fetch('/api/leal/visita', {
       method: 'POST',
-      body: JSON.stringify({ ...data, finVisita: finVisita }),
+      body: JSON.stringify({
+        ...data,
+        finVisita: finVisita,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
+
+    //Prepare Blobs
+    // if (!visitaActual.evidenciaPrecios?.files) {
+    //   throw new Error('No file selected');
+    // }
+
+    // const file = visitaActual.evidenciaPrecios.files[0];
+
+    // const newBlob = (await response.json())
+
+    // setBlob(newBlob);
+    //End Blobs
 
     const responseData = await response.json();
 
@@ -51,7 +71,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
     //Upload to DB with finVisita
     try {
       const result = await uploadVisita(visitaActual, finVisita);
-      setSuccessMessage(result.message);
+      // setSuccessMessage(result.message);
     } catch (error) {
       setErrorMessage(
         'Algo salio mal, intenta de nuevo o contacta al administrador.'
@@ -72,25 +92,25 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
       return;
     }
 
-    dispatch(resetStage());
-    dispatch(setVisitaActual({}));
-    setSuccessMessage('');
-    router.replace('/login');
+    // dispatch(resetStage());
+    // dispatch(setVisitaActual({}));
+    // setSuccessMessage('');
+    // router.replace('/login');
   };
 
   return (
-    <>
-      <Container md>
-        <h2>Resumen</h2>
-        <div>
+    <div className={classes.resumenContainer}>
+      <Container>
+        <FormGroup>
+          <h2>Resumen</h2>
           <p>Asesor: {visitaActual.asesor}</p>
           <p>Cliente: {visitaActual.numeroDeCliente}</p>
-        </div>
-        <div>
+        </FormGroup>
+        <FormGroup>
           <h3>Competidores</h3>
           <p>Número de competidores: {visitaActual.competidores.length}</p>
           {visitaActual.competidores.map((competidor, index) => (
-            <div key={index}>
+            <InputGroup key={index}>
               <h4>{competidor.nombre}</h4>
               <h5>Productos:</h5>
               {competidor.productos.map((producto, index) => (
@@ -106,11 +126,19 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
                   <p>PoP: {producto.pop ? 'Si' : 'No'}</p>
                 </div>
               ))}
-            </div>
+            </InputGroup>
           ))}
-          <p>Comentarios: {visitaActual.comentarios1}</p>
-        </div>
-        <div>
+          <p className={classes.paragraph}>
+            Evidencias adjuntadas:{' '}
+            {visitaActual.evidenciaPrecios
+              ? visitaActual.evidenciaPrecios.length
+              : 'No'}
+          </p>
+          <p className={classes.paragraph}>
+            Comentarios: {visitaActual.comentarios1}
+          </p>
+        </FormGroup>
+        <FormGroup>
           <h3>Promociones</h3>
           <div>
             <h4>Promociones del mes</h4>
@@ -126,20 +154,20 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
                 </div>
               ))
             ) : (
-              <p>No hay promociones</p>
+              <p className={classes.paragraph}>No hay promociones</p>
             )}
           </div>
           <div>
             <h4>Cuneta</h4>
-            <p>
+            <p className={classes.paragraph}>
               Cuenta con inventario:{' '}
               {visitaActual.cuentaConInventario ? 'Si' : 'No'}
             </p>
             {visitaActual.cuentaConInventario && (
               <div>
                 <h5>Inventario:</h5>
-                {visitaActual.inventario.map((item) => (
-                  <div>
+                {visitaActual.inventario.map((item, index) => (
+                  <div key={index}>
                     <h6>{item.producto}</h6>
                     <p>{item.cajas} cajas</p>
                   </div>
@@ -150,8 +178,8 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               <div>
                 <h5>Orden de compra:</h5>
                 <p>Distribuidor: {visitaActual.distribuidor}</p>
-                {visitaActual.ordenDeCompra.map((item) => (
-                  <div>
+                {visitaActual.ordenDeCompra.map((item, index) => (
+                  <div key={index}>
                     <h6>{item.producto}</h6>
                     <p>{item.cajas} cajas</p>
                   </div>
@@ -159,14 +187,18 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               </div>
             ) : (
               <div>
-                <p>No hay orden de compra.</p>
-                <p>¿Porqué no compra?: {visitaActual.porqueNoCompra}</p>
+                <p className={classes.paragraph}>No hay orden de compra.</p>
+                <p className={classes.paragraph}>
+                  ¿Porqué no compra?: {visitaActual.porqueNoCompra}
+                </p>
               </div>
             )}
           </div>
-          <p>Comentarios: {visitaActual.comentarios2}</p>
-        </div>
-        <div>
+          <p className={classes.paragraph}>
+            Comentarios: {visitaActual.comentarios2}
+          </p>
+        </FormGroup>
+        <FormGroup>
           <h3>Comunicación</h3>
           <div>
             <h4>Plan de comunicación del mes</h4>
@@ -196,8 +228,10 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
               </div>
             ))}
           </div>
-          <p>Comentarios: {visitaActual.comentarios3}</p>
-        </div>
+          <p className={classes.paragraph}>
+            Comentarios: {visitaActual.comentarios3}
+          </p>
+        </FormGroup>
         <ButtonGroup
           options={[
             {
@@ -230,6 +264,6 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           </Button>
         </Modal>
       )}
-    </>
+    </div>
   );
 }

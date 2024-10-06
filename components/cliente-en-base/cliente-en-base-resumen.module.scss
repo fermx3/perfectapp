@@ -1,0 +1,41 @@
+@import '@/styles/variables.scss';
+
+.resumenContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    color: $tertiary-color;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 1rem;
+    color: $tertiary-color;
+    margin-top: 10px;
+    border-top: 1px solid $tertiary-color;
+    border-bottom: 1px solid $tertiary-color;
+  }
+
+  h5 {
+    font-size: 1rem;
+    color: $secondary-color;
+    margin-top: 10px;
+  }
+
+  .paragraph {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+}

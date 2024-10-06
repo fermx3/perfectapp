@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { put } from '@vercel/blob';
 
 import { MongoClient } from 'mongodb';
 import { getServerSession } from 'next-auth';
@@ -60,6 +61,9 @@ async function handler(req, res) {
               )}
             </div>`
           )}
+          <p>Evidencias adjuntadas: ${
+            data.evidenciaPrecios ? data.evidenciaPrecios.length : 'No'
+          }</p>
           <p>Comentarios: ${data.comentarios1}</p>
         </div>
         <div>
@@ -196,6 +200,8 @@ async function handler(req, res) {
           'No se pudo enviar el correo. Vuelve a intentar o contacta a un administrador.',
       });
     }
+
+    console.log();
 
     //Create record on DB
     const result = await visitas.insertOne({
