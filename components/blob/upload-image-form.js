@@ -44,7 +44,9 @@ export default function UploadImage({
 
           setBlob(newBlob);
 
-          const newArray = [...visitaActual[field], newBlob.url];
+          const newArray = visitaActual[field]
+            ? [...visitaActual[field], newBlob.url]
+            : [newBlob.url];
 
           dispatch(setVisitaActual({ ...visitaActual, [field]: newArray }));
           setIsSending(false);

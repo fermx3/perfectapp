@@ -56,8 +56,6 @@ export default function VisitaPage({
 
   const router = useRouter();
 
-  console.log(leal.userId);
-
   function prevHandler() {
     dispatch(prevStage());
   }
@@ -206,8 +204,6 @@ export async function getServerSideProps(context) {
     }));
   // const opcionesDeNoCompra = await getOpcionesDeNoCompra(empresa);
   // const distribuidores = await getDistribuidores(empresa);
-
-  console.log('promocionesDisponibles', promocionesDisponibles);
 
   const yearMonth = moment().format('YYYY-MM');
 

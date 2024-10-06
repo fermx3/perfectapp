@@ -39,19 +39,26 @@ export default function UploadedImagesGrid({ imagenes, visitaActual, field }) {
     <FormControl>
       <div className={classes.imageContainer}>
         {imagenes.map((evidencia, index) => (
-          <div className={classes.image} key={index}>
+          <div
+            key={index}
+            className={isDeleting ? classes.deletingImage : classes.image}
+          >
             <Image src={evidencia} alt={`Imagen subida ${index}`} fill />
-            <Button
-              buttonType={
-                isDeleting
-                  ? BUTTON_TYPE_CLASSES.disabled
-                  : BUTTON_TYPE_CLASSES.secondary
-              }
-              type='button'
-              onClick={() => handleDeleteImage(index)}
-            >
-              {isDeleting ? <Loader /> : 'Borrar imagen'}
-            </Button>
+            {isDeleting ? (
+              <Loader />
+            ) : (
+              <Button
+                buttonType={
+                  isDeleting
+                    ? BUTTON_TYPE_CLASSES.disabled
+                    : BUTTON_TYPE_CLASSES.secondary
+                }
+                type='button'
+                onClick={() => handleDeleteImage(index)}
+              >
+                Borrar imagen
+              </Button>
+            )}
           </div>
         ))}
       </div>
