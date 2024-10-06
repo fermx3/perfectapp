@@ -98,7 +98,7 @@ export default function BaseDeDatos({ usuario }) {
     const responseData = await response.json();
 
     if (!response.ok) {
-      throw new Error(responseData.error.message || 'Something went wrong!');
+      throw new Error(responseData.message || 'Something went wrong!');
     }
 
     if (responseData.errors) {
@@ -135,8 +135,8 @@ export default function BaseDeDatos({ usuario }) {
       // }
     } catch (error) {
       setErrorMessage(
-        // error.message ||
-        'Algo salio mal, intenta de nuevo o contacta al administrador.'
+        error.message ||
+          'Algo salio mal, intenta de nuevo o contacta al administrador.'
       );
       //Fail on create user
     }

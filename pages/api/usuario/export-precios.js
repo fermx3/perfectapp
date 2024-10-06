@@ -6,13 +6,13 @@ import { put } from '@vercel/blob';
 
 const Json2csvParser = require('json2csv').Parser;
 
-const uri = process.env.DATABASE_URL;
-const client = new MongoClient(uri);
-
 async function handler(req, res) {
   if (req.method !== 'POST') {
     return;
   }
+
+  const uri = process.env.DATABASE_URL;
+  const client = new MongoClient(uri);
 
   const session = await getServerSession(req, res, authOptions);
 
@@ -52,18 +52,14 @@ async function handler(req, res) {
               competidores: 1,
               finVisita: 1,
               evidenciaPrecios: 1,
-              inicioVisita: {
-                $dateFromString: {
-                  dateString: '$inicioVisita',
-                },
-              },
+              inicioVisita: 1,
             },
           },
           {
             $match: {
               inicioVisita: {
-                $gte: new Date(data.fechaInicio),
-                $lt: new Date(data.fechaFin),
+                $gte: data.fechaInicio,
+                $lt: data.fechaFin,
               },
             },
           },
@@ -154,8 +150,16 @@ async function handler(req, res) {
 
       // Print a message if no documents were found
       if (precios.length === 0) {
-        res.status(404).send({ message: 'No documents found!', url: '' });
-        console.log('No documents found!');
+        res.status(404).send({
+          message:
+            'No se encontró ningun documento correspondiente a las fechas señaladas',
+          url: '',
+        });
+        console.log(
+          'No se encontró ningun documento correspondiente a las fechas señaladas'
+        );
+        await client.close();
+        return;
       }
       // Print returned documents
 

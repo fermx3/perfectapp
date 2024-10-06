@@ -41,7 +41,9 @@ async function handler(req, res) {
         .toArray();
       // Print a message if no documents were found
       if ((await visitas.countDocuments({})) === 0) {
-        console.log('No documents found!');
+        console.log(
+          'No se encontró ningun documento correspondiente a las fechas señaladas'
+        );
       }
       // Print returned documents
 
