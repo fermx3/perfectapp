@@ -146,7 +146,7 @@ async function handler(req, res) {
 
       // Print a message if no documents were found
       if (ventas.length === 0) {
-        res.status(404).send({ message: 'No documents found!' });
+        res.status(404).send({ message: 'No documents found!', url: '' });
         console.log('No documents found!');
       }
       // Print returned documents
