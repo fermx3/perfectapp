@@ -52,6 +52,7 @@ async function handler(req, res) {
               numeroDeCliente: 1,
               ordenDeCompra: 1,
               finVisita: 1,
+              evidenciaCompra: 1,
               inicioVisita: {
                 $dateFromString: {
                   dateString: '$inicioVisita',
@@ -84,6 +85,7 @@ async function handler(req, res) {
               numeroDePromotor: 1,
               numeroDeCliente: 1,
               finVisita: 1,
+              evidenciaCompra: 1,
               cajas: '$ordenDeCompra.cajas',
             },
           },
@@ -136,6 +138,7 @@ async function handler(req, res) {
               ubicacion: '$clienteInfo.userInfo.ubicacion',
               canal: '$clienteInfo.userInfo.canal',
               prioridad: '$clienteInfo.userInfo.nivelDeCliente',
+              evidenciaCompra: 1,
             },
           },
         ])

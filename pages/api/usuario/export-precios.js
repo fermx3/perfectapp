@@ -51,6 +51,7 @@ async function handler(req, res) {
               numeroDeCliente: 1,
               competidores: 1,
               finVisita: 1,
+              evidenciaPrecios: 1,
               inicioVisita: {
                 $dateFromString: {
                   dateString: '$inicioVisita',
@@ -89,6 +90,7 @@ async function handler(req, res) {
               numeroDePromotor: 1,
               numeroDeCliente: 1,
               finVisita: 1,
+              evidenciaPrecios: 1,
               precio: '$competidores.productos.precio',
             },
           },
@@ -144,6 +146,7 @@ async function handler(req, res) {
               marca: 1,
               gramos: 1,
               precio: 1,
+              evidenciaPrecios: 1,
             },
           },
         ])

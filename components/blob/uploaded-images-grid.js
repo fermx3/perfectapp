@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { setVisitaActual } from '@/store/visitaActual/visitaActual.reducer';
 import { useState } from 'react';
 import Loader from '../ui/loader';
-import Link from 'next/link';
 
 export default function UploadedImagesGrid({
   imagenes,

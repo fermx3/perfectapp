@@ -119,14 +119,15 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           ))}
           <div>
             <h4>Evidencia de precios</h4>
-            {visitaActual.evidenciaPrecios.length === 0 ? (
-              <p className={classes.paragraph}>No hay evidencia de precios</p>
-            ) : (
+            {visitaActual.evidenciaPrecios &&
+            visitaActual.evidenciaPrecios?.length > 0 ? (
               <UploadedImagesGrid
-                imagenes={visitaActual.evidenciaPrecios}
+                imagenes={visitaActual.evidenciaPrecios || []}
                 visitaActual={visitaActual}
                 field='evidenciaPrecios'
               />
+            ) : (
+              <p className={classes.paragraph}>No hay evidencia de precios</p>
             )}
           </div>
           <p className={classes.paragraph}>
@@ -191,14 +192,15 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           </div>
           <div>
             <h4>Evidencia de compra</h4>
-            {visitaActual.evidenciaCompra.length === 0 ? (
-              <p className={classes.paragraph}>No hay evidencia de compra</p>
-            ) : (
+            {visitaActual.evidenciaCompra &&
+            visitaActual.evidenciaCompra?.length > 0 ? (
               <UploadedImagesGrid
-                imagenes={visitaActual.evidenciaCompra}
+                imagenes={visitaActual.evidenciaCompra || []}
                 visitaActual={visitaActual}
                 field='evidenciaCompra'
               />
+            ) : (
+              <p className={classes.paragraph}>No hay evidencia de compra</p>
             )}
           </div>
           <p className={classes.paragraph}>
@@ -237,16 +239,17 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
           </div>
           <div>
             <h4>Evidencia de comunicación</h4>
-            {visitaActual.evidenciaComunicacion.length === 0 ? (
-              <p className={classes.paragraph}>
-                No hay evidencia de comunicación
-              </p>
-            ) : (
+            {visitaActual.evidenciaCompra &&
+            visitaActual.evidenciaComunicacion?.length > 0 ? (
               <UploadedImagesGrid
-                imagenes={visitaActual.evidenciaComunicacion}
+                imagenes={visitaActual.evidenciaComunicacion || []}
                 visitaActual={visitaActual}
                 field='evidenciaComunicacion'
               />
+            ) : (
+              <p className={classes.paragraph}>
+                No hay evidencia de comunicación
+              </p>
             )}
           </div>
           <p className={classes.paragraph}>

@@ -64,9 +64,8 @@ async function handler(req, res) {
           <div>
             <h4>Evidencia de precios</h4>
             ${
-              data.evidenciaPrecios.length === 0
-                ? `<p>No hay evidencia de precios</p>`
-                : `<ul>
+              data.evidenciaPrecios?.length > 0
+                ? `<ul>
                   ${data.evidenciaPrecios.map(
                     (imagen) =>
                       `<li>
@@ -74,6 +73,7 @@ async function handler(req, res) {
                       </li>`
                   )}
                 </ul>`
+                : `<p>No hay evidencia de precios</p>`
             }
           </div>
           <p>Comentarios: ${data.comentarios1}</p>
@@ -139,9 +139,8 @@ async function handler(req, res) {
           <div>
             <h4>Evidencia de compra</h4>
             ${
-              data.evidenciaCompra.length === 0
-                ? `<p>No hay evidencia de compra</p>`
-                : `<ul>
+              data.evidenciaCompra?.length > 0
+                ? `<ul>
                   ${data.evidenciaCompra.map(
                     (imagen) =>
                       `<li>
@@ -149,6 +148,7 @@ async function handler(req, res) {
                       </li>`
                   )}
                 </ul>`
+                : `<p>No hay evidencia de compra</p>`
             }
           </div> 
           <p>Comentarios: ${data.comentarios2}</p>
@@ -190,9 +190,8 @@ async function handler(req, res) {
           <div>
             <h4>Evidencia de comunicación</h4>
             ${
-              data.evidenciaComunicacion.length === 0
-                ? `<p>No hay evidencia de comunicación</p>`
-                : `<ul>
+              data.evidenciaComunicacion?.length > 0
+                ? `<ul>
                   ${data.evidenciaComunicacion.map(
                     (imagen) =>
                       `<li>
@@ -200,6 +199,7 @@ async function handler(req, res) {
                       </li>`
                   )}
                 </ul>`
+                : `<p>No hay evidencia de comunicación</p>`
             }
           </div>
           <p>Comentarios: ${data.comentarios3}</p>
