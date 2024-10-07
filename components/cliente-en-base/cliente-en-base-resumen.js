@@ -89,195 +89,191 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
 
   return (
     <div className={classes.resumenContainer}>
-      <Container>
-        <FormGroup>
-          <h2>Resumen</h2>
-          <p>Asesor: {visitaActual.asesor}</p>
-          <p>Cliente: {visitaActual.numeroDeCliente}</p>
-        </FormGroup>
-        <FormGroup>
-          <h3>Competidores</h3>
-          <p>Número de competidores: {visitaActual.competidores.length}</p>
-          {visitaActual.competidores.map((competidor, index) => (
-            <InputGroup key={index}>
-              <h4>{competidor.nombre}</h4>
-              <h5>Productos:</h5>
-              {competidor.productos.map((producto, index) => (
-                <div key={index}>
-                  <p>Gramos: {producto.gramos}</p>
-                  <p>Precio: {producto.precio}</p>
-                  {producto.hasPromo && (
-                    <div>
-                      <p>Precio con promoción: {producto.precioConPromo}</p>
-                      <p>{producto.precioConPromoReason}</p>
-                    </div>
-                  )}
-                  <p>PoP: {producto.pop ? 'Si' : 'No'}</p>
-                </div>
-              ))}
-            </InputGroup>
-          ))}
-          <div>
-            <h4>Evidencia de precios</h4>
-            {visitaActual.evidenciaPrecios &&
-            visitaActual.evidenciaPrecios?.length > 0 ? (
-              <UploadedImagesGrid
-                imagenes={visitaActual.evidenciaPrecios || []}
-                visitaActual={visitaActual}
-                field='evidenciaPrecios'
-              />
-            ) : (
-              <p className={classes.paragraph}>No hay evidencia de precios</p>
-            )}
-          </div>
-          <p className={classes.paragraph}>
-            Comentarios: {visitaActual.comentarios1}
-          </p>
-        </FormGroup>
-        <FormGroup>
-          <h3>Promociones</h3>
-          <div>
-            <h4>Promociones del mes</h4>
-            {visitaActual.promociones.length > 0 ? (
-              visitaActual.promociones.map((promocion, index) => (
-                <div key={index}>
-                  <h5>{promocion.promo}</h5>
-                  <p>
-                    {promocion.implementada
-                      ? 'Implementada'
-                      : 'NO implementada'}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <p className={classes.paragraph}>No hay promociones</p>
-            )}
-          </div>
-          <div>
-            <h4>Cuneta</h4>
-            <p className={classes.paragraph}>
-              Cuenta con inventario:{' '}
-              {visitaActual.cuentaConInventario ? 'Si' : 'No'}
-            </p>
-            {visitaActual.cuentaConInventario && (
-              <div>
-                <h5>Inventario:</h5>
-                {visitaActual.inventario.map((item, index) => (
-                  <div key={index}>
-                    <h6>{item.producto}</h6>
-                    <p>{item.cajas} cajas</p>
+      <FormGroup>
+        <h2>Resumen</h2>
+        <p>Asesor: {visitaActual.asesor}</p>
+        <p>Cliente: {visitaActual.numeroDeCliente}</p>
+      </FormGroup>
+      <FormGroup>
+        <h3>Competidores</h3>
+        <p>Número de competidores: {visitaActual.competidores.length}</p>
+        {visitaActual.competidores.map((competidor, index) => (
+          <InputGroup key={index}>
+            <h4>{competidor.nombre}</h4>
+            <h5>Productos:</h5>
+            {competidor.productos.map((producto, index) => (
+              <div key={index}>
+                <p>Gramos: {producto.gramos}</p>
+                <p>Precio: {producto.precio}</p>
+                {producto.hasPromo && (
+                  <div>
+                    <p>Precio con promoción: {producto.precioConPromo}</p>
+                    <p>{producto.precioConPromoReason}</p>
                   </div>
-                ))}
+                )}
+                <p>PoP: {producto.pop ? 'Si' : 'No'}</p>
               </div>
-            )}
-            {visitaActual.hayOrdenDeCompra ? (
-              <div>
-                <h5>Orden de compra:</h5>
-                <p>Distribuidor: {visitaActual.distribuidor}</p>
-                {visitaActual.ordenDeCompra.map((item, index) => (
-                  <div key={index}>
-                    <h6>{item.producto}</h6>
-                    <p>{item.cajas} cajas</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div>
-                <p className={classes.paragraph}>No hay orden de compra.</p>
-                <p className={classes.paragraph}>
-                  ¿Porqué no compra?: {visitaActual.porqueNoCompra}
+            ))}
+          </InputGroup>
+        ))}
+        <div>
+          <h4>Evidencia de precios</h4>
+          {visitaActual.evidenciaPrecios &&
+          visitaActual.evidenciaPrecios?.length > 0 ? (
+            <UploadedImagesGrid
+              imagenes={visitaActual.evidenciaPrecios || []}
+              visitaActual={visitaActual}
+              field='evidenciaPrecios'
+            />
+          ) : (
+            <p className={classes.paragraph}>No hay evidencia de precios</p>
+          )}
+        </div>
+        <p className={classes.paragraph}>
+          Comentarios: {visitaActual.comentarios1}
+        </p>
+      </FormGroup>
+      <FormGroup>
+        <h3>Promociones</h3>
+        <div>
+          <h4>Promociones del mes</h4>
+          {visitaActual.promociones.length > 0 ? (
+            visitaActual.promociones.map((promocion, index) => (
+              <div key={index}>
+                <h5>{promocion.promo}</h5>
+                <p>
+                  {promocion.implementada ? 'Implementada' : 'NO implementada'}
                 </p>
               </div>
-            )}
-          </div>
-          <div>
-            <h4>Evidencia de compra</h4>
-            {visitaActual.evidenciaCompra &&
-            visitaActual.evidenciaCompra?.length > 0 ? (
-              <UploadedImagesGrid
-                imagenes={visitaActual.evidenciaCompra || []}
-                visitaActual={visitaActual}
-                field='evidenciaCompra'
-              />
-            ) : (
-              <p className={classes.paragraph}>No hay evidencia de compra</p>
-            )}
-          </div>
+            ))
+          ) : (
+            <p className={classes.paragraph}>No hay promociones</p>
+          )}
+        </div>
+        <div>
+          <h4>Cuneta</h4>
           <p className={classes.paragraph}>
-            Comentarios: {visitaActual.comentarios2}
+            Cuenta con inventario:{' '}
+            {visitaActual.cuentaConInventario ? 'Si' : 'No'}
           </p>
-        </FormGroup>
-        <FormGroup>
-          <h3>Comunicación</h3>
-          <div>
-            <h4>Plan de comunicación del mes</h4>
-            {visitaActual.planDeComunicacion.map((material, index) => (
-              <div key={index}>
-                <h5>{material.materiales}</h5>
-                <p>Alcance: {material.alcance ? 'Si' : 'No'}</p>
-              </div>
-            ))}
-          </div>
-          <div>
-            <h4>Implementación Materiales</h4>
-            {visitaActual.materiales.map((material, index) => (
-              <div key={index}>
-                <h5>{material.material}</h5>
-                <p>PoP: {material.pop ? 'Si' : 'No'}</p>
-              </div>
-            ))}
-          </div>
-          <div>
-            <h4>Implementación de Exhibición</h4>
-            {visitaActual.exhibiciones.map((exhibicion, index) => (
-              <div key={index}>
-                <h5>{exhibicion.producto}</h5>
-                <p>Periodo negociado: {exhibicion.periodoNegociado}</p>
-                <p>PoP: {exhibicion.pop ? 'Si' : 'No'}</p>
-              </div>
-            ))}
-          </div>
-          <div>
-            <h4>Evidencia de comunicación</h4>
-            {visitaActual.evidenciaCompra &&
-            visitaActual.evidenciaComunicacion?.length > 0 ? (
-              <UploadedImagesGrid
-                imagenes={visitaActual.evidenciaComunicacion || []}
-                visitaActual={visitaActual}
-                field='evidenciaComunicacion'
-              />
-            ) : (
+          {visitaActual.cuentaConInventario && (
+            <div>
+              <h5>Inventario:</h5>
+              {visitaActual.inventario.map((item, index) => (
+                <div key={index}>
+                  <h6>{item.producto}</h6>
+                  <p>{item.cajas} cajas</p>
+                </div>
+              ))}
+            </div>
+          )}
+          {visitaActual.hayOrdenDeCompra ? (
+            <div>
+              <h5>Orden de compra:</h5>
+              <p>Distribuidor: {visitaActual.distribuidor}</p>
+              {visitaActual.ordenDeCompra.map((item, index) => (
+                <div key={index}>
+                  <h6>{item.producto}</h6>
+                  <p>{item.cajas} cajas</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <p className={classes.paragraph}>No hay orden de compra.</p>
               <p className={classes.paragraph}>
-                No hay evidencia de comunicación
+                ¿Porqué no compra?: {visitaActual.porqueNoCompra}
               </p>
-            )}
-          </div>
-          <p className={classes.paragraph}>
-            Comentarios: {visitaActual.comentarios3}
-          </p>
-        </FormGroup>
-        <ButtonGroup
-          options={[
-            {
-              name: 'Anterior',
-              onClick: prevHandler,
-              type: 'button',
-              buttonType: 'secondary',
-            },
-            {
-              name: 'Guardar y enviar',
-              buttonType: `${
-                isSending
-                  ? BUTTON_TYPE_CLASSES.disabled
-                  : BUTTON_TYPE_CLASSES.base
-              }`,
-              type: 'button',
-              onClick: submitHandler,
-            },
-          ]}
-        />
-        {isSending && <Loader />}
-      </Container>
+            </div>
+          )}
+        </div>
+        <div>
+          <h4>Evidencia de compra</h4>
+          {visitaActual.evidenciaCompra &&
+          visitaActual.evidenciaCompra?.length > 0 ? (
+            <UploadedImagesGrid
+              imagenes={visitaActual.evidenciaCompra || []}
+              visitaActual={visitaActual}
+              field='evidenciaCompra'
+            />
+          ) : (
+            <p className={classes.paragraph}>No hay evidencia de compra</p>
+          )}
+        </div>
+        <p className={classes.paragraph}>
+          Comentarios: {visitaActual.comentarios2}
+        </p>
+      </FormGroup>
+      <FormGroup>
+        <h3>Comunicación</h3>
+        <div>
+          <h4>Plan de comunicación del mes</h4>
+          {visitaActual.planDeComunicacion.map((material, index) => (
+            <div key={index}>
+              <h5>{material.materiales}</h5>
+              <p>Alcance: {material.alcance ? 'Si' : 'No'}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h4>Implementación Materiales</h4>
+          {visitaActual.materiales.map((material, index) => (
+            <div key={index}>
+              <h5>{material.material}</h5>
+              <p>PoP: {material.pop ? 'Si' : 'No'}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h4>Implementación de Exhibición</h4>
+          {visitaActual.exhibiciones.map((exhibicion, index) => (
+            <div key={index}>
+              <h5>{exhibicion.producto}</h5>
+              <p>Periodo negociado: {exhibicion.periodoNegociado}</p>
+              <p>PoP: {exhibicion.pop ? 'Si' : 'No'}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h4>Evidencia de comunicación</h4>
+          {visitaActual.evidenciaCompra &&
+          visitaActual.evidenciaComunicacion?.length > 0 ? (
+            <UploadedImagesGrid
+              imagenes={visitaActual.evidenciaComunicacion || []}
+              visitaActual={visitaActual}
+              field='evidenciaComunicacion'
+            />
+          ) : (
+            <p className={classes.paragraph}>
+              No hay evidencia de comunicación
+            </p>
+          )}
+        </div>
+        <p className={classes.paragraph}>
+          Comentarios: {visitaActual.comentarios3}
+        </p>
+      </FormGroup>
+      <ButtonGroup
+        options={[
+          {
+            name: 'Anterior',
+            onClick: prevHandler,
+            type: 'button',
+            buttonType: 'secondary',
+          },
+          {
+            name: 'Guardar y enviar',
+            buttonType: `${
+              isSending
+                ? BUTTON_TYPE_CLASSES.disabled
+                : BUTTON_TYPE_CLASSES.base
+            }`,
+            type: 'button',
+            onClick: submitHandler,
+          },
+        ]}
+      />
+      {isSending && <Loader />}
       {(successMessage || errorMessage) && (
         <Modal>
           <p style={{ marginBottom: '1rem' }}>

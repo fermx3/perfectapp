@@ -4,10 +4,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 20px;
+  max-width: 100vw;
 
   h2 {
     font-size: 1.5rem;
@@ -15,7 +16,7 @@
   }
 
   h3 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: $tertiary-color;
     margin-bottom: 10px;
   }
@@ -37,5 +38,11 @@
   .paragraph {
     font-size: 1rem;
     margin-top: 10px;
+  }
+}
+
+@media (max-width: $mobile-size) {
+  .resumenContainer {
+    padding: 0;
   }
 }
