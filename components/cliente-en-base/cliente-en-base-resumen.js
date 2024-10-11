@@ -236,7 +236,7 @@ export default function ClienteEnBaseResumen({ prevHandler }) {
         </div>
         <div>
           <h4>Evidencia de comunicación</h4>
-          {visitaActual.evidenciaCompra &&
+          {visitaActual.evidenciaComunicacion &&
           visitaActual.evidenciaComunicacion?.length > 0 ? (
             <UploadedImagesGrid
               imagenes={visitaActual.evidenciaComunicacion || []}

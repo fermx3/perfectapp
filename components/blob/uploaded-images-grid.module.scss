@@ -37,7 +37,7 @@
     @extend .image;
 
     opacity: 0.5;
-    animation: fadeOut 0.5s infinite;
+    animation: fadeOut 5s infinite;
 
     @keyframes fadeOut {
       0% {
