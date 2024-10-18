@@ -1,4 +1,3 @@
-import CrearLealForm from '@/components/admin/crear-leal-form';
 import ClienteNuevoForm from '@/components/asesor/cliente-nuevo-form';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
 import Container from '@/components/layout/container';

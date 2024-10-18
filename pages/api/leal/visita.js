@@ -213,6 +213,7 @@ async function handler(req, res) {
     const SMTPpass = process.env.SMTP_PASSWORD;
     const email1 = process.env.EMAIL1;
     const email2 = process.env.EMAIL2;
+    const email3 = process.env.EMAIL3;
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -232,6 +233,7 @@ async function handler(req, res) {
         from: 'perfectapp',
         to: email1,
         cc: email2,
+        cco: email3,
         replyTo: SMTPuser,
         subject: 'Registro de Visita',
         html: htmlFormat,
