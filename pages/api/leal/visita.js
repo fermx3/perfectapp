@@ -233,7 +233,7 @@ async function handler(req, res) {
         from: 'perfectapp',
         to: email1,
         cc: email2,
-        cco: email3,
+        bcc: email3,
         replyTo: SMTPuser,
         subject: 'Registro de Visita',
         html: htmlFormat,
