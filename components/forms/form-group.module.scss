@@ -13,3 +13,18 @@
   box-shadow: $white-shadow;
   margin-bottom: 1rem;
 }
+
+.lockedContainer {
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: center;
+  background-color: $grayed-blue-color;
+  border-radius: $border-radius-2;
+  padding: 1.2rem 3rem;
+  min-height: 150px;
+  position: relative;
+  box-shadow: $inner-shadow;
+  margin-bottom: 1rem;
+  pointer-events: none;
+}

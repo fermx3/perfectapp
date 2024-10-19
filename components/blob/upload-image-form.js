@@ -24,7 +24,6 @@ export default function UploadImage({
   return (
     <>
       <h3>Sube tu imagen</h3>
-
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -34,7 +33,9 @@ export default function UploadImage({
           const month = new Date().getMonth() + 1;
 
           const file = inputFileRef.current.files[0];
-          const fileName = `${section}/${year}/${month}/${userId}/${lealId}/${field}/${file.name}`;
+          const fileName = lealId
+            ? `${section}/${year}/${month}/${userId}/${lealId}/${field}/${file.name}`
+            : `${section}/${year}/${month}/${userId}/${field}/${file.name}`;
 
           const response = await fetch(
             `/api/images/upload?filename=${fileName}`,

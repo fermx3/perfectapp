@@ -65,6 +65,20 @@
   pointer-events: none;
 }
 
+.outline {
+  @extend .button;
+  background-color: transparent;
+  color: $tertiary-color;
+  border: 0.16em solid $tertiary-color;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: transparent;
+    color: $primary-color;
+    border-color: $primary-color;
+  }
+}
+
 @media all and (max-width: 575px) {
   .button {
     // display: flex;

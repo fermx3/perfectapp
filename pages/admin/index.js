@@ -50,8 +50,13 @@ export default function AdminPage({
     },
     {
       titulo: 'Descargar bases de datos',
-      link: `usuario/${session?.user?.userId}/base-de-datos`,
+      link: `/usuario/${session?.user?.userId}/base-de-datos`,
       desc: 'Descarga las bases de datos generadas por la aplicación.',
+    },
+    {
+      titulo: 'Administrar banners de leales',
+      link: `/admin/banners-leales`,
+      desc: 'Agregar, editar o eliminar banners de leales.',
     },
   ];
 
