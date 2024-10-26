@@ -42,8 +42,6 @@ export default function PanelDeLeal({
   const [successMessage, setSuccessMessage] = useState('');
   const [aceptoTyC, setAceptoTyC] = useState(leal.aceptoTyC);
 
-  const hasDatosCompletos = leal.datosLeal?.nombreDelEncargado ? true : false;
-
   const {
     register,
     handleSubmit,
@@ -93,10 +91,7 @@ export default function PanelDeLeal({
               <Carousel
                 slides={bannersLeales}
                 options={OPTIONS}
-                requisitos={{
-                  datosCompletos: hasDatosCompletos,
-                  fecha: moment().format('YYYY-MM-DD') > '2024-08-03',
-                }}
+                tags={leal.tags}
               />
               {/* {!hasDatosCompletos && (
                 <Button

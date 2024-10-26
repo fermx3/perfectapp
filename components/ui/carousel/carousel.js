@@ -7,7 +7,7 @@ import classes from './carousel.module.scss';
 import Link from 'next/link';
 
 const Carousel = (props) => {
-  const { slides, options, requisitos } = props;
+  const { slides, options, tags } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
@@ -18,31 +18,10 @@ const Carousel = (props) => {
       <div className='embla__viewport' ref={emblaRef}>
         <div className='embla__container'>
           {slides.map((slide, index) => {
-            const compareIfTheKeyExistAndIsTrue = (obj, source) => {
-              for (let key in source) {
-                if (obj[key] === source[key]) return false;
-              }
-              return true;
-            };
+            const shouldHide = tags?.some((tag) => slide.hide?.includes(tag));
 
-            if (slide.requisitosToShow) {
-              {
-                /* console.log(
-                slide.alt,
-                compareIfTheKeyExistAndIsTrue(
-                  slide.requisitosToShow,
-                  requisitos
-                )
-              ); */
-              }
-
-              if (
-                !compareIfTheKeyExistAndIsTrue(
-                  slide.requisitosToShow,
-                  requisitos
-                )
-              )
-                return;
+            if (shouldHide) {
+              return;
             }
 
             return (

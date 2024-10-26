@@ -15,6 +15,7 @@ import { getDatosLeal } from '@/lib/db';
 import { actualizarDatosLealSchema } from '@/lib/schemas/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import BackgroundGradientContainer from '@/components/layout/background-gradient-container';
+import ButtonGroup from '@/components/button-group';
 
 export default function ActualizarDatosPage({ datosLeal }) {
   const {
@@ -137,31 +138,24 @@ export default function ActualizarDatosPage({ datosLeal }) {
           </InputGroup>
           {errorMessage && <ErrorMessage error={errorMessage} />}
           {isSubmitting && <Loader />}
-          <FormControl>
-            <Button
-              type='button'
-              disabled={isSubmitting}
-              buttonType={
-                isSubmitting
+          <ButtonGroup
+            options={[
+              {
+                name: 'VOLVER',
+                type: 'button',
+                buttonType: isSubmitting
                   ? BUTTON_TYPE_CLASSES.disabled
-                  : BUTTON_TYPE_CLASSES.secondary
-              }
-              href={`/leal/${datosLeal.userId}`}
-            >
-              VOLVER
-            </Button>
-            <Button
-              type='submit'
-              disabled={isSubmitting || !isDirty}
-              buttonType={
-                isSubmitting || !isDirty
-                  ? BUTTON_TYPE_CLASSES.disabled
-                  : BUTTON_TYPE_CLASSES.base
-              }
-            >
-              ACTUALIZAR DATOS
-            </Button>
-          </FormControl>
+                  : BUTTON_TYPE_CLASSES.secondary,
+                link: `/leal/${datosLeal.userId}`,
+                disabled: isSubmitting,
+              },
+              {
+                name: 'ACTUALIZAR DATOS',
+                disabled: isSubmitting || !isDirty,
+                type: 'submit',
+              },
+            ]}
+          />
         </form>
       </Container>
       {successMessage && (
