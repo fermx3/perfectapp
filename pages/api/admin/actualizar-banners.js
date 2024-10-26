@@ -36,6 +36,8 @@ async function handler(req, res) {
     res.json(Object.keys(zodErrors).length > 0 && { errors: zodErrors });
   }
 
+  console.log('response', response.data.bannersLeales);
+
   async function main() {
     const ids = response.data.bannersLeales.map((banner) => banner._id);
     await collection.deleteMany({ _id: { $nin: ids }, empresa: empresa });

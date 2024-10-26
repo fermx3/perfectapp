@@ -14,12 +14,11 @@ import Button, { BUTTON_TYPE_CLASSES } from '@/components/button';
 import ButtonGroup from '@/components/button-group';
 import Loader from '@/components/ui/loader';
 import { useState } from 'react';
-import Modal from '@/components/ui/modal';
-import UploadImage from '@/components/blob/upload-image-form';
 import ImagePicker from '@/components/forms/image-pícker';
 import { actualizarBannersSchema } from '@/lib/schemas/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormError from '@/components/ui/form-error';
+import SelectInput from '@/components/forms/select-input';
 
 export default function BannersLealesPage({ bannersLeales }) {
   const [blob, setBlob] = useState(null);
@@ -29,7 +28,7 @@ export default function BannersLealesPage({ bannersLeales }) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting, isSubmitted, isDirty },
     reset,
     resetField,
     setError,
@@ -49,8 +48,6 @@ export default function BannersLealesPage({ bannersLeales }) {
   const bannersLealesWatch = watch('bannersLeales');
 
   const onSubmit = async (data) => {
-    console.log('data', data);
-
     const response = await fetch('/api/admin/actualizar-banners', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -91,7 +88,7 @@ export default function BannersLealesPage({ bannersLeales }) {
     }
   }
 
-  console.log('errors', errors);
+  // console.log('errors', errors);
 
   return (
     <BackgroundGradientContainer>
@@ -183,6 +180,17 @@ export default function BannersLealesPage({ bannersLeales }) {
                     />
                   </FormControl>
                 </InputGroup>
+                {/* <InputGroup>
+                  <FormControl
+                    label='Ocultar a tags:'
+                    error={errors.bannersLeales?.[index]?.hide?.message}
+                  >
+                    <input
+                      type='text'
+                      {...register(`bannersLeales.${index}.hide`)}
+                    />
+                  </FormControl>
+                </InputGroup> */}
                 <Button
                   type='button'
                   buttonType={
@@ -209,9 +217,19 @@ export default function BannersLealesPage({ bannersLeales }) {
                   onClick: () =>
                     append({ src: '', _id: '', url: '', alt: '', titulo: '' }),
                   type: 'button',
-                  buttonType: 'secondary',
+                  buttonType: isSubmitting
+                    ? BUTTON_TYPE_CLASSES.disabled
+                    : BUTTON_TYPE_CLASSES.secondary,
                 },
-                { name: 'Guardar', type: 'submit' },
+                {
+                  name: 'Guardar',
+                  type: 'submit',
+                  disabled: isSubmitting || !isDirty,
+                  buttonType:
+                    isSubmitting || !isDirty
+                      ? BUTTON_TYPE_CLASSES.disabled
+                      : BUTTON_TYPE_CLASSES.primary,
+                },
               ]}
             />
             {isSubmitting && <Loader />}

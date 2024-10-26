@@ -43,6 +43,7 @@ export default function LealesQueRebasaronCuotaPage({
                   max={currentMonth}
                   value={monthEntered}
                   onChange={(e) => setMonthEntered(e.target.value)}
+                  placeholder='AAAA-MM'
                 />
               </FormControl>
               <Button>Ver</Button>
