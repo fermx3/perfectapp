@@ -96,7 +96,21 @@
   margin-top: 1rem;
 }
 
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
 .clienteCol {
   max-width: 100px;
   overflow: auto;
+}
+
+.evidencias {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+  max-width: 300px;
+  flex-wrap: wrap;
 }

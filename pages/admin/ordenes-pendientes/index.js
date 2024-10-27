@@ -8,16 +8,18 @@ import { useFieldArray, useForm } from 'react-hook-form';
 
 import classes from './index.module.scss';
 import Loader from '@/components/ui/loader';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function OrdenesPendientesPage({ ordenes, userNames }) {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
     control,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onValidate = async (data) => {
     const response = await fetch('/api/admin/validar-ordenes', {
       method: 'PATCH',
       headers: {
@@ -28,6 +30,27 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
 
     if (response.ok) {
       alert('Ordenes validadas');
+      window.location.reload();
+    }
+
+    if (!response.ok) {
+      alert('Error al validar orden');
+    }
+
+    return response;
+  };
+
+  const onArchivar = async (data) => {
+    const response = await fetch('/api/admin/archivar-ordenes', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      alert('Ordenes archivadas');
       window.location.reload();
     }
 
@@ -71,6 +94,12 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
     <BackgroundGradientContainer>
       <Container>
         <h1>Ordenes Pendientes</h1>
+        <Button
+          buttonType={BUTTON_TYPE_CLASSES.outline}
+          href='/admin/ordenes-pendientes/archivadas'
+        >
+          Ordenes Archivadas
+        </Button>
         <table className={classes.table}>
           <thead>
             <tr>
@@ -80,7 +109,7 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
               <th>Distribuidor</th>
               <th>Orden</th>
               <th>Puntos</th>
-              <th>Validar</th>
+              <th>Seleccionar</th>
             </tr>
           </thead>
           <tbody>
@@ -137,39 +166,84 @@ export default function OrdenesPendientesPage({ ordenes, userNames }) {
                         </tbody>
                       </table>
                     ))}
+                    {orden.evidenciaCompra && (
+                      <ul className={classes.evidencias}>
+                        {orden.evidenciaCompra.map((evidencia, index) => (
+                          <Button
+                            href={evidencia}
+                            buttonType={BUTTON_TYPE_CLASSES.coloredLink}
+                            key={index}
+                            target='_blank'
+                          >
+                            Evidencia {index + 1}{' '}
+                            {
+                              <Image
+                                src='/images/icons/camera.svg'
+                                width={14}
+                                height={14}
+                                alt='camara'
+                                style={{ filter: 'invert(1)' }}
+                              />
+                            }
+                          </Button>
+                        ))}
+                      </ul>
+                    )}
                   </td>
                   <td>{puntosGenerados}</td>
                   <td className={classes.checkboxes}>
                     <input
                       type='checkbox'
+                      id='validar'
                       value={orden._id}
                       onClick={handleCheck}
                     />
                   </td>
                   {nivelDeCliente === 'Platinum' && (
-                    <div className={classes.cuentaClave}>Cuenta clave</div>
+                    <div className={classes.cuentaClave}>Platinum</div>
                   )}
                 </tr>
               );
             })}
           </tbody>
         </table>
-        <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+        <form className={classes.form}>
           {fields.map((field, index) => {})}
           {isSubmitting ? (
             <Loader />
           ) : (
-            <Button
-              type='submit'
-              disabled={isSubmitting}
-              buttonType={
-                fields.length > 0
-                  ? BUTTON_TYPE_CLASSES.primary
-                  : BUTTON_TYPE_CLASSES.disabled
-              }
-            >
-              Validar
-            </Button>
+            <div className={classes.buttons}>
+              <Button
+                type='submit'
+                disabled={isSubmitting}
+                buttonType={
+                  fields.length > 0
+                    ? BUTTON_TYPE_CLASSES.secondary
+                    : BUTTON_TYPE_CLASSES.disabled
+                }
+                onClick={handleSubmit(onArchivar)}
+              >
+                Archivar
+                <Image
+                  src='/images/icons/delete.png'
+                  width={18}
+                  height={18}
+                  alt='archivar'
+                />
+              </Button>
+              <Button
+                type='submit'
+                disabled={isSubmitting}
+                buttonType={
+                  fields.length > 0
+                    ? BUTTON_TYPE_CLASSES.primary
+                    : BUTTON_TYPE_CLASSES.disabled
+                }
+                onClick={handleSubmit(onValidate)}
+              >
+                Validar
+              </Button>
+            </div>
           )}
         </form>
       </Container>

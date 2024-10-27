@@ -25,6 +25,7 @@ export default function ButtonGroup({ title, options }) {
             target={option.newPage ? '_blank' : '_self'}
             onClick={option.onClick}
             type={option.type}
+            onSubmit={option.onSubmit}
           >
             {option.name && option.name}
             {option.image && <Image src={option.image} fill alt='' />}

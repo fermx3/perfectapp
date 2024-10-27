@@ -48,6 +48,15 @@
   }
 }
 
+.coloredLink {
+  color: $primary-color;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .icon {
   @extend .button;
   background-color: $secondary-color;
