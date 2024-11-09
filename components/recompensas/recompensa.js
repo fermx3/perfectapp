@@ -18,6 +18,7 @@ export default function Recompensa({ recompensa, role }) {
           <p>Valor en puntos:</p>
         )}
         <p>{puntos}</p>
+        {recompensa.valorCajas && <p>de {recompensa.sku}</p>}
       </div>
       <div className={classes.imageContainer}>
         {recompensa.image ? (
