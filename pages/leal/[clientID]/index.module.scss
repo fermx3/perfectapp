@@ -65,3 +65,10 @@
   cursor: pointer;
   z-index: 1;
 }
+
+@media screen and (max-width: 768px) {
+  .popupImage {
+    width: 80vw;
+    height: 80vw;
+  }
+}
