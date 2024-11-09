@@ -3,12 +3,20 @@ import Image from 'next/image';
 import classes from './recompensa.module.scss';
 
 export default function Recompensa({ recompensa, role }) {
-  const puntos = new Intl.NumberFormat().format(recompensa.valorPuntos);
+  const puntos = new Intl.NumberFormat().format(
+    recompensa.valorCajas || recompensa.valorPuntos
+  );
+
+  console.log(recompensa.valorPuntos);
 
   return (
     <div className={classes.recompensaContainer}>
       <div className={classes.puntos}>
-        <p>Valor en puntos:</p>
+        {recompensa.valorCajas ? (
+          <p>Valor en cajas:</p>
+        ) : (
+          <p>Valor en puntos:</p>
+        )}
         <p>{puntos}</p>
       </div>
       <div className={classes.imageContainer}>
