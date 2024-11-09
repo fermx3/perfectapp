@@ -7,8 +7,6 @@ export default function Recompensa({ recompensa, role }) {
     recompensa.valorCajas || recompensa.valorPuntos
   );
 
-  console.log(recompensa.valorPuntos);
-
   return (
     <div className={classes.recompensaContainer}>
       <div className={classes.puntos}>

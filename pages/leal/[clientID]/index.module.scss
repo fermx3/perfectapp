@@ -46,3 +46,22 @@
 
   font-weight: bold;
 }
+
+.popupImage {
+  width: 70vh;
+  height: 70vh;
+  position: relative;
+  border-radius: $border-radius-2;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+  }
+}
+
+.closePopup {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  z-index: 1;
+}

@@ -25,7 +25,10 @@ export default function RecompensasGrid({ recompensas, role, featured }) {
               />
             ))
           ) : (
-            <p>No se encontraron recompensas</p>
+            <p>
+              Lo sentimos, por el momento no hay recompensas disponibles para tu
+              nivel de cliente.
+            </p>
           )}
         </div>
       </div>
@@ -37,6 +40,12 @@ export default function RecompensasGrid({ recompensas, role, featured }) {
   const getMaximumPuntos = () => {
     let max = 0;
     recompensas.forEach((recompensa) => {
+      if (!recompensa.valorPuntos) {
+        if (recompensa.valorCajas > max) {
+          max = recompensa.valorCajas;
+        }
+      }
+
       if (recompensa.valorPuntos > max) {
         max = recompensa.valorPuntos;
       }

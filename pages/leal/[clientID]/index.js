@@ -27,6 +27,7 @@ import InputGroup from '@/components/forms/input-group';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { aceptarTyCSchema } from '@/lib/schemas/schemas';
+import Image from 'next/image';
 
 export default function PanelDeLeal({
   leal,
@@ -41,6 +42,7 @@ export default function PanelDeLeal({
   const [isModalOpen, setIsModalOpen] = useState(!leal.aceptoTyC);
   const [successMessage, setSuccessMessage] = useState('');
   const [aceptoTyC, setAceptoTyC] = useState(leal.aceptoTyC);
+  const [popUpOpen, setPopUpOpen] = useState(true);
 
   const {
     register,
@@ -199,6 +201,21 @@ export default function PanelDeLeal({
               <Button buttonType={BUTTON_TYPE_CLASSES.secondary}>Acepto</Button>
             </form>
           )}
+        </Modal>
+      )}
+      {popUpOpen && (
+        <Modal>
+          <Image
+            src='/images/icons/close-circle.svg'
+            width={50}
+            height={50}
+            alt='close icon'
+            className={classes.closePopup}
+            onClick={() => setPopUpOpen(false)}
+          />
+          <div className={classes.popupImage}>
+            <Image src='/images/popups/leal_popup.jpg' alt='popup' fill />
+          </div>
         </Modal>
       )}
     </>
