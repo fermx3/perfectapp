@@ -69,6 +69,9 @@ export default function LoginForm() {
       case 'USUARIO':
         router.replace(`/usuario/${session.data.user.userId}`);
         break;
+      case 'IDM':
+        router.replace(`/cliente-nuevo`);
+        break;
       default:
         router.replace('/login-error');
     }

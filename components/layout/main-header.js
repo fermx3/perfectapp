@@ -104,19 +104,31 @@ export default function MainHeader({ className }) {
                 >
                   {session.status === 'authenticated' && (
                     <>
-                      <div>
-                        <Button
-                          href={
-                            role === 'ADMIN'
-                              ? `/${role.toLowerCase()}`
-                              : `/${role.toLowerCase()}/${userId}`
-                          }
-                          buttonType={BUTTON_TYPE_CLASSES.link}
-                          onClick={() => dispatch(toggleSettings())}
-                        >
-                          Mi perfil
-                        </Button>
-                      </div>
+                      {role === 'IDM' ? (
+                        <div>
+                          <Button
+                            href={'/cliente-nuevo'}
+                            buttonType={BUTTON_TYPE_CLASSES.link}
+                            onClick={() => dispatch(toggleSettings())}
+                          >
+                            Alta de cliente
+                          </Button>
+                        </div>
+                      ) : (
+                        <div>
+                          <Button
+                            href={
+                              role === 'ADMIN'
+                                ? `/${role.toLowerCase()}`
+                                : `/${role.toLowerCase()}/${userId}`
+                            }
+                            buttonType={BUTTON_TYPE_CLASSES.link}
+                            onClick={() => dispatch(toggleSettings())}
+                          >
+                            Mi perfil
+                          </Button>
+                        </div>
+                      )}
                       {role === 'LEAL' && (
                         <>
                           <div>

@@ -34,15 +34,27 @@ export default function MenuModal({ session, logoutHandler }) {
               <li>
                 <h4>Usuario: {userId}</h4>
               </li>
-              <li>
-                <Button
-                  href={`/leal/${userId}`}
-                  onClick={() => dispatch(toggleMenu())}
-                  buttonType={BUTTON_TYPE_CLASSES.secondary}
-                >
-                  Mi perfil
-                </Button>
-              </li>
+              {role === 'IDM' ? (
+                <li>
+                  <Button
+                    href={'/cliente-nuevo'}
+                    onClick={() => dispatch(toggleMenu())}
+                    buttonType={BUTTON_TYPE_CLASSES.secondary}
+                  >
+                    Cliente nuevo
+                  </Button>
+                </li>
+              ) : (
+                <li>
+                  <Button
+                    href={`/leal/${userId}`}
+                    onClick={() => dispatch(toggleMenu())}
+                    buttonType={BUTTON_TYPE_CLASSES.secondary}
+                  >
+                    Mi perfil
+                  </Button>
+                </li>
+              )}
               {role === 'LEAL' && (
                 <>
                   <li>

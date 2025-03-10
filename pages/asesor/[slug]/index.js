@@ -52,7 +52,7 @@ export default function AsesorPage({
             },
             {
               titulo: 'Cliente Nuevo',
-              link: '/asesor/cliente-nuevo',
+              link: '/cliente-nuevo',
               desc: 'Suma a un prospecto nuevo a nuestra base de datos.',
             },
             {

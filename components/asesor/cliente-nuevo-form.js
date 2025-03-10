@@ -1,10 +1,16 @@
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Form, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { canales, centrales, clienteNuevoSchema } from '@/lib/schemas/schemas';
-import { nivelesDeLeales } from '@/lib/schemas/schemas';
+import {
+  canales,
+  centrales,
+  regiones,
+  cortinasOptions,
+  clienteNuevoSchema,
+  personasQueAtiendenOptions,
+} from '@/lib/schemas/schemas';
 
 import FormControl from '../forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
@@ -14,6 +20,9 @@ import Modal from '../ui/modal';
 
 import classes from './cliente-nuevo-form.module.scss';
 import SelectInput from '../forms/select-input';
+import FormSection from '../forms/form-section';
+import FormGroup from '../forms/form-group';
+import ReactSwitch from 'react-switch';
 
 export default function ClienteNuevoForm({ asesores, session }) {
   const {
@@ -23,17 +32,43 @@ export default function ClienteNuevoForm({ asesores, session }) {
     reset,
     setError,
     control,
+    watch,
+    setValue,
   } = useForm({
     defaultValues: {
+      region: '',
       nombre: '',
       canal: '',
       central: '',
       ubicacion: '',
-      nivelDeCliente: '',
+      cortinas: '',
+      personasQueAtienden: '',
+      mantequilla: false,
+      margarina: false,
+      refrigeracion: false,
+      productosInstitucionales: false,
+      tienenPasillos: false,
+      tienenMostrador: false,
+      perteneceAGrupo: false,
+      grupo: '',
+      // nivelDeCliente: '',
       comentarios: '',
     },
     resolver: zodResolver(clienteNuevoSchema),
   });
+
+  const perteneceAGrupo = watch('perteneceAGrupo');
+
+  console.log(errors);
+
+  const findRegionByCeda = (ceda) => {
+    for (const region of regiones) {
+      if (region.centrales.includes(ceda)) {
+        return region.region;
+      }
+    }
+    return undefined; // or any other value indicating that the ceda was not found
+  };
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -101,6 +136,7 @@ export default function ClienteNuevoForm({ asesores, session }) {
   const onSubmit = async (data) => {
     setSuccessMessage('');
     setErrorMessage('');
+    console.log(data);
 
     // submit to server
     try {
@@ -122,55 +158,187 @@ export default function ClienteNuevoForm({ asesores, session }) {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-        <InputGroup>
-          <FormControl label={'Nombre'} error={errors.nombre?.message}>
-            <input type='text' {...register('nombre')} />
-          </FormControl>
-          <FormControl label='Canal:' error={errors.canal?.message}>
-            <Controller
-              name={'canal'}
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, value } }) => (
-                <SelectInput
-                  defaultValue={'Selecciona un canal'}
-                  options={canales}
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            />
-          </FormControl>
-        </InputGroup>
-        <InputGroup>
-          <FormControl label='CEDAS:' error={errors.central?.message}>
-            <Controller
-              name={'central'}
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, value } }) => (
-                <SelectInput
-                  defaultValue={'Selecciona un CEDAS'}
-                  options={centrales}
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            />
-          </FormControl>
-          <FormControl label='Ubicación' error={errors.ubicacion?.message}>
-            <input
-              type='text'
-              {...register('ubicacion')}
-              placeholder='Nave y local'
-            />
-          </FormControl>
-        </InputGroup>
-        <InputGroup>
+        <FormGroup titulo='Datos del cliente'>
+          <InputGroup>
+            <FormControl label='CEDAS:' error={errors.central?.message}>
+              <Controller
+                name={'central'}
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <SelectInput
+                    defaultValue={'Selecciona un CEDAS'}
+                    options={centrales}
+                    value={value}
+                    onChange={(e) => {
+                      onChange(e);
+                      const region = findRegionByCeda(e.target.value);
+                      setValue('region', region);
+                    }}
+                  />
+                )}
+              />
+            </FormControl>
+            <FormControl label='Región:' error={errors.central?.message}>
+              <input
+                placeholder='Selecciona una central para ver la región'
+                type='text'
+                {...register('region')}
+                readOnly
+              />
+            </FormControl>
+          </InputGroup>
+          <InputGroup>
+            <FormControl label={'Nombre'} error={errors.nombre?.message}>
+              <input type='text' {...register('nombre')} />
+            </FormControl>
+            <FormControl label='Canal:' error={errors.canal?.message}>
+              <Controller
+                name={'canal'}
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <SelectInput
+                    defaultValue={'Selecciona un canal'}
+                    options={canales}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
+            </FormControl>
+          </InputGroup>
+          <InputGroup>
+            <FormControl label='Ubicación' error={errors.ubicacion?.message}>
+              <input
+                type='text'
+                {...register('ubicacion')}
+                placeholder='Nave y local'
+              />
+            </FormControl>
+          </InputGroup>
+        </FormGroup>
+        <FormGroup titulo='Investigación de mercado'>
+          <InputGroup>
+            <FormControl
+              label='Número de cortinas:'
+              error={errors.cortinas?.message}
+            >
+              <Controller
+                name={'cortinas'}
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <SelectInput
+                    defaultValue={'Selecciona un número de cortinas'}
+                    options={cortinasOptions}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
+            </FormControl>
+            <FormControl
+              label='Número de personas que atienden:'
+              error={errors.personasQueAtienden?.message}
+            >
+              <Controller
+                name={'personasQueAtienden'}
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <SelectInput
+                    defaultValue={'Selecciona un número de personas'}
+                    options={personasQueAtiendenOptions}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              />
+            </FormControl>
+          </InputGroup>
+          <InputGroup>
+            <FormControl label='¿Manejan mantequilla?'>
+              <Controller
+                name={`mantequilla`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSwitch checked={value} onChange={onChange} />
+                )}
+              />
+            </FormControl>
+            <FormControl label='¿Manejan margarina?'>
+              <Controller
+                name={`margarina`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSwitch checked={value} onChange={onChange} />
+                )}
+              />
+            </FormControl>
+            <FormControl label='¿Tienen refrigeración en el punto de venta?'>
+              <Controller
+                name={`refrigeracion`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSwitch checked={value} onChange={onChange} />
+                )}
+              />
+            </FormControl>
+            <FormControl label='¿Venden productos institucionales?'>
+              <Controller
+                name={`productosInstitucionales`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSwitch checked={value} onChange={onChange} />
+                )}
+              />
+            </FormControl>
+          </InputGroup>
+          <InputGroup>
+            <FormControl label='¿Tienen pasillos?'>
+              <Controller
+                name={`tienenPasillos`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSwitch checked={value} onChange={onChange} />
+                )}
+              />
+            </FormControl>
+            <FormControl label='¿Tienen mostrador?'>
+              <Controller
+                name={`tienenMostrador`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSwitch checked={value} onChange={onChange} />
+                )}
+              />
+            </FormControl>
+            <FormControl label='¿Pertenece a grupo de puntos de venta?'>
+              <Controller
+                name={`perteneceAGrupo`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <ReactSwitch checked={value} onChange={onChange} />
+                )}
+              />
+            </FormControl>
+            {perteneceAGrupo && (
+              <FormControl label='¿A que grupo pertenece?'>
+                <input type='text' {...register('grupo')} />
+              </FormControl>
+            )}
+          </InputGroup>
+        </FormGroup>
+        {/* <InputGroup>
           <FormControl label='*Grupo:' error={errors.grupo?.message}>
             <input
               type='text'
@@ -198,10 +366,15 @@ export default function ClienteNuevoForm({ asesores, session }) {
               )}
             />
           </FormControl>
-        </InputGroup>
-        <FormControl label='*Comentarios:' error={errors.comentarios?.message}>
-          <textarea {...register('comentarios')} rows={4} />
-        </FormControl>
+        </InputGroup> */}
+        <FormGroup>
+          <FormControl
+            label='*Comentarios:'
+            error={errors.comentarios?.message}
+          >
+            <textarea {...register('comentarios')} rows={4} />
+          </FormControl>
+        </FormGroup>
         <p className={classes.opcionales}>*Campos opcionales</p>
         <FormControl>
           {isSubmitting && <Loader />}
