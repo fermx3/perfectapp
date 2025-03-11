@@ -5,7 +5,7 @@ import ModalBackground from '@/components/ui/modal-background';
 import { Controller, useForm } from 'react-hook-form';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { validarProspectoSchema } from '@/lib/schemas/schemas';
+import { regiones, validarProspectoSchema } from '@/lib/schemas/schemas';
 
 import classes from './validar-prospecto.module.scss';
 import InputGroup from '@/components/forms/input-group';
@@ -22,6 +22,7 @@ import Loader from '@/components/ui/loader';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import FormError from '@/components/ui/form-error';
+import FormGroup from '@/components/forms/form-group';
 
 export default function ValidarProspecto({
   prospecto,
@@ -41,9 +42,10 @@ export default function ValidarProspecto({
     nombre: prospecto.nombre,
     canal: prospecto.canal,
     central: prospecto.central,
+    region: prospecto.region,
     ubicacion: prospecto.ubicacion,
     grupo: prospecto.grupo,
-    nivelDeCliente: prospecto.nivelDeCliente,
+    nivelDeCliente: prospecto.nivelDeCliente ? prospecto.nivelDeCliente : '',
     frecuencia: frecuenciasObj,
     zona: '',
     cuota: skus.reduce((acc, sku) => {
@@ -53,7 +55,8 @@ export default function ValidarProspecto({
     id: prospecto._id,
   };
 
-  // console.log(defaultValues);
+  const regionesValores = regiones.map((region) => region.region);
+  console.log(regionesValores);
 
   const {
     register,
@@ -83,45 +86,10 @@ export default function ValidarProspecto({
     if (responseData.errors) {
       const errors = responseData.errors;
 
-      if (errors.nombre) {
-        setError('nombre', {
+      for (const key in errors) {
+        setError(key, {
           type: 'server',
-          message: errors.nombre,
-        });
-      } else if (errors.nivelDeCliente) {
-        setError('nivelDeCliente', {
-          type: 'server',
-          message: errors.nivelDeCliente,
-        });
-      } else if (errors.central) {
-        setError('central', {
-          type: 'server',
-          message: errors.central,
-        });
-      } else if (errors.ubicacion) {
-        setError('ubicacion', {
-          type: 'server',
-          message: errors.ubicacion,
-        });
-      } else if (errors.grupo) {
-        setError('grupo', {
-          type: 'server',
-          message: errors.grupo,
-        });
-      } else if (errors.zona) {
-        setError('zona', {
-          type: 'server',
-          message: errors.zona,
-        });
-      } else if (errors.frecuencia) {
-        setError('frecuencia', {
-          type: 'server',
-          message: errors.frecuencia,
-        });
-      } else if (errors.cuota) {
-        setError('cuota', {
-          type: 'server',
-          message: errors.cuota,
+          message: errors[key],
         });
       }
     }
@@ -204,6 +172,25 @@ export default function ValidarProspecto({
               </FormControl>
             </InputGroup>
             <InputGroup>
+              <FormControl label='Región:' error={errors.region?.message}>
+                <Controller
+                  name={'region'}
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <SelectInput
+                      defaultValue={'Selecciona una región'}
+                      options={regionesValores}
+                      value={value}
+                      onChange={onChange}
+                    />
+                  )}
+                />
+              </FormControl>
+            </InputGroup>
+            <InputGroup>
               <FormControl label='Ubicación:' error={errors.ubicacion?.message}>
                 <input
                   type='text'
@@ -216,28 +203,84 @@ export default function ValidarProspecto({
                 <input type='text' {...register('grupo', { required: true })} />
               </FormControl>
             </InputGroup>
-            <InputGroup>
-              <FormControl
-                label='Nivel de cliente:'
-                error={errors.nivelDeCliente?.message}
-              >
-                <Controller
-                  name={'nivelDeCliente'}
-                  control={control}
-                  rules={{
-                    required: true,
-                  }}
-                  render={({ field: { onChange, value } }) => (
-                    <SelectInput
-                      defaultValue={'Selecciona un nivel de cliente'}
-                      options={nivelesDeLeales}
-                      value={value}
-                      onChange={onChange}
-                    />
-                  )}
-                />
-              </FormControl>
-            </InputGroup>
+            <FormGroup titulo='Asignación de nivel de cliente:'>
+              <p>
+                Asigna un nivel de cliente al prospecto de acuerdo a los
+                siguientes indicadores:
+              </p>
+              <ul>
+                <li>
+                  <strong>Número de cortinas: </strong> {prospecto.cortinas}
+                </li>
+                <li>
+                  <strong>Número de personas que atienden: </strong>{' '}
+                  {prospecto.personasQueAtienden}
+                </li>
+                {prospecto.mantequilla && (
+                  <li>
+                    <strong>Manejan Mantequilla</strong> ✅
+                  </li>
+                )}
+                {prospecto.margarina && (
+                  <li>
+                    <strong>Manejan Margarina</strong> ✅
+                  </li>
+                )}
+                {prospecto.refrigeracion && (
+                  <li>
+                    <strong>Tienen refrigeración en el punto de venta</strong>{' '}
+                    ✅
+                  </li>
+                )}
+                {prospecto.productosInstitucionales && (
+                  <li>
+                    <strong>Venden productos institucionales</strong> ✅
+                  </li>
+                )}
+                {prospecto.tienenPasillos && (
+                  <li>
+                    <strong>Tienen pasillos</strong> ✅
+                  </li>
+                )}
+                {prospecto.tienenMostrador && (
+                  <li>
+                    <strong>Tienen mostrador</strong> ✅
+                  </li>
+                )}
+                {prospecto.perteneceAGrupo && (
+                  <li>
+                    <strong>
+                      Pertenece al grupo {''}
+                      <u>{prospecto.grupo}</u>
+                    </strong>{' '}
+                    ✅
+                  </li>
+                )}
+              </ul>
+              <br />
+              <InputGroup>
+                <FormControl
+                  label='Nivel de cliente:'
+                  error={errors.nivelDeCliente?.message}
+                >
+                  <Controller
+                    name={'nivelDeCliente'}
+                    control={control}
+                    rules={{
+                      required: true,
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                      <SelectInput
+                        defaultValue={'Selecciona un nivel de cliente'}
+                        options={nivelesDeLeales}
+                        value={value}
+                        onChange={onChange}
+                      />
+                    )}
+                  />
+                </FormControl>
+              </InputGroup>
+            </FormGroup>
             <InputGroup>
               <FormControl label='Asignar a zona:' error={errors.zona?.message}>
                 <Controller

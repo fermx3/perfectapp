@@ -17,6 +17,8 @@ export default function ProspectosList({ prospectos, zonas, skus }) {
     setIsModalOpen(false);
   };
 
+  console.log(prospectos[0]);
+
   return (
     <div>
       <h2>Prospectos sin validar</h2>
@@ -27,10 +29,16 @@ export default function ProspectosList({ prospectos, zonas, skus }) {
               <h3>{prospecto.nombre}</h3>
               <p>Canal: {prospecto.canal}</p>
               <p>Central: {prospecto.central}</p>
+              <p>Región: {prospecto.region}</p>
               <p>Ubicación: {prospecto.ubicacion}</p>
-              <p>Grupo: {prospecto.grupo}</p>
-              <p>Nivel de cliente: {prospecto.nivelDeCliente}</p>
-              <p>Comentarios: {prospecto.comentarios}</p>
+              {prospecto.grupo && <p>Grupo: {prospecto.grupo}</p>}
+              {prospecto.nivelDeCliente && (
+                <p>Nivel de cliente: {prospecto.nivelDeCliente}</p>
+              )}
+              <p>
+                Comentarios:{' '}
+                {prospecto.comentarios ? prospecto.comentarios : 'Ninguno'}
+              </p>
             </div>
             <Button
               type='button'

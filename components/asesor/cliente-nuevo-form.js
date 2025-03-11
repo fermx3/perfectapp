@@ -59,8 +59,6 @@ export default function ClienteNuevoForm({ asesores, session }) {
 
   const perteneceAGrupo = watch('perteneceAGrupo');
 
-  console.log(errors);
-
   const findRegionByCeda = (ceda) => {
     for (const region of regiones) {
       if (region.centrales.includes(ceda)) {
@@ -97,35 +95,10 @@ export default function ClienteNuevoForm({ asesores, session }) {
     if (responseData.errors) {
       const errors = responseData.errors;
 
-      if (errors.nombre) {
-        setError('nombre', {
+      for (const key in errors) {
+        setError(key, {
           type: 'server',
-          message: errors.nombre,
-        });
-      } else if (errors.nivelDeCliente) {
-        setError('nivelDeCliente', {
-          type: 'server',
-          message: errors.nivelDeCliente,
-        });
-      } else if (errors.central) {
-        setError('central', {
-          type: 'server',
-          message: errors.central,
-        });
-      } else if (errors.ubicacion) {
-        setError('ubicacion', {
-          type: 'server',
-          message: errors.ubicacion,
-        });
-      } else if (errors.canal) {
-        setError('canal', {
-          type: 'server',
-          message: errors.canal,
-        });
-      } else if (errors.comentarios) {
-        setError('comentarios', {
-          type: 'server',
-          message: errors.comentarios,
+          message: errors[key],
         });
       }
     }
@@ -136,7 +109,6 @@ export default function ClienteNuevoForm({ asesores, session }) {
   const onSubmit = async (data) => {
     setSuccessMessage('');
     setErrorMessage('');
-    console.log(data);
 
     // submit to server
     try {
