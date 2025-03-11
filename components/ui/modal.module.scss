@@ -23,8 +23,8 @@
 
 @media (max-width: $mobile-size) {
   .modal {
-    max-width: 90dvw;
-    max-height: 90dvh;
+    width: 90dvw;
+    height: 90dvh;
     padding: 1.2rem;
   }
 }

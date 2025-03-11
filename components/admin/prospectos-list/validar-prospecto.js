@@ -210,11 +210,14 @@ export default function ValidarProspecto({
               </p>
               <ul>
                 <li>
-                  <strong>Número de cortinas: </strong> {prospecto.cortinas}
+                  <strong>Número de cortinas: </strong>{' '}
+                  {prospecto.cortinas ? prospecto.cortinas : 'No especificado'}
                 </li>
                 <li>
                   <strong>Número de personas que atienden: </strong>{' '}
-                  {prospecto.personasQueAtienden}
+                  {prospecto.personasQueAtienden
+                    ? prospecto.personasQueAtienden
+                    : 'No especificado'}
                 </li>
                 {prospecto.mantequilla && (
                   <li>
