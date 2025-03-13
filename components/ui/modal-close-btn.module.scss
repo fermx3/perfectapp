@@ -1,0 +1,9 @@
+@import '@/styles/variables.scss';
+
+.closeIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  z-index: 9999;
+}

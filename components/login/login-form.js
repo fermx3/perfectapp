@@ -72,6 +72,9 @@ export default function LoginForm() {
       case 'IDM':
         router.replace(`/cliente-nuevo`);
         break;
+      case 'SUPERADMIN':
+        router.replace(`/superadmin`);
+        break;
       default:
         router.replace('/login-error');
     }

@@ -23,6 +23,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import FormError from '@/components/ui/form-error';
 import FormGroup from '@/components/forms/form-group';
+import ModalCloseBtn from '@/components/ui/modal-close-btn';
 
 export default function ValidarProspecto({
   prospecto,
@@ -370,14 +371,7 @@ export default function ValidarProspecto({
           </form>
         </div>
       </Modal>
-      <Image
-        className={classes.closeIcon}
-        src='/images/icons/close-circle.svg'
-        alt='Cerrar'
-        onClick={handleClose}
-        width={34}
-        height={34}
-      />
+      <ModalCloseBtn handleClose={handleClose} />
     </ModalBackground>
   );
 }
