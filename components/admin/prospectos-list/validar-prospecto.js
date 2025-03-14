@@ -260,6 +260,11 @@ export default function ValidarProspecto({
                     ✅
                   </li>
                 )}
+                {prospecto.comentarios && (
+                  <li>
+                    <strong>Comentarios: </strong> {prospecto.comentarios}
+                  </li>
+                )}
               </ul>
               <br />
               <InputGroup>
