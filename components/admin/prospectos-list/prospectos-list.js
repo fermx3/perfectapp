@@ -17,8 +17,6 @@ export default function ProspectosList({ prospectos, zonas, skus }) {
     setIsModalOpen(false);
   };
 
-  console.log(prospectos[0]);
-
   return (
     <div>
       <h2>Prospectos sin validar</h2>

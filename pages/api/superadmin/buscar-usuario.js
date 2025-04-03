@@ -29,7 +29,6 @@ async function handler(req, res) {
   const user = await users.findOne(
     {
       _id: userId,
-      empresa,
       role: { $ne: 'SUPERADMIN' },
     },
     {

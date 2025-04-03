@@ -6,8 +6,6 @@ import Container from '@/components/layout/container';
 import PasswordModal from '@/components/password-modal/password-modal';
 import ErrorMessage from '@/components/ui/error-message';
 import Loader from '@/components/ui/loader';
-import Modal from '@/components/ui/modal';
-import ModalCloseBtn from '@/components/ui/modal-close-btn';
 import { getSession } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -32,6 +30,7 @@ export default function PasswordsManagerPage() {
   const onSubmit = async (data) => {
     setIsError(null);
     setUser(null);
+    setPasswordSuccessMessage(false);
     const response = await fetch(
       `/api/superadmin/buscar-usuario?userId=${data.userId}`
     );

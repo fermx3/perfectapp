@@ -25,6 +25,26 @@ export default function AsesorMonitoreoPage({
   avance,
   skus,
 }) {
+  if (!userInfo) {
+    return (
+      <BackgroundGradientContainer>
+        <Container>
+          <h1>Usuario no encontrado</h1>
+          <p>
+            El usuario que estás buscando no existe o no tiene acceso a esta
+            página.
+          </p>
+          <Button
+            href={`/asesor/${session.user.userId}`}
+            buttonType={BUTTON_TYPE_CLASSES.secondary}
+          >
+            {'<'} Regresar
+          </Button>
+        </Container>
+      </BackgroundGradientContainer>
+    );
+  }
+
   return (
     <BackgroundGradientContainer>
       <Container>
@@ -58,6 +78,15 @@ export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   const { asesorId } = context.query;
   const userInfo = await getUserInfo(asesorId);
+
+  if (!userInfo) {
+    return {
+      props: {
+        session,
+        userInfo: null,
+      },
+    };
+  }
 
   const yearMonth = moment().format('YYYY-MM');
 

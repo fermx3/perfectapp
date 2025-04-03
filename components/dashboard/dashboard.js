@@ -73,7 +73,7 @@ export default function Dashboard({
                   return (
                     cuota[key] !== 0 && (
                       <li key={i}>
-                        {skus.find((sku) => sku.sku === key).producto}:{' '}
+                        {skus.find((sku) => sku.sku === key)?.producto || key}:{' '}
                         {cuota[key]}
                       </li>
                     )
@@ -90,7 +90,8 @@ export default function Dashboard({
               {avance.map((id, i) => {
                 return (
                   <li key={i}>
-                    {skus.find((sku) => sku.sku === id._id).producto || 'error'}
+                    {skus.find((sku) => sku.sku === id._id)?.producto ||
+                      'error'}
                     : {id.cajas}
                   </li>
                 );
@@ -126,7 +127,7 @@ export default function Dashboard({
                 {Object.keys(valorDePuntos).map((key, i) => {
                   return (
                     <li key={i}>
-                      {skus.find((sku) => sku.sku === key).producto}:{' '}
+                      {skus.find((sku) => sku.sku === key)?.producto || key}:{' '}
                       {valorDePuntos[key] == 1
                         ? `${valorDePuntos[key]} punto`
                         : `${valorDePuntos[key]} puntos`}{' '}

@@ -4,7 +4,6 @@ import FormControl from '../forms/form-control';
 import Modal from '../ui/modal';
 import ModalCloseBtn from '../ui/modal-close-btn';
 import Loader from '../ui/loader';
-import { set } from 'mongoose';
 
 export default function PasswordModal({
   user,

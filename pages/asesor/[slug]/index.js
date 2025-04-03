@@ -96,10 +96,11 @@ export async function getServerSideProps(context) {
   const empresa = session?.user?.empresa;
   const { skus, promocionesDelMes } = await getSettings(empresa);
   const cuotaTotal = await getCuotaTotals(userInfo.zonaAsignada, empresa);
-  const userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
+  let userIdsFromAsesorZonas = await getUserIdsFromAGivenZonas(
     userInfo.zonaAsignada,
     empresa
   );
+
   const clientesQueCompraron = await getUserIdsFromGivenZonasThatPurchased(
     yearMonth,
     userInfo.zonaAsignada,
