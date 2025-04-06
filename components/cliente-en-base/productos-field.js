@@ -83,6 +83,7 @@ export default function ProductosField({
               <input
                 type='number'
                 min={0}
+                step={0.01}
                 {...register(
                   `competidores.${nestIndex}.productos.${k}.precio`,
                   {
@@ -91,8 +92,8 @@ export default function ProductosField({
                   },
                   {
                     min: {
-                      value: 1,
-                      message: 'El valor debe ser igual o mayor a 1',
+                      value: 0.1,
+                      message: 'El valor debe ser igual o mayor a 0.1',
                     },
                   }
                 )}
@@ -123,25 +124,34 @@ export default function ProductosField({
                   <input
                     type='number'
                     min={0}
+                    step={0.01}
                     {...register(
                       `competidores.${nestIndex}.productos.${k}.precioConPromo`,
                       {
                         required: 'Por favor llena este campo',
                         min: {
-                          value: 1,
-                          message: 'El valor debe ser igual o mayor a 1',
+                          value: 0.1,
+                          message: 'El valor debe ser igual o mayor a 0.1',
                         },
                         valueAsNumber: true,
                       }
                     )}
                   />
                 </FormControl>
-                <FormControl label='Razón de promo'>
+                <FormControl
+                  label='Razón de promo'
+                  error={
+                    errors.competidores?.[nestIndex]?.productos?.[k]
+                      ?.precioConPromoReason?.message
+                  }
+                >
                   <Controller
                     name={`competidores.${nestIndex}.productos.${k}.precioConPromoReason`}
                     control={control}
                     rules={{
-                      required: true,
+                      // required: true,
+                      validate: (value) =>
+                        value !== '' || 'Por favor selecciona una razón',
                     }}
                     render={({ field: { onChange, value } }) => (
                       <SelectInput

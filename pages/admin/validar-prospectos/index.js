@@ -4,7 +4,13 @@ import ProspectosList from '@/components/admin/prospectos-list/prospectos-list';
 import { getSession } from 'next-auth/react';
 import { getProspectos, getSettings } from '@/lib/db';
 
-export default function ValidarProspectosPage({ prospectos, zonas, skus }) {
+export default function ValidarProspectosPage({
+  prospectos,
+  zonas,
+  skus,
+  centrales,
+  regiones,
+}) {
   return (
     <BackgroundGradientContainer>
       <Container>
@@ -13,7 +19,13 @@ export default function ValidarProspectosPage({ prospectos, zonas, skus }) {
           <p>Valida los prospectos que han sido agregados por los asesores.</p>
         </header>
         <main>
-          <ProspectosList prospectos={prospectos} zonas={zonas} skus={skus} />
+          <ProspectosList
+            prospectos={prospectos}
+            zonas={zonas}
+            skus={skus}
+            centrales={centrales}
+            regiones={regiones}
+          />
         </main>
       </Container>
     </BackgroundGradientContainer>
@@ -34,9 +46,9 @@ export async function getServerSideProps(context) {
 
   const empresa = session?.user?.empresa;
   const prospectos = await getProspectos(empresa);
-  const { zonas, skus } = await getSettings(empresa);
+  const { zonas, skus, centrales, regiones } = await getSettings(empresa);
 
   return {
-    props: { session, prospectos, zonas, skus },
+    props: { session, prospectos, zonas, skus, centrales, regiones },
   };
 }

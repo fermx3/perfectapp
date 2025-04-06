@@ -32,7 +32,11 @@ export default function ClienteEnBase1({
 
   // Format skus for easier access
   const skusFormatted = skus.reduce((acc, sku) => {
+    // Split the SKU into nombre and gramos
+    // and create a new object with the formatted structure
     const [nombre, gramos] = sku.producto.split(' ');
+
+    // Check if the SKU already exists in the accumulator
     const existingSku = acc.find((item) => item.nombre === nombre);
 
     if (existingSku) {

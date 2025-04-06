@@ -1,12 +1,10 @@
-import { Controller, Form, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   canales,
-  centrales,
-  regiones,
   cortinasOptions,
   clienteNuevoSchema,
   personasQueAtiendenOptions,
@@ -20,11 +18,10 @@ import Modal from '../ui/modal';
 
 import classes from './cliente-nuevo-form.module.scss';
 import SelectInput from '../forms/select-input';
-import FormSection from '../forms/form-section';
 import FormGroup from '../forms/form-group';
 import ReactSwitch from 'react-switch';
 
-export default function ClienteNuevoForm({ asesores, session }) {
+export default function ClienteNuevoForm({ centrales, regiones }) {
   const {
     register,
     handleSubmit,

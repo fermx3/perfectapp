@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { canales, centrales, crearLealSchema } from '@/lib/schemas/schemas';
+import { canales, crearLealSchema } from '@/lib/schemas/schemas';
 
 import FormControl from '../forms/form-control';
 import Button, { BUTTON_TYPE_CLASSES } from '../button';
@@ -18,7 +18,7 @@ import {
 import InfoMessage from '../ui/info-message';
 import ErrorMessage from '../ui/error-message';
 
-export default function CrearLealForm({ asesores, session }) {
+export default function CrearLealForm({ asesores, session, centrales }) {
   const {
     register,
     handleSubmit,
@@ -153,7 +153,6 @@ export default function CrearLealForm({ asesores, session }) {
       //Fail on create user
     }
   };
-  console.log(errors);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

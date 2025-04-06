@@ -118,7 +118,7 @@ async function handler(req, res) {
 
     res.status(201).json({
       message:
-        'Prospecto validado! Ahora el cliente está dado de alta en el sistema con la contraseña "SoyLeal2024".',
+        'Prospecto validado! Ahora el cliente está dado de alta en el sistema con la contraseña "SoyLeal2025".',
     });
   }
 

@@ -3,24 +3,17 @@ import Modal from '@/components/ui/modal';
 import ModalBackground from '@/components/ui/modal-background';
 
 import { Controller, useForm } from 'react-hook-form';
-import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { regiones, validarProspectoSchema } from '@/lib/schemas/schemas';
+import { validarProspectoSchema } from '@/lib/schemas/schemas';
 
 import classes from './validar-prospecto.module.scss';
 import InputGroup from '@/components/forms/input-group';
 import FormControl from '@/components/forms/form-control';
 import SelectInput from '@/components/forms/select-input';
-import {
-  canales,
-  centrales,
-  nivelesDeLeales,
-  frecuencias,
-} from '@/lib/schemas/schemas';
+import { canales, nivelesDeLeales, frecuencias } from '@/lib/schemas/schemas';
 import ReactSwitch from 'react-switch';
 import Loader from '@/components/ui/loader';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import FormError from '@/components/ui/form-error';
 import FormGroup from '@/components/forms/form-group';
 import ModalCloseBtn from '@/components/ui/modal-close-btn';
@@ -30,6 +23,8 @@ export default function ValidarProspecto({
   handleClose,
   zonas,
   skus,
+  centrales,
+  regiones,
 }) {
   const frecuenciasObj = frecuencias.reduce((acc, frecuencia) => {
     // frecuencia = frecuencia.toLowerCase();
@@ -57,7 +52,6 @@ export default function ValidarProspecto({
   };
 
   const regionesValores = regiones.map((region) => region.region);
-  console.log(regionesValores);
 
   const {
     register,
@@ -201,7 +195,7 @@ export default function ValidarProspecto({
             </InputGroup>
             <InputGroup>
               <FormControl label='Grupo:' error={errors.grupo?.message}>
-                <input type='text' {...register('grupo', { required: true })} />
+                <input type='text' {...register('grupo')} />
               </FormControl>
             </InputGroup>
             <FormGroup titulo='Asignación de nivel de cliente:'>
