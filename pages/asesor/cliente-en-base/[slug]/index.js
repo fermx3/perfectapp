@@ -25,6 +25,7 @@ import {
 import Dashboard from '@/components/dashboard/dashboard';
 import { getAvanceDeCuota, getMensajesAsesores } from '@/lib/db';
 import Container from '@/components/layout/container';
+import { notFound } from 'next/navigation';
 
 // const mensajesAsesores = {
 //   infoDeCategoria: {
@@ -180,6 +181,12 @@ export async function getServerSideProps(context) {
 
   const empresa = session?.user?.empresa;
   const leal = await getLeal(slug);
+
+  if (!leal) {
+    return {
+      notFound: true,
+    };
+  }
 
   const {
     promocionesDelMes = [],
