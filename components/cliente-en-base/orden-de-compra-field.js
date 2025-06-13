@@ -28,8 +28,8 @@ export default function OrdenDeCompraField({
     let objetivo = 0;
     let promo = 'No hay promo';
 
-    puntos = Number(valorDePuntos[v.sku]);
-    objetivo = Number(cuotaDelMes[v.sku]);
+    puntos = valorDePuntos ? Number(valorDePuntos[v.sku]) : 0;
+    objetivo = objetivo ? Number(cuotaDelMes[v.sku]) : 0;
 
     promocionesDisponibles.map(
       (promocion) => v.sku === promocion.sku && (promo = promocion.desc)
